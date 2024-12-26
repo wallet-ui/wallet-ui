@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
 
-import { Header } from '../components/header.tsx';
+import { Header, HeaderLink } from '../components/header.tsx';
 
-export function AppLayout({ children }: { children: ReactNode }) {
+export function AppLayout({ children, links }: { children: ReactNode; links: HeaderLink[] }) {
     return (
         <div>
-            <Header />
+            <Header links={links} />
             <main>{children}</main>
         </div>
     );

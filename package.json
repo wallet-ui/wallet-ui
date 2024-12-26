@@ -1,0 +1,77 @@
+{
+    "name": "solana-web3.js-monorepo",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "build": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} build",
+        "compile": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} compile:js compile:typedefs",
+        "compile:ghpages": "typedoc",
+        "lint": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} test:lint",
+        "style:fix": "turbo  run --concurrency=${TURBO_CONCURRENCY:-95.84%} style:fix && pnpm prettier --log-level warn --ignore-unknown --write '{.,!packages}/*'",
+        "test": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} test:unit:browser test:unit:node",
+        "test:live-with-test-validator": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} test:live-with-test-validator",
+        "test:live-with-test-validator:setup": "./scripts/setup-test-validator.sh"
+    },
+    "devDependencies": {
+        "@changesets/changelog-github": "^0.5.0",
+        "@changesets/cli": "^2.27.10",
+        "@eslint/js": "^9.16.0",
+        "@eslint/json": "^0.8.0",
+        "@wallet-ui/build-scripts": "workspace:*",
+        "@solana/eslint-config-solana": "^4.0.0",
+        "@solana/prettier-config-solana": "0.0.5",
+        "@wallet-ui/test-config": "workspace:*",
+        "@wallet-ui/test-matchers": "workspace:*",
+        "@wallet-ui/tsconfig": "workspace:*",
+        "@swc/jest": "^0.2.37",
+        "@types/jest": "^29.5.14",
+        "@types/node": "^22",
+        "@typescript-eslint/eslint-plugin": "^8.17.0",
+        "@typescript-eslint/parser": "^8.17.0",
+        "agadoo": "^3.0.0",
+        "bundlemon": "^3.1.0",
+        "eslint": "^9.17.0",
+        "eslint-plugin-jest": "^28.9.0",
+        "eslint-plugin-react-hooks": "^5.1.0",
+        "eslint-plugin-simple-import-sort": "^12.1.1",
+        "eslint-plugin-sort-keys-fix": "^1.1.2",
+        "eslint-plugin-typescript-sort-keys": "^3.3.0",
+        "jest": "^30.0.0-alpha.6",
+        "jest-environment-jsdom": "^30.0.0-alpha.6",
+        "jest-runner-eslint": "^2.2.1",
+        "jest-runner-prettier": "^1.0.0",
+        "jest-watch-master": "^1.0.0",
+        "jest-watch-select-projects": "^2.0.0",
+        "jest-watch-typeahead": "^2.2.2",
+        "prettier": "^3.4",
+        "ts-node": "^10.9.2",
+        "tsup": "^8.3.5",
+        "turbo": "^2.3.3",
+        "typedoc": "^0.27.4",
+        "typedoc-plugin-missing-exports": "^3.1.0",
+        "typescript": "^5.7.2"
+    },
+    "engines": {
+        "node": ">=20.18.0",
+        "npm": "please-use-pnpm",
+        "pnpm": "^9",
+        "yarn": "please-use-pnpm"
+    },
+    "packageManager": "pnpm@9.1.0",
+    "pnpm": {
+        "overrides": {
+            "agadoo>rollup": "^4",
+            "conventional-changelog-conventionalcommits": ">= 8.0.0",
+            "dset@<3.1.4": "^3.1.4",
+            "jsdom": "^22",
+            "mock-socket": "^9.3.1",
+            "shelljs": ">=0.8.5"
+        },
+        "patchedDependencies": {
+            "jest-runner-prettier@1.0.0": "patches/jest-runner-prettier@1.0.0.patch"
+        }
+    },
+    "prettier": "@solana/prettier-config-solana"
+}

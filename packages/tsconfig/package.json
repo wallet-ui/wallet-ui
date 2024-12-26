@@ -1,0 +1,11 @@
+{
+  "name": "@wallet-ui/tsconfig",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    "base.json"
+  ],
+  "engines": {
+    "node": ">=20.18.0"
+  }
+}

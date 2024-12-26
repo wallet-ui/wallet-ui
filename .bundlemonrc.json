@@ -1,0 +1,14 @@
+{
+    "baseDir": "./packages/",
+    "files": [
+        {
+            "friendlyName": "@wallet-ui/core production bundle",
+            "path": "core/dist/index.production.min.js"
+        },
+        {
+            "path": "**/dist/index.*.mjs"
+        }
+    ],
+    "includeCommitMessage": true,
+    "reportOutput": ["github"]
+}

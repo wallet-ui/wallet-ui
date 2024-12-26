@@ -1,0 +1,18 @@
+{
+  "name": "@wallet-ui/build-scripts",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    "register-node-globals.mjs",
+    "tsup.config.library.ts",
+    "tsup.config.package.ts"
+  ],
+  "devDependencies": {
+    "@types/jscodeshift": "^0.12.0",
+    "browserslist-to-esbuild": "^2.1.1",
+    "jscodeshift": "^17.1.1"
+  },
+  "engines": {
+    "node": ">=20.18.0"
+  }
+}

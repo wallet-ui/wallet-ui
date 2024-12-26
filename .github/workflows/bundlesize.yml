@@ -1,0 +1,37 @@
+name: Compare bundle size
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [synchronize, opened, reopened]
+
+env:
+  # Among other things, opts out of Turborepo telemetry
+  # See https://consoledonottrack.com/
+  DO_NOT_TRACK: '1'
+  # Some tasks slow down considerably on GitHub Actions runners when concurrency is high
+  TURBO_CONCURRENCY: 1
+  # Enables Turborepo Remote Caching.
+  TURBO_REMOTE_CACHE_SIGNATURE_KEY: ${{ secrets.TURBO_REMOTE_CACHE_SIGNATURE_KEY }}
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        uses: ./.github/workflows/actions/install-dependencies
+        with:
+          version: current
+
+      - name: Build
+        run: pnpm turbo compile:js --concurrency=${TURBO_CONCURRENCY:-1}
+
+      - name: BundleMon
+        uses: lironer/bundlemon-action@v1

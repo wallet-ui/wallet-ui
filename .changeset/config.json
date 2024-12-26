@@ -1,0 +1,26 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+  "access": "public",
+  "baseBranch": "main",
+  "bumpVersionsWithWorkspaceProtocolOnly": true,
+  "changelog": [
+    "@changesets/changelog-github",
+    {
+      "repo": "wallet-ui/wallet-ui"
+    }
+  ],
+  "fixed": [
+    [
+      "@wallet-ui/!({*-impl,build-scripts,test-*,tsconfig})"
+    ]
+  ],
+  "linked": [],
+  "snapshot": {
+    "useCalculatedVersion": true
+  },
+  "privatePackages": {
+    "version": false,
+    "tag": false
+  },
+  "updateInternalDependencies": "patch"
+}

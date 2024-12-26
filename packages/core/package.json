@@ -1,6 +1,6 @@
 {
     "name": "@wallet-ui/core",
-    "version": "1.0.0",
+    "version": "0.0.0",
     "description": "Solana Javascript API",
     "exports": {
         "edge-light": {

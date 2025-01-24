@@ -165,7 +165,7 @@ importers:
     devDependencies:
       '@types/react':
         specifier: ^19
-        version: 19.0.1
+        version: 19.0.8
       '@types/react-dom':
         specifier: ^19
         version: 19.0.0
@@ -233,7 +233,7 @@ importers:
     devDependencies:
       '@types/react':
         specifier: ^19
-        version: 19.0.1
+        version: 19.0.8
       '@types/react-test-renderer':
         specifier: ^19
         version: 19.0.0
@@ -2211,8 +2211,8 @@ packages:
   '@types/react-test-renderer@19.0.0':
     resolution: {integrity: sha512-qDVnNybqFm2eZKJ4jD34EvRd6VHD67KjgnWaEMM0Id9L22EpWe3nOSVKHWL1XWRCxUWe3lhXwlEeCKD1BlJCQA==}
 
-  '@types/react@19.0.1':
-    resolution: {integrity: sha512-YW6614BDhqbpR5KtUYzTA+zlA7nayzJRA9ljz9CQoxthR0sDisYZLuvSMsil36t4EH/uAt8T52Xb4sVw17G+SQ==}
+  '@types/react@19.0.8':
+    resolution: {integrity: sha512-9P/o1IGdfmQxrujGbIMDyYaaCykhLKc0NGCtYcECNUr9UAaDe4gwvV9bR6tvd5Br1SG0j+PBpbKr2UYY8CwqSw==}
 
   '@types/semver@7.5.8':
     resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
@@ -7580,13 +7580,13 @@ snapshots:
 
   '@types/react-dom@19.0.0':
     dependencies:
-      '@types/react': 19.0.1
+      '@types/react': 19.0.8
 
   '@types/react-test-renderer@19.0.0':
     dependencies:
-      '@types/react': 19.0.1
+      '@types/react': 19.0.8
 
-  '@types/react@19.0.1':
+  '@types/react@19.0.8':
     dependencies:
       csstype: 3.1.3
 

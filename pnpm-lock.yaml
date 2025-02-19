@@ -168,7 +168,7 @@ importers:
         version: 19.0.8
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.0
+        version: 19.0.4(@types/react@19.0.8)
       '@vitejs/plugin-react-swc':
         specifier: ^3.7.2
         version: 3.7.2(@swc/helpers@0.5.11)(vite@6.0.5(@types/node@22.10.2)(jiti@1.21.0)(terser@5.18.0)(tsx@4.19.2)(yaml@2.6.1))
@@ -2209,8 +2209,10 @@ packages:
   '@types/prettier@2.7.3':
     resolution: {integrity: sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==}
 
-  '@types/react-dom@19.0.0':
-    resolution: {integrity: sha512-1KfiQKsH1o00p9m5ag12axHQSb3FOU9H20UTrujVSkNhuCrRHiQWFqgEnTNK5ZNfnzZv8UWrnXVqCmCF9fgY3w==}
+  '@types/react-dom@19.0.4':
+    resolution: {integrity: sha512-4fSQ8vWFkg+TGhePfUzVmat3eC14TXYSsiiDSLI0dVLsrm9gZFABjPy/Qu6TKgl1tq1Bu1yDsuQgY3A3DOjCcg==}
+    peerDependencies:
+      '@types/react': ^19.0.0
 
   '@types/react-test-renderer@19.0.0':
     resolution: {integrity: sha512-qDVnNybqFm2eZKJ4jD34EvRd6VHD67KjgnWaEMM0Id9L22EpWe3nOSVKHWL1XWRCxUWe3lhXwlEeCKD1BlJCQA==}
@@ -7627,7 +7629,7 @@ snapshots:
 
   '@types/prettier@2.7.3': {}
 
-  '@types/react-dom@19.0.0':
+  '@types/react-dom@19.0.4(@types/react@19.0.8)':
     dependencies:
       '@types/react': 19.0.8
 

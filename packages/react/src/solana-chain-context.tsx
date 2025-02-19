@@ -1,5 +1,5 @@
-import { devnet, testnet } from '@solana/web3.js';
 import { SolanaChain } from '@wallet-ui/core';
+import { devnet, testnet } from 'gill';
 import { createContext, useContext } from 'react';
 
 export type SolanaChainContextProps = Readonly<{

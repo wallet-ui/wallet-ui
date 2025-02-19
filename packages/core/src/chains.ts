@@ -1,4 +1,4 @@
-import { ClusterUrl, devnet, mainnet, testnet } from '@solana/web3.js';
+import { ClusterUrl, devnet, mainnet, testnet } from 'gill';
 
 export type SolanaChainId = `solana:${string}`;
 

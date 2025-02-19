@@ -1,5 +1,5 @@
-import type { Rpc, RpcSubscriptions, SolanaRpcApiDevnet, SolanaRpcSubscriptionsApi } from '@solana/web3.js';
-import { createSolanaRpc, createSolanaRpcSubscriptions, devnet } from '@solana/web3.js';
+import type { Rpc, RpcSubscriptions, SolanaRpcApiDevnet, SolanaRpcSubscriptionsApi } from 'gill';
+import { createSolanaRpc, createSolanaRpcSubscriptions, devnet } from 'gill';
 import { createContext, useContext } from 'react';
 
 export type SolanaRpc = Rpc<SolanaRpcApiDevnet>;

@@ -1,5 +1,5 @@
-import { address } from '@solana/web3.js';
 import type { UiWalletAccount } from '@wallet-standard/react';
+import { address } from 'gill';
 import { createContext, Dispatch, SetStateAction, useContext } from 'react';
 
 export type SelectedWalletAccountState = UiWalletAccount | undefined;

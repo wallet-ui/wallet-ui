@@ -71,9 +71,9 @@
         "maintained node versions"
     ],
     "dependencies": {
-        "@solana/web3.js": "2",
         "@wallet-standard/react": "^1.0.0",
-        "@wallet-ui/core": "workspace:*"
+        "@wallet-ui/core": "workspace:*",
+        "gill": "0.4.0"
     },
     "devDependencies": {
         "@types/react": "^19",

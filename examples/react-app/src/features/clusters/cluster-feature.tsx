@@ -1,23 +1,23 @@
-import { useSolanaChain } from '@wallet-ui/react';
+import { useSolanaCluster } from '@wallet-ui/react';
 
-export default function ChainFeature() {
-    const { chain, chains, setChain } = useSolanaChain();
-    if (!setChain) {
+export default function ClusterFeature() {
+    const { cluster, clusters, setCluster } = useSolanaCluster();
+    if (!setCluster) {
         return null;
     }
     return (
         <div>
             <div style={styles.grid}>
-                {chains.map(item => {
-                    const activeChain = item.id === chain.id;
+                {clusters.map(item => {
+                    const activeCluster = item.id === cluster.id;
                     return (
                         <div
                             key={item.id}
                             style={{
                                 ...styles.card,
-                                ...(activeChain ? styles.activeCard : {}),
+                                ...(activeCluster ? styles.activeCard : {}),
                             }}
-                            onClick={() => setChain(item.id)}
+                            onClick={() => setCluster(item.id)}
                         >
                             <h3 style={styles.cardTitle}>{item.label}</h3>
                             <p style={styles.cardText}>RPC URL: {item.rpcUrl}</p>

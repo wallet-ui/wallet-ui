@@ -2,7 +2,7 @@ import path from 'node:path';
 
 import { Config } from '@jest/types';
 
-import commonConfig from './jest-unit.config.common';
+import commonConfig from './jest-unit.config.common.js';
 
 const config: Partial<Config.InitialProjectOptions> = {
     ...commonConfig,

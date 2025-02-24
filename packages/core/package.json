@@ -74,7 +74,7 @@
         "maintained node versions"
     ],
     "dependencies": {
-        "@solana/web3.js": "2"
+        "gill": "0.4.0"
     },
     "peerDependencies": {
         "typescript": ">=5"

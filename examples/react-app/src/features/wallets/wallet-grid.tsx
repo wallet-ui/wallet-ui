@@ -45,7 +45,7 @@ export function WalletGridItem({ wallet }: { wallet: UiWallet }) {
                 {wallet?.features?.join(', ')}
             </p>
             <p style={styles.cardText}>
-                Chains: <br />
+                Clusters: <br />
                 {wallet.chains.join(', ')}
             </p>
             <div>

@@ -12,8 +12,6 @@ env:
   # Among other things, opts out of Turborepo telemetry
   # See https://consoledonottrack.com/
   DO_NOT_TRACK: '1'
-  # Some tasks slow down considerably on GitHub Actions runners when concurrency is high
-  TURBO_CONCURRENCY: 1
   # Enables Turborepo Remote Caching.
   TURBO_REMOTE_CACHE_SIGNATURE_KEY: ${{ secrets.TURBO_REMOTE_CACHE_SIGNATURE_KEY }}
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -39,27 +37,24 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Create Changesets Pull Request or Trigger an NPM Publish
+      - name: Build And Test (bypass cache)
+        run: pnpm build --force
+
+      - name: Create Changesets Pull Request or Publish to NPM
         id: changesets
         uses: changesets/action@v1
+        with:
+          # Some tasks slow down considerably on GitHub Actions runners when concurrency is high
+          publish: pnpm turbo publish-packages --concurrency=1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Choose Build Step
-        id: build-step-decider
-        run: echo "step-name=${{ steps.changesets.outputs.hasChangesets == 'false' && 'publish-packages --concurrency=${TURBO_CONCURRENCY:-1}' || 'build' }}" >> $GITHUB_OUTPUT
-
-      - name: Run Build Step (force)
-        run: pnpm turbo ${{ steps.build-step-decider.outputs.step-name }} --force=true
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          PUBLISH_TAG: next
+          PUBLISH_TAG: latest
 
       - name: Push Git Tag
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
-          VERSION_TAG=v$(cd packages/core/ && pnpm pkg get version | sed -n '2p' | grep -o '"\([^"]\)\+"$' | tr -d \")
+          VERSION_TAG=v$(cd packages/kit/ && pnpm pkg get version | sed -n '2p' | grep -o '"\([^"]\)\+"$' | tr -d \")
           if ! git ls-remote --tags | grep -q "$VERSION_TAG"; then git tag $VERSION_TAG && git push --tags; fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

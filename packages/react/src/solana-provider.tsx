@@ -5,12 +5,15 @@ import { SolanaClientProvider } from './solana-client-provider';
 import { useSolanaCluster } from './solana-cluster-context';
 import { SolanaClusterProvider } from './solana-cluster-provider';
 import { SolanaWalletProvider } from './solana-wallet-provider';
+import { SolanaWalletUiProvider } from './solana-wallet-ui-provider';
 
 export function SolanaProvider({ clusters, children }: { children: ReactNode; clusters: SolanaCluster[] }) {
     return (
         <SolanaClusterProvider clusters={clusters}>
             <SolanaClientProviderLoader>
-                <SolanaWalletProvider>{children}</SolanaWalletProvider>
+                <SolanaWalletProvider>
+                    <SolanaWalletUiProvider>{children}</SolanaWalletUiProvider>
+                </SolanaWalletProvider>
             </SolanaClientProviderLoader>
         </SolanaClusterProvider>
     );

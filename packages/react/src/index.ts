@@ -6,3 +6,4 @@ export * from './solana-client-context';
 export * from './solana-client-provider';
 export * from './solana-wallet-context';
 export * from './solana-wallet-provider';
+export * from './wallet-ui-button';

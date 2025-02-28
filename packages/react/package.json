@@ -3,24 +3,27 @@
     "version": "1.0.0",
     "description": "React hooks for building Solana apps",
     "exports": {
-        "edge-light": {
-            "import": "./dist/index.node.mjs",
-            "require": "./dist/index.node.cjs"
+        ".": {
+            "edge-light": {
+                "import": "./dist/index.node.mjs",
+                "require": "./dist/index.node.cjs"
+            },
+            "workerd": {
+                "import": "./dist/index.node.mjs",
+                "require": "./dist/index.node.cjs"
+            },
+            "browser": {
+                "import": "./dist/index.browser.mjs",
+                "require": "./dist/index.browser.cjs"
+            },
+            "node": {
+                "import": "./dist/index.node.mjs",
+                "require": "./dist/index.node.cjs"
+            },
+            "react-native": "./dist/index.native.mjs",
+            "types": "./dist/types/index.d.ts"
         },
-        "workerd": {
-            "import": "./dist/index.node.mjs",
-            "require": "./dist/index.node.cjs"
-        },
-        "browser": {
-            "import": "./dist/index.browser.mjs",
-            "require": "./dist/index.browser.cjs"
-        },
-        "node": {
-            "import": "./dist/index.node.mjs",
-            "require": "./dist/index.node.cjs"
-        },
-        "react-native": "./dist/index.native.mjs",
-        "types": "./dist/types/index.d.ts"
+        "./index.css": "./dist/index.css"
     },
     "browser": {
         "./dist/index.node.cjs": "./dist/index.browser.cjs",

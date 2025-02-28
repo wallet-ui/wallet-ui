@@ -1,4 +1,4 @@
-import './index.css';
+// import './index.css';
 
 export * from './solana-client-context';
 export * from './solana-client-provider';

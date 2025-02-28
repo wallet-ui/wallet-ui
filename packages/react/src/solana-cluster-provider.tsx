@@ -6,7 +6,7 @@ import { useLocalStorage } from './use-local-storage';
 
 const STORAGE_KEY = 'placeholder:selected-cluster';
 
-export function SolanaClusterProvider({ clusters, children }: { children: ReactNode, clusters: SolanaCluster[]; }) {
+export function SolanaClusterProvider({ clusters, children }: { children: ReactNode; clusters: SolanaCluster[] }) {
     const [clusterId, setClusterId] = useLocalStorage(STORAGE_KEY, 'solana:devnet');
 
     if (!clusters.length) {

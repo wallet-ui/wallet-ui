@@ -145,8 +145,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/react
       gill:
-        specifier: 0.4.0
-        version: 0.4.0(@solana/web3.js@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+        specifier: 0.5.0
+        version: 0.5.0(@solana/web3.js@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
       react:
         specifier: ^19
         version: 19.0.0
@@ -210,8 +210,8 @@ importers:
   packages/core:
     dependencies:
       gill:
-        specifier: 0.4.0
-        version: 0.4.0(@solana/web3.js@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+        specifier: 0.5.0
+        version: 0.5.0(@solana/web3.js@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
       typescript:
         specifier: '>=5'
         version: 5.7.3
@@ -225,8 +225,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       gill:
-        specifier: 0.4.0
-        version: 0.4.0(@solana/web3.js@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+        specifier: 0.5.0
+        version: 0.5.0(@solana/web3.js@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
     devDependencies:
       '@types/react':
         specifier: ^19
@@ -3468,11 +3468,19 @@ packages:
   get-tsconfig@4.10.0:
     resolution: {integrity: sha512-kGzZ3LWWQcGIAmg6iWvXn0ei6WDtV26wzHRMwDSzmAbcXrTEXxHy6IehI6/4eT6VRKyMP1eF1VqwrVUmE/LR7A==}
 
-  gill@0.4.0:
-    resolution: {integrity: sha512-gpCEeBE07NDhosyZvvPi/P4hbl81HpAQEQKQdh258MXCvvctmhqRJv3Eumol+L12mouzD29eBkNkHDc5ILZ2pw==}
+  gill@0.5.0:
+    resolution: {integrity: sha512-g9S7J2upNPOI1IoZ0MLodHO1+e6t/BGkfB4ADDLlSrAzWyv9vixZVRqoIBpZGxJfpW77lIfkUQXhHkd6+O5VbA==}
     engines: {node: '>=20.18.0'}
     peerDependencies:
+      '@solana/kit': '*'
+      '@solana/web3.js': '>=2.0.0'
+      '@solana/web3.js@^2.0.0': '*'
       typescript: '>=5'
+    peerDependenciesMeta:
+      '@solana/kit':
+        optional: true
+      '@solana/web3.js@^2.0.0':
+        optional: true
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -8989,7 +8997,7 @@ snapshots:
       resolve-pkg-maps: 1.0.0
     optional: true
 
-  gill@0.4.0(@solana/web3.js@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)):
+  gill@0.5.0(@solana/web3.js@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)):
     dependencies:
       '@solana-program/address-lookup-table': 0.6.1(@solana/web3.js@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
       '@solana-program/compute-budget': 0.6.1(@solana/web3.js@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))
@@ -9013,9 +9021,9 @@ snapshots:
       '@solana/transaction-confirmation': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
       '@solana/transaction-messages': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
       '@solana/transactions': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
+      '@solana/web3.js': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
       typescript: 5.7.3
     transitivePeerDependencies:
-      - '@solana/web3.js'
       - fastestsmallesttextencoderdecoder
       - ws
 

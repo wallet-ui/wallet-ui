@@ -135,12 +135,6 @@ importers:
 
   examples/react-app:
     dependencies:
-      '@wallet-standard/react':
-        specifier: ^1.0.0
-        version: 1.0.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@wallet-ui/core':
-        specifier: workspace:*
-        version: link:../../packages/core
       '@wallet-ui/react':
         specifier: workspace:*
         version: link:../../packages/react
@@ -219,7 +213,7 @@ importers:
   packages/react:
     dependencies:
       '@wallet-standard/react':
-        specifier: ^1.0.0
+        specifier: 1.0.0
         version: 1.0.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@wallet-ui/core':
         specifier: workspace:*

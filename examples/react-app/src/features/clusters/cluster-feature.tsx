@@ -20,8 +20,7 @@ export default function ClusterFeature() {
                             onClick={() => setCluster(item.id)}
                         >
                             <h3 style={styles.cardTitle}>{item.label}</h3>
-                            <p style={styles.cardText}>RPC URL: {item.rpcUrl}</p>
-                            <p style={styles.cardText}>Subscriptions: {item.rpcSubscriptionsUrl}</p>
+                            <p style={styles.cardText}>RPC URL: {`${item.urlOrMoniker}`}</p>
                         </div>
                     );
                 })}

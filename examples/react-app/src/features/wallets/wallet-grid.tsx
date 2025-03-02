@@ -1,5 +1,4 @@
-import { UiWallet, useConnect, useDisconnect } from '@wallet-standard/react';
-import { useSolanaWallet } from '@wallet-ui/react';
+import { UiWallet, useConnect, useDisconnect, useSolanaWallet } from '@wallet-ui/react';
 
 export function WalletGrid({ wallets }: { wallets: UiWallet[] }) {
     return (

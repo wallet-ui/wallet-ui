@@ -1,4 +1,4 @@
-import { UiWallet, useWallets } from '@wallet-standard/react';
+import { UiWallet, useWallets } from '@wallet-ui/react';
 
 import { WalletGrid } from './wallet-grid.tsx';
 

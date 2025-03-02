@@ -71,7 +71,7 @@
         "maintained node versions"
     ],
     "dependencies": {
-        "@wallet-standard/react": "^1.0.0",
+        "@wallet-standard/react": "1.0.0",
         "@wallet-ui/core": "workspace:*",
         "gill": "0.5.0"
     },

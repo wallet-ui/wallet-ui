@@ -1,3 +1,5 @@
+import '@wallet-ui/react/index.css';
+
 import { clusterDevnet, clusterLocalnet, clusterTestnet, SolanaCluster, SolanaProvider } from '@wallet-ui/react';
 import { ReactNode } from 'react';
 import { BrowserRouter } from 'react-router-dom';

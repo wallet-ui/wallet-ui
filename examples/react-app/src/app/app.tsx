@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Navigate, RouteObject, useRoutes } from 'react-router-dom';
 
 import { HeaderLink } from '../components/header.tsx';
-import { ClustersFeature, DevFeature, HomeFeature, RpcFeature, WalletsFeature } from '../features';
+import { ClustersFeature, DevFeature, HomeFeature, RpcFeature, UiFeature, WalletsFeature } from '../features';
 import { AppLayout } from './app-layout.tsx';
 
 const routes: RouteObject[] = [
@@ -11,6 +11,7 @@ const routes: RouteObject[] = [
     { element: <DevFeature />, path: '/dev' },
     { element: <HomeFeature />, path: '/home' },
     { element: <RpcFeature />, path: '/rpc' },
+    { element: <UiFeature />, path: '/ui' },
     { element: <WalletsFeature />, path: '/wallets' },
 ];
 const links: HeaderLink[] = [
@@ -19,6 +20,7 @@ const links: HeaderLink[] = [
     { label: 'RPC', to: '/rpc' },
     { label: 'Clusters', to: '/clusters' },
     { label: 'Dev', to: '/dev' },
+    { label: 'UI', to: '/ui' },
 ];
 
 export function App() {

@@ -87,6 +87,11 @@
         "test:treeshakability:node": {
             "dependsOn": ["compile:js"]
         },
+        "@wallet-ui/example-next-tailwind#compile:js": {
+            "dependsOn": ["^compile:js", "^compile:typedefs"],
+            "inputs": ["$TURBO_DEFAULT$", "index.html", "tsconfig.*", "next.config.ts", "public/**", "src/**"],
+            "outputs": [".next/**"]
+        },
         "@wallet-ui/example-react-app#compile:js": {
             "dependsOn": ["^compile:js", "^compile:typedefs"],
             "env": ["REACT_EXAMPLE_APP_BASE_PATH", "REACT_EXAMPLE_APP_ENABLE_MAINNET"],

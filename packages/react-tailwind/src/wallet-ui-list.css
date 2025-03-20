@@ -1,0 +1,15 @@
+.wallet-ui-list {
+    @apply flex flex-col;
+}
+
+.wallet-ui-list.sm {
+    @apply gap-1;
+}
+
+.wallet-ui-list.md {
+    @apply gap-2;
+}
+
+.wallet-ui-list.lg {
+    @apply gap-3;
+}

@@ -1,5 +1,7 @@
 import './index.css';
 
+export * from './base-button';
+export * from './base-dropdown';
 export * from './solana-client-context';
 export * from './solana-client-provider';
 export * from './solana-cluster-context';
@@ -13,6 +15,14 @@ export * from './solana-wallet-ui-dialog';
 export * from './solana-wallet-ui-dialog-trigger';
 export * from './solana-wallet-ui-dropdown';
 export * from './solana-wallet-ui-provider';
+export * from './types/wallet-ui-size';
+export * from './types/wallet-ui-wallet';
+export * from './types/wallet-ui-wallet-account';
+export * from './wallet-ui-icon';
+export * from './wallet-ui-label';
+export * from './wallet-ui-list';
+export * from './wallet-ui-list-item';
+
 // Re-export the most common components from @wallet-standard/react
 export * from '@wallet-standard/react';
 // Re-export the most common types from @wallet-ui/core

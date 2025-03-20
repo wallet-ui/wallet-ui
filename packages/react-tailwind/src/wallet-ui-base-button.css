@@ -1,0 +1,51 @@
+.wallet-ui-base-button {
+    /* Background  */
+    @apply bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700;
+    /* Text color */
+    @apply text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white;
+    /* Border  */
+    @apply border border-gray-200 dark:border-gray-700;
+    /* Shape */
+    @apply rounded-md shadow-sm cursor-pointer;
+    /* Composition */
+    @apply flex items-center justify-center gap-2 whitespace-nowrap;
+    /* Disabled */
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.wallet-ui-base-button.sm {
+    /* Shape */
+    @apply px-3 py-1.5;
+    /* Text size */
+    @apply text-sm;
+    /* Text weight  */
+    @apply font-normal;
+}
+
+.wallet-ui-base-button.md {
+    /* Shape */
+    @apply px-4 py-3;
+    /* Text size */
+    @apply text-base;
+    /* Text weight  */
+    @apply font-semibold;
+}
+
+.wallet-ui-base-button.lg {
+    /* Shape */
+    @apply px-4 py-4;
+    /* Text size */
+    @apply text-lg;
+    /* Text weight  */
+    @apply font-bold;
+}
+
+.wallet-ui-base-button-left-section {
+    /* Composition */
+    @apply mr-1;
+}
+
+.wallet-ui-base-button-right-section {
+    /* Composition */
+    @apply ml-1;
+}

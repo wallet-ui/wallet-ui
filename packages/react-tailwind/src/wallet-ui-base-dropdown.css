@@ -1,0 +1,37 @@
+.wallet-ui-base-dropdown {
+    /* No default styles */
+}
+
+.wallet-ui-base-dropdown-list {
+    /* Background  */
+    @apply bg-gray-100 dark:bg-gray-800;
+    /*!* Border  *!*/
+    @apply border border-gray-200 dark:border-gray-700;
+    /*!* Shape *!*/
+    @apply rounded-md;
+}
+
+.wallet-ui-base-dropdown-item {
+    /* Content */
+    @apply flex items-center gap-2;
+    /* Background  */
+    @apply bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700;
+    /*!* Text color *!*/
+    @apply text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white;
+
+    /*!* Shape *!*/
+    @apply px-4 py-2;
+
+    /* Shape */
+    @apply cursor-pointer;
+}
+
+.wallet-ui-base-dropdown-item-left-section {
+    /* Composition */
+    @apply mr-1;
+}
+
+.wallet-ui-base-dropdown-item-right-section {
+    /* Composition */
+    @apply ml-1;
+}

@@ -1,5 +1,3 @@
-import '@wallet-ui/react/index.css';
-
 import {
     clusterDevnet,
     clusterLocalnet,
@@ -8,8 +6,8 @@ import {
     SolanaProvider,
     SolanaWalletUiDialog,
 } from '@wallet-ui/react';
-import { ReactNode } from 'react';
-import { BrowserRouter } from 'react-router';
+import React from 'react';
+import { ThemeProvider } from './theme-provider.tsx';
 
 const clusters: SolanaCluster[] = [
     clusterDevnet(),
@@ -21,13 +19,13 @@ const clusters: SolanaCluster[] = [
     // clusterMainnet(),
 ];
 
-export function AppProviders({ children }: { children: ReactNode }) {
+export function AppProviders({ children }: { children: React.ReactNode }) {
     return (
-        <BrowserRouter>
+        <ThemeProvider>
             <SolanaProvider clusters={clusters}>
                 <SolanaWalletUiDialog />
                 {children}
             </SolanaProvider>
-        </BrowserRouter>
+        </ThemeProvider>
     );
 }

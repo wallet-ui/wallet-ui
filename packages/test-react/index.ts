@@ -1,6 +1,7 @@
 export * from './box';
 export * from './ellipsify';
 export * from './group';
+export * from './playground-wallet-ui-cluster-dropdown';
 export * from './stack';
 export * from './test-react-panel';
 export * from './test-react-panel-base-button';

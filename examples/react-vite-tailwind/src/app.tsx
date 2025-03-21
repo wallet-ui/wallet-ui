@@ -1,4 +1,4 @@
-import { PlaygroundClusters, TestReactPanel } from '@wallet-ui/test-react';
+import { PlaygroundWalletUiClusterDropdown, TestReactPanel } from '@wallet-ui/test-react';
 import { Suspense } from 'react';
 import { Navigate, useRoutes } from 'react-router';
 import { AppLayout } from './app-layout.tsx';
@@ -17,7 +17,7 @@ export function App() {
         },
         {
             path: '/clusters',
-            element: <PlaygroundClusters />,
+            element: <PlaygroundWalletUiClusterDropdown />,
         },
     ]);
     const links = [

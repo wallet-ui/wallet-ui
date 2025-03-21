@@ -26,7 +26,7 @@ function getDropdownItemsWallets({
 }
 
 export function useWalletUiDropdown(): {
-    buttonProps?: Partial<BaseButtonProps>;
+    buttonProps: BaseButtonProps;
     connected: boolean;
     dropdown: BaseDropdownControl;
     items: BaseDropdownItem[];
@@ -64,7 +64,7 @@ export function useWalletUiDropdown(): {
             label: connected ? ((account ? ellipsify(account.address) : wallet?.name) ?? 'Connected') : 'Select Wallet',
             leftSection: connected ? <WalletUiIcon size={size} wallet={wallet} /> : undefined,
         };
-    }, [connected]);
+    }, [account, connected, size, wallet]);
 
     return {
         buttonProps,

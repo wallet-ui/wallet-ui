@@ -6,7 +6,7 @@ export function AppLayout({ children, links }: { children: React.ReactNode; link
     return (
         <div className="flex flex-col h-screen justify-between">
             <AppHeader links={links} />
-            <main className="p-4 flex-1">{children}</main>
+            <main className="p-4 flex-1 h-full overflow-y-auto">{children}</main>
             <footer className="flex justify-between items-center p-4 text-center border-t border-gray-200 dark:border-gray-700 text-gray-500 text-sm">
                 <div className="w-1/3 text-left">
                     <ThemeSelect />

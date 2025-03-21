@@ -1,7 +1,7 @@
-import { SolanaClusterId, useSolanaCluster } from '@wallet-ui/react';
+import { SolanaClusterId, useWalletUiCluster } from '@wallet-ui/react';
 
 export function SolanaClusterUiSelect() {
-    const { cluster, clusters, setCluster } = useSolanaCluster();
+    const { cluster, clusters, setCluster } = useWalletUiCluster();
     return (
         <select
             onChange={e => {

@@ -14,15 +14,14 @@ export function TestReactPanelWalletUiDropdown() {
 }
 
 function TestDropdown() {
-    const { buttonProps, connected, dropdown, items, label } = useWalletUiDropdown();
+    const { buttonProps, connected, dropdown, items } = useWalletUiDropdown();
     return (
         <Stack>
-            <pre>{JSON.stringify({ connected, label }, null, 4)}</pre>
+            <pre>{JSON.stringify({ connected }, null, 4)}</pre>
             <WalletUiDropdown
                 buttonProps={buttonProps}
                 // size={size}
                 dropdown={dropdown}
-                buttonLabel={label}
                 items={items} // wallets={wallets}
                 // select={async () => {
                 //     await new Promise(resolve => setTimeout(resolve, 1000));

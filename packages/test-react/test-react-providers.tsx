@@ -1,10 +1,18 @@
-import { WalletUiProvider } from '@wallet-ui/react';
+import {
+    clusterDevnet,
+    clusterLocalnet,
+    SolanaCluster,
+    WalletUiClusterProvider,
+    WalletUiProvider,
+} from '@wallet-ui/react';
 import React from 'react';
+
+const clusters: SolanaCluster[] = [clusterDevnet(), clusterLocalnet()];
 
 export function TestReactProviders({ children }: { children: React.ReactNode }) {
     return (
-        <div>
+        <WalletUiClusterProvider clusters={clusters}>
             <WalletUiProvider size="md">{children}</WalletUiProvider>
-        </div>
+        </WalletUiClusterProvider>
     );
 }

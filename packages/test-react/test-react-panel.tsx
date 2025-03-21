@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { PlaygroundWalletUiClusterDropdown } from './playground-wallet-ui-cluster-dropdown';
 import { Stack } from './stack';
 
 import { TestReactPanelBaseButton } from './test-react-panel-base-button';
@@ -52,6 +53,7 @@ export function TestReactPanel() {
                     BaseButton: <TestReactPanelBaseButton />,
                     BaseDropdown: <TestReactPanelBaseDropdown />,
                     BaseModal: <TestReactPanelBaseModal />,
+                    WalletUiClusterDropdown: <PlaygroundWalletUiClusterDropdown />,
                     WalletUiDropdown: <TestReactPanelWalletUiDropdown />,
                     WalletUiIcon: <TestReactPanelWalletUiIcon />,
                     WalletUiIconClose: <TestReactPanelWalletUiIconClose />,
@@ -68,22 +70,6 @@ export function TestReactPanel() {
                         toggle={() => handleToggle(name)}
                         open={open.get(name)}
                     >
-                        {element}
-                    </TestReactUiCard>
-                ))}
-            </Stack>
-        </TestReactProviders>
-    );
-}
-
-export function PlaygroundClusters() {
-    return (
-        <TestReactProviders>
-            <Stack>
-                {Object.entries({
-                    Main: <div>Main</div>,
-                }).map(([name, element]) => (
-                    <TestReactUiCard title={<code>{name}</code>} key={name}>
                         {element}
                     </TestReactUiCard>
                 ))}

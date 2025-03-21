@@ -1,4 +1,4 @@
-import { BaseButton, WalletUiIcon, WalletUiLabel, type WalletUiWallet } from '@wallet-ui/react';
+import { BaseButton, UiWallet, useWalletUiWallets, WalletUiIcon, WalletUiLabel } from '@wallet-ui/react';
 import React from 'react';
 import { Group } from './group';
 import { Stack } from './stack';
@@ -6,13 +6,12 @@ import { TestReactRenderSizes } from './test-react-render-sizes';
 import { TestReactRenderWallets } from './test-react-render-wallets';
 import { TestReactUiIconRefresh } from './test-react-ui-icon-refresh';
 import { TestReactUiPanel } from './test-react-ui-panel';
-import { useTestWallets } from './test-wallets';
 
 export function TestReactPanelBaseButton() {
     const [result, setResult] = React.useState('idle');
 
-    const wallets = useTestWallets();
-    const [selectedWallet, setSelectedWallet] = React.useState<WalletUiWallet | undefined>(wallets[0]);
+    const wallets = useWalletUiWallets();
+    const [selectedWallet, setSelectedWallet] = React.useState<UiWallet | undefined>(wallets[0]);
 
     function onClick() {
         setResult(`click at ${new Date().toISOString()}`);
@@ -23,7 +22,7 @@ export function TestReactPanelBaseButton() {
         <Stack>
             <TestReactRenderSizes
                 render={size => (
-                    <TestReactUiPanel key={size} title={<code>size = {size}</code>}>
+                    <TestReactUiPanel key={size} title={<code>{size}</code>}>
                         <Stack>
                             <Group>
                                 <TestReactRenderWallets
@@ -33,44 +32,37 @@ export function TestReactPanelBaseButton() {
                                             size={size}
                                             disabled={selectedWallet?.name === wallet.name}
                                             onClick={() => setSelectedWallet(wallet)}
+                                            label={<WalletUiLabel wallet={wallet} size={size} />}
                                             leftSection={<WalletUiIcon wallet={wallet} size={size} />}
-                                        >
-                                            <WalletUiLabel wallet={wallet} size={size} />
-                                        </BaseButton>
+                                        />
                                     )}
                                 />
-
                                 <BaseButton
                                     disabled={!selectedWallet}
                                     onClick={() => setSelectedWallet(undefined)}
+                                    label="Disconnect"
                                     leftSection={
                                         selectedWallet ? (
                                             <WalletUiIcon wallet={selectedWallet} size={size} />
                                         ) : undefined
                                     }
                                     size={size}
-                                >
-                                    Disconnect
-                                </BaseButton>
+                                />
                             </Group>
                             <Group>
-                                <BaseButton size={size} onClick={onClick}>
-                                    No Sections
-                                </BaseButton>
+                                <BaseButton size={size} onClick={onClick} label="No Sections" />
                                 <BaseButton
                                     size={size}
                                     leftSection={<TestReactUiIconRefresh size={size} />}
                                     onClick={onClick}
-                                >
-                                    With Left Section
-                                </BaseButton>
+                                    label="With Left Section"
+                                />
                                 <BaseButton
                                     size={size}
                                     rightSection={<TestReactUiIconRefresh size={size} />}
                                     onClick={onClick}
-                                >
-                                    With Right Section
-                                </BaseButton>
+                                    label="With Right Section"
+                                />
                                 <pre>{JSON.stringify(result.length ? result : undefined, null, 4)}</pre>
                             </Group>
                         </Stack>

@@ -1,4 +1,4 @@
-.wallet-ui-list-item {
+.wallet-ui-list-button {
     /* Composition */
     @apply flex items-center gap-2;
     /* No wrap */
@@ -9,14 +9,14 @@
     @apply hover:bg-gray-200 dark:hover:bg-gray-800;
 }
 
-.wallet-ui-list-item.sm {
+.wallet-ui-list-button.sm {
     @apply px-1 py-1 rounded-md;
 }
 
-.wallet-ui-list-item.md {
+.wallet-ui-list-button.md {
     @apply px-2 py-2 rounded-lg;
 }
 
-.wallet-ui-list-item.lg {
+.wallet-ui-list-button.lg {
     @apply px-3 py-3 rounded-xl;
 }

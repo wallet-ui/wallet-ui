@@ -33,19 +33,51 @@
 
 .wallet-ui-base-button.lg {
     /* Shape */
-    @apply px-4 py-4;
+    @apply px-6 py-4;
     /* Text size */
     @apply text-lg;
     /* Text weight  */
     @apply font-bold;
 }
 
-.wallet-ui-base-button-left-section {
+.sm .wallet-ui-base-button-left-section {
     /* Composition */
     @apply mr-1;
+    /* Text size */
+    @apply text-xs;
 }
 
-.wallet-ui-base-button-right-section {
+.md .wallet-ui-base-button-left-section {
+    /* Composition */
+    @apply mr-2;
+    /* Text size */
+    @apply text-sm;
+}
+
+.lg .wallet-ui-base-button-left-section {
+    /* Composition */
+    @apply mr-4;
+    /* Text size */
+    @apply text-xl;
+}
+
+.sm .wallet-ui-base-button-right-section {
     /* Composition */
     @apply ml-1;
+    /* Text size */
+    @apply text-xs;
+}
+
+.md .wallet-ui-base-button-right-section {
+    /* Composition */
+    @apply ml-2;
+    /* Text size */
+    @apply text-sm;
+}
+
+.lg .wallet-ui-base-button-right-section {
+    /* Composition */
+    @apply ml-4;
+    /* Text size */
+    @apply text-xl;
 }

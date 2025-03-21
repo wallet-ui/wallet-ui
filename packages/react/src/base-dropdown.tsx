@@ -1,9 +1,7 @@
-import * as menu from '@zag-js/menu';
-import { normalizeProps, useMachine } from '@zag-js/react';
-import React, { HTMLAttributes, useId } from 'react';
+import React, { HTMLAttributes } from 'react';
 
-import { BaseButton } from './base-button';
-import { WalletUiSize } from './types/wallet-ui-size';
+import { BaseButton, BaseButtonProps } from './base-button';
+import { BaseDropdownControl } from './use-base-dropdown';
 
 export interface BaseDropdownItem {
     closeMenu?: boolean;
@@ -16,29 +14,19 @@ export interface BaseDropdownItem {
 }
 
 export interface BaseDropdownProps {
-    buttonLabel: React.ReactNode;
-    buttonLeftSection?: React.ReactNode;
-    buttonSize?: WalletUiSize;
+    buttonProps: BaseButtonProps;
+    dropdown: BaseDropdownControl;
     items: BaseDropdownItem[];
     showIndicator?: boolean;
 }
 
-export function BaseDropdown({
-    buttonLabel,
-    buttonLeftSection,
-    buttonSize = 'md',
-    showIndicator,
-    items,
-}: BaseDropdownProps) {
-    const service = useMachine(menu.machine, { id: useId() });
-    const api = menu.connect(service, normalizeProps);
-
+export function BaseDropdown({ buttonProps, dropdown, showIndicator, items }: BaseDropdownProps) {
+    const api = dropdown.api;
     const trigger = (
         <BaseButton
             {...api.getTriggerProps()}
             className={`wallet-ui-base-dropdown-trigger`}
             data-part="trigger"
-            leftSection={buttonLeftSection}
             rightSection={
                 showIndicator ? (
                     <span className="wallet-actions">
@@ -48,10 +36,8 @@ export function BaseDropdown({
                     </span>
                 ) : null
             }
-            size={buttonSize}
-        >
-            {buttonLabel}
-        </BaseButton>
+            {...buttonProps}
+        />
     );
 
     return (
@@ -71,7 +57,7 @@ export function BaseDropdown({
                                 }
                                 item.handler();
                                 if (item.closeMenu !== false) {
-                                    service.send({ type: 'CLOSE' });
+                                    dropdown.close();
                                 }
                             }}
                         >

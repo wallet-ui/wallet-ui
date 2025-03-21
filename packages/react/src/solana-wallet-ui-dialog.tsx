@@ -1,4 +1,4 @@
-import './solana-wallet-ui-dialog.css';
+// import './solana-wallet-ui-dialog.css';
 
 import { UiWallet, useConnect, useDisconnect } from '@wallet-standard/react';
 import { Portal } from '@zag-js/react';

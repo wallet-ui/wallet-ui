@@ -1,4 +1,4 @@
-import { WalletUiList, WalletUiWallet } from '@wallet-ui/react';
+import { UiWallet, WalletUiList } from '@wallet-ui/react';
 import React, { useState } from 'react';
 import { Group } from './group';
 import { Stack } from './stack';
@@ -10,10 +10,10 @@ import { useTestWallets } from './test-wallets';
 
 export function TestReactPanelWalletUiList() {
     const wallets = useTestWallets();
-    const [selectedWallet, setSelectedWallet] = useState<WalletUiWallet | null>(null);
+    const [selectedWallet, setSelectedWallet] = useState<UiWallet | null>(null);
     const [pending, setPending] = useState(false);
 
-    async function handleSelect(wallet: WalletUiWallet) {
+    async function handleSelect(wallet: UiWallet) {
         setSelectedWallet(null);
         setPending(true);
         await new Promise(resolve => setTimeout(resolve, 1000));

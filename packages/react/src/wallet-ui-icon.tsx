@@ -1,12 +1,12 @@
-import React, { ImgHTMLAttributes } from 'react';
+import { UiWallet } from '@wallet-standard/react';
+import React from 'react';
 
+import { WalletUiImg } from './types/wallet-ui-img';
 import { WalletUiSize } from './types/wallet-ui-size';
-import { WalletUiWallet } from './types/wallet-ui-wallet';
 
-export interface WalletUiIconProps
-    extends React.DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> {
+export interface WalletUiIconProps extends WalletUiImg {
     size?: WalletUiSize;
-    wallet?: WalletUiWallet;
+    wallet?: UiWallet;
 }
 
 export function WalletUiIcon({ className, size, wallet, ...props }: WalletUiIconProps) {

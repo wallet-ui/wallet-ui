@@ -1,4 +1,4 @@
-import { WalletUiListItem, WalletUiWallet } from '@wallet-ui/react';
+import { UiWallet, WalletUiListButton } from '@wallet-ui/react';
 import React, { useState } from 'react';
 import { Group } from './group';
 import { Stack } from './stack';
@@ -7,11 +7,11 @@ import { TestReactRenderWallets } from './test-react-render-wallets';
 
 import { TestReactUiPanel } from './test-react-ui-panel';
 
-export function TestReactPanelWalletUiListItem() {
-    const [selectedWallet, setSelectedWallet] = useState<WalletUiWallet | null>(null);
+export function TestReactPanelWalletUiListButton() {
+    const [selectedWallet, setSelectedWallet] = useState<UiWallet | null>(null);
     const [pending, setPending] = useState(false);
 
-    async function handleSelect(wallet: WalletUiWallet) {
+    async function handleSelect(wallet: UiWallet) {
         setSelectedWallet(null);
         setPending(true);
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -27,7 +27,7 @@ export function TestReactPanelWalletUiListItem() {
                         <Group>
                             <TestReactRenderWallets
                                 render={wallet => (
-                                    <WalletUiListItem
+                                    <WalletUiListButton
                                         key={wallet.name}
                                         size={size}
                                         wallet={wallet}

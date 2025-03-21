@@ -1,18 +1,18 @@
+import { UiWallet } from '@wallet-standard/react';
 import React from 'react';
 
 import { WalletUiButton } from './types/wallet-ui-button';
 import { WalletUiSize } from './types/wallet-ui-size';
-import { WalletUiWallet } from './types/wallet-ui-wallet';
 import { WalletUiIcon } from './wallet-ui-icon';
 import { WalletUiLabel } from './wallet-ui-label';
 
-export interface WalletUiListItemProps extends Omit<WalletUiButton, 'onClick'> {
-    select?: (wallet: WalletUiWallet) => Promise<void>;
+export interface WalletUiListButtonProps extends Omit<WalletUiButton, 'onClick'> {
+    select?: (wallet: UiWallet) => Promise<void>;
     size?: WalletUiSize;
-    wallet: WalletUiWallet;
+    wallet: UiWallet;
 }
 
-export function WalletUiListItem({ className, select, size = 'md', wallet, ...props }: WalletUiListItemProps) {
+export function WalletUiListButton({ className, select, size = 'md', wallet, ...props }: WalletUiListButtonProps) {
     const [pending, setPending] = React.useState(false);
 
     function handleSelect() {
@@ -26,12 +26,12 @@ export function WalletUiListItem({ className, select, size = 'md', wallet, ...pr
     return (
         <button
             disabled={pending}
-            className={`wallet-ui-list-item ${size} ${pending ? 'wallet-ui-list-item-pending' : ''} ${className ?? ''}`}
+            className={`wallet-ui-list-button ${size} ${pending ? 'wallet-ui-list-button-pending' : ''} ${className ?? ''}`}
             onClick={handleSelect}
             {...props}
         >
-            <WalletUiIcon className="wallet-ui-list-item-icon" wallet={wallet} size={size} />
-            <WalletUiLabel className="wallet-ui-list-item-label" wallet={wallet} size={size} />
+            <WalletUiIcon className="wallet-ui-list-button-icon" wallet={wallet} size={size} />
+            <WalletUiLabel className="wallet-ui-list-button-label" wallet={wallet} size={size} />
         </button>
     );
 }

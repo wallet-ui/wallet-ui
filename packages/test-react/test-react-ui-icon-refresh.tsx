@@ -1,4 +1,4 @@
-import { WalletUiSize } from '@wallet-ui/react/src';
+import { WalletUiSize } from '@wallet-ui/react';
 import * as React from 'react';
 import { HTMLAttributes } from 'react';
 

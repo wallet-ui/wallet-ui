@@ -2,10 +2,11 @@ import {
     BaseDropdown,
     BaseDropdownItem,
     handleCopyText,
+    UiWallet,
+    UiWalletAccount,
+    useBaseDropdown,
     WalletUiIcon,
     WalletUiSize,
-    type WalletUiWallet,
-    type WalletUiWalletAccount,
 } from '@wallet-ui/react';
 
 import React, { useMemo, useState } from 'react';
@@ -16,15 +17,15 @@ import { TestReactUiPanel } from './test-react-ui-panel';
 import { useTestWallets } from './test-wallets';
 
 interface GetItemsConnectedOptions {
-    account?: WalletUiWalletAccount;
+    account?: UiWalletAccount;
     handleWalletDisconnect: () => void;
 }
 
 interface GetItemsDisconnectedOptions {
-    handleWalletConnect: (wallet: WalletUiWallet) => void;
+    handleWalletConnect: (wallet: UiWallet) => void;
     handleWalletDisconnect: () => void;
     size?: WalletUiSize;
-    wallets: WalletUiWallet[];
+    wallets: UiWallet[];
 }
 
 interface GetItemsOptions extends GetItemsConnectedOptions, GetItemsDisconnectedOptions {
@@ -79,10 +80,10 @@ function useTestWalletDropdownItems({
     itemSize = 'md',
     wallets = [],
 }: {
-    account?: WalletUiWalletAccount;
+    account?: UiWalletAccount;
     buttonSize?: WalletUiSize;
     itemSize?: WalletUiSize;
-    wallets: WalletUiWallet[];
+    wallets: UiWallet[];
 }) {
     const { selectedWallet, setSelectedWallet } = useTestWalletAccount();
     const [isConnected, setIsConnected] = useState(false);
@@ -92,7 +93,7 @@ function useTestWalletDropdownItems({
         setIsConnected(false);
     }
 
-    function handleWalletConnect(wallet: WalletUiWallet) {
+    function handleWalletConnect(wallet: UiWallet) {
         setSelectedWallet(wallet);
         setIsConnected(true);
     }
@@ -127,9 +128,9 @@ function useTestWalletDropdownItems({
 
 function useTestWalletAccount() {
     const wallets = useTestWallets();
-    const [selectedWallet, setSelectedWallet] = useState<WalletUiWallet | undefined>(undefined);
+    const [selectedWallet, setSelectedWallet] = useState<UiWallet | undefined>(undefined);
 
-    const account: WalletUiWalletAccount | undefined = useMemo(() => {
+    const account: UiWalletAccount | undefined = useMemo(() => {
         if (!selectedWallet || !selectedWallet.accounts.length) {
             return undefined;
         }
@@ -160,13 +161,13 @@ function TestReactPanelBaseDropdownItem({ size }: { size: WalletUiSize }) {
         itemSize: size,
         wallets,
     });
+    const dropdown = useBaseDropdown();
 
     return (
-        <TestReactUiPanel key={size} title={<code>size = {size}</code>}>
+        <TestReactUiPanel key={size} title={<code>{size}</code>}>
             <BaseDropdown
-                buttonLabel={buttonLabel}
-                buttonLeftSection={buttonLeftSection}
-                buttonSize={size}
+                dropdown={dropdown}
+                buttonProps={{ label: buttonLabel, leftSection: buttonLeftSection, size }}
                 items={items}
             />
         </TestReactUiPanel>

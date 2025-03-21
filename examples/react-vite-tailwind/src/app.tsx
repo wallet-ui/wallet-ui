@@ -1,27 +1,28 @@
-import { SolanaWalletUiButton } from '@wallet-ui/react';
-import { TestReactPanel } from '@wallet-ui/test-react';
+import { PlaygroundClusters, TestReactPanel } from '@wallet-ui/test-react';
 import { Suspense } from 'react';
-import { useRoutes } from 'react-router';
+import { Navigate, useRoutes } from 'react-router';
 import { AppLayout } from './app-layout.tsx';
 import { AppProviders } from './app-providers.tsx';
 
 export function App() {
     const router = useRoutes([
+        { index: true, element: <Navigate to="/playground" replace /> },
         {
-            index: true,
+            path: '/playground',
             element: (
                 <div>
                     <TestReactPanel />
-                    <hr style={{ margin: '1rem 0' }} />
-                    <SolanaWalletUiButton />
                 </div>
             ),
         },
-        { path: '/about', element: <div>About</div> },
+        {
+            path: '/clusters',
+            element: <PlaygroundClusters />,
+        },
     ]);
     const links = [
-        { label: 'Home', to: '/' },
-        { label: 'About', to: '/about' },
+        { label: 'Playground', to: '/playground' },
+        { label: 'Clusters', to: '/clusters' },
     ];
     return (
         <AppProviders>

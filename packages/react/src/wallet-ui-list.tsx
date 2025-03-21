@@ -1,21 +1,21 @@
+import { UiWallet } from '@wallet-standard/react';
 import React from 'react';
 
 import { WalletUiDiv } from './types/wallet-ui-div';
 import { WalletUiSize } from './types/wallet-ui-size';
-import { WalletUiWallet } from './types/wallet-ui-wallet';
-import { WalletUiListItem } from './wallet-ui-list-item';
+import { WalletUiListButton } from './wallet-ui-list-button';
 
 export interface WalletUiListProps extends WalletUiDiv {
-    select?: (wallet: WalletUiWallet) => Promise<void>;
+    select?: (wallet: UiWallet) => Promise<void>;
     size?: WalletUiSize;
-    wallets: WalletUiWallet[];
+    wallets: UiWallet[];
 }
 
 export function WalletUiList({ className, select, size = 'md', wallets, ...props }: WalletUiListProps) {
     return (
         <div className={`wallet-ui-list ${size} ${className ?? ''}`} {...props}>
             {wallets.map(wallet => (
-                <WalletUiListItem key={wallet.name} select={select} size={size} wallet={wallet} />
+                <WalletUiListButton key={wallet.name} select={select} size={size} wallet={wallet} />
             ))}
         </div>
     );

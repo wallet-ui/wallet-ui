@@ -1,84 +1,12 @@
 @import './wallet-ui-base-button.css';
 @import './wallet-ui-base-dropdown.css';
+@import './wallet-ui-base-modal.css';
 @import './wallet-ui-icon.css';
 @import './wallet-ui-label.css';
-@import './wallet-ui-list-item.css';
+@import './wallet-ui-list-button.css';
 @import './wallet-ui-list.css';
 
 @reference "tailwindcss";
-
-[data-scope='dialog'][data-part='backdrop'] {
-    @apply fixed top-0 left-0 bottom-0 w-full z-20;
-    @apply bg-black/40 dark:bg-black/70;
-}
-
-[data-scope='dialog'][data-part='positioner'] {
-    @apply fixed top-0 left-0 bottom-0 w-full z-20;
-    @apply flex items-center justify-center;
-}
-
-[data-scope='dialog'][data-part='content'] {
-    @apply w-full max-w-md mx-4 overflow-hidden shadow-lg;
-    @apply bg-white dark:bg-gray-800;
-    @apply border border-gray-200 dark:border-gray-700;
-    @apply rounded-xl outline-0;
-}
-
-[data-scope='dialog'][data-part='content'].black {
-    @apply bg-gray-900 dark:bg-black;
-    @apply text-white;
-}
-
-[data-scope='dialog'][data-part='content'].sidebar {
-    @apply fixed top-0 left-0 bottom-0 max-w-[300px] max-h-full m-0;
-    @apply flex flex-col border-0 border-r;
-    @apply border-gray-200 dark:border-gray-700;
-    @apply bg-white dark:bg-gray-800;
-    @apply overflow-hidden transition-all duration-200;
-    animation: none !important;
-}
-
-[data-scope='dialog'][data-part='content'][data-state='open'].sidebar {
-    @apply translate-x-0;
-}
-
-[data-scope='dialog'][data-part='content'][data-state='closed'].sidebar {
-    @apply -translate-x-full;
-}
-
-[data-scope='dialog'][data-part='content'][data-state='open'] {
-    animation: anim-scale-in 200ms ease-out;
-}
-
-[data-scope='dialog'][data-part='content'][data-state='closed'] {
-    animation: anim-scale-out 200ms ease-in;
-}
-
-[data-scope='dialog'][data-part='title'] {
-    @apply font-semibold leading-none text-gray-900 dark:text-white;
-}
-
-[data-scope='dialog'][data-part='description'] {
-    @apply text-sm text-gray-600 dark:text-gray-300;
-}
-
-[data-scope='dialog'][data-part='trigger'] {
-    @apply text-sm bg-transparent;
-    @apply text-gray-700 dark:text-gray-300;
-    @apply hover:text-gray-900 dark:hover:text-white;
-}
-
-[data-scope='dialog'][data-part='trigger'] {
-    @apply text-sm font-medium;
-    @apply px-4 py-2 rounded-md;
-    @apply bg-gray-100 dark:bg-gray-700;
-    @apply text-gray-700 dark:text-gray-200;
-    @apply border border-gray-300 dark:border-gray-600;
-    @apply hover:bg-gray-200 dark:hover:bg-gray-600;
-    @apply hover:text-gray-900 dark:hover:text-white;
-    @apply transition-colors duration-200;
-    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800;
-}
 
 /*[data-scope='menu'][data-part='trigger'] {*/
 /*    @apply bg-transparent;*/

@@ -18,4 +18,7 @@ export default defineConfig(({ mode }) => ({
         'process.env': process.env,
     },
     plugins: [react(), replaceProcessEnv(mode)],
+    server: {
+        port: 5110,
+    },
 }));

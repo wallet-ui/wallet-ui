@@ -2,6 +2,7 @@ import {
     BaseButton,
     BaseModal,
     UiWallet,
+    UiWalletAccount,
     useBaseModal,
     WalletUiIconNoWallet,
     WalletUiList,
@@ -10,18 +11,18 @@ import {
 } from '@wallet-ui/react';
 import React from 'react';
 import { Group } from './group';
+import { PlaygroundUiPanel } from './playground-ui-panel';
 import { Stack } from './stack';
 import { TestReactRenderSizes } from './test-react-render-sizes';
-import { TestReactUiPanel } from './test-react-ui-panel';
 import { useTestWallets } from './test-wallets';
 
 export function TestReactPanelBaseModal() {
     const wallets = useTestWallets();
 
-    async function select(wallet: UiWallet) {
-        console.log('select start', wallet.name);
+    async function select(wallet: UiWalletAccount) {
+        console.log('select start', wallet.address);
         await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log('select done', wallet.name);
+        console.log('select done', wallet.address);
     }
 
     return (
@@ -29,45 +30,45 @@ export function TestReactPanelBaseModal() {
             <Group style={{ alignItems: 'flex-start' }}>
                 <TestReactRenderSizes
                     render={size => (
-                        <TestReactUiPanel key={size} title={<code>{size}</code>}>
+                        <PlaygroundUiPanel key={size} title={<code>{size}</code>}>
                             <TestModalSimple size={size} />
-                        </TestReactUiPanel>
+                        </PlaygroundUiPanel>
                     )}
                 />
             </Group>
             <Group style={{ alignItems: 'flex-start' }}>
                 <TestReactRenderSizes
                     render={size => (
-                        <TestReactUiPanel key={size} title={<code>{size}</code>}>
+                        <PlaygroundUiPanel key={size} title={<code>{size}</code>}>
                             <TestModalCustom size={size} />
-                        </TestReactUiPanel>
+                        </PlaygroundUiPanel>
                     )}
                 />
             </Group>
             <Group style={{ alignItems: 'flex-start' }}>
                 <TestReactRenderSizes
                     render={size => (
-                        <TestReactUiPanel key={size} title={<code>{size}</code>}>
+                        <PlaygroundUiPanel key={size} title={<code>{size}</code>}>
                             <TestModalExternalTrigger size={size} />
-                        </TestReactUiPanel>
+                        </PlaygroundUiPanel>
                     )}
                 />
             </Group>
             <Group style={{ alignItems: 'flex-start' }}>
                 <TestReactRenderSizes
                     render={size => (
-                        <TestReactUiPanel key={size} title={<code>{size}</code>}>
+                        <PlaygroundUiPanel key={size} title={<code>{size}</code>}>
                             <TestModalWallets select={select} size={size} wallets={wallets} />
-                        </TestReactUiPanel>
+                        </PlaygroundUiPanel>
                     )}
                 />
             </Group>
             <Group style={{ alignItems: 'flex-start' }}>
                 <TestReactRenderSizes
                     render={size => (
-                        <TestReactUiPanel key={size} title={<code>{size}</code>}>
+                        <PlaygroundUiPanel key={size} title={<code>{size}</code>}>
                             <TestModalNoWallet size={size} />
-                        </TestReactUiPanel>
+                        </PlaygroundUiPanel>
                     )}
                 />
             </Group>

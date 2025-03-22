@@ -1,3 +1,4 @@
+import { WalletUiClusterDropdown } from '@wallet-ui/react';
 import { Link, useLocation } from 'react-router';
 
 export function AppHeader({ links }: { links: { label: string; to: string }[] }) {
@@ -6,28 +7,26 @@ export function AppHeader({ links }: { links: { label: string; to: string }[] })
     return (
         <nav className="px-4 py-2 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
             <div className="flex justify-between items-center">
-                <Link to="/" className="flex items-center gap-2">
+                <Link to="/" className="flex items-center gap-4">
                     <img src="/wallet-ui.png" alt="wallet-ui logo" width={32} height={32} />
-                    <span className="text-lg font-semibold">Wallet UI - React + Vite + Tailwind</span>
+                    <span className="text-lg font-semibold">Wallet UI</span>
+                    <span className="font-light text-gray-500">React + Vite + Tailwind</span>
                 </Link>
 
-                <ul className="flex gap-2 p-4">
+                <ul className="flex gap-2 p-4 text-xl leading-none">
                     {links.map(link => {
                         const isActive = link.to === '/' ? pathname === '/' : pathname.startsWith(link.to);
                         return (
-                            <li key={link.to} className={isActive ? 'font-bold' : ''}>
+                            <li key={link.to} className={isActive ? 'font-semibold' : 'font-light'}>
                                 <Link to={link.to}>{link.label}</Link>
                             </li>
                         );
                     })}
                 </ul>
             </div>
-            <a href="https://github.com/wallet-ui/wallet-ui" target="_blank" rel="noreferrer">
-                <img
-                    src="https://img.shields.io/github/stars/wallet-ui/wallet-ui?style=social"
-                    alt="GitHub Repo stars"
-                />
-            </a>
+            <div className="flex items-center gap-4">
+                <WalletUiClusterDropdown size="sm" />
+            </div>
         </nav>
     );
 }

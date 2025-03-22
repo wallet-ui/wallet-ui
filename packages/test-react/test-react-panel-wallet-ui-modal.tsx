@@ -1,9 +1,9 @@
 import { UiWallet, useBaseModal, WalletUiModal, WalletUiSize } from '@wallet-ui/react';
 import React from 'react';
 import { Group } from './group';
+import { PlaygroundUiPanel } from './playground-ui-panel';
 import { Stack } from './stack';
 import { TestReactRenderSizes } from './test-react-render-sizes';
-import { TestReactUiPanel } from './test-react-ui-panel';
 import { useTestWallets } from './test-wallets';
 
 export function TestReactPanelWalletUiModal() {
@@ -14,9 +14,9 @@ export function TestReactPanelWalletUiModal() {
             <Group>
                 <TestReactRenderSizes
                     render={size => (
-                        <TestReactUiPanel key={size} title={<code>{size}</code>}>
+                        <PlaygroundUiPanel key={size} title={<code>{size}</code>}>
                             <TestModal size={size} wallets={wallets} />
-                        </TestReactUiPanel>
+                        </PlaygroundUiPanel>
                     )}
                 />
             </Group>

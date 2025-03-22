@@ -1,4 +1,4 @@
-import { UiWallet, useConnect, useDisconnect, useSolanaWallet } from '@wallet-ui/react';
+import { UiWallet, useConnect, useDisconnect, useWalletUiAccount } from '@wallet-ui/react';
 
 export function WalletGrid({ wallets }: { wallets: UiWallet[] }) {
     return (
@@ -16,7 +16,7 @@ export function WalletGrid({ wallets }: { wallets: UiWallet[] }) {
 export function WalletGridItem({ wallet }: { wallet: UiWallet }) {
     const [isConnecting, connect] = useConnect(wallet);
     const [isDisconnecting, disconnect] = useDisconnect(wallet);
-    const [selectedWalletAccount, setSelectedWalletAccount] = useSolanaWallet();
+    const { account, setAccount } = useWalletUiAccount();
     const isPending = isConnecting || isDisconnecting;
     const isConnected = wallet.accounts.length > 0;
 
@@ -53,10 +53,7 @@ export function WalletGridItem({ wallet }: { wallet: UiWallet }) {
                           return (
                               <div key={acc.address}>
                                   <p>{acc.address}</p>
-                                  <button
-                                      disabled={acc?.address === selectedWalletAccount?.address}
-                                      onClick={() => setSelectedWalletAccount(acc)}
-                                  >
+                                  <button disabled={acc?.address === account?.address} onClick={() => setAccount(acc)}>
                                       Select
                                   </button>
                               </div>

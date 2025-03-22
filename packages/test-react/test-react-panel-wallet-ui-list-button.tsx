@@ -1,21 +1,21 @@
-import { UiWallet, WalletUiListButton } from '@wallet-ui/react';
+import { UiWalletAccount, WalletUiListButton } from '@wallet-ui/react';
 import React, { useState } from 'react';
 import { Group } from './group';
+
+import { PlaygroundUiPanel } from './playground-ui-panel';
 import { Stack } from './stack';
 import { TestReactRenderSizes } from './test-react-render-sizes';
 import { TestReactRenderWallets } from './test-react-render-wallets';
 
-import { TestReactUiPanel } from './test-react-ui-panel';
-
 export function TestReactPanelWalletUiListButton() {
-    const [selectedWallet, setSelectedWallet] = useState<UiWallet | null>(null);
+    const [selectedAccount, setSelectedWallet] = useState<UiWalletAccount | null>(null);
     const [pending, setPending] = useState(false);
 
-    async function handleSelect(wallet: UiWallet) {
+    async function handleSelect(account: UiWalletAccount) {
         setSelectedWallet(null);
         setPending(true);
         await new Promise(resolve => setTimeout(resolve, 1000));
-        setSelectedWallet(wallet);
+        setSelectedWallet(account);
         setPending(false);
     }
 
@@ -23,7 +23,7 @@ export function TestReactPanelWalletUiListButton() {
         <Stack>
             <TestReactRenderSizes
                 render={size => (
-                    <TestReactUiPanel key={size} title={<code>{size}</code>}>
+                    <PlaygroundUiPanel key={size} title={<code>{size}</code>}>
                         <Group>
                             <TestReactRenderWallets
                                 render={wallet => (
@@ -35,9 +35,9 @@ export function TestReactPanelWalletUiListButton() {
                                     />
                                 )}
                             />
-                            <pre>{selectedWallet ? selectedWallet.name : pending ? 'Pending...' : ''}</pre>
+                            <pre>{selectedAccount ? selectedAccount.address : pending ? 'Pending...' : ''}</pre>
                         </Group>
-                    </TestReactUiPanel>
+                    </PlaygroundUiPanel>
                 )}
             />
         </Stack>

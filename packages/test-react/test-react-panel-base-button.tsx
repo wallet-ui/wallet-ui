@@ -1,11 +1,11 @@
 import { BaseButton, UiWallet, useWalletUiWallets, WalletUiIcon, WalletUiLabel } from '@wallet-ui/react';
 import React from 'react';
 import { Group } from './group';
+import { PlaygroundUiPanel } from './playground-ui-panel';
 import { Stack } from './stack';
 import { TestReactRenderSizes } from './test-react-render-sizes';
 import { TestReactRenderWallets } from './test-react-render-wallets';
 import { TestReactUiIconRefresh } from './test-react-ui-icon-refresh';
-import { TestReactUiPanel } from './test-react-ui-panel';
 
 export function TestReactPanelBaseButton() {
     const [result, setResult] = React.useState('idle');
@@ -22,7 +22,7 @@ export function TestReactPanelBaseButton() {
         <Stack>
             <TestReactRenderSizes
                 render={size => (
-                    <TestReactUiPanel key={size} title={<code>{size}</code>}>
+                    <PlaygroundUiPanel key={size} title={<code>{size}</code>}>
                         <Stack>
                             <Group>
                                 <TestReactRenderWallets
@@ -66,7 +66,7 @@ export function TestReactPanelBaseButton() {
                                 <pre>{JSON.stringify(result.length ? result : undefined, null, 4)}</pre>
                             </Group>
                         </Stack>
-                    </TestReactUiPanel>
+                    </PlaygroundUiPanel>
                 )}
             />
         </Stack>

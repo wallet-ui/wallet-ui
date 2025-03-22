@@ -25,7 +25,6 @@ export default [
         },
         rules: {
             '@typescript-eslint/no-misused-promises': 'off',
-            '@typescript-eslint/unbound-method': 'warn',
             '@typescript-eslint/no-unsafe-argument': 'off',
             '@typescript-eslint/no-unsafe-assignment': 'off',
             '@typescript-eslint/restrict-template-expressions': 'error',

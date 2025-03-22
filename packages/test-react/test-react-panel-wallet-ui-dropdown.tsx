@@ -14,19 +14,19 @@ export function TestReactPanelWalletUiDropdown() {
 }
 
 function TestDropdown() {
-    const { buttonProps, connected, dropdown, items } = useWalletUiDropdown();
+    const { connected } = useWalletUiDropdown();
     return (
         <Stack>
             <pre>{JSON.stringify({ connected }, null, 4)}</pre>
             <WalletUiDropdown
-                buttonProps={buttonProps}
-                // size={size}
-                dropdown={dropdown}
-                items={items} // wallets={wallets}
-                // select={async () => {
-                //     await new Promise(resolve => setTimeout(resolve, 1000));
-                //     modal.close();
-                // }}
+            //buttonProps={buttonProps}
+            // size={size}
+            //dropdown={dropdown}
+            //items={items} // wallets={wallets}
+            // select={async () => {
+            //     await new Promise(resolve => setTimeout(resolve, 1000));
+            //     modal.close();
+            // }}
             />
         </Stack>
     );

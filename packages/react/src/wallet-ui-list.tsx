@@ -1,4 +1,4 @@
-import { UiWallet } from '@wallet-standard/react';
+import { UiWallet, UiWalletAccount } from '@wallet-standard/react';
 import React from 'react';
 
 import { WalletUiDiv } from './types/wallet-ui-div';
@@ -6,7 +6,7 @@ import { WalletUiSize } from './types/wallet-ui-size';
 import { WalletUiListButton } from './wallet-ui-list-button';
 
 export interface WalletUiListProps extends WalletUiDiv {
-    select?: (wallet: UiWallet) => Promise<void>;
+    select?: (account: UiWalletAccount) => Promise<void>;
     size?: WalletUiSize;
     wallets: UiWallet[];
 }

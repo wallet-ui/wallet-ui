@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
-import { PlaygroundWalletUiClusterDropdown } from './playground-wallet-ui-cluster-dropdown';
+import { PlaygroundClusterDropdown } from './playground-cluster-dropdown';
+import { PlaygroundProviders } from './playground-providers';
+
+import { PlaygroundUiCard } from './playground-ui-card';
 import { Stack } from './stack';
 
 import { TestReactPanelBaseButton } from './test-react-panel-base-button';
@@ -14,9 +17,6 @@ import { TestReactPanelWalletUiList } from './test-react-panel-wallet-ui-list';
 import { TestReactPanelWalletUiListButton } from './test-react-panel-wallet-ui-list-button';
 import { TestReactPanelWalletUiModal } from './test-react-panel-wallet-ui-modal';
 import { TestReactPanelWalletUiProvider } from './test-react-panel-wallet-ui-provider';
-import { TestReactProviders } from './test-react-providers';
-
-import { TestReactUiCard } from './test-react-ui-card';
 
 const url = new URL(window.location.href);
 const urlOpen = new Map(
@@ -47,13 +47,13 @@ export function TestReactPanel() {
     }, [open]);
 
     return (
-        <TestReactProviders>
+        <PlaygroundProviders>
             <Stack>
                 {Object.entries({
                     BaseButton: <TestReactPanelBaseButton />,
                     BaseDropdown: <TestReactPanelBaseDropdown />,
                     BaseModal: <TestReactPanelBaseModal />,
-                    WalletUiClusterDropdown: <PlaygroundWalletUiClusterDropdown />,
+                    WalletUiClusterDropdown: <PlaygroundClusterDropdown />,
                     WalletUiDropdown: <TestReactPanelWalletUiDropdown />,
                     WalletUiIcon: <TestReactPanelWalletUiIcon />,
                     WalletUiIconClose: <TestReactPanelWalletUiIconClose />,
@@ -64,16 +64,16 @@ export function TestReactPanel() {
                     WalletUiModal: <TestReactPanelWalletUiModal />,
                     WalletUiProvider: <TestReactPanelWalletUiProvider />,
                 }).map(([name, element]) => (
-                    <TestReactUiCard
+                    <PlaygroundUiCard
                         title={<code>{name}</code>}
                         key={name}
                         toggle={() => handleToggle(name)}
                         open={open.get(name)}
                     >
                         {element}
-                    </TestReactUiCard>
+                    </PlaygroundUiCard>
                 ))}
             </Stack>
-        </TestReactProviders>
+        </PlaygroundProviders>
     );
 }

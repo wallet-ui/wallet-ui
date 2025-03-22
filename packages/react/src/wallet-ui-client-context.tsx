@@ -1,4 +1,12 @@
 import { SolanaClient } from '@wallet-ui/core';
-import { createContext } from 'react';
+import { SolanaClientUrlOrMoniker } from 'gill';
+import { createContext, ReactNode } from 'react';
 
-export const WalletUiClientContext = createContext<SolanaClient>({} as SolanaClient);
+export interface WalletUiClientContextProviderProps {
+    children: ReactNode;
+    urlOrMoniker: SolanaClientUrlOrMoniker;
+}
+
+export type WalletUiClientContextValue = SolanaClient;
+
+export const WalletUiClientContext = createContext<WalletUiClientContextValue>({} as WalletUiClientContextValue);

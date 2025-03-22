@@ -1,24 +1,31 @@
-import { UiWallet } from '@wallet-standard/react';
+import { UiWallet, UiWalletAccount } from '@wallet-standard/react';
 import React, { useMemo } from 'react';
 
 import { BaseButtonProps } from './base-button';
 import { BaseDropdownItem } from './base-dropdown';
 import { WalletUiSize } from './types/wallet-ui-size';
 import { BaseDropdownControl } from './use-base-dropdown';
+import { useWalletUi } from './use-wallet-ui';
 import { WalletUiIcon } from './wallet-ui-icon';
-import { useWalletUi } from './wallet-ui-provider';
 
 function getDropdownItemsWallets({
     wallets,
     connect,
     size,
 }: {
-    connect: (wallet: UiWallet) => void;
+    connect: (wallet: UiWalletAccount) => void;
     size: WalletUiSize;
     wallets: UiWallet[];
 }): BaseDropdownItem[] {
     return wallets.map(wallet => ({
-        handler: () => connect(wallet),
+        handler: () => {
+            // TODO: Add support for multiple accounts, properly handle no accounts
+            const account = wallet.accounts.length > 0 ? wallet.accounts[0] : undefined;
+            if (!account) {
+                return;
+            }
+            connect(account);
+        },
         label: wallet.name,
         leftSection: <WalletUiIcon wallet={wallet} size={size} />,
         value: wallet.name,

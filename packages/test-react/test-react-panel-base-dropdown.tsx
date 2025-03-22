@@ -12,8 +12,8 @@ import {
 import React, { useMemo, useState } from 'react';
 import { ellipsify } from './ellipsify';
 import { Group } from './group';
+import { PlaygroundUiPanel } from './playground-ui-panel';
 import { TestReactRenderSizes } from './test-react-render-sizes';
-import { TestReactUiPanel } from './test-react-ui-panel';
 import { useTestWallets } from './test-wallets';
 
 interface GetItemsConnectedOptions {
@@ -164,12 +164,12 @@ function TestReactPanelBaseDropdownItem({ size }: { size: WalletUiSize }) {
     const dropdown = useBaseDropdown();
 
     return (
-        <TestReactUiPanel key={size} title={<code>{size}</code>}>
+        <PlaygroundUiPanel key={size} title={<code>{size}</code>}>
             <BaseDropdown
                 dropdown={dropdown}
                 buttonProps={{ label: buttonLabel, leftSection: buttonLeftSection, size }}
                 items={items}
             />
-        </TestReactUiPanel>
+        </PlaygroundUiPanel>
     );
 }

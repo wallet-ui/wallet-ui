@@ -1,7 +1,7 @@
 import { SolanaCluster, SolanaClusterId } from '@wallet-ui/core';
 import { createContext, ReactNode } from 'react';
 
-export interface WalletUiClusterContextProps {
+export interface WalletUiClusterContextProviderProps {
     children: ReactNode;
     clusters: SolanaCluster[];
     storageKey?: string;

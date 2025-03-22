@@ -7,6 +7,7 @@
     ],
     "dependencies": {
         "@wallet-ui/react": "workspace:*",
+        "gill": "0.8.0",
         "react": "^19",
         "react-dom": "^19",
         "react-error-boundary": "^5.0.0",

@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { BaseDropdown, BaseDropdownProps } from './base-dropdown';
+import { BaseDropdown } from './base-dropdown';
+import { useWalletUiDropdown } from './use-wallet-ui-dropdown';
 
-export interface WalletUiDropdownProps extends Omit<BaseDropdownProps, 'children'> {
-    children?: React.ReactNode;
+export interface WalletUiDropdownProps {
     label?: string;
 }
 
-export function WalletUiDropdown({ children, label = 'Select Wallet', ...props }: WalletUiDropdownProps) {
-    return <BaseDropdown {...props}>{children ?? label}</BaseDropdown>;
+export function WalletUiDropdown({ ...props }: WalletUiDropdownProps) {
+    const { buttonProps, items, dropdown } = useWalletUiDropdown();
+    return <BaseDropdown {...props} buttonProps={buttonProps} items={items} dropdown={dropdown}></BaseDropdown>;
 }

@@ -1,4 +1,4 @@
-import { UiWallet } from '@wallet-standard/react';
+import { UiWallet, UiWalletAccount } from '@wallet-standard/react';
 import React from 'react';
 
 import { WalletUiButton } from './types/wallet-ui-button';
@@ -7,7 +7,7 @@ import { WalletUiIcon } from './wallet-ui-icon';
 import { WalletUiLabel } from './wallet-ui-label';
 
 export interface WalletUiListButtonProps extends Omit<WalletUiButton, 'onClick'> {
-    select?: (wallet: UiWallet) => Promise<void>;
+    select?: (wallet: UiWalletAccount) => Promise<void>;
     size?: WalletUiSize;
     wallet: UiWallet;
 }
@@ -20,7 +20,12 @@ export function WalletUiListButton({ className, select, size = 'md', wallet, ...
             return;
         }
         setPending(true);
-        void select(wallet).finally(() => setPending(false));
+        // TODO: Add support for multiple accounts, properly handle no accounts
+        const account = wallet.accounts.length > 0 ? wallet.accounts[0] : undefined;
+        if (!account) {
+            return;
+        }
+        void select(account).finally(() => setPending(false));
     }
 
     return (

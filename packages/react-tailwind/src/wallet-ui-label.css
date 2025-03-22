@@ -1,0 +1,25 @@
+.wallet-ui-list-label {
+    /* Default label style */
+    @apply text-gray-500 dark:text-gray-200;
+}
+
+.wallet-ui-list-label.sm {
+    /* Size */
+    @apply text-xs;
+    /* Weight */
+    @apply font-light;
+}
+
+.wallet-ui-list-label.md {
+    /* Size */
+    @apply text-base;
+    /* Weight */
+    @apply font-normal;
+}
+
+.wallet-ui-list-label.lg {
+    /* Size */
+    @apply text-xl;
+    /* Weight */
+    @apply font-semibold;
+}

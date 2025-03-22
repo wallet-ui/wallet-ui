@@ -8,9 +8,9 @@ import { useSolanaWallet } from './solana-wallet-context';
 import { SolanaWalletUiContext, SolanaWalletUiProviderContext } from './solana-wallet-ui-context';
 
 export function SolanaWalletUiProvider(props: { children: ReactNode }) {
+    const [wallet, setWallet] = useState<UiWallet | undefined>(undefined);
     const wallets = useWallets();
     const [walletAccount, setWalletAccount] = useSolanaWallet();
-    const [wallet, setWallet] = useState<UiWallet | undefined>(undefined);
     const dialogService = useMachine(dialog.machine, { id: useId(), modal: true });
     const dialogApi = dialog.connect(dialogService, normalizeProps);
     const menuService = useMachine(menu.machine, { id: useId() });
@@ -43,8 +43,8 @@ export function SolanaWalletUiProvider(props: { children: ReactNode }) {
     function disconnect() {
         setConnected(false);
         setWalletAccount(undefined);
-        dialogService.send({ type: 'CLOSE' });
-        menuService.send({ type: 'CLOSE' });
+        // dialogService.send({ type: 'CLOSE' });
+        // menuService.send({ type: 'CLOSE' });
     }
 
     const value: SolanaWalletUiProviderContext = {

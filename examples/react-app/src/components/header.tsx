@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 
 import { SolanaClusterUiSelect } from '../features/clusters/solana-cluster-ui-select.tsx';
 

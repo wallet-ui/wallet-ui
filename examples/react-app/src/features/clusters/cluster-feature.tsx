@@ -1,10 +1,7 @@
-import { useSolanaCluster } from '@wallet-ui/react';
+import { useWalletUiCluster } from '@wallet-ui/react';
 
 export default function ClusterFeature() {
-    const { cluster, clusters, setCluster } = useSolanaCluster();
-    if (!setCluster) {
-        return null;
-    }
+    const { cluster, clusters, setCluster } = useWalletUiCluster();
     return (
         <div>
             <div style={styles.grid}>

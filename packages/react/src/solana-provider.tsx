@@ -1,26 +1,26 @@
 import { SolanaCluster } from '@wallet-ui/core';
 import React, { ReactNode } from 'react';
 
-import { SolanaClientProvider } from './solana-client-provider';
-import { useSolanaCluster } from './solana-cluster-context';
-import { SolanaClusterProvider } from './solana-cluster-provider';
 import { SolanaWalletProvider } from './solana-wallet-provider';
 import { SolanaWalletUiProvider } from './solana-wallet-ui-provider';
+import { useWalletUiCluster } from './use-wallet-ui-cluster';
+import { WalletUiClientProvider } from './wallet-ui-client-provider';
+import { WalletUiClusterProvider } from './wallet-ui-cluster-provider';
 
 export function SolanaProvider({ clusters, children }: { children: ReactNode; clusters: SolanaCluster[] }) {
     return (
-        <SolanaClusterProvider clusters={clusters}>
-            <SolanaClientProviderLoader>
+        <WalletUiClusterProvider clusters={clusters}>
+            <WalletUiClientProviderFromCluster>
                 <SolanaWalletProvider>
                     <SolanaWalletUiProvider>{children}</SolanaWalletUiProvider>
                 </SolanaWalletProvider>
-            </SolanaClientProviderLoader>
-        </SolanaClusterProvider>
+            </WalletUiClientProviderFromCluster>
+        </WalletUiClusterProvider>
     );
 }
 
-function SolanaClientProviderLoader({ children }: { children: ReactNode }) {
-    const { cluster } = useSolanaCluster();
+function WalletUiClientProviderFromCluster({ children }: { children: ReactNode }) {
+    const { cluster } = useWalletUiCluster();
 
-    return <SolanaClientProvider urlOrMoniker={cluster.urlOrMoniker}>{children}</SolanaClientProvider>;
+    return <WalletUiClientProvider urlOrMoniker={cluster.urlOrMoniker}>{children}</WalletUiClientProvider>;
 }

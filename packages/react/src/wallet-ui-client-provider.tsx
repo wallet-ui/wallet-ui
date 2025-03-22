@@ -2,9 +2,9 @@ import { SolanaClientUrlOrMoniker } from '@wallet-ui/core';
 import { createSolanaClient } from 'gill';
 import React, { ReactNode, useMemo } from 'react';
 
-import { SolanaClientContext } from './solana-client-context';
+import { WalletUiClientContext } from './wallet-ui-client-context';
 
-export function SolanaClientProvider({
+export function WalletUiClientProvider({
     children,
     urlOrMoniker,
 }: {
@@ -13,5 +13,5 @@ export function SolanaClientProvider({
 }) {
     const value = useMemo(() => createSolanaClient({ urlOrMoniker }), [urlOrMoniker]);
 
-    return <SolanaClientContext.Provider value={value}>{children}</SolanaClientContext.Provider>;
+    return <WalletUiClientContext.Provider value={value}>{children}</WalletUiClientContext.Provider>;
 }

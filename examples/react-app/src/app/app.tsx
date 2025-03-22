@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Navigate, RouteObject, useRoutes } from 'react-router-dom';
+import { Navigate, RouteObject, useRoutes } from 'react-router';
 
 import { HeaderLink } from '../components/header.tsx';
 import { ClustersFeature, DevFeature, HomeFeature, RpcFeature, UiFeature, WalletsFeature } from '../features';

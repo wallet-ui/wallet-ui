@@ -9,7 +9,7 @@ import {
     SolanaWalletUiDialog,
 } from '@wallet-ui/react';
 import { ReactNode } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router';
 
 const clusters: SolanaCluster[] = [
     clusterDevnet(),

@@ -1,0 +1,142 @@
+[data-scope='dialog'][data-part='backdrop'] {
+    /* Position */
+    @apply fixed top-0 left-0 bottom-0 w-full z-20;
+    /* Background  */
+    @apply bg-black/40 dark:bg-black/70;
+}
+
+[data-scope='dialog'][data-part='positioner'] {
+    /* Position */
+    @apply fixed top-0 left-0 bottom-0 w-full z-20;
+    /* Content */
+    @apply flex items-center justify-center;
+}
+
+[data-scope='dialog'][data-part='content'] {
+    /* Position */
+    @apply w-full overflow-hidden shadow-lg;
+    /* Background  */
+    @apply bg-white dark:bg-gray-900;
+    /* Border  */
+    @apply border border-gray-100 dark:border-gray-900;
+    /* Shape */
+    @apply rounded-xl outline-0;
+}
+
+[data-scope='dialog'][data-part='content'] header {
+    /* Content */
+    @apply flex items-center justify-end;
+    /* Shape */
+    @apply pb-4;
+}
+
+[data-scope='dialog'][data-part='description'] {
+    /* Content */
+    @apply flex items-center justify-center;
+
+    /* Text */
+    @apply text-center text-gray-900 dark:text-gray-200;
+}
+
+[data-scope='dialog'][data-part='close-trigger'] {
+    /* Position */
+    @apply border border-gray-500/40 dark:border-gray-600/40;
+    /* Behavior */
+    @apply cursor-pointer hover:bg-gray-500/40 dark:hover:bg-gray-600/40;
+    /* Content */
+    @apply flex items-center justify-center;
+    /* Text */
+    @apply text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white;
+}
+
+[data-scope='dialog'][data-part='content'][data-state='open'] {
+    animation: anim-scale-in 300ms ease-out;
+}
+
+[data-scope='dialog'][data-part='content'][data-state='closed'] {
+    animation: anim-scale-out 200ms ease-in;
+}
+
+/* Responsive Styles */
+
+/* CONTENT */
+[data-scope='dialog'][data-part='content'].sm {
+    /* Position */
+    @apply max-w-3xs;
+    /* Shape */
+    @apply p-2 rounded-md;
+}
+
+[data-scope='dialog'][data-part='content'].md {
+    /* Position */
+    @apply max-w-sm mx-4;
+    /* Shape */
+    @apply p-2 rounded-lg;
+}
+
+[data-scope='dialog'][data-part='content'].lg {
+    /* Position */
+    @apply max-w-lg mx-auto;
+    /* Shape */
+    @apply p-4 rounded-xl;
+}
+
+/* HEADER */
+[data-scope='dialog'][data-part='content'].sm header {
+    /* Shape */
+    @apply pb-2;
+    /* Text */
+    @apply text-sm;
+}
+
+[data-scope='dialog'][data-part='content'].md header {
+    /* Shape */
+    @apply pb-4;
+    /* Text */
+    @apply text-2xl;
+}
+
+[data-scope='dialog'][data-part='content'].lg header {
+    /* Shape */
+    @apply pb-4;
+    /* Text */
+    @apply text-3xl;
+}
+
+/* CLOSE TRIGGER */
+.sm [data-scope='dialog'][data-part='close-trigger'] {
+    /* Shape */
+    @apply h-6 w-6 rounded-full;
+}
+
+.md [data-scope='dialog'][data-part='close-trigger'] {
+    /* Shape */
+    @apply h-8 w-8 rounded-full;
+}
+
+.lg [data-scope='dialog'][data-part='close-trigger'] {
+    /* Shape */
+    @apply h-10 w-10 rounded-full;
+}
+
+/* DESCRIPTION */
+.sm [data-scope='dialog'][data-part='description'] {
+    /* Shape */
+    @apply pb-2 px-4;
+    /* Text */
+    @apply text-sm;
+}
+
+.md [data-scope='dialog'][data-part='description'] {
+    /* Shape */
+    @apply pb-8 px-16;
+    /* Text */
+    @apply text-2xl;
+}
+
+.lg [data-scope='dialog'][data-part='description'] {
+    /* Shape */
+    @apply pb-8 px-16;
+    /* Text */
+    @apply text-3xl;
+}

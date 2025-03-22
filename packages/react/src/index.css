@@ -1,3 +1,33 @@
 .wallet-ui-debug {
     border: 1px solid red;
 }
+
+:root {
+    --padding-x: 1rem;
+    --padding-y: 0.5rem;
+    --border-radius: 0.375rem;
+    --box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --border-color-light: #edf2f7;
+    --border-color-dark: #4a5568;
+    --bg-color-light: #f7fafc;
+    --bg-color-dark: #4a5568;
+    --text-color-light: #4a5568;
+    --text-color-dark: #edf2f7;
+}
+
+.wallet-ui-base-button {
+    padding: var(--padding-y) var(--padding-x);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--border-color-light);
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light);
+}
+
+@media (prefers-color-scheme: dark) {
+    .wallet-ui-base-button {
+        border-color: var(--border-color-dark);
+        background-color: var(--bg-color-dark);
+        color: var(--text-color-dark);
+    }
+}

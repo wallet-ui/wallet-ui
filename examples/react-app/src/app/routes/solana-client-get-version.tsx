@@ -1,9 +1,9 @@
-import { useWalletUiSolanaClient } from '@wallet-ui/react';
+import { useWalletUi } from '@wallet-ui/react';
 import { useState } from 'react';
 
 export function SolanaClientGetVersion() {
     const [version, setVersion] = useState('');
-    const client = useWalletUiSolanaClient();
+    const { client } = useWalletUi();
 
     return (
         <div>

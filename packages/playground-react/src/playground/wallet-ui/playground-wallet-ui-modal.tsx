@@ -1,10 +1,9 @@
-import { UiWallet, useBaseModal, WalletUiModal, WalletUiSize } from '@wallet-ui/react';
+import { UiWallet, useBaseModal, useWalletUi, WalletUiModal, WalletUiSize } from '@wallet-ui/react';
 import React from 'react';
 import { UiGroup, UiPanel, UiSizes, UiStack } from '../../ui';
-import { useTestWallets } from '../../util/test-wallets';
 
 export function PlaygroundWalletUiModal() {
-    const wallets = useTestWallets();
+    const { wallets } = useWalletUi();
 
     return (
         <UiStack>

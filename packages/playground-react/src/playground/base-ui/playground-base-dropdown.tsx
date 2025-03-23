@@ -6,6 +6,7 @@ import {
     UiWallet,
     UiWalletAccount,
     useBaseDropdown,
+    useWalletUi,
     WalletUiIcon,
     WalletUiSize,
 } from '@wallet-ui/react';
@@ -13,7 +14,6 @@ import {
 import React, { useMemo, useState } from 'react';
 import { UiGroup, UiPanel, UiSizes } from '../../ui/';
 import { ellipsify } from '../../util/ellipsify';
-import { useTestWallets } from '../../util/test-wallets';
 
 interface GetItemsConnectedOptions {
     account?: UiWalletAccount;
@@ -41,13 +41,6 @@ function getItemsConnected({ account, handleWalletDisconnect }: GetItemsConnecte
             label: 'Copy Address',
             value: 'copy',
             type: BaseDropdownItemType.WalletCopy,
-        },
-        {
-            closeMenu: false,
-            handler: async () => handleWalletDisconnect(),
-            label: 'Change Wallet',
-            value: 'change',
-            type: BaseDropdownItemType.Item,
         },
         {
             handler: async () => handleWalletDisconnect(),
@@ -151,7 +144,7 @@ function useTestWalletDropdownItems({
 }
 
 function useTestWalletAccount() {
-    const wallets = useTestWallets();
+    const { wallets } = useWalletUi();
     const [selectedWallet, setSelectedWallet] = useState<UiWallet | undefined>(undefined);
 
     const account: UiWalletAccount | undefined = useMemo(() => {

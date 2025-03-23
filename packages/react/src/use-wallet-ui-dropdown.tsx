@@ -17,22 +17,34 @@ function getDropdownItemsWallets({
     size: WalletUiSize;
     wallets: UiWallet[];
 }): BaseDropdownItem[] {
-    return wallets.map(wallet => ({
-        handler: async () => {
-            // TODO: Add support for multiple accounts, properly handle no accounts
-            const account = wallet.accounts.length > 0 ? wallet.accounts[0] : undefined;
-            if (!account) {
-                return;
-            }
-            connect(account);
-            await Promise.resolve();
-        },
-        label: wallet.name,
-        leftSection: <WalletUiIcon wallet={wallet} size={size} />,
-        type: BaseDropdownItemType.WalletConnect,
-        value: wallet.name,
-        wallet,
-    }));
+    return wallets.length
+        ? wallets.map(wallet => ({
+              handler: async () => {
+                  // TODO: Add support for multiple accounts, properly handle no accounts
+                  const account = wallet.accounts.length > 0 ? wallet.accounts[0] : undefined;
+                  if (!account) {
+                      return;
+                  }
+                  connect(account);
+                  await Promise.resolve();
+              },
+              label: wallet.name,
+              leftSection: <WalletUiIcon wallet={wallet} size={size} />,
+              type: BaseDropdownItemType.WalletConnect,
+              value: wallet.name,
+              wallet,
+          }))
+        : [
+              {
+                  handler: async () => {
+                      window.open('https://solana.com/solana-wallets', '_blank');
+                      await Promise.resolve();
+                  },
+                  label: "You'll need a wallet on Solana to continue",
+                  type: BaseDropdownItemType.WalletNeeded,
+                  value: 'no-wallets',
+              },
+          ];
 }
 
 export function useWalletUiDropdown({ size = 'md' }: { size?: WalletUiSize } = {}): {

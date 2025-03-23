@@ -16,4 +16,3 @@ export * from './ui/ui-panel';
 export * from './ui/ui-sizes';
 export * from './ui/ui-stack';
 export * from './util/ellipsify';
-export * from './util/test-wallets';

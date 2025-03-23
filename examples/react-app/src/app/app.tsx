@@ -1,9 +1,15 @@
-import { Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { Navigate, RouteObject, useRoutes } from 'react-router';
 
 import { HeaderLink } from '../components/app-header.tsx';
 import { AppLayout } from '../components/app-layout.tsx';
-import { AccountFeature, ClustersFeature, DevFeature, RpcFeature, UiFeature, WalletsFeature } from '../features';
+
+export const AccountFeature = lazy(() => import('./routes/account-route.tsx'));
+export const ClustersFeature = lazy(() => import('./routes/cluster-route.tsx'));
+export const RpcFeature = lazy(() => import('./routes/client-route.tsx'));
+export const WalletsFeature = lazy(() => import('./routes/wallets-route.tsx'));
+export const DevFeature = lazy(() => import('./routes/dev-route.tsx'));
+export const UiFeature = lazy(() => import('./routes/ui-route.tsx'));
 
 const routes: RouteObject[] = [
     { element: <Navigate replace to="/account" />, path: '/' },

@@ -1,6 +1,7 @@
 import {
     BaseDropdown,
     BaseDropdownItem,
+    BaseDropdownItemType,
     handleCopyText,
     UiWallet,
     UiWalletAccount,
@@ -37,9 +38,25 @@ function getItemsConnected({ account, handleWalletDisconnect }: GetItemsConnecte
         return [];
     }
     return [
-        { handler: () => handleCopyText(account.address), label: 'Copy Address', value: 'copy' },
-        { closeMenu: false, handler: () => handleWalletDisconnect(), label: 'Change Wallet', value: 'change' },
-        { handler: () => handleWalletDisconnect(), label: 'Disconnect', value: 'disconnect' },
+        {
+            handler: async () => handleCopyText(account.address),
+            label: 'Copy Address',
+            value: 'copy',
+            type: BaseDropdownItemType.WalletCopy,
+        },
+        {
+            closeMenu: false,
+            handler: async () => handleWalletDisconnect(),
+            label: 'Change Wallet',
+            value: 'change',
+            type: BaseDropdownItemType.Item,
+        },
+        {
+            handler: async () => handleWalletDisconnect(),
+            label: 'Disconnect',
+            value: 'disconnect',
+            type: BaseDropdownItemType.WalletDisconnect,
+        },
     ];
 }
 
@@ -50,13 +67,22 @@ function getItemsDisconnected({
     wallets,
 }: GetItemsDisconnectedOptions): BaseDropdownItem[] {
     if (!wallets.length) {
-        return [{ disabled: true, handler: () => handleWalletDisconnect(), label: 'No wallets', value: 'no-wallets' }];
+        return [
+            {
+                disabled: true,
+                handler: async () => handleWalletDisconnect(),
+                label: 'No wallets',
+                type: BaseDropdownItemType.Item,
+                value: 'no-wallets',
+            },
+        ];
     }
     return wallets.map(wallet => ({
-        handler: () => handleWalletConnect(wallet),
+        handler: async () => handleWalletConnect(wallet),
         label: wallet.name,
         leftSection: <WalletUiIcon wallet={wallet} size={size} />,
         value: wallet.name,
+        type: BaseDropdownItemType.WalletConnect,
     }));
 }
 

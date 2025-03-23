@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BaseDropdown, BaseDropdownProps } from './base-dropdown';
+import { BaseDropdown, BaseDropdownItemType, BaseDropdownProps } from './base-dropdown';
 import { WalletUiSize } from './types/wallet-ui-size';
 import { useBaseDropdown } from './use-base-dropdown';
 import { useWalletUiCluster } from './use-wallet-ui-cluster';
@@ -18,8 +18,12 @@ export function WalletUiClusterDropdown({ buttonProps, size = 'md', ...props }: 
         <BaseDropdown
             buttonProps={{ ...buttonProps, label: cluster.label, size: size }}
             items={clusters.map(cluster => ({
-                handler: () => setCluster(cluster.id),
+                handler: async () => {
+                    setCluster(cluster.id);
+                    await Promise.resolve();
+                },
                 label: cluster.label,
+                type: BaseDropdownItemType.Item,
                 value: cluster.id,
             }))}
             dropdown={dropdown}

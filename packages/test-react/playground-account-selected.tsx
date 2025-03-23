@@ -10,7 +10,7 @@ import { Stack } from './stack';
 import { WalletUiAccountSignMessageLoader } from './wallet-ui-account-sign-message-loader';
 
 export function PlaygroundAccountSelected() {
-    const { account, errorBoundaryResetKeys } = useWalletUiAccount();
+    const { account, accountKeys } = useWalletUiAccount();
 
     if (!account) {
         return (
@@ -22,19 +22,14 @@ export function PlaygroundAccountSelected() {
 
     return (
         <Stack>
+            <WalletUiDropdown />
             <PlaygroundUiPanel title="Sign And Send Tx">
-                <ErrorBoundary
-                    FallbackComponent={PlaygroundErrorBoundaryNotSupported}
-                    resetKeys={errorBoundaryResetKeys}
-                >
+                <ErrorBoundary FallbackComponent={PlaygroundErrorBoundaryNotSupported} resetKeys={accountKeys}>
                     <PlaygroundSignAndSendTx account={account} />
                 </ErrorBoundary>
             </PlaygroundUiPanel>
             <PlaygroundUiPanel title="Sign Message">
-                <ErrorBoundary
-                    FallbackComponent={PlaygroundErrorBoundaryNotSupported}
-                    resetKeys={errorBoundaryResetKeys}
-                >
+                <ErrorBoundary FallbackComponent={PlaygroundErrorBoundaryNotSupported} resetKeys={accountKeys}>
                     <WalletUiAccountSignMessageLoader
                         account={account}
                         render={({ signMessage }) => {
@@ -44,10 +39,7 @@ export function PlaygroundAccountSelected() {
                 </ErrorBoundary>
             </PlaygroundUiPanel>
             <PlaygroundUiPanel title="Sign In">
-                <ErrorBoundary
-                    FallbackComponent={PlaygroundErrorBoundaryNotSupported}
-                    resetKeys={errorBoundaryResetKeys}
-                >
+                <ErrorBoundary FallbackComponent={PlaygroundErrorBoundaryNotSupported} resetKeys={accountKeys}>
                     <PlaygroundSignInMenuButtons />
                 </ErrorBoundary>
             </PlaygroundUiPanel>

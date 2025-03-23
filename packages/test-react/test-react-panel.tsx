@@ -8,6 +8,7 @@ import { Stack } from './stack';
 import { TestReactPanelBaseButton } from './test-react-panel-base-button';
 import { TestReactPanelBaseDropdown } from './test-react-panel-base-dropdown';
 import { TestReactPanelBaseModal } from './test-react-panel-base-modal';
+import { TestReactPanelWalletUiButton } from './test-react-panel-wallet-ui-button';
 import { TestReactPanelWalletUiDropdown } from './test-react-panel-wallet-ui-dropdown';
 import { TestReactPanelWalletUiIcon } from './test-react-panel-wallet-ui-icon';
 import { TestReactPanelWalletUiIconClose } from './test-react-panel-wallet-ui-icon-close';
@@ -54,6 +55,7 @@ export function TestReactPanel() {
                     BaseDropdown: <TestReactPanelBaseDropdown />,
                     BaseModal: <TestReactPanelBaseModal />,
                     WalletUiClusterDropdown: <PlaygroundClusterDropdown />,
+                    WalletUiButton: <TestReactPanelWalletUiButton />,
                     WalletUiDropdown: <TestReactPanelWalletUiDropdown />,
                     WalletUiIcon: <TestReactPanelWalletUiIcon />,
                     WalletUiIconClose: <TestReactPanelWalletUiIconClose />,

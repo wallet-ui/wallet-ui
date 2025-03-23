@@ -1,4 +1,5 @@
 import { UiWallet, UiWalletAccount } from '@wallet-standard/react';
+import { SolanaClient } from 'gill';
 import React, { ReactNode } from 'react';
 
 import { WalletUiSize } from './types/wallet-ui-size';
@@ -11,6 +12,7 @@ export interface WalletUiContextProviderProps {
 export interface WalletUiProviderContextValue {
     account?: UiWalletAccount;
     change: () => void;
+    client: SolanaClient;
     connect: (wallet: UiWalletAccount) => void;
     connected: boolean;
     copy: () => void;

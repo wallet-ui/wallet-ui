@@ -10,10 +10,10 @@ export function AppHeader({ links }: { links: { label: string; to: string }[] })
                 <Link to="/" className="flex items-center gap-4">
                     <img src="/wallet-ui.png" alt="wallet-ui logo" width={32} height={32} />
                     <span className="text-lg font-semibold">Wallet UI</span>
-                    <span className="font-light text-gray-500">React + Vite + Tailwind</span>
+                    <span className="font-light text-gray-500">React/Tailwind</span>
                 </Link>
 
-                <ul className="flex gap-2 p-4 text-xl leading-none">
+                <ul className="flex gap-4 p-4 text-xl leading-none">
                     {links.map(link => {
                         const isActive = link.to === '/' ? pathname === '/' : pathname.startsWith(link.to);
                         return (

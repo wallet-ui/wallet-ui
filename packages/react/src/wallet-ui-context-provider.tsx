@@ -3,12 +3,14 @@ import { handleCopyText } from '@wallet-ui/core';
 import React from 'react';
 
 import { useWalletUiAccount } from './use-wallet-ui-account';
+import { useWalletUiSolanaClient } from './use-wallet-ui-solana-client';
 import { useWalletUiWallets } from './use-wallet-ui-wallets';
 import { WalletUiContext, WalletUiContextProviderProps, WalletUiProviderContextValue } from './wallet-ui-context';
 
 export function WalletUiContextProvider({ children, size = 'md' }: WalletUiContextProviderProps) {
     const { account, setAccount, wallet } = useWalletUiAccount();
     const wallets = useWalletUiWallets();
+    const client = useWalletUiSolanaClient();
     const walletHasAccounts = Boolean(wallet && wallet?.accounts.length > 0);
 
     // const [connected, setConnected] = useState(!!account);
@@ -36,6 +38,7 @@ export function WalletUiContextProvider({ children, size = 'md' }: WalletUiConte
     const value: WalletUiProviderContextValue = {
         account,
         change,
+        client,
         connect,
         connected: walletHasAccounts,
         copy,

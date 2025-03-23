@@ -1,4 +1,5 @@
 import './index.css';
+import '@wallet-ui/react/index.css';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

@@ -46,6 +46,7 @@
     "scripts": {
         "compile:js": "tsup --config build-scripts/tsup.config.package.ts",
         "compile:typedefs": "tsc -p ./tsconfig.declarations.json",
+        "compile:css": "tailwindcss -i ./src/index.css -o ./dist/compiled.css --minify",
         "dev": "jest -c ../../node_modules/@wallet-ui/test-config/jest-dev.config.ts --rootDir . --watch",
         "prepublishOnly": "pnpm pkg delete devDependencies",
         "publish-impl": "npm view $npm_package_name@$npm_package_version > /dev/null 2>&1 || (pnpm publish --tag ${PUBLISH_TAG:-canary} --access public --no-git-checks && (([ \"$PUBLISH_TAG\" != \"canary\" ] && pnpm dist-tag add $npm_package_name@$npm_package_version latest) || true))",
@@ -73,8 +74,9 @@
         "supports bigint and not dead",
         "maintained node versions"
     ],
-    "dependencies": {},
-    "devDependencies": {},
+    "devDependencies": {
+        "@tailwindcss/cli": "^4.0.15"
+    },
     "peerDependencies": {
         "tailwindcss": "^4.0.14"
     },

@@ -15,8 +15,8 @@
     "dependencies": {
         "@tailwindcss/vite": "^4.0.14",
         "@wallet-ui/react": "workspace:*",
-        "@wallet-ui/react-tailwind": "workspace:*",
         "@wallet-ui/playground-react": "workspace:*",
+        "@wallet-ui/tailwind": "workspace:*",
         "gill": "0.8.0",
         "react": "^19",
         "react-dom": "^19",

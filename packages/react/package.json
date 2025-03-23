@@ -1,7 +1,7 @@
 {
     "name": "@wallet-ui/react",
     "version": "1.0.0",
-    "description": "React hooks for building Solana apps",
+    "description": "React components for Wallet UI",
     "exports": {
         ".": {
             "edge-light": {

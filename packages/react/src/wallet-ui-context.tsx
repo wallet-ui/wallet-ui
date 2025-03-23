@@ -2,8 +2,6 @@ import { UiWallet, UiWalletAccount } from '@wallet-standard/react';
 import React, { ReactNode } from 'react';
 
 import { WalletUiSize } from './types/wallet-ui-size';
-import { BaseDropdownControl } from './use-base-dropdown';
-import { BaseModalControl } from './use-base-modal';
 
 export interface WalletUiContextProviderProps {
     children: ReactNode;
@@ -17,8 +15,6 @@ export interface WalletUiProviderContextValue {
     connected: boolean;
     copy: () => void;
     disconnect: () => void;
-    dropdown: BaseDropdownControl;
-    modal: BaseModalControl;
     size: WalletUiSize;
     wallet?: UiWallet;
     wallets: UiWallet[];

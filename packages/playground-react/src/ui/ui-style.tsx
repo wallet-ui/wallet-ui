@@ -10,6 +10,12 @@ export const testReactUiStyleHeader: React.CSSProperties = {
     borderBottom: '1px solid rgba(128,128,128, 0.1)',
 };
 
+export const testReactUiStyleTitle: React.CSSProperties = {
+    fontSize: '1.25rem',
+    fontWeight: 500,
+    lineHeight: '1.6',
+};
+
 export const testReactUiStylePadding: React.CSSProperties = {
     padding: '1rem',
 };

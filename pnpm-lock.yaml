@@ -187,9 +187,9 @@ importers:
       '@wallet-ui/react':
         specifier: workspace:*
         version: link:../../packages/react
-      '@wallet-ui/react-tailwind':
+      '@wallet-ui/tailwind':
         specifier: workspace:*
-        version: link:../../packages/react-tailwind
+        version: link:../../packages/tailwind
       gill:
         specifier: 0.8.0
         version: 0.8.0(@solana/sysvars@2.1.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
@@ -244,7 +244,7 @@ importers:
     dependencies:
       '@inquirer/core':
         specifier: ^10.1.7
-        version: 10.1.7(@types/node@22.10.2)
+        version: 10.1.7(@types/node@20.17.25)
       pino:
         specifier: ^9.6.0
         version: 9.6.0
@@ -252,6 +252,9 @@ importers:
         specifier: ^13.0.0
         version: 13.0.0
     devDependencies:
+      '@types/node':
+        specifier: ^20
+        version: 20.17.25
       yoctocolors:
         specifier: ^2.1.1
         version: 2.1.1
@@ -354,51 +357,11 @@ importers:
         specifier: ^19
         version: 19.0.0(react@19.0.0)
 
-  packages/react-tailwind:
+  packages/tailwind:
     dependencies:
-      '@wallet-standard/react':
-        specifier: 1.0.0
-        version: 1.0.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@wallet-ui/core':
-        specifier: workspace:*
-        version: link:../core
-      '@wallet-ui/react':
-        specifier: workspace:*
-        version: link:../react
-      '@zag-js/dialog':
-        specifier: ^1.3.3
-        version: 1.3.3
-      '@zag-js/menu':
-        specifier: ^1.3.3
-        version: 1.3.3
-      '@zag-js/react':
-        specifier: ^1.3.3
-        version: 1.3.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      gill:
-        specifier: 0.8.0
-        version: 0.8.0(@solana/sysvars@2.1.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
       tailwindcss:
         specifier: ^4.0.14
         version: 4.0.14
-    devDependencies:
-      '@types/react':
-        specifier: ^19
-        version: 19.0.12
-      '@types/react-dom':
-        specifier: ^19
-        version: 19.0.4(@types/react@19.0.12)
-      '@types/react-test-renderer':
-        specifier: ^19
-        version: 19.0.0
-      react:
-        specifier: ^19
-        version: 19.0.0
-      react-error-boundary:
-        specifier: ^5.0.0
-        version: 5.0.0(react@19.0.0)
-      react-test-renderer:
-        specifier: ^19
-        version: 19.0.0(react@19.0.0)
 
   packages/test-config:
     dependencies:
@@ -2613,6 +2576,9 @@ packages:
 
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
+
+  '@types/node@20.17.25':
+    resolution: {integrity: sha512-bT+r2haIlplJUYtlZrEanFHdPIZTeiMeh/fSOEbOOfWf9uTn+lg8g0KU6Q3iMgjd9FLuuMAgfCNSkjUbxL6E3Q==}
 
   '@types/node@22.10.2':
     resolution: {integrity: sha512-Xxr6BBRCAOQixvonOye19wnzyDiUtTeqldOOmj3CkeblonbccA12PFwlufvRdrpjXxqnmUaeiU5EOA+7s5diUQ==}
@@ -5493,6 +5459,9 @@ packages:
   uc.micro@2.1.0:
     resolution: {integrity: sha512-ARDJmphmdvUk6Glw7y9DQ2bFkKBHwQHLi2lsaH6PPmz/Ka9sFOBsBluozhDltWmnv9u/cF6Rt87znRTPV+yp/A==}
 
+  undici-types@6.19.8:
+    resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
+
   undici-types@6.20.0:
     resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
 
@@ -7081,10 +7050,10 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.2': {}
 
-  '@inquirer/core@10.1.7(@types/node@22.10.2)':
+  '@inquirer/core@10.1.7(@types/node@20.17.25)':
     dependencies:
       '@inquirer/figures': 1.0.10
-      '@inquirer/type': 3.0.4(@types/node@22.10.2)
+      '@inquirer/type': 3.0.4(@types/node@20.17.25)
       ansi-escapes: 4.3.2
       cli-width: 4.1.0
       mute-stream: 2.0.0
@@ -7092,13 +7061,13 @@ snapshots:
       wrap-ansi: 6.2.0
       yoctocolors-cjs: 2.1.2
     optionalDependencies:
-      '@types/node': 22.10.2
+      '@types/node': 20.17.25
 
   '@inquirer/figures@1.0.10': {}
 
-  '@inquirer/type@3.0.4(@types/node@22.10.2)':
+  '@inquirer/type@3.0.4(@types/node@20.17.25)':
     optionalDependencies:
-      '@types/node': 22.10.2
+      '@types/node': 20.17.25
 
   '@isaacs/cliui@8.0.2':
     dependencies:
@@ -8314,6 +8283,10 @@ snapshots:
   '@types/lodash@4.17.13': {}
 
   '@types/node@12.20.55': {}
+
+  '@types/node@20.17.25':
+    dependencies:
+      undici-types: 6.19.8
 
   '@types/node@22.10.2':
     dependencies:
@@ -11722,6 +11695,8 @@ snapshots:
   typescript@5.7.3: {}
 
   uc.micro@2.1.0: {}
+
+  undici-types@6.19.8: {}
 
   undici-types@6.20.0: {}
 

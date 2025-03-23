@@ -5,10 +5,10 @@
 
 [code-style-prettier-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [code-style-prettier-url]: https://github.com/prettier/prettier
-[npm-downloads-image]: https://img.shields.io/npm/dm/@wallet-ui/react/latest.svg?style=flat
-[npm-image]: https://img.shields.io/npm/v/@wallet-ui/react/latest.svg?style=flat
-[npm-url]: https://www.npmjs.com/package/@wallet-ui/react/v/latest
+[npm-downloads-image]: https://img.shields.io/npm/dm/@wallet-ui/tailwind/latest.svg?style=flat
+[npm-image]: https://img.shields.io/npm/v/@wallet-ui/tailwind/latest.svg?style=flat
+[npm-url]: https://www.npmjs.com/package/@wallet-ui/tailwind/v/latest
 
-# @wallet-ui/core
+# @wallet-ui/tailwind
 
-Wallet UI core.
+Tailwind CSS for Wallet UI.

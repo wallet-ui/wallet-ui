@@ -1,7 +1,7 @@
 {
-    "name": "@wallet-ui/react-tailwind",
+    "name": "@wallet-ui/tailwind",
     "version": "1.0.0",
-    "description": "React hooks for building Solana apps",
+    "description": "Tailwind CSS for Wallet UI",
     "exports": {
         ".": {
             "edge-light": {
@@ -73,25 +73,9 @@
         "supports bigint and not dead",
         "maintained node versions"
     ],
-    "dependencies": {
-        "@wallet-standard/react": "1.0.0",
-        "@wallet-ui/core": "workspace:*",
-        "@wallet-ui/react": "workspace:*",
-        "@zag-js/dialog": "^1.3.3",
-        "@zag-js/menu": "^1.3.3",
-        "@zag-js/react": "^1.3.3",
-        "gill": "0.8.0"
-    },
-    "devDependencies": {
-        "@types/react": "^19",
-        "@types/react-dom": "^19",
-        "@types/react-test-renderer": "^19",
-        "react": "^19",
-        "react-error-boundary": "^5.0.0",
-        "react-test-renderer": "^19"
-    },
+    "dependencies": {},
+    "devDependencies": {},
     "peerDependencies": {
-        "react": ">=18",
         "tailwindcss": "^4.0.14"
     },
     "engines": {

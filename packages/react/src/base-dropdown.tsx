@@ -56,7 +56,7 @@ export function BaseDropdown({ buttonProps, dropdown, showIndicator, items }: Ba
         <div className="wallet-ui-base-dropdown">
             {trigger}
             <div {...api.getPositionerProps()} className="wallet-positioner">
-                <ul {...api.getContentProps()} className="wallet-ui-base-dropdown-list" data-part="content">
+                <div {...api.getContentProps()} className="wallet-ui-base-dropdown-list" data-part="content">
                     {items.map(item => {
                         return (
                             <BaseDropdownItem
@@ -74,7 +74,7 @@ export function BaseDropdown({ buttonProps, dropdown, showIndicator, items }: Ba
                             />
                         );
                     })}
-                </ul>
+                </div>
             </div>
         </div>
     );
@@ -158,7 +158,7 @@ function BaseDropdownItemRender({ afterClick, item }: BaseDropdownItemRenderProp
     }
 
     return (
-        <li className="wallet-ui-base-dropdown-item" data-part="item" onClick={onClick}>
+        <div className="wallet-ui-base-dropdown-item" data-part="item" onClick={onClick}>
             {item.leftSection ? (
                 <span className="wallet-ui-base-dropdown-item-left-section">{item.leftSection}</span>
             ) : null}
@@ -166,7 +166,7 @@ function BaseDropdownItemRender({ afterClick, item }: BaseDropdownItemRenderProp
             {item.rightSection ? (
                 <span className="wallet-ui-base-dropdown-item-right-section">{item.rightSection}</span>
             ) : null}
-        </li>
+        </div>
     );
 }
 

@@ -1,4 +1,4 @@
-import { PlaygroundProviders } from '@wallet-ui/test-react';
+import { PlaygroundProviders } from '@wallet-ui/playground-react';
 import React from 'react';
 import { ThemeProvider } from '../theme-provider.tsx';
 

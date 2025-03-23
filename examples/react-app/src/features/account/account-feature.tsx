@@ -1,4 +1,4 @@
-import { PlaygroundAccount } from '@wallet-ui/test-react';
+import { PlaygroundAccount } from '@wallet-ui/playground-react';
 
 export default function AccountFeature() {
     return <PlaygroundAccount />;

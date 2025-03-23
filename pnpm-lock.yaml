@@ -135,12 +135,12 @@ importers:
 
   examples/react-app:
     dependencies:
+      '@wallet-ui/playground-react':
+        specifier: workspace:*
+        version: link:../../packages/playground-react
       '@wallet-ui/react':
         specifier: workspace:*
         version: link:../../packages/react
-      '@wallet-ui/test-react':
-        specifier: workspace:*
-        version: link:../../packages/test-react
       gill:
         specifier: 0.8.0
         version: 0.8.0(@solana/sysvars@2.1.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
@@ -181,15 +181,15 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.0.14
         version: 4.0.14(vite@6.2.1(@types/node@22.10.2)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.18.0)(tsx@4.19.2)(yaml@2.7.0))
+      '@wallet-ui/playground-react':
+        specifier: workspace:*
+        version: link:../../packages/playground-react
       '@wallet-ui/react':
         specifier: workspace:*
         version: link:../../packages/react
       '@wallet-ui/react-tailwind':
         specifier: workspace:*
         version: link:../../packages/react-tailwind
-      '@wallet-ui/test-react':
-        specifier: workspace:*
-        version: link:../../packages/test-react
       gill:
         specifier: 0.8.0
         version: 0.8.0(@solana/sysvars@2.1.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
@@ -276,6 +276,34 @@ importers:
       typescript:
         specifier: '>=5'
         version: 5.7.3
+
+  packages/playground-react:
+    dependencies:
+      '@wallet-ui/react':
+        specifier: workspace:*
+        version: link:../react
+      gill:
+        specifier: 0.8.0
+        version: 0.8.0(@solana/sysvars@2.1.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+      react:
+        specifier: ^19
+        version: 19.0.0
+      react-dom:
+        specifier: ^19
+        version: 19.0.0(react@19.0.0)
+      react-error-boundary:
+        specifier: ^5.0.0
+        version: 5.0.0(react@19.0.0)
+      react-router:
+        specifier: ^7.4.0
+        version: 7.4.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+    devDependencies:
+      '@types/react':
+        specifier: ^19
+        version: 19.0.12
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.0.4(@types/react@19.0.12)
 
   packages/react:
     dependencies:
@@ -392,34 +420,6 @@ importers:
         version: 3.6.20
 
   packages/test-matchers: {}
-
-  packages/test-react:
-    dependencies:
-      '@wallet-ui/react':
-        specifier: workspace:*
-        version: link:../react
-      gill:
-        specifier: 0.8.0
-        version: 0.8.0(@solana/sysvars@2.1.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
-      react:
-        specifier: ^19
-        version: 19.0.0
-      react-dom:
-        specifier: ^19
-        version: 19.0.0(react@19.0.0)
-      react-error-boundary:
-        specifier: ^5.0.0
-        version: 5.0.0(react@19.0.0)
-      react-router:
-        specifier: ^7.4.0
-        version: 7.4.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-    devDependencies:
-      '@types/react':
-        specifier: ^19
-        version: 19.0.12
-      '@types/react-dom':
-        specifier: ^19
-        version: 19.0.4(@types/react@19.0.12)
 
   packages/tsconfig: {}
 

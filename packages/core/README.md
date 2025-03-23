@@ -11,4 +11,4 @@
 
 # @wallet-ui/core
 
-This is the core library.
+Wallet UI core.

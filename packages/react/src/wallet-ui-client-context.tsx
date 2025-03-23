@@ -1,5 +1,4 @@
-import { SolanaClient } from '@wallet-ui/core';
-import { SolanaClientUrlOrMoniker } from 'gill';
+import { SolanaClient, SolanaClientUrlOrMoniker } from 'gill';
 import { createContext, ReactNode } from 'react';
 
 export interface WalletUiClientContextProviderProps {

@@ -1,5 +1,5 @@
+import { UiStack } from '@wallet-ui/playground-react';
 import { UiWallet, useWallets } from '@wallet-ui/react';
-import { Stack } from '@wallet-ui/test-react';
 
 import { WalletGrid } from './wallet-grid.tsx';
 
@@ -10,8 +10,8 @@ export default function Wallets() {
         .filter(wallet => wallet.chains?.some(chain => chain.startsWith('solana:')));
 
     return (
-        <Stack>
+        <UiStack>
             <WalletGrid wallets={filtered} />
-        </Stack>
+        </UiStack>
     );
 }

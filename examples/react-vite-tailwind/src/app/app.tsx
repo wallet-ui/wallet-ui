@@ -1,6 +1,11 @@
-import { PlaygroundAccount, PlaygroundClient, PlaygroundCluster, PlaygroundUi } from '@wallet-ui/test-react';
-
-import { PlaygroundWallet } from '@wallet-ui/test-react/playground-wallet.tsx';
+import {
+    PlaygroundAccount,
+    PlaygroundClient,
+    PlaygroundCluster,
+    PlaygroundUi,
+    PlaygroundWallet,
+    PlaygroundWalletUi,
+} from '@wallet-ui/playground-react';
 import { Suspense } from 'react';
 import { Navigate, useRoutes } from 'react-router';
 import { AppLayout } from './app-layout.tsx';
@@ -24,6 +29,10 @@ export function App() {
         {
             path: '/ui',
             element: <PlaygroundUi />,
+        },
+        {
+            path: '/ui',
+            element: <PlaygroundWalletUi />,
         },
         {
             path: '/wallets',

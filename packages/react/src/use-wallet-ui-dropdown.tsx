@@ -35,7 +35,7 @@ function getDropdownItemsWallets({
     }));
 }
 
-export function useWalletUiDropdown({ size = 'md' }: { size?: WalletUiSize }): {
+export function useWalletUiDropdown({ size = 'md' }: { size?: WalletUiSize } = {}): {
     buttonProps: BaseButtonProps;
     connected: boolean;
     dropdown: BaseDropdownControl;

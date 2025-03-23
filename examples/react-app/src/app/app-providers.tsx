@@ -1,6 +1,6 @@
 import '@wallet-ui/react/index.css';
 
-import { PlaygroundProviders } from '@wallet-ui/test-react';
+import { PlaygroundProviders } from '@wallet-ui/playground-react';
 import { ReactNode } from 'react';
 import { BrowserRouter } from 'react-router';
 

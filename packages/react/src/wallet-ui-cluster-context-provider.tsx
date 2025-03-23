@@ -10,7 +10,7 @@ import {
 
 export function WalletUiClusterContextProvider({
     clusters,
-    children,
+    render,
     storageKey = '__wallet-ui:selected-cluster',
 }: WalletUiClusterContextProviderProps) {
     const [clusterId, setClusterId] = useLocalStorage(storageKey, 'solana:devnet');
@@ -35,5 +35,5 @@ export function WalletUiClusterContextProvider({
         },
     };
 
-    return <WalletUiClusterContext.Provider value={value}>{children}</WalletUiClusterContext.Provider>;
+    return <WalletUiClusterContext.Provider value={value}>{render(value)}</WalletUiClusterContext.Provider>;
 }

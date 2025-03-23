@@ -11,4 +11,4 @@
 
 # @wallet-ui/react
 
-This package contains example React code.
+React components for Wallet UI.

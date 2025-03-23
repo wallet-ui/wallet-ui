@@ -1,33 +1,13 @@
 import '@wallet-ui/react/index.css';
 
-import {
-    clusterDevnet,
-    clusterLocalnet,
-    clusterTestnet,
-    SolanaCluster,
-    SolanaProvider,
-    SolanaWalletUiDialog,
-} from '@wallet-ui/react';
+import { PlaygroundProviders } from '@wallet-ui/playground-react';
 import { ReactNode } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-
-const clusters: SolanaCluster[] = [
-    clusterDevnet(),
-    // Customize the clusters here
-    clusterLocalnet({ urlOrMoniker: 'http://localhost:8899' }),
-    clusterTestnet(),
-    // Enable mainnet when it's ready.
-    // You will need a custom RPC URL for mainnet as the public RPC url can't be used for production.
-    // clusterMainnet(),
-];
+import { BrowserRouter } from 'react-router';
 
 export function AppProviders({ children }: { children: ReactNode }) {
     return (
         <BrowserRouter>
-            <SolanaProvider clusters={clusters}>
-                <SolanaWalletUiDialog />
-                {children}
-            </SolanaProvider>
+            <PlaygroundProviders>{children}</PlaygroundProviders>
         </BrowserRouter>
     );
 }

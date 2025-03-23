@@ -4,8 +4,8 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "vite",
         "compile:js": "vite build",
+        "dev": "vite",
         "preview": "vite preview",
         "style:fix": "pnpm eslint --fix src && pnpm prettier --log-level warn --ignore-unknown --write ./*",
         "test:lint": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../../node_modules/@wallet-ui/test-config/jest-lint.config.ts --rootDir . --silent --testMatch '<rootDir>src/**/*.{ts,tsx}'",
@@ -13,12 +13,13 @@
         "test:typecheck": "tsc"
     },
     "dependencies": {
+        "@wallet-ui/playground-react": "workspace:*",
         "@wallet-ui/react": "workspace:*",
         "gill": "0.8.0",
         "react": "^19",
         "react-dom": "^19",
         "react-error-boundary": "^5.0.0",
-        "react-router-dom": "^7.2.0"
+        "react-router": "^7.4.0"
     },
     "devDependencies": {
         "@types/react": "^19",

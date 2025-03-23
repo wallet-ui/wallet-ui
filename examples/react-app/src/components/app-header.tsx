@@ -1,10 +1,9 @@
-import { Link, useLocation } from 'react-router-dom';
-
-import { SolanaClusterUiSelect } from '../features/clusters/solana-cluster-ui-select.tsx';
+import { WalletUiClusterDropdown } from '@wallet-ui/react';
+import { Link, useLocation } from 'react-router';
 
 export type HeaderLink = { label: string; to: string };
 
-export function Header({ links }: { links: HeaderLink[] }) {
+export function AppHeader({ links }: { links: HeaderLink[] }) {
     const { pathname } = useLocation();
     return (
         <header style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -22,7 +21,7 @@ export function Header({ links }: { links: HeaderLink[] }) {
                 </nav>
             </div>
             <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>
-                <SolanaClusterUiSelect />
+                <WalletUiClusterDropdown size="sm" />
                 <a href="https://github.com/wallet-ui/wallet-ui" target="_blank" rel="noreferrer">
                     <img
                         src="https://img.shields.io/github/stars/wallet-ui/wallet-ui?style=social"

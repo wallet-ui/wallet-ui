@@ -1,16 +1,16 @@
-import { useSolanaClient } from '@wallet-ui/react';
+import { useWalletUi } from '@wallet-ui/react';
 import { useState } from 'react';
 
-export function SolanaGetVersion() {
+export function SolanaClientGetVersion() {
     const [version, setVersion] = useState('');
-    const { rpc } = useSolanaClient();
+    const { client } = useWalletUi();
 
     return (
         <div>
             <button
                 onClick={() => {
                     setVersion('Loading...');
-                    void rpc
+                    void client.rpc
                         .getVersion()
                         .send()
                         .then(res => {

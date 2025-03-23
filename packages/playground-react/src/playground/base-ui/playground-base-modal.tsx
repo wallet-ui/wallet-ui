@@ -158,7 +158,7 @@ function TestModalNoWallet({ size }: { size: WalletUiSize }) {
         <BaseModal
             modal={modal}
             buttonLabel="No Wallet"
-            description={"You'll need a wallet on Solana to continue"}
+            description="You'll need a wallet on Solana to continue"
             size={size}
         >
             <div

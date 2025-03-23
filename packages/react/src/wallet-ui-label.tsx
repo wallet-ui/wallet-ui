@@ -6,7 +6,7 @@ import { WalletUiSize } from './types/wallet-ui-size';
 export interface WalletUiLabelProps
     extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> {
     size?: WalletUiSize;
-    wallet?: UiWallet;
+    wallet?: Pick<UiWallet, 'name'>;
 }
 
 export function WalletUiLabel({ className, size, wallet, ...props }: WalletUiLabelProps) {

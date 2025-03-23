@@ -6,7 +6,7 @@ import { WalletUiSize } from './types/wallet-ui-size';
 
 export interface WalletUiIconProps extends WalletUiImg {
     size?: WalletUiSize;
-    wallet?: UiWallet;
+    wallet?: Pick<UiWallet, 'icon' | 'name'>;
 }
 
 export function WalletUiIcon({ className, size, wallet, ...props }: WalletUiIconProps) {

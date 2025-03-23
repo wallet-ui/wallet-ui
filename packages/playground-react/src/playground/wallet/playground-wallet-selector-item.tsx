@@ -1,20 +1,58 @@
-import { BaseButton, UiWallet, useWalletUiWallet, WalletUiIcon, WalletUiLabel } from '@wallet-ui/react';
+import {
+    BaseButton,
+    BaseModal,
+    UiWallet,
+    useBaseModal,
+    useWalletUiWallet,
+    WalletUiIcon,
+    WalletUiLabel,
+} from '@wallet-ui/react';
 import React from 'react';
 import { UiGroup, UiPanel, UiStack } from '../../ui/';
 
 export function PlaygroundWalletSelectorItem({ wallet }: { wallet: UiWallet }) {
     const { isConnecting, isDisconnecting, disconnect, connect } = useWalletUiWallet({ wallet });
-
+    const isConnected = wallet.accounts.length > 0;
+    const modal = useBaseModal();
     return (
         <UiPanel
             key={wallet.name}
             title={
                 <UiGroup>
-                    <WalletUiIcon wallet={wallet} />
-                    <WalletUiLabel wallet={wallet} />
+                    <WalletUiIcon wallet={wallet} size="lg" />
+                    <WalletUiLabel wallet={wallet} size="lg" />
                 </UiGroup>
             }
         >
+            <UiGroup>
+                <BaseButton disabled={isConnected} label="Connect" onClick={() => connect()} />
+                <BaseButton disabled={!isConnected} label="Disconnect" onClick={() => disconnect()} />
+                <BaseModal modal={modal} buttonLabel="Info">
+                    <pre
+                        style={{
+                            fontSize: '0.8rem',
+                            whiteSpace: 'pre-wrap',
+                            wordBreak: 'break-word',
+                        }}
+                    >
+                        {JSON.stringify(
+                            {
+                                name: wallet.name,
+                                version: wallet.version,
+                                features: wallet.features,
+                                chains: wallet.chains,
+                                accounts: wallet.accounts?.map(account => ({
+                                    address: account.address,
+                                    label: account.label,
+                                })),
+                            },
+                            null,
+                            4,
+                        )}
+                    </pre>
+                </BaseModal>
+            </UiGroup>
+
             {isConnecting || isDisconnecting ? <div>Connecting...</div> : null}
 
             {wallet.accounts?.length ? (
@@ -25,15 +63,7 @@ export function PlaygroundWalletSelectorItem({ wallet }: { wallet: UiWallet }) {
                         </div>
                     ))}
                 </UiStack>
-            ) : (
-                <div>
-                    <BaseButton label="Connect" onClick={() => connect()} />
-                </div>
-            )}
-            <UiGroup>
-                <BaseButton label="Connect" onClick={() => connect()} />
-                <BaseButton label="Disconnect" onClick={() => disconnect()} />
-            </UiGroup>
+            ) : null}
         </UiPanel>
     );
 }

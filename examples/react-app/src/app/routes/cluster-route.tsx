@@ -1,5 +1,5 @@
 import { PlaygroundCluster } from '@wallet-ui/playground-react';
 
-export default function ClusterFeature() {
+export default function ClusterRoute() {
     return <PlaygroundCluster />;
 }

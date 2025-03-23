@@ -1,9 +1,8 @@
-import { UiWallet } from '@wallet-ui/react';
+import { UiWallet, useWalletUi } from '@wallet-ui/react';
 import React from 'react';
-import { useTestWallets } from '../util/test-wallets';
 
 export function UiWallets(props: { render: (wallet: UiWallet) => React.ReactNode }) {
-    const wallets = useTestWallets();
+    const { wallets } = useWalletUi();
 
     return wallets.map(wallet => props.render(wallet));
 }

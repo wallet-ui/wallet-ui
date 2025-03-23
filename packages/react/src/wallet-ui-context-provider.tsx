@@ -13,15 +13,12 @@ export function WalletUiContextProvider({ children, size = 'md' }: WalletUiConte
     const client = useWalletUiSolanaClient();
     const walletHasAccounts = Boolean(wallet && wallet?.accounts.length > 0);
 
-    // const [connected, setConnected] = useState(!!account);
-
-    function change() {
-        console.log('change');
-    }
-
     function connect(account: UiWalletAccount) {
         setAccount(account);
-        // setConnected(true);
+    }
+
+    function disconnect() {
+        setAccount(undefined);
     }
 
     function copy() {
@@ -31,13 +28,8 @@ export function WalletUiContextProvider({ children, size = 'md' }: WalletUiConte
         handleCopyText(account.address);
     }
 
-    function disconnect() {
-        // setConnected(false);
-    }
-
     const value: WalletUiProviderContextValue = {
         account,
-        change,
         client,
         connect,
         connected: walletHasAccounts,

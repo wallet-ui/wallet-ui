@@ -4,6 +4,7 @@ import {
     UiWallet,
     UiWalletAccount,
     useBaseModal,
+    useWalletUi,
     WalletUiIconNoWallet,
     WalletUiList,
     WalletUiListProps,
@@ -11,10 +12,9 @@ import {
 } from '@wallet-ui/react';
 import React from 'react';
 import { UiGroup, UiPanel, UiSizes, UiStack } from '../../ui/';
-import { useTestWallets } from '../../util/test-wallets';
 
 export function PlaygroundBaseModal() {
-    const wallets = useTestWallets();
+    const { wallets } = useWalletUi();
 
     async function select(wallet: UiWalletAccount) {
         console.log('select start', wallet.address);

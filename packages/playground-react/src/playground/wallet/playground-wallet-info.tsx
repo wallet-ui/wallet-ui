@@ -1,6 +1,6 @@
 import { useWalletUi, WalletUiIcon, WalletUiIconNoWallet, WalletUiLabel } from '@wallet-ui/react';
 import React from 'react';
-import { testReactUiStyleTitle, UiGroup, UiPanel, UiStack } from '../../ui';
+import { UiGroup, UiPanel, UiStack, uiStyleTitle } from '../../ui';
 import { PlaygroundWalletListItem, walletList } from './playground-wallet-list';
 
 const sortedWalletList = walletList.sort((a, b) => a.name.localeCompare(b.name));
@@ -37,12 +37,12 @@ export function PlaygroundWalletInfo() {
                         <a href="https://solana.com/solana-wallets" target="_blank" rel="noreferrer noopener">
                             <WalletUiIconNoWallet size="lg" />
                         </a>
-                        <span style={{ ...testReactUiStyleTitle }}>You'll need a wallet on Solana to continue.</span>
+                        <span style={{ ...uiStyleTitle }}>You'll need a wallet on Solana to continue.</span>
                     </UiStack>
                 )}
             </UiPanel>
             <UiPanel title="Ecosystem Wallets">
-                <span style={{ ...testReactUiStyleTitle }}>
+                <span style={{ ...uiStyleTitle }}>
                     These are some of the{' '}
                     <a
                         href="https://solana.com/solana-wallets"
@@ -58,7 +58,7 @@ export function PlaygroundWalletInfo() {
                     <PlaygroundWalletInfoItem key={item.name} item={item} />
                 ))}
 
-                <span style={{ ...testReactUiStyleTitle }}>
+                <span style={{ ...uiStyleTitle }}>
                     Please create a{' '}
                     <a
                         href="https://github.com/wallet-ui/wallet-ui/pulls"

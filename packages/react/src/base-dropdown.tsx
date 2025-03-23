@@ -10,6 +10,7 @@ export enum BaseDropdownItemType {
     WalletConnect = 'WalletConnect',
     WalletCopy = 'WalletCopy',
     WalletDisconnect = 'WalletDisconnect',
+    WalletNeeded = 'WalletNeeded',
 }
 
 export interface BaseDropdownItem {
@@ -108,7 +109,6 @@ function BaseDropdownItemWalletConnect({
             afterClick={afterClick}
             item={{
                 ...item,
-
                 handler: async () => {
                     //
                     await connect();

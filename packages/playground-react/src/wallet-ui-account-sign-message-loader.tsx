@@ -16,6 +16,7 @@ export interface UiWalletAccountSignMessageLoaderProps {
 
 export function WalletUiAccountSignMessageLoader({ account, render }: UiWalletAccountSignMessageLoaderProps) {
     const messageSigner = useWalletAccountMessageSigner(account);
+
     const signMessage = useCallback(
         async (message: ReadonlyUint8Array) => {
             const [result] = await messageSigner.modifyAndSignMessages([
@@ -32,5 +33,6 @@ export function WalletUiAccountSignMessageLoader({ account, render }: UiWalletAc
         },
         [account.address, messageSigner],
     );
+
     return render({ account, signMessage });
 }

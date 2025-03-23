@@ -11,7 +11,6 @@ export interface WalletUiContextProviderProps {
 
 export interface WalletUiProviderContextValue {
     account?: UiWalletAccount;
-    change: () => void;
     client: SolanaClient;
     connect: (wallet: UiWalletAccount) => void;
     connected: boolean;

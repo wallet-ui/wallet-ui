@@ -2,7 +2,7 @@ import { BaseButton } from '@wallet-ui/react';
 import * as React from 'react';
 import { UiGroup } from './ui-group';
 import { UiStack } from './ui-stack';
-import { testReactUiStyleBorder, testReactUiStylePadding } from './ui-style';
+import { uiStyleBorder, uiStylePadding, uiStyleTitle } from './ui-style';
 
 export function UiCard({
     children,
@@ -16,20 +16,21 @@ export function UiCard({
     toggle?: () => void;
 }) {
     const [isOpen, setIsOpen] = React.useState(open);
+
+    function handleToggle() {
+        setIsOpen(prev => !prev);
+        toggle?.();
+    }
+
     return (
-        <div style={{ ...testReactUiStyleBorder }}>
-            <UiGroup style={{ ...testReactUiStylePadding, justifyContent: 'space-between' }}>
-                <div style={{ fontWeight: 500, paddingLeft: '0.5rem' }}>{title}</div>
-                <BaseButton
-                    label={isOpen ? 'Close' : 'Open'}
-                    onClick={() => {
-                        setIsOpen(prev => !prev);
-                        toggle?.();
-                    }}
-                    size="sm"
-                />
+        <div style={{ ...uiStyleBorder }}>
+            <UiGroup style={{ ...uiStylePadding, justifyContent: 'space-between' }}>
+                <div style={{ ...uiStyleTitle, cursor: 'pointer' }} onClick={() => handleToggle()}>
+                    {title}
+                </div>
+                <BaseButton label={isOpen ? 'Close' : 'Open'} onClick={() => handleToggle()} size="sm" />
             </UiGroup>
-            {isOpen ? <UiStack style={{ ...testReactUiStylePadding, paddingTop: 0 }}>{children}</UiStack> : null}
+            {isOpen ? <UiStack style={{ ...uiStylePadding, paddingTop: 0 }}>{children}</UiStack> : null}
         </div>
     );
 }

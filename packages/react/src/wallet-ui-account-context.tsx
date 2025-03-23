@@ -3,7 +3,7 @@ import React, { createContext } from 'react';
 
 export interface WalletUiAccountState {
     account: UiWalletAccount | undefined;
-    errorBoundaryResetKeys: string[];
+    accountKeys: string[];
     setAccount: React.Dispatch<React.SetStateAction<UiWalletAccount | undefined>>;
     wallet: UiWallet | undefined;
 }

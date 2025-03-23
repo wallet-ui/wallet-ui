@@ -2,9 +2,9 @@ import { UiWallet, UiWalletAccount } from '@wallet-standard/react';
 import React, { useMemo } from 'react';
 
 import { BaseButtonProps } from './base-button';
-import { BaseDropdownItem } from './base-dropdown';
+import { BaseDropdownItem, BaseDropdownItemType } from './base-dropdown';
 import { WalletUiSize } from './types/wallet-ui-size';
-import { BaseDropdownControl } from './use-base-dropdown';
+import { BaseDropdownControl, useBaseDropdown } from './use-base-dropdown';
 import { useWalletUi } from './use-wallet-ui';
 import { WalletUiIcon } from './wallet-ui-icon';
 
@@ -18,53 +18,65 @@ function getDropdownItemsWallets({
     wallets: UiWallet[];
 }): BaseDropdownItem[] {
     return wallets.map(wallet => ({
-        handler: () => {
+        handler: async () => {
             // TODO: Add support for multiple accounts, properly handle no accounts
             const account = wallet.accounts.length > 0 ? wallet.accounts[0] : undefined;
             if (!account) {
                 return;
             }
             connect(account);
+            await Promise.resolve();
         },
         label: wallet.name,
         leftSection: <WalletUiIcon wallet={wallet} size={size} />,
+        type: BaseDropdownItemType.WalletConnect,
         value: wallet.name,
+        wallet,
     }));
 }
 
-export function useWalletUiDropdown(): {
+export function useWalletUiDropdown({ size = 'md' }: { size?: WalletUiSize }): {
     buttonProps: BaseButtonProps;
     connected: boolean;
     dropdown: BaseDropdownControl;
     items: BaseDropdownItem[];
 } {
-    const { account, connect, copy, disconnect, connected, dropdown, size, wallet, wallets } = useWalletUi();
+    const dropdown = useBaseDropdown();
 
-    const itemsDisconnected = useMemo(() => {
+    const { account, connect, copy, disconnect, connected, wallet, wallets } = useWalletUi();
+
+    const itemsWallets = useMemo(() => {
         return getDropdownItemsWallets({ connect, size, wallets });
     }, [wallets, size, connect]);
 
-    const itemsConnected = useMemo(
+    const itemsConnected: BaseDropdownItem[] = useMemo(
         () => [
             {
-                handler: copy,
+                handler: async () => {
+                    copy();
+                    void (await Promise.resolve());
+                },
                 label: 'Copy Address',
+                type: BaseDropdownItemType.WalletCopy,
                 value: 'copy',
             },
             {
-                handler: () => {
+                handler: async () => {
                     disconnect();
                     dropdown.close();
+                    await Promise.resolve();
                 },
                 label: 'Disconnect',
+                type: BaseDropdownItemType.WalletDisconnect,
                 value: 'disconnect',
             },
+            ...itemsWallets,
         ],
         [connect, copy, disconnect, dropdown, size, wallets],
     );
     const items = useMemo(() => {
-        return connected ? itemsConnected : itemsDisconnected;
-    }, [connected, itemsConnected, itemsDisconnected]);
+        return connected ? itemsConnected : itemsWallets;
+    }, [connected, itemsConnected, itemsWallets]);
 
     const buttonProps: BaseButtonProps = useMemo(() => {
         return {

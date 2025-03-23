@@ -59,7 +59,6 @@ export function WalletUiAccountContextProvider({
     );
 
     function setAccount(setStateAction: React.SetStateAction<UiWalletAccount | undefined>) {
-        console.log('setAccount', setStateAction);
         setAccountInternal(prevAccount => {
             wasSetterInvoked = true;
             const nextWalletAccount =
@@ -123,7 +122,7 @@ export function WalletUiAccountContextProvider({
     }, [walletAccount, wallets]);
 
     // Expose the error boundary reset keys to the context
-    const errorBoundaryResetKeys = useMemo(() => {
+    const accountKeys = useMemo(() => {
         if (!account) {
             return [];
         }
@@ -134,11 +133,11 @@ export function WalletUiAccountContextProvider({
             value={useMemo(
                 () => ({
                     account: walletAccount,
-                    errorBoundaryResetKeys,
+                    accountKeys,
                     setAccount,
                     wallet,
                 }),
-                [walletAccount, wallet, errorBoundaryResetKeys],
+                [walletAccount, wallet, accountKeys],
             )}
         >
             {children}

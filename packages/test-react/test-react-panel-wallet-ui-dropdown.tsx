@@ -14,7 +14,7 @@ export function TestReactPanelWalletUiDropdown() {
 }
 
 function TestDropdown() {
-    const { connected } = useWalletUiDropdown();
+    const { connected } = useWalletUiDropdown({ size: 'sm' });
     return (
         <Stack>
             <pre>{JSON.stringify({ connected }, null, 4)}</pre>

@@ -15,6 +15,7 @@ export * from './use-wallet-ui-dropdown';
 export * from './use-wallet-ui-wallet';
 export * from './use-wallet-ui-wallets';
 export * from './wallet-ui';
+export * from './wallet-ui-button';
 export * from './wallet-ui-client-context';
 export * from './wallet-ui-client-context-provider';
 export * from './wallet-ui-cluster-context';

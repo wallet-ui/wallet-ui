@@ -12,10 +12,10 @@ import { WalletUiModal } from './wallet-ui-modal';
 export function WalletUiContextProvider({ children, size = 'md' }: WalletUiContextProviderProps) {
     const modal = useBaseModal();
     const dropdown = useBaseDropdown();
-    const { account: account, setAccount: setWalletAccount, wallet } = useWalletUiAccount();
+    const { account, setAccount, wallet } = useWalletUiAccount();
     const wallets = useWalletUiWallets();
 
-    const [connected, setConnected] = useState(false);
+    const [connected, setConnected] = useState(!!account);
 
     function change() {
         dropdown.close();
@@ -23,7 +23,7 @@ export function WalletUiContextProvider({ children, size = 'md' }: WalletUiConte
     }
 
     function connect(account: UiWalletAccount) {
-        setWalletAccount(account);
+        setAccount(account);
         setConnected(true);
         modal.close();
     }

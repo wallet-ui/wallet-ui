@@ -1,4 +1,4 @@
-import { WalletUiClusterDropdown } from '@wallet-ui/react';
+import { WalletUiClusterDropdown, WalletUiDropdown } from '@wallet-ui/react';
 import { Link, useLocation } from 'react-router';
 
 export function AppHeader({ links }: { links: { label: string; to: string }[] }) {
@@ -25,6 +25,7 @@ export function AppHeader({ links }: { links: { label: string; to: string }[] })
                 </ul>
             </div>
             <div className="flex items-center gap-4">
+                <WalletUiDropdown size="sm" />
                 <WalletUiClusterDropdown size="sm" />
             </div>
         </nav>

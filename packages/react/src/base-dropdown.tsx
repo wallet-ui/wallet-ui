@@ -1,16 +1,27 @@
+import { UiWallet } from '@wallet-standard/react';
 import React, { HTMLAttributes } from 'react';
 
 import { BaseButton, BaseButtonProps } from './base-button';
 import { BaseDropdownControl } from './use-base-dropdown';
+import { useWalletUiWallet } from './use-wallet-ui-wallet';
+
+export enum BaseDropdownItemType {
+    Item = 'Item',
+    WalletConnect = 'WalletConnect',
+    WalletCopy = 'WalletCopy',
+    WalletDisconnect = 'WalletDisconnect',
+}
 
 export interface BaseDropdownItem {
     closeMenu?: boolean;
     disabled?: boolean;
-    handler: () => void;
+    handler: () => Promise<void>;
     label: string;
     leftSection?: React.ReactNode;
     rightSection?: React.ReactNode;
+    type: BaseDropdownItemType;
     value: string;
+    wallet?: UiWallet;
 }
 
 export interface BaseDropdownProps {
@@ -45,34 +56,117 @@ export function BaseDropdown({ buttonProps, dropdown, showIndicator, items }: Ba
             {trigger}
             <div {...api.getPositionerProps()} className="wallet-positioner">
                 <ul {...api.getContentProps()} className="wallet-ui-base-dropdown-list" data-part="content">
-                    {items.map(item => (
-                        <li
-                            key={item.value}
-                            {...api.getItemProps({ value: item.value })}
-                            className="wallet-ui-base-dropdown-item"
-                            data-part="item"
-                            onClick={() => {
-                                if (item.disabled) {
-                                    return;
-                                }
-                                item.handler();
-                                if (item.closeMenu !== false) {
-                                    dropdown.close();
-                                }
-                            }}
-                        >
-                            {item.leftSection ? (
-                                <span className="wallet-ui-base-dropdown-item-left-section">{item.leftSection}</span>
-                            ) : null}
-                            {item.label}
-                            {item.rightSection ? (
-                                <span className="wallet-ui-base-dropdown-item-right-section">{item.rightSection}</span>
-                            ) : null}
-                        </li>
-                    ))}
+                    {items.map(item => {
+                        return (
+                            <BaseDropdownItem
+                                {...api.getItemProps({ value: item.value })}
+                                key={item.value}
+                                item={item}
+                                afterClick={() => {
+                                    if (item.disabled) {
+                                        return;
+                                    }
+                                    if (item.closeMenu !== false) {
+                                        dropdown.close();
+                                    }
+                                }}
+                            />
+                        );
+                    })}
                 </ul>
             </div>
         </div>
+    );
+}
+
+function BaseDropdownItem({ afterClick, item }: BaseDropdownItemRenderProps) {
+    if (!item.wallet) {
+        return <BaseDropdownItemRender afterClick={afterClick} item={item} />;
+    }
+    switch (item.type) {
+        case BaseDropdownItemType.Item:
+            return <BaseDropdownItemRender afterClick={afterClick} item={item} />;
+        case BaseDropdownItemType.WalletConnect:
+            return <BaseDropdownItemWalletConnect afterClick={afterClick} item={item} wallet={item.wallet} />;
+        case BaseDropdownItemType.WalletCopy:
+            return <BaseDropdownItemRender afterClick={afterClick} item={item} />;
+        case BaseDropdownItemType.WalletDisconnect:
+            return <BaseDropdownItemWalletDisconnect afterClick={afterClick} item={item} wallet={item.wallet} />;
+    }
+}
+
+function BaseDropdownItemWalletConnect({
+    afterClick,
+    item,
+    wallet,
+}: BaseDropdownItemRenderProps & {
+    wallet: UiWallet;
+}) {
+    const { connect } = useWalletUiWallet({ wallet });
+    return (
+        <BaseDropdownItemRender
+            afterClick={afterClick}
+            item={{
+                ...item,
+
+                handler: async () => {
+                    //
+                    await connect();
+                    return await item.handler();
+                },
+            }}
+        />
+    );
+}
+
+function BaseDropdownItemWalletDisconnect({
+    afterClick,
+    item,
+    wallet,
+}: BaseDropdownItemRenderProps & {
+    wallet: UiWallet;
+}) {
+    const { disconnect } = useWalletUiWallet({ wallet });
+    return (
+        <BaseDropdownItemRender
+            afterClick={afterClick}
+            item={{
+                ...item,
+                handler: async () => {
+                    //
+                    await disconnect();
+                    return await item.handler();
+                },
+            }}
+        />
+    );
+}
+
+interface BaseDropdownItemRenderProps {
+    afterClick: () => void;
+    item: BaseDropdownItem;
+}
+
+function BaseDropdownItemRender({ afterClick, item }: BaseDropdownItemRenderProps) {
+    function onClick() {
+        if (item.disabled) {
+            return;
+        }
+        void item.handler().then(() => {
+            afterClick();
+        });
+    }
+
+    return (
+        <li className="wallet-ui-base-dropdown-item" data-part="item" onClick={onClick}>
+            {item.leftSection ? (
+                <span className="wallet-ui-base-dropdown-item-left-section">{item.leftSection}</span>
+            ) : null}
+            {item.label}
+            {item.rightSection ? (
+                <span className="wallet-ui-base-dropdown-item-right-section">{item.rightSection}</span>
+            ) : null}
+        </li>
     );
 }
 

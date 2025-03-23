@@ -1,22 +1,22 @@
 import { BaseButton, useWalletUi } from '@wallet-ui/react';
 import React, { useState } from 'react';
-import { UiPanel } from '../../ui/';
+import { UiPanel } from '../../ui';
 
-export function PlaygroundClientGetVersion() {
+export function PlaygroundClientGetGenesisHash() {
     const [result, setResult] = useState('');
     const { client } = useWalletUi();
 
     return (
-        <UiPanel title="Get Version">
+        <UiPanel title="Get GenesisHash">
             <BaseButton
-                label="Get Version"
+                label="Get GenesisHash"
                 onClick={() => {
                     setResult('Loading...');
                     void client.rpc
-                        .getVersion()
+                        .getGenesisHash()
                         .send()
                         .then(res => {
-                            setResult(res['solana-core']);
+                            setResult(res.toString());
                         });
                 }}
             />

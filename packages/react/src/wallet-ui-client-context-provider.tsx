@@ -1,10 +1,17 @@
 import { createSolanaClient, SolanaClient } from 'gill';
 import React, { useMemo } from 'react';
 
-import { WalletUiClientContext, WalletUiClientContextProviderProps } from './wallet-ui-client-context';
+import {
+    WalletUiSolanaClientContext,
+    WalletUiSolanaClientContextProviderProps,
+} from './wallet-ui-solana-client-context';
 
-export function WalletUiClientContextProvider({ children, urlOrMoniker }: WalletUiClientContextProviderProps) {
-    const value = useMemo(() => createSolanaClient({ urlOrMoniker }) as SolanaClient, [urlOrMoniker]);
-
-    return <WalletUiClientContext.Provider value={value}>{children}</WalletUiClientContext.Provider>;
+export function WalletUiClientContextProvider({ children, urlOrMoniker }: WalletUiSolanaClientContextProviderProps) {
+    return (
+        <WalletUiSolanaClientContext.Provider
+            value={useMemo(() => createSolanaClient({ urlOrMoniker }) as SolanaClient, [urlOrMoniker])}
+        >
+            {children}
+        </WalletUiSolanaClientContext.Provider>
+    );
 }

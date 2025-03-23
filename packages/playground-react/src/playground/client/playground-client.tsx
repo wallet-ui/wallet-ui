@@ -1,6 +1,7 @@
 import React from 'react';
 import { UiCard } from '../../ui/';
-import { PlaygroundClientGetGenesisHash, PlaygroundClientGetVersion } from './playground-client-get-version';
+import { PlaygroundClientGetGenesisHash } from './playground-client-get-genesis-hash';
+import { PlaygroundClientGetVersion } from './playground-client-get-version';
 
 export function PlaygroundClient() {
     return (

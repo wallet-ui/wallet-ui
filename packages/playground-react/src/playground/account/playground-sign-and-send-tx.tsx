@@ -3,7 +3,7 @@ import {
     type UiWalletAccount,
     useWalletAccountTransactionSendingSigner,
     useWallets,
-    useWalletUiClient,
+    useWalletUi,
     useWalletUiCluster,
 } from '@wallet-ui/react';
 import {
@@ -25,7 +25,7 @@ import { PlaygroundTxSuccess } from '../playground-tx-success';
 export function PlaygroundSignAndSendTx({ account }: { account: UiWalletAccount }) {
     const { error, hasError, setError, resetError } = useError();
     const { cluster } = useWalletUiCluster();
-    const { rpc } = useWalletUiClient();
+    const { client } = useWalletUi();
     const wallets = useWallets();
     const [isSendingTransaction, setIsSendingTransaction] = useState(false);
     const [lastSignature, setLastSignature] = useState<Uint8Array | undefined>();
@@ -54,7 +54,7 @@ export function PlaygroundSignAndSendTx({ account }: { account: UiWalletAccount 
             if (!recipientAccount) {
                 throw new Error('The address of the recipient could not be found');
             }
-            const { value: latestBlockhash } = await rpc.getLatestBlockhash({ commitment: 'confirmed' }).send();
+            const { value: latestBlockhash } = await client.rpc.getLatestBlockhash({ commitment: 'confirmed' }).send();
             const message = pipe(
                 createTransactionMessage({ version: 0 }),
                 m => setTransactionMessageFeePayerSigner(transactionSendingSigner, m),

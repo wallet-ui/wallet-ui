@@ -1,5 +1,4 @@
-import { useWalletUiAccount, WalletUiDropdown } from '@wallet-ui/react';
-import { WalletUiAccountInfo } from '@wallet-ui/react/src/wallet-ui-account-context';
+import { useWalletUiAccount, WalletUiAccountInfo, WalletUiDropdown } from '@wallet-ui/react';
 import React from 'react';
 
 export interface WalletUiAccountGuardProps {

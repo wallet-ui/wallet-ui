@@ -1,13 +1,34 @@
+import { useWalletUi } from '@wallet-ui/react';
+import { getMonikerFromGenesisHash } from 'gill';
 import React from 'react';
 import { UiCard } from '../../ui/';
-import { PlaygroundClientGetGenesisHash } from './playground-client-get-genesis-hash';
-import { PlaygroundClientGetVersion } from './playground-client-get-version';
+import { PlaygroundRunCommand } from './playground-run-command';
 
 export function PlaygroundClient() {
+    const { client } = useWalletUi();
+
+    const commandMap = new Map<string, () => Promise<unknown>>()
+        .set('getLatestBlockhash', () =>
+            client.rpc
+                .getLatestBlockhash()
+                .send()
+                .then(blockhash => blockhash.value),
+        )
+        .set('getGenesisHash', () =>
+            client.rpc
+                .getGenesisHash()
+                .send()
+                .then(genesisHash => ({
+                    genesisHash,
+                    cluster: getMonikerFromGenesisHash(genesisHash),
+                })),
+        );
+
     return (
         <UiCard title="Solana Client" open>
-            <PlaygroundClientGetVersion />
-            <PlaygroundClientGetGenesisHash />
+            {Array.from(commandMap.entries()).map(([label, command]) => (
+                <PlaygroundRunCommand key={label} command={command} label={label} />
+            ))}
         </UiCard>
     );
 }

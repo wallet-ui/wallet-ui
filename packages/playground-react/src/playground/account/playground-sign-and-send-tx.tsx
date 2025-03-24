@@ -16,8 +16,8 @@ import {
 } from 'gill';
 import type { SyntheticEvent } from 'react';
 import React, { useMemo, useState } from 'react';
-import { solStringToLamports } from '../../util/sol-string-to-lamports';
-import { useError } from '../../util/use-error';
+import { solStringToLamports } from '../../lib/sol-string-to-lamports';
+import { useError } from '../../lib/use-error';
 
 import { PlaygroundErrorPanel } from '../playground-error-panel';
 import { PlaygroundTxSuccess } from '../playground-tx-success';

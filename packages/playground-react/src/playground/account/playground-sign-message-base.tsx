@@ -2,7 +2,7 @@ import { BaseButton, useWalletUiCluster } from '@wallet-ui/react';
 import type { ReadonlyUint8Array } from 'gill';
 import type { SyntheticEvent } from 'react';
 import React, { useState } from 'react';
-import { useError } from '../../util/use-error';
+import { useError } from '../../lib/use-error';
 
 import { PlaygroundErrorPanel } from '../playground-error-panel';
 import { PlaygroundTxSuccess } from '../playground-tx-success';

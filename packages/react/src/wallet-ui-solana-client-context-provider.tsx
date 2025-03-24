@@ -6,7 +6,10 @@ import {
     WalletUiSolanaClientContextProviderProps,
 } from './wallet-ui-solana-client-context';
 
-export function WalletUiClientContextProvider({ children, urlOrMoniker }: WalletUiSolanaClientContextProviderProps) {
+export function WalletUiSolanaClientContextProvider({
+    children,
+    urlOrMoniker,
+}: WalletUiSolanaClientContextProviderProps) {
     return (
         <WalletUiSolanaClientContext.Provider
             value={useMemo(() => createSolanaClient({ urlOrMoniker }) as SolanaClient, [urlOrMoniker])}

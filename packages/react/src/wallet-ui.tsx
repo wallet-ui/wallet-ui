@@ -2,10 +2,10 @@ import { SolanaCluster } from '@wallet-ui/core';
 import React from 'react';
 
 import { WalletUiAccountContextProvider } from './wallet-ui-account-context-provider';
-import { WalletUiClientContextProvider } from './wallet-ui-client-context-provider';
 import { WalletUiClusterContextProvider } from './wallet-ui-cluster-context-provider';
 import { WalletUiContextProviderProps } from './wallet-ui-context';
 import { WalletUiContextProvider } from './wallet-ui-context-provider';
+import { WalletUiSolanaClientContextProvider } from './wallet-ui-solana-client-context-provider';
 
 export interface WalletUiConfig extends Omit<WalletUiContextProviderProps, 'children'> {
     clusterStorageKey?: string;
@@ -33,11 +33,11 @@ export function WalletUi({
                 storageKey={clusterStorageKey}
                 render={({ cluster }) => {
                     return (
-                        <WalletUiClientContextProvider urlOrMoniker={cluster.urlOrMoniker}>
+                        <WalletUiSolanaClientContextProvider urlOrMoniker={cluster.urlOrMoniker}>
                             <WalletUiAccountContextProvider storageKey={selectedAccountStorageKey}>
                                 <WalletUiContextProvider {...config}>{children}</WalletUiContextProvider>
                             </WalletUiAccountContextProvider>
-                        </WalletUiClientContextProvider>
+                        </WalletUiSolanaClientContextProvider>
                     );
                 }}
             />

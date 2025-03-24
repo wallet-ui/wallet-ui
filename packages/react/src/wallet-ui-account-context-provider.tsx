@@ -127,7 +127,7 @@ export function WalletUiAccountContextProvider({
             return [];
         }
         return [cluster.id, getUiWalletAccountStorageKey(account)].filter(Boolean);
-    }, [account]);
+    }, [account, cluster.id]);
     return (
         <WalletUiAccountContext.Provider
             value={useMemo(

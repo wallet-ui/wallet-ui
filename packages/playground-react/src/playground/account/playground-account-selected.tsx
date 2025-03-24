@@ -1,4 +1,4 @@
-import { WalletUiDropdown } from '@wallet-ui/react';
+import { WalletUiClusterDropdown, WalletUiDropdown } from '@wallet-ui/react';
 import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { UiPanel, UiStack } from '../../ui/';
@@ -16,6 +16,8 @@ export function PlaygroundAccountSelected() {
             render={({ account, accountKeys }) => (
                 <UiStack>
                     <WalletUiDropdown />
+                    <WalletUiClusterDropdown />
+                    <pre className="text-xs font-mono">{JSON.stringify({ accountKeys }, null, 2)}</pre>
                     <UiPanel title="Sign And Send Tx">
                         <ErrorBoundary FallbackComponent={PlaygroundErrorBoundaryNotSupported} resetKeys={accountKeys}>
                             <PlaygroundSignAndSendTx account={account} />

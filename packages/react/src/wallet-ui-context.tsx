@@ -9,8 +9,9 @@ export interface WalletUiContextProviderProps {
     size?: WalletUiSize;
 }
 
-export interface WalletUiProviderContextValue {
+export interface WalletUiContextValue {
     account?: UiWalletAccount;
+    accountKeys: string[];
     client: SolanaClient;
     connect: (wallet: UiWalletAccount) => void;
     connected: boolean;
@@ -26,4 +27,4 @@ export interface WalletUiContextProviderProps {
     size?: WalletUiSize;
 }
 
-export const WalletUiContext = React.createContext<WalletUiProviderContextValue>({} as WalletUiProviderContextValue);
+export const WalletUiContext = React.createContext<WalletUiContextValue>({} as WalletUiContextValue);

@@ -35,7 +35,7 @@ importers:
         version: 0.10.0
       '@solana/eslint-config-solana':
         specifier: ^4.0.0
-        version: 4.0.0(902a16b83865eebafc237cb92352e183)
+        version: 4.0.0(1f00ba4fbbbb6e3e7361a86933bf9090)
       '@solana/prettier-config-solana':
         specifier: 0.0.5
         version: 0.0.5(prettier@3.5.3)
@@ -170,8 +170,8 @@ importers:
         specifier: ^0.4.19
         version: 0.4.19(eslint@9.23.0(jiti@2.4.2))
       globals:
-        specifier: ^15.13.0
-        version: 15.13.0
+        specifier: ^16.0.0
+        version: 16.0.0
       vite:
         specifier: ^6.2.1
         version: 6.2.1(@types/node@22.10.2)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.18.0)(tsx@4.19.2)(yaml@2.7.0)
@@ -228,8 +228,8 @@ importers:
         specifier: ^0.4.19
         version: 0.4.19(eslint@9.23.0(jiti@2.4.2))
       globals:
-        specifier: ^15.13.0
-        version: 15.15.0
+        specifier: ^16.0.0
+        version: 16.0.0
       typescript:
         specifier: ~5.7.2
         version: 5.7.3
@@ -4012,12 +4012,8 @@ packages:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
     engines: {node: '>=18'}
 
-  globals@15.13.0:
-    resolution: {integrity: sha512-49TewVEz0UxZjr1WYYsWpPrhyC/B/pA8Bq0fUmet2n+eR7yn0IvNzNaoBwnK6mdkzcN+se7Ez9zUgULTz2QH4g==}
-    engines: {node: '>=18'}
-
-  globals@15.15.0:
-    resolution: {integrity: sha512-7ACyT3wmyp3I61S4fG682L0VA2RGD9otkqGJIwNUMF1SWUombIIk+af1unuDYgMm082aHYwD+mzJvv9Iu8dsgg==}
+  globals@16.0.0:
+    resolution: {integrity: sha512-iInW14XItCXET01CQFqudPOWP2jYMl7T+QRQT+UNcR/iQncN/F0UNpgd76iFkBPgNQb4+X3LV9tLJYzwh+Gl3A==}
     engines: {node: '>=18'}
 
   globby@11.1.0:
@@ -8027,7 +8023,7 @@ snapshots:
       commander: 13.1.0
       typescript: 5.7.3
 
-  '@solana/eslint-config-solana@4.0.0(902a16b83865eebafc237cb92352e183)':
+  '@solana/eslint-config-solana@4.0.0(1f00ba4fbbbb6e3e7361a86933bf9090)':
     dependencies:
       '@eslint/js': 9.21.0
       '@types/eslint__js': 8.42.3
@@ -8037,7 +8033,7 @@ snapshots:
       eslint-plugin-simple-import-sort: 12.1.1(eslint@9.23.0(jiti@2.4.2))
       eslint-plugin-sort-keys-fix: 1.1.2
       eslint-plugin-typescript-sort-keys: 3.3.0(@typescript-eslint/parser@8.25.0(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3)
-      globals: 15.15.0
+      globals: 16.0.0
       jest: 30.0.0-alpha.6(@types/node@22.10.2)(ts-node@10.9.2(@swc/core@1.11.13(@swc/helpers@0.5.11))(@types/node@22.10.2)(typescript@5.7.3))
       typescript: 5.7.3
       typescript-eslint: 8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3)
@@ -10091,9 +10087,7 @@ snapshots:
 
   globals@14.0.0: {}
 
-  globals@15.13.0: {}
-
-  globals@15.15.0: {}
+  globals@16.0.0: {}
 
   globby@11.1.0:
     dependencies:

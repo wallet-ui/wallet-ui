@@ -9,15 +9,15 @@ export * from './use-base-dropdown';
 export * from './use-base-modal';
 export * from './use-wallet-ui';
 export * from './use-wallet-ui-account';
-export * from './use-wallet-ui-solana-client';
 export * from './use-wallet-ui-cluster';
 export * from './use-wallet-ui-dropdown';
+export * from './use-wallet-ui-solana-client';
 export * from './use-wallet-ui-wallet';
 export * from './use-wallet-ui-wallets';
 export * from './wallet-ui';
+export * from './wallet-ui-account-context';
+export * from './wallet-ui-account-context-provider';
 export * from './wallet-ui-button';
-export * from './wallet-ui-solana-client-context';
-export * from './wallet-ui-client-context-provider';
 export * from './wallet-ui-cluster-context';
 export * from './wallet-ui-cluster-context-provider';
 export * from './wallet-ui-cluster-dropdown';
@@ -32,6 +32,8 @@ export * from './wallet-ui-list';
 export * from './wallet-ui-list-button';
 export * from './wallet-ui-modal';
 export * from './wallet-ui-modal-trigger';
+export * from './wallet-ui-solana-client-context';
+export * from './wallet-ui-solana-client-context-provider';
 
 // Re-exports
 export * from '@solana/react';

@@ -12,8 +12,8 @@ import {
 } from '@wallet-ui/react';
 
 import React, { useMemo, useState } from 'react';
+import { ellipsify } from '../../lib/ellipsify';
 import { UiGroup, UiPanel, UiSizes } from '../../ui/';
-import { ellipsify } from '../../util/ellipsify';
 
 interface GetItemsConnectedOptions {
     account?: UiWalletAccount;

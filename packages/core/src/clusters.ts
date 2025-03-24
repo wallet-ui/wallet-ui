@@ -27,7 +27,7 @@ export function createSolanaDevnet(props: CreateSolanaProps = {}): SolanaCluster
 export function createSolanaLocalnet(props: CreateSolanaProps = {}): SolanaCluster {
     return createSolanaCluster(props, {
         cluster: 'localnet',
-        id: 'solana:local',
+        id: 'solana:localnet',
         label: 'Localnet',
         urlOrMoniker: 'localnet' as LocalnetUrl,
     });

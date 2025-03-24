@@ -35,7 +35,7 @@ describe('createSolanaCluster', () => {
         expect(result).toMatchInlineSnapshot(`
             {
               "cluster": "localnet",
-              "id": "solana:local",
+              "id": "solana:localnet",
               "label": "Localnet",
               "urlOrMoniker": "localnet",
             }
@@ -62,7 +62,7 @@ describe('createSolanaCluster', () => {
         expect(result).toMatchInlineSnapshot(`
             {
               "cluster": "localnet",
-              "id": "solana:local",
+              "id": "solana:localnet",
               "label": "Localnet",
               "urlOrMoniker": "http://host.docker.internal:8899",
             }
@@ -78,7 +78,7 @@ describe('createSolanaCluster', () => {
         expect(result).toMatchInlineSnapshot(`
             {
               "cluster": "localnet",
-              "id": "solana:local",
+              "id": "solana:localnet",
               "label": "Custom Local",
               "urlOrMoniker": "http://host.docker.internal:8899",
             }

@@ -1,21 +1,25 @@
-export interface Storage {
-    getItem(key: string): string | null;
+import { persistentAtom } from '@nanostores/persistent';
+import { computed, WritableAtom } from 'nanostores';
 
-    removeItem(key: string): void;
+export class Storage<T> {
+    private readonly atom: WritableAtom<T>;
 
-    setItem(key: string, value: string): void;
-}
-
-export class LocalStorage implements Storage {
-    getItem(key: string): string | null {
-        return localStorage.getItem(key);
+    constructor(
+        readonly key: string,
+        readonly initial: T,
+    ) {
+        this.atom = persistentAtom<T>(key, initial, { decode: JSON.parse, encode: JSON.stringify });
     }
 
-    setItem(key: string, value: string): void {
-        localStorage.setItem(key, value);
+    get() {
+        return this.atom.get();
     }
 
-    removeItem(key: string): void {
-        localStorage.removeItem(key);
+    set(value: T) {
+        this.atom.set(value);
+    }
+
+    get value() {
+        return computed(this.atom, value => value);
     }
 }

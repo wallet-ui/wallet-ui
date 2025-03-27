@@ -1,4 +1,4 @@
-import { SolanaCluster } from '@wallet-ui/core';
+import { SolanaCluster, StorageAccount, StorageCluster } from '@wallet-ui/core';
 import React from 'react';
 
 import { WalletUiAccountContextProvider } from './wallet-ui-account-context-provider';
@@ -8,9 +8,9 @@ import { WalletUiContextProvider } from './wallet-ui-context-provider';
 import { WalletUiSolanaClientContextProvider } from './wallet-ui-solana-client-context-provider';
 
 export interface WalletUiConfig extends Omit<WalletUiContextProviderProps, 'children'> {
-    clusterStorageKey?: string;
+    accountStorage?: StorageAccount;
+    clusterStorage?: StorageCluster;
     clusters: SolanaCluster[];
-    selectedAccountStorageKey?: string;
 }
 
 export function createWalletUiConfig(props: WalletUiConfig): WalletUiConfig {
@@ -22,19 +22,16 @@ export interface WalletUiProps {
     config: WalletUiConfig;
 }
 
-export function WalletUi({
-    children,
-    config: { clusters, clusterStorageKey, selectedAccountStorageKey, ...config },
-}: WalletUiProps) {
+export function WalletUi({ children, config: { accountStorage, clusters, clusterStorage, ...config } }: WalletUiProps) {
     return (
         <React.Fragment>
             <WalletUiClusterContextProvider
                 clusters={clusters}
-                storageKey={clusterStorageKey}
+                storage={clusterStorage}
                 render={({ cluster }) => {
                     return (
                         <WalletUiSolanaClientContextProvider urlOrMoniker={cluster.urlOrMoniker}>
-                            <WalletUiAccountContextProvider storageKey={selectedAccountStorageKey}>
+                            <WalletUiAccountContextProvider storage={accountStorage}>
                                 <WalletUiContextProvider {...config}>{children}</WalletUiContextProvider>
                             </WalletUiAccountContextProvider>
                         </WalletUiSolanaClientContextProvider>

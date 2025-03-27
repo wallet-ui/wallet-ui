@@ -1,7 +1,7 @@
-import { SolanaCluster, SolanaClusterId } from '@wallet-ui/core';
-import React, { useMemo } from 'react';
+import { useStore } from '@nanostores/react';
+import { createStorageCluster, SolanaClusterId } from '@wallet-ui/core';
+import React from 'react';
 
-import { useLocalStorage } from './use-local-storage';
 import {
     WalletUiClusterContext,
     WalletUiClusterContextProviderProps,
@@ -11,27 +11,30 @@ import {
 export function WalletUiClusterContextProvider({
     clusters,
     render,
-    storageKey = '__wallet-ui:selected-cluster',
+    storage = createStorageCluster(),
 }: WalletUiClusterContextProviderProps) {
-    const [clusterId, setClusterId] = useLocalStorage(storageKey, 'solana:devnet');
+    const clusterId = useStore(storage.value);
+    if (!clusterId) {
+        throw new Error('Error reading cluster id from storage');
+    }
     if (!clusters.length) {
         throw new Error('No clusters provided');
     }
-    const cluster = useMemo<SolanaCluster>(() => {
-        for (const cluster of clusters) {
-            if (cluster.id === clusterId) {
-                return cluster;
-            }
-        }
-        return clusters[0];
-    }, [clusterId, clusters]);
+
+    const cluster = clusters.find(c => c.id === clusterId);
+    if (!cluster) {
+        throw new Error(`Cluster ${clusterId.toString()} not found`);
+    }
 
     const value: WalletUiClusterContextValue = {
         cluster,
         clusters,
-        setCluster: (cluster: SolanaClusterId) => {
-            localStorage.setItem(storageKey, cluster);
-            setClusterId(cluster);
+        setCluster: (clusterId: SolanaClusterId) => {
+            const cluster = clusters.find(c => c.id === clusterId);
+            if (!cluster) {
+                throw new Error(`Cluster ${clusterId} not found`);
+            }
+            storage.set(clusterId);
         },
     };
 

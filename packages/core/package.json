@@ -73,7 +73,10 @@
         "supports bigint and not dead",
         "maintained node versions"
     ],
-    "dependencies": {},
+    "dependencies": {
+        "@nanostores/persistent": "0.10.2",
+        "nanostores": "0.11.4"
+    },
     "peerDependencies": {
         "gill": "^0.8.0",
         "typescript": ">=5"

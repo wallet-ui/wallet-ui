@@ -1,3 +1,4 @@
+import { useStore } from '@nanostores/react';
 import {
     getUiWalletAccountStorageKey,
     UiWallet,
@@ -6,22 +7,23 @@ import {
     uiWalletAccountsAreSame,
     useWallets,
 } from '@wallet-standard/react';
+import { createStorageAccount, StorageAccount } from '@wallet-ui/core';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { useWalletUiCluster } from './use-wallet-ui-cluster';
 import { WalletUiAccountContext } from './wallet-ui-account-context';
 
-const STORAGE_KEY = 'wallet-ui:selected-wallet-account';
-
 let wasSetterInvoked = false;
 
-function getSavedWalletAccount(wallets: readonly UiWallet[], storageKey: string): UiWalletAccount | undefined {
+function getSavedWalletAccount(
+    wallets: readonly UiWallet[],
+    savedWalletNameAndAddress?: string,
+): UiWalletAccount | undefined {
     if (wasSetterInvoked) {
         // After the user makes an explicit choice of wallet, stop trying to auto-select the
         // saved wallet, if and when it appears.
         return;
     }
-    const savedWalletNameAndAddress = localStorage.getItem(storageKey);
     if (!savedWalletNameAndAddress || typeof savedWalletNameAndAddress !== 'string') {
         return;
     }
@@ -29,15 +31,11 @@ function getSavedWalletAccount(wallets: readonly UiWallet[], storageKey: string)
     if (!savedWalletName || !savedAccountAddress) {
         return;
     }
-    for (const wallet of wallets) {
-        if (wallet.name === savedWalletName) {
-            for (const account of wallet.accounts) {
-                if (account.address === savedAccountAddress) {
-                    return account;
-                }
-            }
-        }
+    const wallet = wallets.find(w => w.name === savedWalletName);
+    if (!wallet) {
+        return;
     }
+    return wallet.accounts.find(a => a.address === savedAccountAddress);
 }
 
 /**
@@ -47,15 +45,16 @@ function getSavedWalletAccount(wallets: readonly UiWallet[], storageKey: string)
  */
 export function WalletUiAccountContextProvider({
     children,
-    storageKey = STORAGE_KEY,
+    storage = createStorageAccount(),
 }: {
     children: React.ReactNode;
-    storageKey?: string;
+    storage?: StorageAccount;
 }) {
     const { cluster } = useWalletUiCluster();
     const wallets = useWallets();
+    const accountId = useStore(storage.value);
     const [account, setAccountInternal] = useState<UiWalletAccount | undefined>(() =>
-        getSavedWalletAccount(wallets, storageKey),
+        getSavedWalletAccount(wallets, accountId),
     );
 
     function setAccount(setStateAction: React.SetStateAction<UiWalletAccount | undefined>) {
@@ -64,21 +63,17 @@ export function WalletUiAccountContextProvider({
             const nextWalletAccount =
                 typeof setStateAction === 'function' ? setStateAction(prevAccount) : setStateAction;
             const accountKey = nextWalletAccount ? getUiWalletAccountStorageKey(nextWalletAccount) : undefined;
-            if (accountKey) {
-                localStorage.setItem(storageKey, accountKey);
-            } else {
-                localStorage.removeItem(storageKey);
-            }
+            storage.set(accountKey ? accountKey : undefined);
             return nextWalletAccount;
         });
     }
 
     useEffect(() => {
-        const savedWalletAccount = getSavedWalletAccount(wallets, storageKey);
+        const savedWalletAccount = getSavedWalletAccount(wallets, accountId);
         if (savedWalletAccount) {
             setAccountInternal(savedWalletAccount);
         }
-    }, [wallets]);
+    }, [accountId, wallets]);
     const walletAccount = useMemo(() => {
         if (account) {
             for (const uiWallet of wallets) {

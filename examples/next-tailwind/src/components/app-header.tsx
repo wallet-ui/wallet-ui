@@ -1,7 +1,13 @@
 'use client';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
+const AccountDropdown = dynamic(() => import('@wallet-ui/react').then(m => m.WalletUiDropdown), { ssr: false });
+const ClusterDropdown = dynamic(() => import('@wallet-ui/react').then(m => m.WalletUiClusterDropdown), {
+    ssr: false,
+});
 
 export function AppHeader({ links }: { links: { label: string; to: string }[] }) {
     const pathname = usePathname();
@@ -27,8 +33,8 @@ export function AppHeader({ links }: { links: { label: string; to: string }[] })
                 </ul>
             </div>
             <div className="flex items-center gap-4">
-                {/*<WalletUiDropdown size="sm" />*/}
-                {/*<WalletUiClusterDropdown size="sm" />*/}
+                <AccountDropdown size="sm" />
+                <ClusterDropdown size="sm" />
             </div>
         </nav>
     );

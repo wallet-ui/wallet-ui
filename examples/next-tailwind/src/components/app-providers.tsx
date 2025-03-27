@@ -1,21 +1,30 @@
 'use client';
 import '@wallet-ui/tailwind/index.css';
-import { createSolanaDevnet, createSolanaLocalnet, createSolanaTestnet, createWalletUiConfig } from '@wallet-ui/react';
+import {
+    createSolanaDevnet,
+    createSolanaLocalnet,
+    createSolanaTestnet,
+    createStorageCluster,
+    createWalletUiConfig,
+    WalletUi,
+} from '@wallet-ui/react';
 import { ThemeProvider } from 'next-themes';
 import React from 'react';
 import { ReactQueryProvider } from './react-query-provider';
 
-const config = createWalletUiConfig({
+// TODO: Figure out how we can store the cluster in the cookie
+export const storageCluster = createStorageCluster();
+export const walletUiConfig = createWalletUiConfig({
     clusters: [createSolanaDevnet(), createSolanaLocalnet(), createSolanaTestnet()],
+    clusterStorage: storageCluster,
 });
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
-    console.log('WalletUiConfig', config);
     return (
         <ThemeProvider>
-            {/*<WalletUi config={config}>*/}
-            <ReactQueryProvider>{children}</ReactQueryProvider>
-            {/*</WalletUi>*/}
+            <WalletUi config={walletUiConfig}>
+                <ReactQueryProvider>{children}</ReactQueryProvider>
+            </WalletUi>
         </ThemeProvider>
     );
 }

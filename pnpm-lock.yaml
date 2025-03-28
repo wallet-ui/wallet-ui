@@ -387,8 +387,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@zag-js/dialog':
-        specifier: 1.3.3
-        version: 1.3.3
+        specifier: 1.6.2
+        version: 1.6.2
       '@zag-js/menu':
         specifier: 1.3.3
         version: 1.3.3
@@ -3422,26 +3422,41 @@ packages:
   '@zag-js/anatomy@1.3.3':
     resolution: {integrity: sha512-w0xH/sjfswqeHJRqWBlsXO6mS31y+9ljAe4BkAvCyp8IWSfy+w3toKBOoRB2cN3N0oKdcC3k6kfpBS4gSsCqUw==}
 
-  '@zag-js/aria-hidden@1.3.3':
-    resolution: {integrity: sha512-P0hfx9xNThRkHxyi+mBSJl12hFJgbWVQ6A2LUZedpfJFt3npRAgz0WEykEg5xQP4NlwuCowS4/b4Im4yOwwj2A==}
+  '@zag-js/anatomy@1.6.2':
+    resolution: {integrity: sha512-uttZI/SdoZjQy1STnUnbu9Hu3L26ZhVI8dMNG5AYjqj2frPrjKaXo75xBzd7D6BlijQ/s9TOXnustcT11f4E9Q==}
+
+  '@zag-js/aria-hidden@1.6.2':
+    resolution: {integrity: sha512-KqHW7E5Ov4xQL7gA7bwP1ZIFaBKzDYG70psUW4D/uHZ+mQVKbSHbUNWGI9UfBkbzEDrpyFw+CwxFZ8PyLzPXbQ==}
 
   '@zag-js/core@1.3.3':
     resolution: {integrity: sha512-Gou9WIan5GHT/IG73N6Q6gcgD1hF1G7wrIp4xz5Ca0UzvsjJZvhGRWsjWirIGlub145KHutSWoU48SHCLzjjSg==}
 
-  '@zag-js/dialog@1.3.3':
-    resolution: {integrity: sha512-Hrc4K9p3cJV3pqvVJL5oj1dPE5GI+8EwcG5gx+i7NBuqQtJyE7mk+EN/fTrUoc461yX+h5lMhAQ1uJtI1sgIUQ==}
+  '@zag-js/core@1.6.2':
+    resolution: {integrity: sha512-dTeXLGNAhztsrXvA4uLMY6zc8YhsE3adzS5wKfE81VTho3kGtopcTnTXlb9Xjsh3geyizokpsFEUCjEW1bRR+w==}
+
+  '@zag-js/dialog@1.6.2':
+    resolution: {integrity: sha512-9zMsYNVCUh6ziNNceAUgEdaHiOdJA3otAQF0QcOSIkF6evw/X4IW8WtGQtfdHHW8xT7AFrY/Pr1QbWRGl9/bFA==}
 
   '@zag-js/dismissable@1.3.3':
     resolution: {integrity: sha512-HDCf7DKCIAaoehhy/D1UzhOXVjLxvy3Fa2smitqkJDFgb+7xoM7dvChTZ3x+RHtQDXzXAuoOP756Rhy2Hi+T3A==}
 
+  '@zag-js/dismissable@1.6.2':
+    resolution: {integrity: sha512-rLCcSykP9ABwkcDZO7sTKRFyD2qozrVVZEl0N7xnBK4Q3/ynGTy+YPr6Nw+vdIMXESrKNcf0w+UGkZVpCD3Qrw==}
+
   '@zag-js/dom-query@1.3.3':
     resolution: {integrity: sha512-xPSTRlE9ZnNjHQMmZ3j1J/BFrlNX4T3OHkHGnvrB6LswJLTpraNxSAKENJ5pFf09UQjcwGltWHqwQivT6+pwfA==}
 
-  '@zag-js/focus-trap@1.3.3':
-    resolution: {integrity: sha512-fK+XV9EcA0QaQA+968aSCM0QMLr7xdzfYr3hSByGUSOpY+r8R4oKSNbf6JCGbSDfYFNrrggjnE0V/7nKWt0f/w==}
+  '@zag-js/dom-query@1.6.2':
+    resolution: {integrity: sha512-DJQrjF2kBjN2/pX+2W4NIfhE7j/tNjuUVl6Jvv4ceujH08CDvLMPJTrcjNJmTyCqEnyjfMXba/vWqzQ+Mn+jlg==}
+
+  '@zag-js/focus-trap@1.6.2':
+    resolution: {integrity: sha512-OuA6xFBy33sa3hrYvaS4NFmP5Z4XILCFKYkAG8nkKb8IpzNB+pRH9+LTNvbZX4cOngoiwvRB4kPpsHRcEIE72A==}
 
   '@zag-js/interact-outside@1.3.3':
     resolution: {integrity: sha512-bJFeLbRGmdgil1glrGNk3XhRJQD5P8X6AMivPUQqUT4DiUmgYA1ChL2l0QIrfvZkxF4gjoKgnJ20PEUq5hcrqA==}
+
+  '@zag-js/interact-outside@1.6.2':
+    resolution: {integrity: sha512-gZmf5PnrrQKLNCAy79FcgkSJ5X3ZDNxEP3zMGuLFBVV3O7ppMRoh3XTqNzVY1NthqPQTuolEIOgTP6hA8wOsEg==}
 
   '@zag-js/menu@1.3.3':
     resolution: {integrity: sha512-xOA9dgcykaVR39zbbaco3uG+Q1uN7xUuCNMyZhJTwmGxp21Y+c4/0ybZTFa03nn2wkfsZDMUqo7TG5nNhj2b/Q==}
@@ -3458,8 +3473,8 @@ packages:
   '@zag-js/rect-utils@1.3.3':
     resolution: {integrity: sha512-byMWQ0zuF1B+HK8sDhY59tgIKQDTvRmDGO/N+d8Dm3eNEeSQa2BpOcwNnZtqjg+jg9TQ7ju2vnS+LtfL/o7VCA==}
 
-  '@zag-js/remove-scroll@1.3.3':
-    resolution: {integrity: sha512-91TO46fKYakr7UVz3VvCzdBrdwwmN3w7hS+Ij/vpxU0O/Q0VeaOhMWfYkjv8EcDVmIxfsLTTLgwYsxv02ZWg9Q==}
+  '@zag-js/remove-scroll@1.6.2':
+    resolution: {integrity: sha512-CUznVCYoa56FY9zry2BWKlb51ooK51Y7US40fk2VwFIpA9JXckVxt7nlgFrA9eX6J1qEIOMtILIzPqs3inN72Q==}
 
   '@zag-js/store@1.3.3':
     resolution: {integrity: sha512-DH8tSUJMCE3WoV88c7uRsZUI9Sape0N57eEcDka3rm1I7nlbia6WY+h245i3DjtrgaS8w5KJl3jCJ4UQHCU4yA==}
@@ -3467,8 +3482,14 @@ packages:
   '@zag-js/types@1.3.3':
     resolution: {integrity: sha512-dwsPUjPX9fwyp5VywLzWC7GinFqYONdMNmEtMi7QxZPubUoMK3ror9rgUS3AZhkKfKx2IXUl707BXbcNqZGDFQ==}
 
+  '@zag-js/types@1.6.2':
+    resolution: {integrity: sha512-ww5/heC3xWdJLGBFJLpACuoWQWPG0Mfzvqzmp+ObNyxEW4YN4jxN2l+fTSPD8uhaETzKAmD341qnTe5SDKDvWg==}
+
   '@zag-js/utils@1.3.3':
     resolution: {integrity: sha512-ji3CizZNPDRQXEjrdvtHCD3bVmjP2bOtGUtwGgwvN9G2o9tbYyY/gaOWE2ik1DEFYJuYS8AIWCGwPJPygrph1g==}
+
+  '@zag-js/utils@1.6.2':
+    resolution: {integrity: sha512-gaEXBVMC3wWEIDXDZUi7/akYrjqFFYSN7omjVaTkVniLxH6uOlz912fVx/yZA9GOF54ddFChYlOAICScSsNp6Q==}
 
   abab@2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
@@ -10323,24 +10344,31 @@ snapshots:
 
   '@zag-js/anatomy@1.3.3': {}
 
-  '@zag-js/aria-hidden@1.3.3': {}
+  '@zag-js/anatomy@1.6.2': {}
+
+  '@zag-js/aria-hidden@1.6.2': {}
 
   '@zag-js/core@1.3.3':
     dependencies:
       '@zag-js/dom-query': 1.3.3
       '@zag-js/utils': 1.3.3
 
-  '@zag-js/dialog@1.3.3':
+  '@zag-js/core@1.6.2':
     dependencies:
-      '@zag-js/anatomy': 1.3.3
-      '@zag-js/aria-hidden': 1.3.3
-      '@zag-js/core': 1.3.3
-      '@zag-js/dismissable': 1.3.3
-      '@zag-js/dom-query': 1.3.3
-      '@zag-js/focus-trap': 1.3.3
-      '@zag-js/remove-scroll': 1.3.3
-      '@zag-js/types': 1.3.3
-      '@zag-js/utils': 1.3.3
+      '@zag-js/dom-query': 1.6.2
+      '@zag-js/utils': 1.6.2
+
+  '@zag-js/dialog@1.6.2':
+    dependencies:
+      '@zag-js/anatomy': 1.6.2
+      '@zag-js/aria-hidden': 1.6.2
+      '@zag-js/core': 1.6.2
+      '@zag-js/dismissable': 1.6.2
+      '@zag-js/dom-query': 1.6.2
+      '@zag-js/focus-trap': 1.6.2
+      '@zag-js/remove-scroll': 1.6.2
+      '@zag-js/types': 1.6.2
+      '@zag-js/utils': 1.6.2
 
   '@zag-js/dismissable@1.3.3':
     dependencies:
@@ -10348,18 +10376,33 @@ snapshots:
       '@zag-js/interact-outside': 1.3.3
       '@zag-js/utils': 1.3.3
 
+  '@zag-js/dismissable@1.6.2':
+    dependencies:
+      '@zag-js/dom-query': 1.6.2
+      '@zag-js/interact-outside': 1.6.2
+      '@zag-js/utils': 1.6.2
+
   '@zag-js/dom-query@1.3.3':
     dependencies:
       '@zag-js/types': 1.3.3
 
-  '@zag-js/focus-trap@1.3.3':
+  '@zag-js/dom-query@1.6.2':
     dependencies:
-      '@zag-js/dom-query': 1.3.3
+      '@zag-js/types': 1.6.2
+
+  '@zag-js/focus-trap@1.6.2':
+    dependencies:
+      '@zag-js/dom-query': 1.6.2
 
   '@zag-js/interact-outside@1.3.3':
     dependencies:
       '@zag-js/dom-query': 1.3.3
       '@zag-js/utils': 1.3.3
+
+  '@zag-js/interact-outside@1.6.2':
+    dependencies:
+      '@zag-js/dom-query': 1.6.2
+      '@zag-js/utils': 1.6.2
 
   '@zag-js/menu@1.3.3':
     dependencies:
@@ -10389,9 +10432,9 @@ snapshots:
 
   '@zag-js/rect-utils@1.3.3': {}
 
-  '@zag-js/remove-scroll@1.3.3':
+  '@zag-js/remove-scroll@1.6.2':
     dependencies:
-      '@zag-js/dom-query': 1.3.3
+      '@zag-js/dom-query': 1.6.2
 
   '@zag-js/store@1.3.3':
     dependencies:
@@ -10401,7 +10444,13 @@ snapshots:
     dependencies:
       csstype: 3.1.3
 
+  '@zag-js/types@1.6.2':
+    dependencies:
+      csstype: 3.1.3
+
   '@zag-js/utils@1.3.3': {}
+
+  '@zag-js/utils@1.6.2': {}
 
   abab@2.0.6: {}
 
@@ -11258,8 +11307,8 @@ snapshots:
       '@typescript-eslint/parser': 8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3)
       eslint: 9.23.0(jiti@2.4.2)
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.10.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-typescript@3.10.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2))
+      eslint-import-resolver-typescript: 3.10.0(eslint-plugin-import@2.31.0)(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-typescript@3.10.0)(eslint@9.23.0(jiti@2.4.2))
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.23.0(jiti@2.4.2))
       eslint-plugin-react: 7.37.4(eslint@9.23.0(jiti@2.4.2))
       eslint-plugin-react-hooks: 5.2.0(eslint@9.23.0(jiti@2.4.2))
@@ -11278,7 +11327,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.10.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2)):
+  eslint-import-resolver-typescript@3.10.0(eslint-plugin-import@2.31.0)(eslint@9.23.0(jiti@2.4.2)):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.4.0
@@ -11289,22 +11338,22 @@ snapshots:
       tinyglobby: 0.2.12
       unrs-resolver: 1.3.2
     optionalDependencies:
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-typescript@3.10.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-typescript@3.10.0)(eslint@9.23.0(jiti@2.4.2))
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2)):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.0)(eslint@9.23.0(jiti@2.4.2)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3)
       eslint: 9.23.0(jiti@2.4.2)
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.10.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2))
+      eslint-import-resolver-typescript: 3.10.0(eslint-plugin-import@2.31.0)(eslint@9.23.0(jiti@2.4.2))
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-typescript@3.10.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2)):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-typescript@3.10.0)(eslint@9.23.0(jiti@2.4.2)):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
@@ -11315,7 +11364,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.23.0(jiti@2.4.2)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2))
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.26.1(eslint@9.23.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.0)(eslint@9.23.0(jiti@2.4.2))
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3

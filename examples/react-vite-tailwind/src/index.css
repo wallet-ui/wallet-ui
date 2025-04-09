@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import '@wallet-ui/tailwind/index.css';
 
 html,
 body,
@@ -21,6 +22,25 @@ body,
         @apply text-gray-900 dark:text-white;
     }
 }
+
+/*:root {*/
+/*    --background: var(--color-red-50);*/
+/*    --border: var(--color-red-200);*/
+/*    --foreground: var(--color-red-950);*/
+/*    --primary-foreground: var(--color-red-100);*/
+/*    --primary: var(--color-red-950);*/
+/*    --ring: var(--color-red-400);*/
+/*}*/
+
+/*.dark {*/
+/*    --background: var(--color-red-950);*/
+/*    --border: var(--color-red-800);*/
+/*    --foreground: var(--color-red-100);*/
+/*    --primary-foreground: var(--color-red-950);*/
+/*    --primary: var(--color-red-100);*/
+/*    --ring: var(--color-red-500);*/
+/*}*/
+
 
 /*:root {*/
 /*    --background: #ffffff;*/

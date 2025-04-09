@@ -1,10 +1,11 @@
-.wallet-ui-base-button {
+
+[data-part='base-button'] {
     /* Background  */
-    @apply bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700;
+    background: var(--background);
     /* Text color */
-    @apply text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white;
+    color: var(--foreground);
     /* Border  */
-    @apply border border-gray-200 dark:border-gray-700;
+    border: var(--border);
     /* Shape */
     @apply rounded-md shadow-sm cursor-pointer;
     /* Composition */
@@ -13,7 +14,23 @@
     @apply disabled:cursor-not-allowed disabled:opacity-50;
 }
 
-.wallet-ui-base-button.sm {
+/*.wallet-x-ui-base-button {*/
+/*    !* Background  *!*/
+/*    @apply bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700;*/
+/*    !* Text color *!*/
+/*    @apply text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white;*/
+/*    !* Border  *!*/
+/*    @apply border border-gray-200 dark:border-gray-700;*/
+/*    !* Shape *!*/
+/*    @apply rounded-md shadow-sm cursor-pointer;*/
+/*    !* Composition *!*/
+/*    @apply flex items-center justify-center gap-2 whitespace-nowrap;*/
+/*    !* Disabled *!*/
+/*    @apply disabled:cursor-not-allowed disabled:opacity-50;*/
+/*}*/
+
+/* sm */
+[data-part='base-button'].sm {
     /* Shape */
     @apply px-3 py-1.5;
     /* Text size */
@@ -22,7 +39,17 @@
     @apply font-normal;
 }
 
-.wallet-ui-base-button.md {
+/*.wallet-ui-base-button.sm {*/
+/*    !* Shape *!*/
+/*    @apply px-3 py-1.5;*/
+/*    !* Text size *!*/
+/*    @apply text-sm;*/
+/*    !* Text weight  *!*/
+/*    @apply font-normal;*/
+/*}*/
+
+/* md */
+[data-part='base-button'].md {
     /* Shape */
     @apply px-4 py-3;
     /* Text size */
@@ -31,7 +58,17 @@
     @apply font-semibold;
 }
 
-.wallet-ui-base-button.lg {
+/*.wallet-ui-base-button.md {*/
+/*    !* Shape *!*/
+/*    @apply px-4 py-3;*/
+/*    !* Text size *!*/
+/*    @apply text-base;*/
+/*    !* Text weight  *!*/
+/*    @apply font-semibold;*/
+/*}*/
+
+/* lg */
+[data-part='base-button'].lg {
     /* Shape */
     @apply px-6 py-4;
     /* Text size */
@@ -40,44 +77,77 @@
     @apply font-bold;
 }
 
-.sm .wallet-ui-base-button-left-section {
+/*.wallet-ui-base-button.lg {*/
+/*    !* Shape *!*/
+/*    @apply px-6 py-4;*/
+/*    !* Text size *!*/
+/*    @apply text-lg;*/
+/*    !* Text weight  *!*/
+/*    @apply font-bold;*/
+/*}*/
+
+/* sm */
+[data-part='base-button'] .sm [data-part='left-section'] {
     /* Composition */
     @apply mr-1;
     /* Text size */
     @apply text-xs;
 }
 
-.md .wallet-ui-base-button-left-section {
+/*.sm .wallet-ui-base-button-left-section {*/
+/*    !* Composition *!*/
+/*    @apply mr-1;*/
+/*    !* Text size *!*/
+/*    @apply text-xs;*/
+/*}*/
+
+/* md */
+[data-part='base-button'] .md [data-part='left-section'] {
     /* Composition */
     @apply mr-2;
     /* Text size */
     @apply text-sm;
 }
 
-.lg .wallet-ui-base-button-left-section {
+/*.md .wallet-ui-base-button-left-section {*/
+/*    !* Composition *!*/
+/*    @apply mr-2;*/
+/*    !* Text size *!*/
+/*    @apply text-sm;*/
+/*}*/
+
+/* lg */
+[data-part='base-button'] .lg [data-part='left-section'] {
     /* Composition */
     @apply mr-4;
     /* Text size */
     @apply text-xl;
 }
 
-.sm .wallet-ui-base-button-right-section {
-    /* Composition */
-    @apply ml-1;
-    /* Text size */
-    @apply text-xs;
-}
+/*.lg .wallet-ui-base-button-left-section {*/
+/*    !* Composition *!*/
+/*    @apply mr-4;*/
+/*    !* Text size *!*/
+/*    @apply text-xl;*/
+/*}*/
 
-.md .wallet-ui-base-button-right-section {
-    /* Composition */
-    @apply ml-2;
-    /* Text size */
-    @apply text-sm;
-}
+/*.sm .wallet-ui-base-button-right-section {*/
+/*    !* Composition *!*/
+/*    @apply ml-1;*/
+/*    !* Text size *!*/
+/*    @apply text-xs;*/
+/*}*/
 
-.lg .wallet-ui-base-button-right-section {
-    /* Composition */
-    @apply ml-4;
-    /* Text size */
-    @apply text-xl;
-}
+/*.md .wallet-ui-base-button-right-section {*/
+/*    !* Composition *!*/
+/*    @apply ml-2;*/
+/*    !* Text size *!*/
+/*    @apply text-sm;*/
+/*}*/
+
+/*.lg .wallet-ui-base-button-right-section {*/
+/*    !* Composition *!*/
+/*    @apply ml-4;*/
+/*    !* Text size *!*/
+/*    @apply text-xl;*/
+/*}*/

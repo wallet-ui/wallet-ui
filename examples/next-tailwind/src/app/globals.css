@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import '@wallet-ui/tailwind/index.css';
 
 :root {
     --background: #ffffff;

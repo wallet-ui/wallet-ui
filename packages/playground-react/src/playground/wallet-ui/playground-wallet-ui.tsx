@@ -18,16 +18,8 @@ import { PlaygroundWalletUiListButton } from './playground-wallet-ui-list-button
 import { PlaygroundWalletUiModal } from './playground-wallet-ui-modal';
 import { PlaygroundWalletUiProvider } from './playground-wallet-ui-provider';
 
-const url = new URL(window.location.href);
-const urlOpen = new Map(
-    url.searchParams
-        .get('open')
-        ?.split(',')
-        .map(name => [name, true]),
-);
-
 export function PlaygroundWalletUi() {
-    const [open, setOpen] = React.useState<Map<string, boolean>>(urlOpen);
+    const [open, setOpen] = React.useState<Map<string, boolean>>(new Map());
 
     function handleToggle(name: string) {
         if (open.has(name) && open.get(name) === true) {

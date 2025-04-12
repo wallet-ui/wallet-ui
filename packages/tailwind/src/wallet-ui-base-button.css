@@ -1,10 +1,20 @@
-.wallet-ui-base-button {
+/**
+ * These are the variables that style the BaseButton component.
+ *
+ * It targets the [data-ui='base-button'] and related [data-ui='base-button-*'] selectors.
+ *
+ * The colors are coming from the wallet-ui-variables.css file. Other styles are Tailwind CSS.
+ */
+
+/* Base Button */
+[data-ui='base-button'] {
     /* Background  */
-    @apply bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700;
+    background: var(--background);
     /* Text color */
-    @apply text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white;
+    color: var(--foreground);
     /* Border  */
-    @apply border border-gray-200 dark:border-gray-700;
+    @apply border;
+    border-color: var(--color-border);
     /* Shape */
     @apply rounded-md shadow-sm cursor-pointer;
     /* Composition */
@@ -13,7 +23,16 @@
     @apply disabled:cursor-not-allowed disabled:opacity-50;
 }
 
-.wallet-ui-base-button.sm {
+/* Base Button Hover */
+[data-ui='base-button']:hover {
+    /* Background  */
+    background: var(--background-hover);
+    /* Text color */
+    color: var(--foreground-hover);
+}
+
+/* Base Button Sizes */
+[data-ui='base-button'].sm {
     /* Shape */
     @apply px-3 py-1.5;
     /* Text size */
@@ -22,7 +41,7 @@
     @apply font-normal;
 }
 
-.wallet-ui-base-button.md {
+[data-ui='base-button'].md {
     /* Shape */
     @apply px-4 py-3;
     /* Text size */
@@ -31,7 +50,7 @@
     @apply font-semibold;
 }
 
-.wallet-ui-base-button.lg {
+[data-ui='base-button'].lg {
     /* Shape */
     @apply px-6 py-4;
     /* Text size */
@@ -40,42 +59,44 @@
     @apply font-bold;
 }
 
-.sm .wallet-ui-base-button-left-section {
+/* Left Section Sizes */
+.sm [data-ui='base-button-left-section'] {
     /* Composition */
     @apply mr-1;
     /* Text size */
     @apply text-xs;
 }
 
-.md .wallet-ui-base-button-left-section {
+.md [data-ui='base-button-left-section'] {
     /* Composition */
     @apply mr-2;
     /* Text size */
     @apply text-sm;
 }
 
-.lg .wallet-ui-base-button-left-section {
+.lg [data-ui='base-button-left-section'] {
     /* Composition */
     @apply mr-4;
     /* Text size */
     @apply text-xl;
 }
 
-.sm .wallet-ui-base-button-right-section {
+/* Right Section Sizes */
+.sm [data-ui='base-button-right-section'] {
     /* Composition */
     @apply ml-1;
     /* Text size */
     @apply text-xs;
 }
 
-.md .wallet-ui-base-button-right-section {
+.md [data-ui='base-button-right-section'] {
     /* Composition */
     @apply ml-2;
     /* Text size */
     @apply text-sm;
 }
 
-.lg .wallet-ui-base-button-right-section {
+.lg [data-ui='base-button-right-section'] {
     /* Composition */
     @apply ml-4;
     /* Text size */

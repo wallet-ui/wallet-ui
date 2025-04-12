@@ -16,6 +16,7 @@ export * from './ui/ui-panel';
 export * from './ui/ui-sizes';
 export * from './ui/ui-stack';
 export * from './lib/ellipsify';
+export * from './ui-client-render';
 
 // We know how to serialize BigInts.
 function patchBigintToJSON() {

@@ -24,6 +24,7 @@
         "@types/react": "^19",
         "@types/react-dom": "^19",
         "@wallet-ui/react": "workspace:*",
+        "@wallet-ui/playground-react": "workspace:*",
         "@wallet-ui/tailwind": "workspace:*",
         "eslint": "^9",
         "eslint-config-next": "15.2.4",

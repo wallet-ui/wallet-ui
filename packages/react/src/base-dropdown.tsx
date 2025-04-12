@@ -2,8 +2,10 @@ import { UiWallet } from '@wallet-standard/react';
 import React, { HTMLAttributes } from 'react';
 
 import { BaseButton, BaseButtonProps } from './base-button';
+import { WalletUiSize } from './types/wallet-ui-size';
 import { BaseDropdownControl } from './use-base-dropdown';
 import { useWalletUiWallet } from './use-wallet-ui-wallet';
+import { WalletUiIcon } from './wallet-ui-icon';
 
 export enum BaseDropdownItemType {
     Item = 'Item',
@@ -30,21 +32,19 @@ export interface BaseDropdownProps {
     dropdown: BaseDropdownControl;
     items: BaseDropdownItem[];
     showIndicator?: boolean;
+    size?: WalletUiSize;
 }
 
-export function BaseDropdown({ buttonProps, dropdown, showIndicator, items }: BaseDropdownProps) {
+export function BaseDropdown({ buttonProps, dropdown, items, showIndicator, size = 'md' }: BaseDropdownProps) {
     const api = dropdown.api;
     const trigger = (
         <BaseButton
             {...api.getTriggerProps()}
-            className={`wallet-ui-base-dropdown-trigger`}
-            data-part="trigger"
+            size={size}
             rightSection={
                 showIndicator ? (
-                    <span className="wallet-actions">
-                        <span {...api.getIndicatorProps()} className="indicator">
-                            <BaseDropdownChevronDown size={12} />
-                        </span>
+                    <span {...api.getIndicatorProps()}>
+                        <BaseDropdownChevronDown size={12} />
                     </span>
                 ) : null
             }
@@ -53,16 +53,17 @@ export function BaseDropdown({ buttonProps, dropdown, showIndicator, items }: Ba
     );
 
     return (
-        <div className="wallet-ui-base-dropdown">
+        <div data-ui="base-dropdown">
             {trigger}
-            <div {...api.getPositionerProps()} className="wallet-positioner">
-                <div {...api.getContentProps()} className="wallet-ui-base-dropdown-list" data-part="content">
+            <div {...api.getPositionerProps()}>
+                <div {...api.getContentProps()} data-ui="base-dropdown-list" data-part="content">
                     {items.map(item => {
                         return (
                             <BaseDropdownItem
                                 {...api.getItemProps({ value: item.value })}
                                 key={item.value}
                                 item={item}
+                                size={size}
                                 afterClick={() => {
                                     if (item.disabled) {
                                         return;
@@ -80,25 +81,36 @@ export function BaseDropdown({ buttonProps, dropdown, showIndicator, items }: Ba
     );
 }
 
-function BaseDropdownItem({ afterClick, item }: BaseDropdownItemRenderProps) {
+function BaseDropdownItem({ afterClick, item, size }: BaseDropdownItemRenderProps) {
+    console.log('BaseDropdownItem', item, size);
     if (!item.wallet) {
-        return <BaseDropdownItemRender afterClick={afterClick} item={item} />;
+        return <BaseDropdownItemRender afterClick={afterClick} item={item} size={size} />;
     }
     switch (item.type) {
         case BaseDropdownItemType.Item:
-            return <BaseDropdownItemRender afterClick={afterClick} item={item} />;
+            return <BaseDropdownItemRender afterClick={afterClick} item={item} size={size} />;
         case BaseDropdownItemType.WalletConnect:
-            return <BaseDropdownItemWalletConnect afterClick={afterClick} item={item} wallet={item.wallet} />;
+            return (
+                <BaseDropdownItemWalletConnect afterClick={afterClick} item={item} size={size} wallet={item.wallet} />
+            );
         case BaseDropdownItemType.WalletCopy:
-            return <BaseDropdownItemRender afterClick={afterClick} item={item} />;
+            return <BaseDropdownItemRender afterClick={afterClick} item={item} size={size} />;
         case BaseDropdownItemType.WalletDisconnect:
-            return <BaseDropdownItemWalletDisconnect afterClick={afterClick} item={item} wallet={item.wallet} />;
+            return (
+                <BaseDropdownItemWalletDisconnect
+                    afterClick={afterClick}
+                    item={item}
+                    size={size}
+                    wallet={item.wallet}
+                />
+            );
     }
 }
 
 function BaseDropdownItemWalletConnect({
     afterClick,
     item,
+    size,
     wallet,
 }: BaseDropdownItemRenderProps & {
     wallet: UiWallet;
@@ -114,7 +126,9 @@ function BaseDropdownItemWalletConnect({
                     await connect();
                     return await item.handler();
                 },
+                leftSection: wallet ? <WalletUiIcon wallet={wallet} size={size} /> : undefined,
             }}
+            size={size}
         />
     );
 }
@@ -122,6 +136,7 @@ function BaseDropdownItemWalletConnect({
 function BaseDropdownItemWalletDisconnect({
     afterClick,
     item,
+    size,
     wallet,
 }: BaseDropdownItemRenderProps & {
     wallet: UiWallet;
@@ -138,6 +153,7 @@ function BaseDropdownItemWalletDisconnect({
                     return await item.handler();
                 },
             }}
+            size={size}
         />
     );
 }
@@ -145,9 +161,10 @@ function BaseDropdownItemWalletDisconnect({
 interface BaseDropdownItemRenderProps {
     afterClick: () => void;
     item: BaseDropdownItem;
+    size: WalletUiSize;
 }
 
-function BaseDropdownItemRender({ afterClick, item }: BaseDropdownItemRenderProps) {
+function BaseDropdownItemRender({ afterClick, item, size }: BaseDropdownItemRenderProps) {
     function onClick() {
         if (item.disabled) {
             return;
@@ -158,14 +175,10 @@ function BaseDropdownItemRender({ afterClick, item }: BaseDropdownItemRenderProp
     }
 
     return (
-        <div className="wallet-ui-base-dropdown-item" data-part="item" onClick={onClick}>
-            {item.leftSection ? (
-                <span className="wallet-ui-base-dropdown-item-left-section">{item.leftSection}</span>
-            ) : null}
+        <div data-ui="base-dropdown-item" className={size} data-part="item" onClick={onClick}>
+            {item.leftSection ? <span data-ui="base-dropdown-item-left-section">{item.leftSection}</span> : null}
             {item.label}
-            {item.rightSection ? (
-                <span className="wallet-ui-base-dropdown-item-right-section">{item.rightSection}</span>
-            ) : null}
+            {item.rightSection ? <span data-ui="base-dropdown-item-right-section">{item.rightSection}</span> : null}
         </div>
     );
 }

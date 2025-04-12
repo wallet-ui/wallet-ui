@@ -1,23 +1,23 @@
-.wallet-ui-list-icon {
+[data-ui='wallet-ui-icon'] {
     /* Border */
     @apply border-0;
 }
 
-.wallet-ui-list-icon.sm {
-    /*Radius*/
+[data-ui='wallet-ui-icon'].sm {
+    /* Radius */
     @apply rounded-xs;
     /* Shape */
     @apply h-[16px] w-[16px];
 }
 
-.wallet-ui-list-icon.md {
-    /*Radius*/
+[data-ui='wallet-ui-icon'].md {
+    /* Radius */
     @apply rounded-md;
     /* Shape */
     @apply h-[24px] w-[24px];
 }
 
-.wallet-ui-list-icon.lg {
+[data-ui='wallet-ui-icon'].lg {
     /* Radius */
     @apply rounded-lg;
     /* Shape */

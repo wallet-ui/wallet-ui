@@ -11,5 +11,5 @@ export interface WalletUiDropdownProps {
 
 export function WalletUiDropdown({ size = 'md', ...props }: WalletUiDropdownProps) {
     const { buttonProps, items, dropdown } = useWalletUiDropdown({ size });
-    return <BaseDropdown {...props} buttonProps={{ ...buttonProps, size }} items={items} dropdown={dropdown} />;
+    return <BaseDropdown {...props} buttonProps={{ ...buttonProps }} dropdown={dropdown} items={items} size={size} />;
 }

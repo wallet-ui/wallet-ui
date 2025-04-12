@@ -1,12 +1,17 @@
+/* First, we need our variables */
+@import './wallet-ui-variables.css';
+
+/* Then, we can import the rest of the styles */
 @import './wallet-ui-base-button.css';
 @import './wallet-ui-base-dropdown.css';
-@import './wallet-ui-base-modal.css';
+/*@import './wallet-ui-base-modal.css';*/
 @import './wallet-ui-icon.css';
-@import './wallet-ui-label.css';
-@import './wallet-ui-list-button.css';
-@import './wallet-ui-list.css';
+/*@import './wallet-ui-label.css';*/
+/*@import './wallet-ui-list-button.css';*/
+/*@import './wallet-ui-list.css';*/
 
-@reference "tailwindcss";
+/* We must reference tailwindcss so that it compiles */
+/*@reference "tailwindcss";*/
 
 /*[data-scope='menu'][data-part='trigger'] {*/
 /*    @apply bg-transparent;*/

@@ -11,10 +11,8 @@ import { WalletUiIcon } from './wallet-ui-icon';
 function getDropdownItemsWallets({
     wallets,
     connect,
-    size,
 }: {
     connect: (wallet: UiWalletAccount) => void;
-    size: WalletUiSize;
     wallets: UiWallet[];
 }): BaseDropdownItem[] {
     return wallets.length
@@ -29,7 +27,7 @@ function getDropdownItemsWallets({
                   await Promise.resolve();
               },
               label: wallet.name,
-              leftSection: <WalletUiIcon wallet={wallet} size={size} />,
+
               type: BaseDropdownItemType.WalletConnect,
               value: wallet.name,
               wallet,
@@ -57,9 +55,7 @@ export function useWalletUiDropdown({ size = 'md' }: { size?: WalletUiSize } = {
 
     const { account, connect, copy, disconnect, connected, wallet, wallets } = useWalletUi();
 
-    const itemsWallets = useMemo(() => {
-        return getDropdownItemsWallets({ connect, size, wallets });
-    }, [wallets, size, connect]);
+    const itemsWallets = useMemo(() => getDropdownItemsWallets({ connect, wallets }), [wallets, connect]);
 
     const itemsConnected: BaseDropdownItem[] = useMemo(
         () => [
@@ -84,7 +80,7 @@ export function useWalletUiDropdown({ size = 'md' }: { size?: WalletUiSize } = {
             },
             ...itemsWallets,
         ],
-        [connect, copy, disconnect, dropdown, size, wallets],
+        [copy, disconnect, dropdown, itemsWallets],
     );
     const items = useMemo(() => {
         return connected ? itemsConnected : itemsWallets;

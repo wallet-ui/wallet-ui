@@ -1,16 +1,11 @@
 @import 'tailwindcss';
+@import '@wallet-ui/tailwind/index.css';
 
 html,
 body,
 #root {
     margin: 0;
     height: 100%;
-}
-
-@layer components {
-    .app-ui-test {
-        @apply bg-yellow-500 text-white p-2 rounded-lg border border-yellow-600 shadow-md;
-    }
 }
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
@@ -21,6 +16,24 @@ body,
         @apply text-gray-900 dark:text-white;
     }
 }
+
+/*:root {*/
+/*    --background: var(--color-red-50);*/
+/*    --border: var(--color-red-200);*/
+/*    --foreground: var(--color-red-950);*/
+/*    --primary-foreground: var(--color-red-100);*/
+/*    --primary: var(--color-red-950);*/
+/*    --ring: var(--color-red-400);*/
+/*}*/
+
+/*.dark {*/
+/*    --background: var(--color-red-950);*/
+/*    --border: var(--color-red-800);*/
+/*    --foreground: var(--color-red-100);*/
+/*    --primary-foreground: var(--color-red-950);*/
+/*    --primary: var(--color-red-100);*/
+/*    --ring: var(--color-red-500);*/
+/*}*/
 
 /*:root {*/
 /*    --background: #ffffff;*/

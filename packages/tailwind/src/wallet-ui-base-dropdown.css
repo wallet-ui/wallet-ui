@@ -1,37 +1,70 @@
-.wallet-ui-base-dropdown {
-    /* No default styles */
-}
+/**
+ * These are the variables that style the BaseDropdown component.
+ *
+ * It targets the [data-ui='base-dropdown'] and related [data-ui='base-dropdown-*'] selectors.
+ *
+ * The colors are coming from the wallet-ui-variables.css file. Other styles are Tailwind CSS.
+ */
 
-.wallet-ui-base-dropdown-list {
+/* Base Dropdown List */
+[data-ui='base-dropdown-list'] {
     /* Background  */
-    @apply bg-gray-100 dark:bg-gray-800;
-    /*!* Border  *!*/
-    @apply border border-gray-200 dark:border-gray-700;
+    background: var(--background);
+    /* Border  */
+    @apply border;
+    border-color: var(--color-border);
     /*!* Shape *!*/
     @apply rounded-md;
 }
 
-.wallet-ui-base-dropdown-item {
+/* Base Dropdown Item */
+[data-ui='base-dropdown-item'] {
+    /* Background  */
+    background: var(--background);
+    /* Text color */
+    color: var(--foreground);
     /* Content */
     @apply flex items-center gap-2;
-    /* Background  */
-    @apply bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700;
-    /*!* Text color *!*/
-    @apply text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white;
-
-    /*!* Shape *!*/
-    @apply px-4 py-2;
-
     /* Shape */
     @apply cursor-pointer;
 }
 
-.wallet-ui-base-dropdown-item-left-section {
+/* Base Dropdown Item Hover */
+[data-ui='base-dropdown-item']:hover {
+    background: var(--background-hover);
+    color: var(--foreground-hover);
+}
+
+/* Base Dropdown Item Sizes */
+[data-ui='base-dropdown-item'].sm {
+    /* Shape */
+    @apply px-3 py-2;
+    /* Text size */
+    @apply text-sm;
+}
+
+[data-ui='base-dropdown-item'].md {
+    /* Shape */
+    @apply px-4 py-3;
+    /* Text size */
+    @apply text-base;
+}
+
+[data-ui='base-dropdown-item'].lg {
+    /* Shape */
+    @apply px-4 py-3;
+    /* Text size */
+    @apply text-lg;
+}
+
+/* Left Section */
+[data-ui='base-dropdown-item-left-section'] {
     /* Composition */
     @apply mr-1;
 }
 
-.wallet-ui-base-dropdown-item-right-section {
+/* Right Section */
+[data-ui='base-dropdown-item-right-section'] {
     /* Composition */
     @apply ml-1;
 }

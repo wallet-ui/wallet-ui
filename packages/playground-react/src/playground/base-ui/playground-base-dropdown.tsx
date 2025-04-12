@@ -183,9 +183,11 @@ function TestReactPanelBaseDropdownItem({ size }: { size: WalletUiSize }) {
     return (
         <UiPanel key={size} title={<code>{size}</code>}>
             <BaseDropdown
+                size={size}
                 dropdown={dropdown}
-                buttonProps={{ label: buttonLabel, leftSection: buttonLeftSection, size }}
+                buttonProps={{ label: buttonLabel, leftSection: buttonLeftSection }}
                 items={items}
+                showIndicator
             />
         </UiPanel>
     );

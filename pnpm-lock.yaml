@@ -239,6 +239,9 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.0.4(@types/react@19.0.12)
+      '@wallet-ui/playground-react':
+        specifier: workspace:*
+        version: link:../../packages/playground-react
       '@wallet-ui/react':
         specifier: workspace:*
         version: link:../../packages/react

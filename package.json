@@ -1,5 +1,5 @@
 {
-    "name": "solana-web3.js-monorepo",
+    "name": "wallet-ui-monorepo",
     "private": true,
     "workspaces": [
         "packages/*"

@@ -81,7 +81,7 @@
         "@wallet-standard/react": "1.0.0",
         "@wallet-ui/core": "workspace:*",
         "@zag-js/dialog": "1.8.2",
-        "@zag-js/menu": "1.8.2",
+        "@zag-js/menu": "1.9.3",
         "@zag-js/react": "1.8.2"
     },
     "devDependencies": {

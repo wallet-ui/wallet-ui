@@ -1,15 +1,15 @@
-.wallet-ui-list {
+[data-ui='wallet-ui-list'] {
     @apply flex flex-col;
 }
 
-.wallet-ui-list.sm {
+[data-ui='wallet-ui-list'].sm {
     @apply gap-1;
 }
 
-.wallet-ui-list.md {
+[data-ui='wallet-ui-list'].md {
     @apply gap-2;
 }
 
-.wallet-ui-list.lg {
+[data-ui='wallet-ui-list'].lg {
     @apply gap-3;
 }

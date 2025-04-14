@@ -1,3 +1,8 @@
+/**
+ * TBD: Figure out how to match the behavior (data-scope='dialog') with our styles.
+ *
+ * For now, we don't have the Modal feature so this can stay here for now.
+ */
 [data-scope='dialog'][data-part='backdrop'] {
     /* Position */
     @apply fixed top-0 left-0 bottom-0 w-full z-20;
@@ -13,12 +18,13 @@
 }
 
 [data-scope='dialog'][data-part='content'] {
+    /* Background  */
+    background: var(--background);
+    /* Border  */
+    @apply border;
+    border-color: var(--color-border);
     /* Position */
     @apply w-full overflow-hidden shadow-lg;
-    /* Background  */
-    @apply bg-white dark:bg-gray-900;
-    /* Border  */
-    @apply border border-gray-100 dark:border-gray-900;
     /* Shape */
     @apply rounded-xl outline-0;
 }
@@ -33,20 +39,27 @@
 [data-scope='dialog'][data-part='description'] {
     /* Content */
     @apply flex items-center justify-center;
-
     /* Text */
-    @apply text-center text-gray-900 dark:text-gray-200;
+    color: var(--foreground);
 }
 
 [data-scope='dialog'][data-part='close-trigger'] {
-    /* Position */
-    @apply border border-gray-500/40 dark:border-gray-600/40;
+    /* Border  */
+    @apply border;
+    border-color: var(--color-border);
     /* Behavior */
-    @apply cursor-pointer hover:bg-gray-500/40 dark:hover:bg-gray-600/40;
+    @apply cursor-pointer;
     /* Content */
     @apply flex items-center justify-center;
     /* Text */
-    @apply text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white;
+    color: var(--foreground);
+}
+
+[data-scope='dialog'][data-part='close-trigger']:hover {
+    /* Background  */
+    background: var(--background-hover);
+    /* Text */
+    color: var(--foreground-hover);
 }
 
 [data-scope='dialog'][data-part='content'][data-state='open'] {
@@ -139,4 +152,27 @@
     @apply pb-8 px-16;
     /* Text */
     @apply text-3xl;
+}
+
+/* Define the animations */
+@keyframes anim-scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes anim-scale-out {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
 }

@@ -1,23 +1,23 @@
-.wallet-ui-list-label {
-    /* Default label style */
-    @apply text-gray-500 dark:text-gray-200;
+[data-ui='wallet-ui-label'] {
+    /* Text color */
+    color: var(--foreground);
 }
 
-.wallet-ui-list-label.sm {
+[data-ui='wallet-ui-label'].sm {
     /* Size */
     @apply text-xs;
     /* Weight */
     @apply font-light;
 }
 
-.wallet-ui-list-label.md {
+[data-ui='wallet-ui-label'].md {
     /* Size */
     @apply text-base;
     /* Weight */
     @apply font-normal;
 }
 
-.wallet-ui-list-label.lg {
+[data-ui='wallet-ui-label'].lg {
     /* Size */
     @apply text-xl;
     /* Weight */

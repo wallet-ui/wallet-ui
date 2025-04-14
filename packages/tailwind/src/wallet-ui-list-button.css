@@ -1,22 +1,25 @@
-.wallet-ui-list-button {
+[data-ui='wallet-ui-list-button'] {
     /* Composition */
     @apply flex items-center gap-2;
     /* No wrap */
     @apply whitespace-nowrap;
     /* Behavior */
     @apply cursor-pointer select-none appearance-none disabled:cursor-not-allowed disabled:opacity-50;
-    /* Hover*/
-    @apply hover:bg-gray-200 dark:hover:bg-gray-800;
 }
 
-.wallet-ui-list-button.sm {
+[data-ui='wallet-ui-list-button'].hover {
+    /* Background */
+    background: var(--background-hover);
+}
+
+[data-ui='wallet-ui-list-button'].sm {
     @apply px-1 py-1 rounded-md;
 }
 
-.wallet-ui-list-button.md {
+[data-ui='wallet-ui-list-button'].md {
     @apply px-2 py-2 rounded-lg;
 }
 
-.wallet-ui-list-button.lg {
+[data-ui='wallet-ui-list-button'].lg {
     @apply px-3 py-3 rounded-xl;
 }

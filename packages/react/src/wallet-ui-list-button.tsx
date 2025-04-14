@@ -31,12 +31,13 @@ export function WalletUiListButton({ className, select, size = 'md', wallet, ...
     return (
         <button
             disabled={pending}
-            className={`wallet-ui-list-button ${size} ${pending ? 'wallet-ui-list-button-pending' : ''} ${className ?? ''}`}
+            data-ui="wallet-ui-list-button"
+            className={`${size} ${pending ? 'pending' : ''} ${className ?? ''}`}
             onClick={handleSelect}
             {...props}
         >
-            <WalletUiIcon className="wallet-ui-list-button-icon" wallet={wallet} size={size} />
-            <WalletUiLabel className="wallet-ui-list-button-label" wallet={wallet} size={size} />
+            <WalletUiIcon wallet={wallet} size={size} />
+            <WalletUiLabel wallet={wallet} size={size} />
         </button>
     );
 }

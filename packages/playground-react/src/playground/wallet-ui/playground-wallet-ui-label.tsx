@@ -9,7 +9,9 @@ export function PlaygroundWalletUiLabel() {
                 render={size => (
                     <UiPanel key={size} title={<code>{size}</code>}>
                         <UiStack>
-                            <UiWallets render={wallet => <WalletUiLabel wallet={wallet} size={size} />} />
+                            <UiWallets
+                                render={wallet => <WalletUiLabel key={wallet.name} wallet={wallet} size={size} />}
+                            />
                         </UiStack>
                     </UiPanel>
                 )}

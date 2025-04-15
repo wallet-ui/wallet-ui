@@ -74,12 +74,14 @@
         "maintained node versions"
     ],
     "dependencies": {
-        "@nanostores/persistent": "0.10.2",
-        "nanostores": "0.11.4"
+        "@nanostores/persistent": "1.0.0",
+        "nanostores": "1.0.1"
+    },
+    "devDependencies": {
+        "typescript": ">=5"
     },
     "peerDependencies": {
-        "gill": "^0.8.0",
-        "typescript": ">=5"
+        "gill": "^0.8.0"
     },
     "engines": {
         "node": ">=20.18.0"

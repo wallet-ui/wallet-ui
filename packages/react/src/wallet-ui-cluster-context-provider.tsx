@@ -14,20 +14,16 @@ export function WalletUiClusterContextProvider({
     storage = createStorageCluster(),
 }: WalletUiClusterContextProviderProps) {
     const clusterId = useStore(storage.value);
-    if (!clusterId) {
-        throw new Error('Error reading cluster id from storage');
-    }
+
     if (!clusters.length) {
         throw new Error('No clusters provided');
     }
 
-    const cluster = clusters.find(c => c.id === clusterId);
-    if (!cluster) {
-        throw new Error(`Cluster ${clusterId.toString()} not found`);
-    }
+    const found = clusters.find(c => c.id === clusterId);
+    const first = clusters[0];
 
     const value: WalletUiClusterContextValue = {
-        cluster,
+        cluster: found ?? first,
         clusters,
         setCluster: (clusterId: SolanaClusterId) => {
             const cluster = clusters.find(c => c.id === clusterId);

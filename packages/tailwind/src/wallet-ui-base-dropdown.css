@@ -9,24 +9,24 @@
 /* Base Dropdown List */
 [data-ui='base-dropdown-list'] {
     /* Background  */
-    background: var(--background);
+    background: var(--color-background);
     /* Border  */
-    @apply border;
+    @apply border outline-hidden;
     border-color: var(--color-border);
     /*!* Shape *!*/
-    @apply rounded-md;
+    @apply overflow-clip rounded-md p-1;
 }
 
 /* Base Dropdown Item */
 [data-ui='base-dropdown-item'] {
     /* Background  */
-    background: var(--background);
+    background: var(--color-background);
     /* Text color */
-    color: var(--foreground);
+    color: var(--color-foreground);
     /* Content */
     @apply flex items-center gap-2;
     /* Shape */
-    @apply cursor-pointer w-full;
+    @apply cursor-pointer w-full rounded-md;
 }
 
 /* Base Dropdown Item Hover */

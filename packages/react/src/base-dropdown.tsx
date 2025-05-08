@@ -55,7 +55,7 @@ export function BaseDropdown({ buttonProps, dropdown, items, showIndicator, size
     return (
         <div data-ui="base-dropdown">
             {trigger}
-            <div {...api.getPositionerProps()}>
+            <div {...api.getPositionerProps()} data-ui="base-dropdown-wrapper">
                 <div {...api.getContentProps()} data-ui="base-dropdown-list" data-part="content">
                     {items.map(item => {
                         return (

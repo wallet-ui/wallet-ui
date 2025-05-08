@@ -16,6 +16,7 @@ export function WalletUiClusterDropdown({ buttonProps, size = 'md', ...props }: 
     const { cluster, clusters, setCluster } = useWalletUiCluster();
     return (
         <BaseDropdown
+            size={size}
             buttonProps={{ ...buttonProps, label: cluster.label, size: size }}
             items={clusters.map(cluster => ({
                 handler: async () => {

@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { UiCard, UiStack } from '../../ui/';
+import { useOpenState } from '../../ui/use-open-state';
 
 import { PlaygroundBaseButton } from '../base-ui/playground-base-button';
 import { PlaygroundBaseDropdown } from '../base-ui/playground-base-dropdown';
@@ -18,50 +19,34 @@ import { PlaygroundWalletUiListButton } from './playground-wallet-ui-list-button
 import { PlaygroundWalletUiModal } from './playground-wallet-ui-modal';
 import { PlaygroundWalletUiProvider } from './playground-wallet-ui-provider';
 
+const cards = {
+    BaseButton: <PlaygroundBaseButton />,
+    BaseDropdown: <PlaygroundBaseDropdown />,
+    BaseModal: <PlaygroundBaseModal />,
+    WalletUiClusterDropdown: <PlaygroundClusterDropdown />,
+    WalletUiButton: <PlaygroundWalletUiButton />,
+    WalletUiDropdown: <PlaygroundWalletUiDropdown />,
+    WalletUiIcon: <PlaygroundWalletUiIcon />,
+    WalletUiIconClose: <PlaygroundWalletUiIconClose />,
+    WalletUiIconNoWallet: <PlaygroundWalletUiIconNoWallet />,
+    WalletUiLabel: <PlaygroundWalletUiLabel />,
+    WalletUiList: <PlaygroundWalletUiList />,
+    WalletUiListButton: <PlaygroundWalletUiListButton />,
+    WalletUiModal: <PlaygroundWalletUiModal />,
+    WalletUiProvider: <PlaygroundWalletUiProvider />,
+};
+
 export function PlaygroundWalletUi() {
-    const [open, setOpen] = React.useState<Map<string, boolean>>(new Map());
-
-    function handleToggle(name: string) {
-        if (open.has(name) && open.get(name) === true) {
-            setOpen(prev => new Map(prev.set(name, false)));
-        } else {
-            setOpen(prev => new Map(prev.set(name, true)));
-        }
-    }
-
-    useEffect(() => {
-        const url = new URL(window.location.href);
-        const urlParam = Array.from(open.keys()).join(',');
-        if (urlParam !== url.searchParams.get('open')) {
-            url.searchParams.set('open', urlParam);
-            window.history.pushState(null, '', url.toString());
-        }
-    }, [open]);
-
+    const { open, handleToggle } = useOpenState();
     return (
         <PlaygroundProviders>
             <UiStack>
-                {Object.entries({
-                    BaseButton: <PlaygroundBaseButton />,
-                    BaseDropdown: <PlaygroundBaseDropdown />,
-                    BaseModal: <PlaygroundBaseModal />,
-                    WalletUiClusterDropdown: <PlaygroundClusterDropdown />,
-                    WalletUiButton: <PlaygroundWalletUiButton />,
-                    WalletUiDropdown: <PlaygroundWalletUiDropdown />,
-                    WalletUiIcon: <PlaygroundWalletUiIcon />,
-                    WalletUiIconClose: <PlaygroundWalletUiIconClose />,
-                    WalletUiIconNoWallet: <PlaygroundWalletUiIconNoWallet />,
-                    WalletUiLabel: <PlaygroundWalletUiLabel />,
-                    WalletUiList: <PlaygroundWalletUiList />,
-                    WalletUiListButton: <PlaygroundWalletUiListButton />,
-                    WalletUiModal: <PlaygroundWalletUiModal />,
-                    WalletUiProvider: <PlaygroundWalletUiProvider />,
-                }).map(([name, element]) => (
+                {Object.entries(cards).map(([name, element]) => (
                     <UiCard
                         title={<code>{name}</code>}
                         key={name}
                         toggle={() => handleToggle(name)}
-                        open={open.get(name)}
+                        open={open.includes(name)}
                     >
                         {element}
                     </UiCard>

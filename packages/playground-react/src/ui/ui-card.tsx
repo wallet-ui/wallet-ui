@@ -1,6 +1,5 @@
 import { BaseButton } from '@wallet-ui/react';
 import * as React from 'react';
-import { UiGroup } from './ui-group';
 import { UiStack } from './ui-stack';
 import { uiStyleBorder, uiStylePadding, uiStyleTitle } from './ui-style';
 
@@ -24,13 +23,14 @@ export function UiCard({
 
     return (
         <div style={{ ...uiStyleBorder }}>
-            <UiGroup style={{ ...uiStylePadding, justifyContent: 'space-between' }}>
-                <div style={{ ...uiStyleTitle, cursor: 'pointer' }} onClick={() => handleToggle()}>
-                    {title}
-                </div>
-                <BaseButton label={isOpen ? 'Close' : 'Open'} onClick={() => handleToggle()} size="sm" />
-            </UiGroup>
-            {isOpen ? <UiStack style={{ ...uiStylePadding, paddingTop: 0 }}>{children}</UiStack> : null}
+            <BaseButton
+                style={{ ...uiStylePadding, display: 'flex', justifyContent: 'stretch', width: '100%' }}
+                label={<div style={{ ...uiStyleTitle }}>{title}</div>}
+                onClick={() => handleToggle()}
+                size="sm"
+            />
+
+            {isOpen ? <UiStack style={{ ...uiStylePadding }}>{children}</UiStack> : null}
         </div>
     );
 }

@@ -2,7 +2,6 @@ import {
     BaseDropdown,
     BaseDropdownItem,
     BaseDropdownItemType,
-    handleCopyText,
     UiWallet,
     UiWalletAccount,
     useBaseDropdown,
@@ -15,48 +14,14 @@ import React, { useMemo, useState } from 'react';
 import { ellipsify } from '../../lib/ellipsify';
 import { UiGroup, UiPanel, UiSizes } from '../../ui/';
 
-interface GetItemsConnectedOptions {
-    account?: UiWalletAccount;
-    handleWalletDisconnect: () => void;
-}
-
-interface GetItemsDisconnectedOptions {
+interface GetItemsOptions {
     handleWalletConnect: (wallet: UiWallet) => void;
     handleWalletDisconnect: () => void;
     size?: WalletUiSize;
     wallets: UiWallet[];
 }
 
-interface GetItemsOptions extends GetItemsConnectedOptions, GetItemsDisconnectedOptions {
-    isConnected: boolean;
-}
-
-function getItemsConnected({ account, handleWalletDisconnect }: GetItemsConnectedOptions): BaseDropdownItem[] {
-    if (!account) {
-        return [];
-    }
-    return [
-        {
-            handler: async () => handleCopyText(account.address),
-            label: 'Copy Address',
-            value: 'copy',
-            type: BaseDropdownItemType.WalletCopy,
-        },
-        {
-            handler: async () => handleWalletDisconnect(),
-            label: 'Disconnect',
-            value: 'disconnect',
-            type: BaseDropdownItemType.WalletDisconnect,
-        },
-    ];
-}
-
-function getItemsDisconnected({
-    handleWalletConnect,
-    handleWalletDisconnect,
-    size = 'md',
-    wallets,
-}: GetItemsDisconnectedOptions): BaseDropdownItem[] {
+function getItems({ handleWalletConnect, handleWalletDisconnect, wallets, size }: GetItemsOptions): BaseDropdownItem[] {
     if (!wallets.length) {
         return [
             {
@@ -75,20 +40,6 @@ function getItemsDisconnected({
         value: wallet.name,
         type: BaseDropdownItemType.WalletConnect,
     }));
-}
-
-function getItems({
-    account,
-    handleWalletConnect,
-    handleWalletDisconnect,
-    isConnected,
-    wallets,
-    size,
-}: GetItemsOptions): BaseDropdownItem[] {
-    if (isConnected) {
-        return getItemsConnected({ account, handleWalletDisconnect });
-    }
-    return getItemsDisconnected({ handleWalletConnect, handleWalletDisconnect, wallets, size });
 }
 
 function useTestWalletDropdownItems({
@@ -118,11 +69,9 @@ function useTestWalletDropdownItems({
     const items = useMemo(
         () =>
             getItems({
-                account,
                 handleWalletConnect,
                 handleWalletDisconnect,
                 size: itemSize,
-                isConnected,
                 wallets,
             }),
         [account, handleWalletConnect, handleWalletDisconnect, itemSize, isConnected, selectedWallet, wallets],

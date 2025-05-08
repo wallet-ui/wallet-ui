@@ -6,7 +6,7 @@ export function PlaygroundWalletUiDropdown() {
     return (
         <UiStack>
             <UiGroup>
-                <UiSizes render={size => <TestDropdown size={size} />} />
+                <UiSizes render={size => <TestDropdown key={size} size={size} />} />
             </UiGroup>
         </UiStack>
     );

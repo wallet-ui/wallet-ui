@@ -1,3 +1,4 @@
+export * from './lib/ellipsify';
 export * from './playground/account/playground-account';
 export * from './playground/base-ui/playground-base-button';
 export * from './playground/base-ui/playground-base-dropdown';
@@ -8,6 +9,7 @@ export * from './playground/playground-providers';
 export * from './playground/wallet-ui/playground-ui';
 export * from './playground/wallet-ui/playground-wallet-ui';
 export * from './playground/wallet/playground-wallet';
+export * from './ui-client-render';
 export * from './ui/ui-box';
 export * from './ui/ui-card';
 export * from './ui/ui-group';
@@ -15,8 +17,7 @@ export * from './ui/ui-icon-refresh';
 export * from './ui/ui-panel';
 export * from './ui/ui-sizes';
 export * from './ui/ui-stack';
-export * from './lib/ellipsify';
-export * from './ui-client-render';
+export * from './ui/use-open-state';
 
 // We know how to serialize BigInts.
 function patchBigintToJSON() {

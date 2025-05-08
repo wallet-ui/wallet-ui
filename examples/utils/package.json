@@ -9,7 +9,7 @@
         "pino-pretty": "^13.0.0"
     },
     "devDependencies": {
-        "@types/node": "^22",
+        "@types/node": "^22.15.14",
         "yoctocolors": "^2.1.1"
     }
 }

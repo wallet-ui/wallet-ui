@@ -14,13 +14,12 @@ export function useWalletUiWallet({ wallet }: { wallet: UiWallet }) {
     return {
         connect: async () => {
             const connectedAccount = await connect();
-            console.log('connectedAccount', connectedAccount);
             if (!connectedAccount.length) {
-                console.log('connect, no accounts');
+                console.warn(`Connect to ${wallet.name} but there are no accounts.`);
                 return connectedAccount;
             }
+            // TODO: Support wallets with multiple accounts
             const first = connectedAccount[0];
-            console.log('connect, setting first account => ', first);
             setAccount(first);
             connectAccount(first);
             return connectedAccount;

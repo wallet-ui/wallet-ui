@@ -82,7 +82,6 @@ export function BaseDropdown({ buttonProps, dropdown, items, showIndicator, size
 }
 
 function BaseDropdownItem({ afterClick, item, size }: BaseDropdownItemRenderProps) {
-    console.log('BaseDropdownItem', item, size);
     if (!item.wallet) {
         return <BaseDropdownItemRender afterClick={afterClick} item={item} size={size} />;
     }

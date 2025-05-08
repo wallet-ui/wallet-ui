@@ -26,7 +26,7 @@
     /* Content */
     @apply flex items-center gap-2;
     /* Shape */
-    @apply cursor-pointer;
+    @apply cursor-pointer w-full;
 }
 
 /* Base Dropdown Item Hover */

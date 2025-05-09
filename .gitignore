@@ -26,11 +26,5 @@ yarn-error.log*
 .agave/
 test-ledger/
 
-# GitHub Pages deploy directory
-.ghpages-deploy
-
-# Codegenerated TypeDoc API
-docs/
-
 # tsup
 tsup.config.package.bundled_*.mjs

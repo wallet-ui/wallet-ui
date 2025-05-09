@@ -174,7 +174,7 @@ function BaseDropdownItemRender({ afterClick, item, size }: BaseDropdownItemRend
     }
 
     return (
-        <button data-ui="base-dropdown-item" className={size} data-part="item" onClick={onClick}>
+        <button type="button" data-ui="base-dropdown-item" className={size} data-part="item" onClick={onClick}>
             {item.leftSection ? <span data-ui="base-dropdown-item-left-section">{item.leftSection}</span> : null}
             {item.label}
             {item.rightSection ? <span data-ui="base-dropdown-item-right-section">{item.rightSection}</span> : null}

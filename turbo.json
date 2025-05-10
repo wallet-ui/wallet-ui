@@ -87,6 +87,19 @@
         "test:treeshakability:node": {
             "dependsOn": ["compile:js"]
         },
+        "@wallet-ui/docs#build": {
+            "dependsOn": ["^compile:js", "^compile:typedefs"],
+            "inputs": [
+                "$TURBO_DEFAULT$",
+                "tsconfig.*",
+                "next.config.ts",
+                "source.config.ts",
+                "src/**",
+                "postcss.config.mjs",
+                "wrangler.jsonc"
+            ],
+            "outputs": [".vercel/output/static/**"]
+        },
         "@wallet-ui/example-react-app#compile:js": {
             "dependsOn": ["^compile:js", "^compile:typedefs"],
             "env": ["REACT_EXAMPLE_APP_BASE_PATH", "REACT_EXAMPLE_APP_ENABLE_MAINNET"],

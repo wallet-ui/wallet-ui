@@ -13,7 +13,7 @@
         "test:typecheck": "tsc"
     },
     "dependencies": {
-        "@tailwindcss/vite": "^4.1.5",
+        "@tailwindcss/vite": "^4.1.6",
         "@wallet-ui/playground-react": "workspace:*",
         "@wallet-ui/react": "workspace:*",
         "@wallet-ui/tailwind": "workspace:*",

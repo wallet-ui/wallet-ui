@@ -132,6 +132,12 @@ importers:
       '@opennextjs/cloudflare':
         specifier: ^1.2.1
         version: 1.2.1(wrangler@4.20.0)
+      '@wallet-ui/react':
+        specifier: workspace:*
+        version: link:../packages/react
+      '@wallet-ui/tailwind':
+        specifier: workspace:*
+        version: link:../packages/tailwind
       fumadocs-core:
         specifier: 15.5.1
         version: 15.5.1(@types/react@19.1.8)(next@15.3.3(@babel/core@7.27.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -8580,7 +8586,7 @@ snapshots:
       '@aws-crypto/sha256-js': 3.0.0
       '@aws-crypto/supports-web-crypto': 3.0.0
       '@aws-crypto/util': 3.0.0
-      '@aws-sdk/types': 3.398.0
+      '@aws-sdk/types': 3.821.0
       '@aws-sdk/util-locate-window': 3.804.0
       '@aws-sdk/util-utf8-browser': 3.259.0
       tslib: 1.14.1
@@ -8598,7 +8604,7 @@ snapshots:
   '@aws-crypto/sha256-js@3.0.0':
     dependencies:
       '@aws-crypto/util': 3.0.0
-      '@aws-sdk/types': 3.398.0
+      '@aws-sdk/types': 3.821.0
       tslib: 1.14.1
 
   '@aws-crypto/sha256-js@5.2.0':
@@ -8617,7 +8623,7 @@ snapshots:
 
   '@aws-crypto/util@3.0.0':
     dependencies:
-      '@aws-sdk/types': 3.398.0
+      '@aws-sdk/types': 3.821.0
       '@aws-sdk/util-utf8-browser': 3.259.0
       tslib: 1.14.1
 
@@ -17682,7 +17688,7 @@ snapshots:
 
   send@1.2.0:
     dependencies:
-      debug: 4.3.6
+      debug: 4.4.1
       encodeurl: 2.0.0
       escape-html: 1.0.3
       etag: 1.8.1

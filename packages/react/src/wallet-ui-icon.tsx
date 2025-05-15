@@ -9,7 +9,7 @@ export interface WalletUiIconProps extends WalletUiImg {
     wallet?: Pick<UiWallet, 'icon' | 'name'>;
 }
 
-export function WalletUiIcon({ className, size, wallet, ...props }: WalletUiIconProps) {
+export function WalletUiIcon({ className, size = 'md', wallet, ...props }: WalletUiIconProps) {
     if (!wallet) {
         return null;
     }
@@ -19,7 +19,7 @@ export function WalletUiIcon({ className, size, wallet, ...props }: WalletUiIcon
             data-wu="wallet-ui-icon"
             src={wallet.icon}
             alt={wallet.name}
-            className={`${size ?? 'md'} ${className ?? ''}`}
+            className={`${size} ${className ?? ''}`}
             {...props}
         />
     );

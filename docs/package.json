@@ -17,6 +17,8 @@
     },
     "dependencies": {
         "@opennextjs/cloudflare": "^1.2.1",
+        "@wallet-ui/react": "workspace:*",
+        "@wallet-ui/tailwind": "workspace:*",
         "fumadocs-core": "15.5.1",
         "fumadocs-mdx": "11.6.7",
         "fumadocs-ui": "15.5.1",

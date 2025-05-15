@@ -8,6 +8,7 @@
     "scripts": {
         "build": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} build",
         "compile": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} compile:js compile:typedefs",
+        "postinstall": "pnpm run build",
         "lint": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} test:lint",
         "style:fix": "turbo  run --concurrency=${TURBO_CONCURRENCY:-95.84%} style:fix && pnpm prettier --log-level warn --ignore-unknown --write '{.,!packages}/*'",
         "test": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} test:unit:browser test:unit:node",

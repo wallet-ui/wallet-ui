@@ -20,8 +20,10 @@
         "@wallet-ui/react": "workspace:*",
         "@wallet-ui/tailwind": "workspace:*",
         "fumadocs-core": "15.5.1",
+        "fumadocs-docgen": "^2.0.0",
         "fumadocs-mdx": "11.6.7",
         "fumadocs-ui": "15.5.1",
+        "lucide-react": "^0.514.0",
         "next": "15.3.3",
         "react": "^19.1.0",
         "react-dom": "^19.1.0"

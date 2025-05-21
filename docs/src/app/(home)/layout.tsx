@@ -6,14 +6,15 @@ export default function Layout({ children }: { children: ReactNode }) {
     return (
         <HomeLayout
             {...baseOptions}
+            githubUrl="https://github.com/wallet-ui/wallet-ui"
             links={[
                 {
                     text: 'Docs',
                     url: '/docs',
                 },
                 {
-                    text: 'Demo',
-                    url: '/demo',
+                    text: 'Playground',
+                    url: '/playground',
                 },
             ]}
         >

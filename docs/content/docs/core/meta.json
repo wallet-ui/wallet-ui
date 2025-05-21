@@ -1,0 +1,7 @@
+{
+    "title": "Core library",
+    "description": "@wallet-ui/core",
+    "icon": "Package",
+    "root": true,
+    "pages": ["index"]
+}

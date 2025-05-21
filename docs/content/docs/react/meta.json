@@ -1,0 +1,17 @@
+{
+    "title": "React SDK",
+    "description": "@wallet-ui/react",
+    "icon": "Package",
+    "root": true,
+    "pages": [
+        "getting-started",
+        "---Guides---",
+        "guides/next",
+        "guides/vite",
+        "guides/react-router",
+        "---Components---",
+        "components/index",
+        "components/dropdown",
+        "components/cluster-dropdown"
+    ]
+}

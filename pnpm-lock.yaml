@@ -322,8 +322,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/react
       gill:
-        specifier: 0.9.1
-        version: 0.9.1(@solana/sysvars@2.1.1(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(ws@8.18.2)
+        specifier: 0.10.1
+        version: 0.10.1(@solana/sysvars@2.1.1(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(ws@8.18.2)
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -371,8 +371,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/tailwind
       gill:
-        specifier: 0.9.1
-        version: 0.9.1(@solana/sysvars@2.1.1(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(ws@8.18.2)
+        specifier: 0.10.1
+        version: 0.10.1(@solana/sysvars@2.1.1(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(ws@8.18.2)
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -457,8 +457,8 @@ importers:
         specifier: 1.0.0
         version: 1.0.0(nanostores@1.0.1)
       gill:
-        specifier: 0.9.1
-        version: 0.9.1(@solana/sysvars@2.1.1(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(ws@8.18.2)
+        specifier: 0.10.1
+        version: 0.10.1(@solana/sysvars@2.1.1(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(ws@8.18.2)
       nanostores:
         specifier: 1.0.1
         version: 1.0.1
@@ -473,8 +473,8 @@ importers:
         specifier: workspace:*
         version: link:../react
       gill:
-        specifier: 0.9.1
-        version: 0.9.1(@solana/sysvars@2.1.1(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(ws@8.18.2)
+        specifier: 0.10.1
+        version: 0.10.1(@solana/sysvars@2.1.1(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(ws@8.18.2)
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -525,8 +525,8 @@ importers:
         specifier: 1.12.0
         version: 1.12.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       gill:
-        specifier: 0.9.1
-        version: 0.9.1(@solana/sysvars@2.1.1(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(ws@8.18.2)
+        specifier: 0.10.1
+        version: 0.10.1(@solana/sysvars@2.1.1(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(ws@8.18.2)
       nanostores:
         specifier: ^1.0.1
         version: 1.0.1
@@ -5639,8 +5639,8 @@ packages:
   get-tsconfig@4.10.0:
     resolution: {integrity: sha512-kGzZ3LWWQcGIAmg6iWvXn0ei6WDtV26wzHRMwDSzmAbcXrTEXxHy6IehI6/4eT6VRKyMP1eF1VqwrVUmE/LR7A==}
 
-  gill@0.9.1:
-    resolution: {integrity: sha512-3t9zkzd1SheAqIoRaDr8J+exooGgIgt9ruN+wcc24f79yvvuRanmtQ/meRRxLE9MCeb9ej8Ldp0pXtUN8P22lA==}
+  gill@0.10.1:
+    resolution: {integrity: sha512-Vq94PmnLsiAaQMgEnB77ldEMSKnwkDgP9eiyu67Bp/wA41DUJtDGvHIO5Ew6WJdwzLUc/ivX8rIe20Q38/ZDQg==}
     engines: {node: '>=20.18.0'}
     peerDependencies:
       typescript: '>=5'
@@ -15227,7 +15227,7 @@ snapshots:
     dependencies:
       resolve-pkg-maps: 1.0.0
 
-  gill@0.9.1(@solana/sysvars@2.1.1(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(ws@8.18.2):
+  gill@0.10.1(@solana/sysvars@2.1.1(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3))(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(ws@8.18.2):
     dependencies:
       '@solana-program/address-lookup-table': 0.7.0(@solana/kit@2.1.1(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(ws@8.18.2))
       '@solana-program/compute-budget': 0.8.0(@solana/kit@2.1.1(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(ws@8.18.2))

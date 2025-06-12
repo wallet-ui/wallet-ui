@@ -23,7 +23,7 @@
         "@solana/prettier-config-solana": "0.0.5",
         "@swc/jest": "^0.2.37",
         "@types/jest": "^29.5.14",
-        "@types/node": "^22",
+        "@types/node": "^24",
         "@typescript-eslint/eslint-plugin": "^8.32.0",
         "@typescript-eslint/parser": "^8.32.0",
         "@wallet-ui/build-scripts": "workspace:*",

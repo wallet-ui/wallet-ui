@@ -1,23 +1,23 @@
-[data-ui='wallet-ui-icon'] {
+[data-wu='wallet-ui-icon'] {
     /* Border */
     @apply border-0;
 }
 
-[data-ui='wallet-ui-icon'].sm {
+[data-wu='wallet-ui-icon'].sm {
     /* Radius */
-    @apply rounded-xs;
+    @apply rounded-sm;
     /* Shape */
     @apply h-[16px] w-[16px];
 }
 
-[data-ui='wallet-ui-icon'].md {
+[data-wu='wallet-ui-icon'].md {
     /* Radius */
     @apply rounded-md;
     /* Shape */
     @apply h-[24px] w-[24px];
 }
 
-[data-ui='wallet-ui-icon'].lg {
+[data-wu='wallet-ui-icon'].lg {
     /* Radius */
     @apply rounded-lg;
     /* Shape */

@@ -13,7 +13,7 @@ export interface WalletUiListProps extends WalletUiDiv {
 
 export function WalletUiList({ className, select, size = 'md', wallets, ...props }: WalletUiListProps) {
     return (
-        <div data-ui="wallet-ui-list" className={`${size} ${className ?? ''}`} {...props}>
+        <div data-wu="wallet-ui-list" className={`${size} ${className ?? ''}`} {...props}>
             {wallets.map(wallet => (
                 <WalletUiListButton key={wallet.name} select={select} size={size} wallet={wallet} />
             ))}

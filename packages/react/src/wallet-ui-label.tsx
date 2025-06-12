@@ -15,7 +15,7 @@ export function WalletUiLabel({ className, size, wallet, ...props }: WalletUiLab
     }
 
     return (
-        <span data-ui="wallet-ui-label" className={`${size ?? 'md'} ${className ?? ''}`} {...props}>
+        <span data-wu="wallet-ui-label" className={`${size ?? 'md'} ${className ?? ''}`} {...props}>
             {wallet.name}
         </span>
     );

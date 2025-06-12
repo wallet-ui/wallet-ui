@@ -1,56 +1,57 @@
 /**
  * These are the variables that style the BaseDropdown component.
  *
- * It targets the [data-ui='base-dropdown'] and related [data-ui='base-dropdown-*'] selectors.
+ * It targets the [data-wu='base-dropdown'] and related [data-wu='base-dropdown-*'] selectors.
  *
  * The colors are coming from the wallet-ui-variables.css file. Other styles are Tailwind CSS.
  */
 
 /* Base Dropdown List */
-[data-ui='base-dropdown-list'] {
+[data-wu='base-dropdown-list'] {
     /* Background  */
-    background: var(--color-background);
+    background: var(--wu-color-background);
     /* Border  */
     @apply border outline-hidden;
-    border-color: var(--color-border);
+    border-color: var(--wu-color-border);
     /*!* Shape *!*/
     @apply overflow-clip rounded-md p-1;
 }
 
 /* Base Dropdown Item */
-[data-ui='base-dropdown-item'] {
+[data-wu='base-dropdown-item'] {
     /* Background  */
-    background: var(--color-background);
+    background: var(--wu-color-background);
     /* Text color */
-    color: var(--color-foreground);
+    color: var(--wu-color-foreground);
     /* Content */
     @apply flex items-center gap-2;
     /* Shape */
     @apply cursor-pointer w-full rounded-md;
-}
 
-/* Base Dropdown Item Hover */
-[data-ui='base-dropdown-item']:hover {
-    background: var(--background-hover);
-    color: var(--foreground-hover);
+    &:hover {
+        /* Background  */
+        background: var(--wu-color-background-hover);
+        /* Text color */
+        color: var(--wu-color-foreground-hover);
+    }
 }
 
 /* Base Dropdown Item Sizes */
-[data-ui='base-dropdown-item'].sm {
+[data-wu='base-dropdown-item'].sm {
     /* Shape */
     @apply px-3 py-2;
     /* Text size */
     @apply text-sm;
 }
 
-[data-ui='base-dropdown-item'].md {
+[data-wu='base-dropdown-item'].md {
     /* Shape */
     @apply px-4 py-3;
     /* Text size */
     @apply text-base;
 }
 
-[data-ui='base-dropdown-item'].lg {
+[data-wu='base-dropdown-item'].lg {
     /* Shape */
     @apply px-4 py-3;
     /* Text size */
@@ -58,13 +59,27 @@
 }
 
 /* Left Section */
-[data-ui='base-dropdown-item-left-section'] {
-    /* Composition */
+.sm [data-wu='base-dropdown-item-left-section'] {
     @apply mr-1;
 }
 
+.md [data-wu='base-dropdown-item-left-section'] {
+    @apply mr-2;
+}
+
+.lg [data-wu='base-dropdown-item-left-section'] {
+    @apply mr-3;
+}
+
 /* Right Section */
-[data-ui='base-dropdown-item-right-section'] {
-    /* Composition */
+.sm [data-wu='base-dropdown-item-right-section'] {
     @apply ml-1;
+}
+
+.md [data-wu='base-dropdown-item-right-section'] {
+    @apply ml-2;
+}
+
+.lg [data-wu='base-dropdown-item-right-section'] {
+    @apply ml-3;
 }

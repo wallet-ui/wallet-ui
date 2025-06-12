@@ -53,10 +53,10 @@ export function BaseDropdown({ buttonProps, dropdown, items, showIndicator, size
     );
 
     return (
-        <div data-ui="base-dropdown">
+        <div data-wu="base-dropdown">
             {trigger}
-            <div {...api.getPositionerProps()} data-ui="base-dropdown-wrapper">
-                <div {...api.getContentProps()} data-ui="base-dropdown-list" data-part="content">
+            <div {...api.getPositionerProps()} data-wu="base-dropdown-wrapper">
+                <div {...api.getContentProps()} data-wu="base-dropdown-list" data-part="content">
                     {items.map(item => {
                         return (
                             <BaseDropdownItem
@@ -174,10 +174,10 @@ function BaseDropdownItemRender({ afterClick, item, size }: BaseDropdownItemRend
     }
 
     return (
-        <button type="button" data-ui="base-dropdown-item" className={size} data-part="item" onClick={onClick}>
-            {item.leftSection ? <span data-ui="base-dropdown-item-left-section">{item.leftSection}</span> : null}
+        <button type="button" data-wu="base-dropdown-item" className={size} data-part="item" onClick={onClick}>
+            {item.leftSection ? <span data-wu="base-dropdown-item-left-section">{item.leftSection}</span> : null}
             {item.label}
-            {item.rightSection ? <span data-ui="base-dropdown-item-right-section">{item.rightSection}</span> : null}
+            {item.rightSection ? <span data-wu="base-dropdown-item-right-section">{item.rightSection}</span> : null}
         </button>
     );
 }

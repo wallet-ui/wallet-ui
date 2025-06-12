@@ -13,10 +13,10 @@ export interface BaseButtonProps extends Omit<WalletUiButton, 'children'> {
 
 export function BaseButton({ className, label, leftSection, onClick, rightSection, size, ...props }: BaseButtonProps) {
     return (
-        <button data-ui="base-button" className={`${size ?? 'md'} ${className ?? ''}`} onClick={onClick} {...props}>
-            {leftSection ? <span data-ui="base-button-left-section">{leftSection}</span> : null}
+        <button data-wu="base-button" className={`${size ?? 'md'} ${className ?? ''}`} onClick={onClick} {...props}>
+            {leftSection ? <span data-wu="base-button-left-section">{leftSection}</span> : null}
             {label}
-            {rightSection ? <span data-ui="base-button-right-section">{rightSection}</span> : null}
+            {rightSection ? <span data-wu="base-button-right-section">{rightSection}</span> : null}
         </button>
     );
 }

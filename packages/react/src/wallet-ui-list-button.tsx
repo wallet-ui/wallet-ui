@@ -31,7 +31,7 @@ export function WalletUiListButton({ className, select, size = 'md', wallet, ...
     return (
         <button
             disabled={pending}
-            data-ui="wallet-ui-list-button"
+            data-wu="wallet-ui-list-button"
             className={`${size} ${pending ? 'pending' : ''} ${className ?? ''}`}
             onClick={handleSelect}
             {...props}

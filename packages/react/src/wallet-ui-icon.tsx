@@ -16,7 +16,7 @@ export function WalletUiIcon({ className, size, wallet, ...props }: WalletUiIcon
 
     return (
         <img
-            data-ui="wallet-ui-icon"
+            data-wu="wallet-ui-icon"
             src={wallet.icon}
             alt={wallet.name}
             className={`${size ?? 'md'} ${className ?? ''}`}

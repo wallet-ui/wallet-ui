@@ -1,38 +1,44 @@
 /**
  * These are the variables that style the BaseButton component.
  *
- * It targets the [data-ui='base-button'] and related [data-ui='base-button-*'] selectors.
+ * It targets the [data-wu='base-button'] and related [data-wu='base-button-*'] selectors.
  *
  * The colors are coming from the wallet-ui-variables.css file. Other styles are Tailwind CSS.
  */
 
 /* Base Button */
-[data-ui='base-button'] {
+[data-wu='base-button'] {
     /* Background  */
-    background: var(--background);
+    background: var(--wu-color-background);
     /* Text color */
-    color: var(--foreground);
+    color: var(--wu-color-foreground);
     /* Border  */
     @apply border;
-    border-color: var(--color-border);
+    border-color: var(--wu-color-border);
     /* Shape */
     @apply rounded-md shadow-sm cursor-pointer;
     /* Composition */
     @apply flex items-center justify-center gap-2 whitespace-nowrap;
     /* Disabled */
     @apply disabled:cursor-not-allowed disabled:opacity-50;
-}
 
-/* Base Button Hover */
-[data-ui='base-button']:hover {
-    /* Background  */
-    background: var(--background-hover);
-    /* Text color */
-    color: var(--foreground-hover);
+    &:hover {
+        /* Background  */
+        background: var(--wu-color-background-hover);
+        /* Text color */
+        color: var(--wu-color-foreground-hover);
+    }
+
+    &:focus {
+        /* Outline */
+        @apply outline-none;
+        /* Box shadow */
+        box-shadow: 0 0 0 2px var(--wu-color-ring);
+    }
 }
 
 /* Base Button Sizes */
-[data-ui='base-button'].sm {
+[data-wu='base-button'].sm {
     /* Shape */
     @apply px-3 py-1.5;
     /* Text size */
@@ -41,7 +47,7 @@
     @apply font-normal;
 }
 
-[data-ui='base-button'].md {
+[data-wu='base-button'].md {
     /* Shape */
     @apply px-4 py-3;
     /* Text size */
@@ -50,7 +56,7 @@
     @apply font-semibold;
 }
 
-[data-ui='base-button'].lg {
+[data-wu='base-button'].lg {
     /* Shape */
     @apply px-6 py-4;
     /* Text size */
@@ -60,21 +66,21 @@
 }
 
 /* Left Section Sizes */
-.sm [data-ui='base-button-left-section'] {
+.sm [data-wu='base-button-left-section'] {
     /* Composition */
     @apply mr-1;
     /* Text size */
     @apply text-xs;
 }
 
-.md [data-ui='base-button-left-section'] {
+.md [data-wu='base-button-left-section'] {
     /* Composition */
     @apply mr-2;
     /* Text size */
     @apply text-sm;
 }
 
-.lg [data-ui='base-button-left-section'] {
+.lg [data-wu='base-button-left-section'] {
     /* Composition */
     @apply mr-4;
     /* Text size */
@@ -82,21 +88,21 @@
 }
 
 /* Right Section Sizes */
-.sm [data-ui='base-button-right-section'] {
+.sm [data-wu='base-button-right-section'] {
     /* Composition */
     @apply ml-1;
     /* Text size */
     @apply text-xs;
 }
 
-.md [data-ui='base-button-right-section'] {
+.md [data-wu='base-button-right-section'] {
     /* Composition */
     @apply ml-2;
     /* Text size */
     @apply text-sm;
 }
 
-.lg [data-ui='base-button-right-section'] {
+.lg [data-wu='base-button-right-section'] {
     /* Composition */
     @apply ml-4;
     /* Text size */

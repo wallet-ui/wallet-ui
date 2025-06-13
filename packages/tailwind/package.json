@@ -75,7 +75,7 @@
         "maintained node versions"
     ],
     "devDependencies": {
-        "@tailwindcss/cli": "^4.1.5"
+        "@tailwindcss/cli": "^4.1.10"
     },
     "peerDependencies": {
         "tailwindcss": "^4.1.5"

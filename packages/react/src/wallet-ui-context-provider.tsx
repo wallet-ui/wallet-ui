@@ -8,7 +8,7 @@ import { useWalletUiWallets } from './use-wallet-ui-wallets';
 import { WalletUiContext, WalletUiContextProviderProps, WalletUiContextValue } from './wallet-ui-context';
 
 export function WalletUiContextProvider({ children, size = 'md' }: WalletUiContextProviderProps) {
-    const { account, accountKeys, setAccount, wallet } = useWalletUiAccount();
+    const { account, accountKeys, cluster, setAccount, wallet } = useWalletUiAccount();
     const wallets = useWalletUiWallets();
     const client = useWalletUiSolanaClient();
     const connected = Boolean(wallet && wallet?.accounts.length > 0);
@@ -32,6 +32,7 @@ export function WalletUiContextProvider({ children, size = 'md' }: WalletUiConte
         account,
         accountKeys,
         client,
+        cluster,
         connect,
         connected,
         copy,

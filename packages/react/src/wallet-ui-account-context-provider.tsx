@@ -7,10 +7,9 @@ import {
     uiWalletAccountsAreSame,
     useWallets,
 } from '@wallet-standard/react';
-import { createStorageAccount, StorageAccount } from '@wallet-ui/core';
+import { createStorageAccount, SolanaCluster, StorageAccount } from '@wallet-ui/core';
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { useWalletUiCluster } from './use-wallet-ui-cluster';
 import { WalletUiAccountContext } from './wallet-ui-account-context';
 
 let wasSetterInvoked = false;
@@ -45,12 +44,13 @@ function getSavedWalletAccount(
  */
 export function WalletUiAccountContextProvider({
     children,
+    cluster,
     storage = createStorageAccount(),
 }: {
     children: React.ReactNode;
+    cluster: SolanaCluster;
     storage?: StorageAccount;
 }) {
-    const { cluster } = useWalletUiCluster();
     const wallets = useWallets();
     const accountId = useStore(storage.value);
     const [account, setAccountInternal] = useState<UiWalletAccount | undefined>(() =>
@@ -129,10 +129,11 @@ export function WalletUiAccountContextProvider({
                 () => ({
                     account: walletAccount,
                     accountKeys,
+                    cluster,
                     setAccount,
                     wallet,
                 }),
-                [walletAccount, wallet, accountKeys],
+                [accountKeys, cluster, wallet, walletAccount],
             )}
         >
             {children}

@@ -31,7 +31,7 @@ export function WalletUi({ children, config: { accountStorage, clusters, cluster
                 render={({ cluster }) => {
                     return (
                         <WalletUiSolanaClientContextProvider urlOrMoniker={cluster.urlOrMoniker}>
-                            <WalletUiAccountContextProvider storage={accountStorage}>
+                            <WalletUiAccountContextProvider cluster={cluster} storage={accountStorage}>
                                 <WalletUiContextProvider {...config}>{children}</WalletUiContextProvider>
                             </WalletUiAccountContextProvider>
                         </WalletUiSolanaClientContextProvider>

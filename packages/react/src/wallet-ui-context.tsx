@@ -1,4 +1,5 @@
 import { UiWallet, UiWalletAccount } from '@wallet-standard/react';
+import { SolanaCluster } from '@wallet-ui/core';
 import { SolanaClient } from 'gill';
 import React, { ReactNode } from 'react';
 
@@ -13,6 +14,7 @@ export interface WalletUiContextValue {
     account?: UiWalletAccount;
     accountKeys: string[];
     client: SolanaClient;
+    cluster: SolanaCluster;
     connect: (wallet: UiWalletAccount) => void;
     connected: boolean;
     copy: () => void;

@@ -1,9 +1,11 @@
 import { UiWallet, UiWalletAccount } from '@wallet-standard/react';
+import { SolanaCluster } from '@wallet-ui/core';
 import React, { createContext } from 'react';
 
 export interface WalletUiAccountInfo {
     account: UiWalletAccount;
     accountKeys: string[];
+    cluster: SolanaCluster;
     wallet: UiWallet | undefined;
 }
 

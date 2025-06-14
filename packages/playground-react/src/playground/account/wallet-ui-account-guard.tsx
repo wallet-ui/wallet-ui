@@ -7,7 +7,7 @@ export interface WalletUiAccountGuardProps {
 }
 
 export function WalletUiAccountGuard({ fallback = <WalletUiDropdown />, render }: WalletUiAccountGuardProps) {
-    const { account, accountKeys, wallet } = useWalletUiAccount();
+    const { account, accountKeys, cluster, wallet } = useWalletUiAccount();
 
-    return account ? render({ account, accountKeys, wallet }) : fallback;
+    return account ? render({ account, accountKeys, cluster, wallet }) : fallback;
 }

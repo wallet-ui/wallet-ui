@@ -1,0 +1,21 @@
+{
+	"extends": "./.svelte-kit/tsconfig.json",
+	"compilerOptions": {
+		"allowJs": true,
+		"checkJs": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+        "verbatimModuleSyntax": true,
+        "isolatedModules": true,
+        "declaration": true,
+        "declarationMap": true,
+        "target": "ESNext",
+        "lib": ["DOM", "ES2015", "ESNext.Promise"]
+	}
+}

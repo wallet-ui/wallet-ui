@@ -1,0 +1,94 @@
+{
+	"name": "@wallet-ui/svelte",
+	"version": "1.0.0",
+	"author": "beeman <beeman@beeman.nl>",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/wallet-ui/wallet-ui.git"
+	},
+	"dependencies": {
+		"@solana/kit": "^2.1.1",
+		"@solana/wallet-standard-features": "1.3.0",
+		"@wallet-standard/app": "1.1.0",
+		"@wallet-standard/core": "1.1.1",
+		"@wallet-ui/core": "workspace:*",
+		"bits-ui": "^2.8.0",
+		"clsx": "^2.1.1",
+		"gill": "0.10.1",
+		"runed": "^0.28.0",
+		"tailwind-merge": "^3.3.1",
+		"wallet-standard-svelte": "^1.0.0"
+	},
+	"peerDependencies": {
+		"svelte": "^5.0.0"
+	},
+	"devDependencies": {
+		"@eslint/compat": "^1.3.0",
+		"@eslint/js": "^9.29.0",
+		"@internationalized/date": "^3.8.1",
+		"@lucide/svelte": "^0.515.0",
+		"@sveltejs/adapter-auto": "^6.0.1",
+		"@sveltejs/kit": "^2.21.5",
+		"@sveltejs/package": "^2.3.11",
+		"@sveltejs/vite-plugin-svelte": "^5.0.0",
+		"eslint": "^9.29.0",
+		"eslint-config-prettier": "^10.1.5",
+		"eslint-plugin-svelte": "^3.9.2",
+		"globals": "^16.2.0",
+		"prettier": "^3.5.3",
+		"prettier-plugin-svelte": "^3.4.0",
+		"publint": "^0.3.12",
+		"svelte": "^5.0.0",
+		"svelte-check": "^4.2.1",
+		"tailwind-variants": "^1.0.0",
+		"tw-animate-css": "^1.3.4",
+		"typescript": "^5.8.3",
+		"typescript-eslint": "^8.34.0",
+		"vite": "^6.3.5"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js"
+		},
+		"./styles.css": "./dist/styles.css",
+		"./package.json": "./package.json"
+	},
+	"bugs": {
+		"url": "https://github.com/wallet-ui/wallet-ui/issues"
+	},
+	"description": "Svelte components for Wallet UI",
+	"engines": {
+		"node": ">=20.18.0"
+	},
+	"files": [
+		"./dist/"
+	],
+	"keywords": [
+		"blockchain",
+		"solana",
+		"web3",
+		"svelte",
+		"svelte5"
+	],
+	"license": "MIT",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build && npm run prepack",
+		"build:css": "cp src/index.css dist/styles.css",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"prepack": "svelte-kit sync && svelte-package",
+		"lint:package": "bunx publint --pack bun",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"format": "prettier --write .",
+		"lint": "prettier --check . && eslint ."
+	},
+	"sideEffects": [
+		"**/*.css"
+	],
+	"svelte": "./dist/index.js",
+	"type": "module",
+	"types": "./dist/index.d.ts"
+}

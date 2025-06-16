@@ -1,0 +1,21 @@
+# @wallet-ui/svelte
+
+> Svelte 5 components for Solana wallet integration
+
+A component library that provides wallet connection UI for Solana dApps. Uses Svelte 5 runes for state management and supports automatic wallet detection, persistent connections, and multiple UI patterns.
+
+## Docs
+
+- [README](./README.md): Installation and usage guide
+- [API Reference](./src/lib/index.ts): Exported components and hooks
+- [Core State](./src/lib/wallet-state.svelte.ts): Wallet state management implementation
+
+## Examples
+
+- [Basic Integration](./src/routes/+page.svelte): Complete example with all components
+- [Component Usage](./README.md#components): Code snippets for each component
+
+## Optional
+
+- [Types](./src/lib/types.ts): TypeScript definitions
+- [Package Config](./package.json): Dependencies and build configuration

@@ -12,5 +12,15 @@ export default defineConfig({
 				'/root/dev/wallet-ui-svelte/wallet-ui/packages/svelte/wallet-standard-svelte/src'
 			]
 		}
-	}
+	},
+	test: {
+		environment: 'jsdom',
+		globals: true,
+		setupFiles: ['./src/setupTests.ts']
+	},
+	resolve: process.env.VITEST
+		? {
+				conditions: ['browser']
+			}
+		: undefined
 });

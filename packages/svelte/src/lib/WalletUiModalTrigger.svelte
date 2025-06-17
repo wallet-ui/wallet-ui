@@ -1,11 +1,9 @@
 <script lang="ts">
-import * as Dialog from './components/ui/dialog/index.js';
-import { Button } from './components/ui/button/index.js';
+import BaseButton from './components/base-button.svelte';
 import type { UiWalletAccount } from 'wallet-standard-svelte';
 import type { WalletUiSize } from './wallet-state.svelte.js';
 import { useWalletUi } from './use-wallet-ui.js';
 import WalletUiModal from './WalletUiModal.svelte';
-import { cn } from './utils.js';
 
 interface Props {
     size?: WalletUiSize;
@@ -29,15 +27,6 @@ const wallet = useWalletUi();
 
 let open = $state(false);
 
-// Map WalletUiSize to shadcn-svelte button sizes
-const sizeMap = {
-    sm: 'sm' as const,
-    md: 'default' as const,
-    lg: 'lg' as const
-};
-
-const buttonSize = sizeMap[size || wallet.size];
-
 async function handleSelect(account: UiWalletAccount) {
     // Find the wallet that contains this account
     const selectedWallet = wallet.wallets.find(w => w.accounts.includes(account));
@@ -54,25 +43,25 @@ async function handleSelect(account: UiWalletAccount) {
 </script>
 
 <div data-wu="wallet-ui-modal-trigger">
-    <Dialog.Root bind:open>
-        <Dialog.Trigger>
-            {#snippet child({ props })}
-                <Button {...props} variant="default" size={buttonSize} class={cn(className)} data-wu="base-button">
-                    {#if children}
-                        {@render children()}
-                    {:else}
-                        {buttonLabel}
-                    {/if}
-                </Button>
-            {/snippet}
-        </Dialog.Trigger>
-        
-        <WalletUiModal 
-            wallets={wallet.wallets}
-            {size}
-            {title}
-            {description}
-            select={handleSelect}
-        />
-    </Dialog.Root>
+    <BaseButton
+        {size}
+        class={className}
+        onclick={() => open = true}
+    >
+        {#if children}
+            {@render children()}
+        {:else}
+            {buttonLabel}
+        {/if}
+    </BaseButton>
+    
+    <WalletUiModal 
+        wallets={wallet.wallets}
+        {size}
+        {title}
+        {description}
+        select={handleSelect}
+        bind:open
+        onOpenChange={(newOpen) => open = newOpen}
+    />
 </div>

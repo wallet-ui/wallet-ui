@@ -24,7 +24,7 @@ async function handleCopyText(text?: string) {
 			textArea.value = text;
 			document.body.appendChild(textArea);
 			textArea.select();
-			// @ts-ignore - execCommand is deprecated but needed for fallback
+			// @@ts-expect-error - execCommand is deprecated but needed for fallback
 			document.execCommand('copy');
 			document.body.removeChild(textArea);
 		}
@@ -68,13 +68,74 @@ function getSavedWalletAccount(
 }
 
 export class WalletState {
-	// Use $state.raw for wallet objects to preserve handles for wallet-standard registry
-	account = $state.raw<UiWalletAccount | undefined>(undefined);
-	wallet = $state.raw<UiWallet | undefined>(undefined);
-	wallets = $state.raw<UiWallet[]>([]);
+	// Reactive state - use regular $state for internal reactivity
+	account = $state<UiWalletAccount | undefined>(undefined);
+	private _wallet = $state<UiWallet | undefined>(undefined);
+	wallets = $state<UiWallet[]>([]);
 	cluster = $state<SolanaCluster | undefined>(undefined);
-	client = $state.raw<SolanaClient | undefined>(undefined); // Keep raw - gill client needs internal structure preserved
+	private _client = $state.raw<SolanaClient | undefined>(undefined); // Use raw for complex objects
 	size = $state<WalletUiSize>('md');
+
+	// Track timeouts for cleanup
+	private timeoutIds = new Set<NodeJS.Timeout>();
+
+	constructor(config: WalletUiConfig) {
+		this.clusters = config.clusters;
+		this.accountStorage = config.accountStorage ?? createStorageAccount();
+		this.clusterStorage = config.clusterStorage ?? createStorageCluster();
+
+		// Auto-create client when cluster changes - effects should be in constructor for classes
+		$effect(() => {
+			// Read this.cluster directly to ensure dependency tracking
+			const currentCluster = this.cluster;
+			
+			if (currentCluster) {
+				try {
+					// Use snapshot only for external API to avoid proxy issues
+					const clusterSnapshot = $state.snapshot(currentCluster);
+					this._client = createSolanaClient({ urlOrMoniker: clusterSnapshot.urlOrMoniker });
+				} catch (error) {
+					console.error('Error creating client:', error);
+					this._client = undefined;
+				}
+			} else {
+				this._client = undefined;
+			}
+
+			// Return teardown function to clean up client when effect re-runs or component destroys
+			return () => {
+				if (this._client) {
+					// Gill clients don't require explicit disposal - they use RPC connections
+					// that are managed by the fetch API. Clearing the reference is sufficient.
+					this._client = undefined;
+				}
+			};
+		});
+
+		this.loadWallets(); // This will call tryRestoreAccount() at the end
+		this.setupWalletRegistryListeners(); // Listen for new wallets
+		this.loadSavedCluster();
+		this.loadSavedAccount(); // Also call it directly to ensure it runs
+		// Client creation now handled automatically by $effect
+	}
+
+	// Public getters that return clean objects (same API as React version)
+	get wallet(): UiWallet | undefined {
+		if (!this._wallet) return undefined;
+		return this.getCleanWallet(this._wallet);
+	}
+
+	set wallet(value: UiWallet | undefined) {
+		this._wallet = value;
+	}
+
+	get client(): SolanaClient | undefined {
+		return this._client;
+	}
+
+	set client(value: SolanaClient | undefined) {
+		this._client = value;
+	}
 
 	// Connection state
 	connecting = $state<boolean>(false);
@@ -91,34 +152,16 @@ export class WalletState {
 	// Wallet registry listeners
 	private walletRegistryDisposers: (() => void)[] = [];
 
-	// Trigger for manual reactivity of raw state
-	private stateTrigger = $state(0);
-
-	// Derived state with manual trigger for raw state reactivity
-	connected = $derived.by(() => {
-		this.stateTrigger; // Access trigger to make reactive
-		return Boolean(this.wallet && this.account);
-	});
-	accountKeys = $derived.by(() => {
-		this.stateTrigger; // Access trigger to make reactive
-		return this.account && this.wallet
-			? [this.cluster?.id, getWalletAccountStorageKey(this.account, this.wallet.name)].filter(
+	// Proper derived state without manual triggers
+	connected = $derived(Boolean(this._wallet && this.account));
+	accountKeys = $derived(
+		this.account && this._wallet
+			? [this.cluster?.id, getWalletAccountStorageKey(this.account, this._wallet.name)].filter(
 					Boolean
 				)
-			: [];
-	});
+			: []
+	);
 
-	constructor(config: WalletUiConfig) {
-		this.clusters = config.clusters;
-		this.accountStorage = config.accountStorage ?? createStorageAccount();
-		this.clusterStorage = config.clusterStorage ?? createStorageCluster();
-
-		this.loadWallets(); // This will call tryRestoreAccount() at the end
-		this.setupWalletRegistryListeners(); // Listen for new wallets
-		this.loadSavedCluster();
-		this.loadSavedAccount(); // Also call it directly to ensure it runs
-		this.createClient();
-	}
 
 	private loadWallets = () => {
 		// Get wallets directly from registry to ensure fresh state
@@ -140,7 +183,6 @@ export class WalletState {
 
 		console.log('Solana wallets:', solanaWallets);
 		this.wallets = solanaWallets;
-		this.stateTrigger++; // Trigger reactivity
 
 		this.tryRestoreAccount();
 	};
@@ -162,7 +204,7 @@ export class WalletState {
 	};
 
 	private loadSavedCluster = () => {
-		const savedClusterId = this.clusterStorage.current;
+		const savedClusterId = this.clusterStorage.get();
 		if (savedClusterId) {
 			const cluster = this.clusters.find((c) => c.id === savedClusterId);
 			if (cluster) {
@@ -182,7 +224,7 @@ export class WalletState {
 	};
 
 	private tryRestoreAccount = () => {
-		const savedAccountKey = this.accountStorage.current;
+		const savedAccountKey = this.accountStorage.get();
 		if (!savedAccountKey) return;
 
 		// Extract wallet name from saved account key for fallback matching
@@ -197,7 +239,6 @@ export class WalletState {
 						console.log('Restoring cached connection:', wallet.name, account.address);
 						this.wallet = wallet;
 						this.account = account;
-						this.stateTrigger++; // Trigger reactivity
 						return;
 					}
 				}
@@ -211,7 +252,6 @@ export class WalletState {
 					);
 					this.wallet = wallet;
 					this.account = wallet.accounts[0];
-					this.stateTrigger++; // Trigger reactivity
 					return;
 				}
 			}
@@ -219,31 +259,23 @@ export class WalletState {
 
 		// If we get here, saved account not found - clear cache
 		console.log('Saved account not found, clearing cache');
-		this.accountStorage.current = undefined;
+		this.accountStorage.set(undefined);
 	};
 
-	private createClient = () => {
-		if (this.cluster) {
-			try {
-				this.client = createSolanaClient({ urlOrMoniker: this.cluster.urlOrMoniker });
-			} catch (error) {
-				console.error('Error creating client:', error);
-			}
-		}
-	};
 
 	connect = async (wallet: UiWallet) => {
-		// Prevent multiple simultaneous connections
+		// If already connecting, terminate the existing connection first
 		if (this.connecting) {
-			return;
+			await this.terminateConnection();
 		}
 
 		this.connecting = true;
 		this.error = null;
 
 		try {
-			// Create connection handler
-			this.connectHandler = new UiWalletConnect(wallet);
+			// Get a clean wallet from registry to avoid Svelte proxy issues
+			const cleanWallet = this.getCleanWallet(wallet);
+			this.connectHandler = new UiWalletConnect(cleanWallet);
 			const accounts = await this.connectHandler.connect();
 
 			if (accounts.length > 0) {
@@ -268,31 +300,32 @@ export class WalletState {
 
 				// Save to storage - use wallet name + address
 				const accountKey = `${wallet.name}:${accounts[0].address}`;
-				this.accountStorage.current = accountKey;
-
-				this.stateTrigger++; // Trigger reactivity
+				this.accountStorage.set(accountKey);
 			}
-		} catch (error: any) {
+		} catch (error: unknown) {
 			console.error('Failed to connect wallet:', error);
 
 			// Store error for UI display
-			this.error = error;
+			const errorObj = error instanceof Error ? error : new Error(String(error));
+			this.error = errorObj;
 
 			// Provide helpful console messages for common issues
 			if (
-				error.message?.includes('User rejected') ||
-				error.message?.includes('User cancelled') ||
-				error.message?.includes('rejected')
+				errorObj.message?.includes('User rejected') ||
+				errorObj.message?.includes('User cancelled') ||
+				errorObj.message?.includes('rejected')
 			) {
 				console.warn('User cancelled wallet connection');
 				// For user rejection, we can clear the error after a delay so it doesn't persist
-				setTimeout(() => {
-					if (this.error === error) {
+				const timeoutId = setTimeout(() => {
+					if (this.error === errorObj) {
 						this.error = null;
 					}
+					this.timeoutIds.delete(timeoutId);
 				}, 3000);
+				this.timeoutIds.add(timeoutId);
 			} else if (
-				error.message?.includes('Unexpected error') ||
+				errorObj.message?.includes('Unexpected error') ||
 				wallet.name.toLowerCase().includes('phantom')
 			) {
 				console.error(
@@ -309,8 +342,9 @@ export class WalletState {
 	disconnect = async () => {
 		try {
 			if (this.wallet) {
-				// Create disconnect handler
-				this.disconnectHandler = new UiWalletDisconnect(this.wallet);
+				// Get a clean wallet from registry to avoid Svelte proxy issues
+				const cleanWallet = this.getCleanWallet(this.wallet);
+				this.disconnectHandler = new UiWalletDisconnect(cleanWallet);
 				await this.disconnectHandler.disconnect();
 			}
 		} catch (error) {
@@ -318,8 +352,7 @@ export class WalletState {
 		} finally {
 			this.account = undefined;
 			this.wallet = undefined;
-			this.accountStorage.current = undefined;
-			this.stateTrigger++; // Trigger reactivity
+			this.accountStorage.set(undefined);
 		}
 	};
 
@@ -331,9 +364,7 @@ export class WalletState {
 
 		// Update storage with new account
 		const accountKey = `${this.wallet.name}:${account.address}`;
-		this.accountStorage.current = accountKey;
-
-		this.stateTrigger++; // Trigger reactivity
+		this.accountStorage.set(accountKey);
 	};
 
 	copy = async () => {
@@ -343,22 +374,74 @@ export class WalletState {
 
 	setCluster = (cluster: SolanaCluster) => {
 		this.cluster = cluster;
-		this.clusterStorage.current = cluster.id;
-		this.createClient();
-	};
-
-	setSize = (size: WalletUiSize) => {
-		this.size = size;
+		this.clusterStorage.set(cluster.id);
+		// Client creation now handled automatically by $effect
 	};
 
 	clearError = () => {
 		this.error = null;
 	};
 
+
+	// Helper method to get "clean" wallet from registry to avoid proxy issues
+	private getCleanWallet(wallet: UiWallet): UiWallet {
+		try {
+			// Get the wallet name from the potentially proxied wallet
+			const walletName = $state.snapshot(wallet).name;
+			
+			// Get a fresh wallet from the registry to avoid Svelte proxy issues
+			const { get } = getWallets();
+			const rawWallets = get();
+			const matchingWallet = rawWallets.find(w => w.name === walletName);
+			
+			if (matchingWallet) {
+				// Create a fresh UiWallet with proper handles
+				return getOrCreateUiWalletForStandardWallet_DO_NOT_USE_OR_YOU_WILL_BE_FIRED(matchingWallet);
+			}
+		} catch (error) {
+			console.warn('Failed to get clean wallet from registry:', error);
+		}
+		
+		// Fallback to the original wallet
+		return wallet;
+	};
+
+	// Helper method to terminate existing connection
+	private terminateConnection = async () => {
+		try {
+			if (this.connectHandler) {
+				// Cancel any ongoing connection
+				this.connectHandler = undefined;
+			}
+			if (this.wallet) {
+				const cleanWallet = this.getCleanWallet(this.wallet);
+				this.disconnectHandler = new UiWalletDisconnect(cleanWallet);
+				await this.disconnectHandler.disconnect();
+			}
+		} catch (error) {
+			console.warn('Error terminating connection:', error);
+		} finally {
+			this.connecting = false;
+			this.connectHandler = undefined;
+			this.disconnectHandler = undefined;
+		}
+	};
+
 	destroy = () => {
+		// Clean up all timeouts
+		this.timeoutIds.forEach(id => clearTimeout(id));
+		this.timeoutIds.clear();
+
 		// Clean up wallet registry listeners
 		this.walletRegistryDisposers.forEach((dispose) => dispose());
 		this.walletRegistryDisposers = [];
+
+		// Clean up connection handlers
+		this.connectHandler = undefined;
+		this.disconnectHandler = undefined;
+
+		// Clear client reference
+		this._client = undefined;
 	};
 }
 
@@ -367,7 +450,7 @@ let walletState: WalletState | undefined;
 export function createWalletState(config: WalletUiConfig): WalletState {
 	if (!walletState) {
 		walletState = new WalletState(config);
-		walletState.setSize(config.size ?? 'md');
+		walletState.size = config.size ?? 'md'; // Direct property assignment since it's $state
 	}
 	return walletState;
 }

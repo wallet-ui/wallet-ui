@@ -7,16 +7,17 @@
 		"url": "git+https://github.com/wallet-ui/wallet-ui.git"
 	},
 	"dependencies": {
+		"@nanostores/persistent": "^1.0.0",
 		"@solana/kit": "^2.1.1",
 		"@solana/wallet-standard-features": "1.3.0",
 		"@wallet-standard/app": "1.1.0",
 		"@wallet-standard/core": "1.1.1",
 		"@wallet-ui/core": "workspace:*",
-		"bits-ui": "^2.8.0",
-		"clsx": "^2.1.1",
+		"@zag-js/dialog": "^1.15.4",
+		"@zag-js/menu": "^1.15.4",
+		"@zag-js/svelte": "^1.15.4",
 		"gill": "0.10.1",
-		"runed": "^0.28.0",
-		"tailwind-merge": "^3.3.1",
+		"nanostores": "^1.0.1",
 		"wallet-standard-svelte": "^1.0.0"
 	},
 	"peerDependencies": {
@@ -31,20 +32,23 @@
 		"@sveltejs/kit": "^2.21.5",
 		"@sveltejs/package": "^2.3.11",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
+		"@testing-library/svelte": "^5.2.8",
+		"@testing-library/user-event": "^14.6.1",
 		"eslint": "^9.29.0",
 		"eslint-config-prettier": "^10.1.5",
 		"eslint-plugin-svelte": "^3.9.2",
 		"globals": "^16.2.0",
+		"jsdom": "^26.1.0",
 		"prettier": "^3.5.3",
 		"prettier-plugin-svelte": "^3.4.0",
 		"publint": "^0.3.12",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.2.1",
-		"tailwind-variants": "^1.0.0",
 		"tw-animate-css": "^1.3.4",
 		"typescript": "^5.8.3",
 		"typescript-eslint": "^8.34.0",
-		"vite": "^6.3.5"
+		"vite": "^6.3.5",
+		"vitest": "^3.2.3"
 	},
 	"exports": {
 		".": {
@@ -83,7 +87,10 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint ."
+		"lint": "prettier --check . && eslint .",
+		"test": "vitest",
+		"test:ui": "vitest --ui",
+		"test:run": "vitest run"
 	},
 	"sideEffects": [
 		"**/*.css"

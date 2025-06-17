@@ -1,5 +1,5 @@
 <script lang="ts">
-import * as Dialog from './components/ui/dialog/index.js';
+import BaseModal from './components/base-modal.svelte';
 import type { UiWallet, UiWalletAccount } from 'wallet-standard-svelte';
 import type { WalletUiSize } from './wallet-state.svelte.js';
 import WalletUiList from './WalletUiList.svelte';
@@ -10,6 +10,8 @@ interface Props {
     title?: string;
     description?: string;
     select?: (account: UiWalletAccount) => Promise<void>;
+    open?: boolean;
+    onOpenChange?: (open: boolean) => void;
 }
 
 let { 
@@ -17,8 +19,12 @@ let {
     size = 'md', 
     title = "Connect Wallet",
     description = "Connect a wallet on Solana to continue",
-    select
+    select,
+    open = $bindable(false),
+    onOpenChange
 }: Props = $props();
+
+const modalId = $props.id();
 
 async function handleSelect(account: UiWalletAccount) {
     try {
@@ -29,17 +35,14 @@ async function handleSelect(account: UiWalletAccount) {
 }
 </script>
 
-<Dialog.Content class="w-full max-w-sm" data-wu="wallet-ui-modal" data-scope="dialog" data-part="content">
-    <Dialog.Header>
-        <Dialog.Title class="text-xl font-semibold">
-            {title}
-        </Dialog.Title>
-        {#if description}
-            <Dialog.Description class="text-sm">
-                {description}
-            </Dialog.Description>
-        {/if}
-    </Dialog.Header>
-    
-    <WalletUiList {wallets} {size} select={handleSelect} />
-</Dialog.Content>
+<BaseModal
+    id={modalId}
+    {description}
+    {size}
+    {open}
+    {onOpenChange}
+>
+    {#snippet children()}
+        <WalletUiList {wallets} {size} select={handleSelect} />
+    {/snippet}
+</BaseModal>

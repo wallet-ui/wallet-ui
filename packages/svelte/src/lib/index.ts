@@ -1,3 +1,4 @@
+import '../index.css';
 import type { WalletUiConfig } from './wallet-state.svelte.js';
 
 // Main components

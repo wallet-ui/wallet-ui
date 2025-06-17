@@ -1,8 +1,8 @@
 <script lang="ts">
-import { Button } from './components/ui/button/index.js';
+import BaseButton from './components/base-button.svelte';
+import BaseSvg from './components/base-svg.svelte';
 import { useWalletUi } from './use-wallet-ui.js';
 import type { WalletUiSize } from './wallet-state.svelte.js';
-import { cn } from './utils.js';
 
 interface Props {
     size?: WalletUiSize;
@@ -12,15 +12,7 @@ interface Props {
 let { size, class: className }: Props = $props();
 
 const wallet = useWalletUi();
-
-// Map WalletUiSize to shadcn-svelte button sizes
-const sizeMap = {
-    sm: 'sm' as const,
-    md: 'default' as const,
-    lg: 'lg' as const
-};
-
-const buttonSize = sizeMap[size || wallet.size];
+const buttonSize = size || wallet.size;
 
 async function handleClick() {
     if (wallet.connecting) return;
@@ -44,22 +36,21 @@ async function handleClick() {
 }
 </script>
 
-<Button 
+<BaseButton 
     size={buttonSize}
-    class={cn(wallet.connecting && "opacity-50", className)}
-    data-wu="base-button"
+    class={`${wallet.connecting ? "opacity-50" : ""} ${className || ""}`}
     onclick={handleClick}
     disabled={wallet.connecting}
 >
     {#if wallet.connecting}
-        <svg class="h-4 w-4 animate-spin mr-2" fill="none" viewBox="0 0 24 24">
+        <BaseSvg size={buttonSize} class="animate-spin mr-2" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
+        </BaseSvg>
         Connecting...
     {:else if wallet.connected}
         {wallet.account?.address.slice(0, 4)}...{wallet.account?.address.slice(-4)}
     {:else}
         Connect Wallet
     {/if}
-</Button>
+</BaseButton>

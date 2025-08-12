@@ -1,6 +1,8 @@
 [data-wu='wallet-ui-icon'] {
     /* Border */
     @apply border-0;
+    /* Position */
+    @apply m-0;
 }
 
 [data-wu='wallet-ui-icon'].sm {

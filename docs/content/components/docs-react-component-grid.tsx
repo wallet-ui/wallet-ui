@@ -18,7 +18,12 @@ export function DocsReactComponentGrid() {
         <section className="py-4">
             <Cards>
                 {item.map(item => (
-                    <Card key={item.id} href={`./${item.id}`} title={item.name} description={item.description} />
+                    <Card
+                        key={item.id}
+                        href={`./components/${item.id}`}
+                        title={item.name}
+                        description={item.description}
+                    />
                 ))}
             </Cards>
         </section>

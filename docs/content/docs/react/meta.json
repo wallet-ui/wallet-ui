@@ -12,6 +12,8 @@
         "---Components---",
         "components/index",
         "components/dropdown",
-        "components/cluster-dropdown"
+        "components/cluster-dropdown",
+        "---Hooks---",
+        "hooks/index"
     ]
 }

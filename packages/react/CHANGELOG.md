@@ -1,5 +1,14 @@
 # @wallet-ui/react
 
+## 1.1.1
+
+### Patch Changes
+
+- [#242](https://github.com/wallet-ui/wallet-ui/pull/242) [`c89fb4d`](https://github.com/wallet-ui/wallet-ui/commit/c89fb4d5f4836871c365fbe7bd009bd0d692f202) Thanks [@beeman](https://github.com/beeman)! - add homepage to package.json
+
+- Updated dependencies [[`c89fb4d`](https://github.com/wallet-ui/wallet-ui/commit/c89fb4d5f4836871c365fbe7bd009bd0d692f202)]:
+    - @wallet-ui/core@1.1.1
+
 ## 1.1.0
 
 ### Minor Changes

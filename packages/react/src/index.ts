@@ -11,6 +11,7 @@ export * from './use-wallet-ui';
 export * from './use-wallet-ui-account';
 export * from './use-wallet-ui-cluster';
 export * from './use-wallet-ui-dropdown';
+export * from './use-wallet-ui-signer';
 export * from './use-wallet-ui-solana-client';
 export * from './use-wallet-ui-wallet';
 export * from './use-wallet-ui-wallets';

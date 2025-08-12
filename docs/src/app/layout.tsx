@@ -15,6 +15,11 @@ export const metadata: Metadata = {
         default: `${siteConfig.name} - The modern UI for Wallet Standard`,
         template: `%s | ${siteConfig.name} - The modern UI for Wallet Standard`,
     },
+    openGraph: {
+        images: {
+            url: '/og.png',
+        },
+    },
     metadataBase: new URL(siteConfig.url),
     description: siteConfig.description,
 };

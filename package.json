@@ -57,7 +57,7 @@
         "pnpm": "^10",
         "yarn": "please-use-pnpm"
     },
-    "packageManager": "pnpm@10.5.2",
+    "packageManager": "pnpm@10.14.0",
     "pnpm": {
         "overrides": {
             "agadoo>rollup": "^4",
@@ -69,7 +69,16 @@
         },
         "patchedDependencies": {
             "jest-runner-prettier@1.0.0": "patches/jest-runner-prettier@1.0.0.patch"
-        }
+        },
+        "onlyBuiltDependencies": [
+            "@parcel/watcher",
+            "@swc/core",
+            "@tailwindcss/oxide",
+            "esbuild",
+            "sharp",
+            "unrs-resolver",
+            "workerd"
+        ]
     },
     "prettier": "@solana/prettier-config-solana"
 }

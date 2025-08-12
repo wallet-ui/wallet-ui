@@ -15,6 +15,7 @@
     },
     "dependencies": {
         "@sentry/nextjs": "^10.4.0",
+        "@vercel/analytics": "^1.5.0",
         "@wallet-ui/react": "workspace:*",
         "@wallet-ui/tailwind": "workspace:*",
         "fumadocs-core": "15.5.1",

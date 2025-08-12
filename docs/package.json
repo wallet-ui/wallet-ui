@@ -4,19 +4,16 @@
     "private": true,
     "scripts": {
         "build": "next build",
+        "compile:js": "next build",
         "dev": "next dev --turbo --port 3080",
-        "start": "next start",
         "postinstall": "fumadocs-mdx",
-        "compile:js": "opennextjs-cloudflare build",
-        "preview": "npm run compile:js && opennextjs-cloudflare preview",
-        "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
+        "start": "next start",
         "style:fix": "next lint --fix && pnpm prettier --log-level warn --ignore-unknown --write ./*",
         "test:lint": "next lint",
         "test:prettier": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../node_modules/@wallet-ui/test-config/jest-prettier.config.ts --rootDir . --silent",
         "test:typecheck": "tsc"
     },
     "dependencies": {
-        "@opennextjs/cloudflare": "^1.2.1",
         "@wallet-ui/react": "workspace:*",
         "@wallet-ui/tailwind": "workspace:*",
         "fumadocs-core": "15.5.1",
@@ -38,7 +35,6 @@
         "eslint-config-next": "15.3.3",
         "postcss": "^8.5.5",
         "tailwindcss": "^4.1.10",
-        "typescript": "^5.8.3",
-        "wrangler": "^4.20.0"
+        "typescript": "^5.8.3"
     }
 }

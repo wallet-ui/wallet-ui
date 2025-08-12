@@ -1,5 +1,4 @@
 import { createMDX } from 'fumadocs-mdx/next';
-import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
 
 const withMDX = createMDX();
 
@@ -8,25 +7,23 @@ const config = {
     reactStrictMode: true,
     logging: {
         fetches: {
-            fullUrl: true,
-        },
+            fullUrl: true
+        }
     },
     async redirects() {
         return [
             {
                 source: '/docs',
                 destination: '/docs/react',
-                permanent: true,
+                permanent: true
             },
             {
                 source: '/docs/react',
                 destination: '/docs/react/getting-started',
-                permanent: true,
-            },
+                permanent: true
+            }
         ];
-    },
+    }
 };
 
 export default withMDX(config);
-
-await initOpenNextCloudflareForDev();

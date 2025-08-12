@@ -61,6 +61,7 @@
         "test:unit:node": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../../node_modules/@wallet-ui/test-config/jest-unit.config.node.ts --rootDir . --silent"
     },
     "author": "beeman <beeman@beeman.nl>",
+    "homepage": "https://wallet-ui.dev",
     "license": "MIT",
     "repository": {
         "type": "git",

@@ -27,3 +27,6 @@ yarn-error.log*
 .vercel
 next-env.d.ts
 .dev.vars
+
+# Sentry Config File
+.env.sentry-build-plugin

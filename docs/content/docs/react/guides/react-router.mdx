@@ -5,4 +5,114 @@ description: Set up Wallet UI with React Router
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-<Callout type="info">Coming soon</Callout>
+This guide explains how to integrate Wallet UI into a React application that uses React Router for navigation.
+
+<Callout>
+    This guide assumes you have a project set up with Vite and React. If you are starting from scratch, please follow
+    the [Vite guide](./vite) first.
+</Callout>
+
+## 1. Install React Router
+
+If you haven't already, add `react-router-dom` to your project.
+
+```package-install
+npm install react-router-dom
+```
+
+## 2. Place the WalletUiProvider
+
+For the wallet context to be available on all your routes, the `WalletUiProvider` should wrap your `RouterProvider`.
+
+Update your `main.tsx` to include both providers.
+
+```tsx title="src/main.tsx"
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import App from './App.tsx';
+import './index.css';
+import { WalletUiProvider } from './providers/wallet-ui-provider.tsx';
+
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <App />,
+    },
+    // Add other routes here
+]);
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+    <React.StrictMode>
+        <WalletUiProvider>
+            <RouterProvider router={router} />
+        </WalletUiProvider>
+    </React.StrictMode>,
+);
+```
+
+## 3. Example Usage in Routes
+
+Now you can use Wallet UI components and hooks in any of your route components.
+
+Here is an example of a simple app with a home page and a profile page that shows the connected wallet's address.
+
+**`App.tsx` (Home Page)**
+
+```tsx title="src/App.tsx"
+import { WalletUiDropdown } from '@wallet-ui/react';
+import { Link } from 'react-router-dom';
+
+export default function App() {
+    return (
+        <div>
+            <h1>Home</h1>
+            <WalletUiDropdown />
+            <nav>
+                <Link to="/profile">Go to Profile</Link>
+            </nav>
+        </div>
+    );
+}
+```
+
+**`Profile.tsx` (Profile Page)**
+
+```tsx title="src/pages/profile.tsx"
+import { useWalletUi } from '@wallet-ui/react';
+import { Link } from 'react-router-dom';
+
+export default function ProfilePage() {
+    const { account, connected } = useWalletUi();
+
+    return (
+        <div>
+            <h1>Profile</h1>
+            {connected ? <p>Your address: {account?.address}</p> : <p>Please connect a wallet to see your profile.</p>}
+            <nav>
+                <Link to="/">Go Home</Link>
+            </nav>
+        </div>
+    );
+}
+```
+
+Finally, add the new route to your router configuration in `main.tsx`.
+
+```tsx title="src/main.tsx" {6-9}
+// ... imports
+import ProfilePage from './pages/profile.tsx';
+
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <App />,
+    },
+    {
+        path: '/profile',
+        element: <ProfilePage />,
+    },
+]);
+
+// ... rest of the file
+```

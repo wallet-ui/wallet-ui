@@ -9,6 +9,7 @@ node_modules
 .DS_Store
 *.pem
 tmp
+dist
 
 # debug
 npm-debug.log*
@@ -16,7 +17,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# turbo
+# framworks
+.next
+.react-router
 .turbo
 
 # Sapling SCM

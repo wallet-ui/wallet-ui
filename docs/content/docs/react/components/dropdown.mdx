@@ -5,6 +5,10 @@ description: A dropdown that lists wallets, allows to connect and disconnect
 
 import { DocsReactComponentDropdown } from '../../../components/docs-react-component-dropdown';
 
+The `WalletUiDropdown` is a complete, pre-built component that renders a button for wallet selection. When clicked, it displays a list of detected wallets, allowing users to connect and disconnect.
+
+When a user is connected, the button will display their truncated address.
+
 ## Usage
 
 ```tsx
@@ -14,6 +18,12 @@ function MyComponent() {
     return <WalletUiDropdown />;
 }
 ```
+
+## Props
+
+| Name   | Type                   | Default |
+| ------ | ---------------------- | ------- |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'`  |
 
 ## Sizes
 

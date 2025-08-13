@@ -3,6 +3,98 @@ title: Getting started with Vite
 description: Set up Wallet UI with Vite
 ---
 
-import { Callout } from 'fumadocs-ui/components/callout';
+This guide will walk you through setting up Wallet UI in a new or existing Vite application with React and TypeScript.
 
-<Callout type="info">Coming soon</Callout>
+## 1. Generate new application
+
+If you're starting from scratch, you can use `create-vite` to generate a new React and TypeScript project.
+
+```package-install
+npm create vite@latest my-vite-app -- --template react-ts
+cd my-vite-app
+```
+
+## 2. Install dependencies
+
+Install the required Wallet UI packages.
+
+```package-install
+npm install @wallet-ui/react @wallet-ui/tailwind
+```
+
+## 3. Set up Tailwind CSS
+
+Wallet UI components are designed with Tailwind CSS. If you don't have it set up yet, follow these steps.
+
+First, install Tailwind and its peer dependencies, then generate the config files.
+
+```package-install
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+```
+
+Next, configure your Tailwind CSS content paths in `tailwind.config.js`.
+
+```js title="tailwind.config.js"
+/** @type {import('tailwindcss').Config} */
+export default {
+    content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+    theme: {
+        extend: {},
+    },
+    plugins: [],
+};
+```
+
+Finally, add the Tailwind directives and the Wallet UI styles to your main CSS file.
+
+```css title="src/index.css"
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import '@wallet-ui/tailwind/index.css';
+```
+
+## 4. Add WalletUiProvider
+
+Create a provider component that will set up the Wallet UI configuration and wrap your application.
+
+```tsx title="src/providers/wallet-ui-provider.tsx"
+import { createSolanaDevnet, createSolanaLocalnet, createWalletUiConfig, WalletUi } from '@wallet-ui/react';
+import { ReactNode } from 'react';
+
+const config = createWalletUiConfig({
+    clusters: [
+        // You can add mainnet when you're ready
+        // createSolanaMainnet('https://mainnet.your-rpc.com?api-key=secret'),
+        createSolanaDevnet(),
+        createSolanaLocalnet(),
+    ],
+});
+
+export function WalletUiProvider({ children }: { children: ReactNode }) {
+    return <WalletUi config={config}>{children}</WalletUi>;
+}
+```
+
+## 5. Update your main application file
+
+Now, wrap your root `App` component with the `WalletUiProvider` you just created.
+
+```tsx title="src/main.tsx"
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.tsx';
+import './index.css';
+import { WalletUiProvider } from './providers/wallet-ui-provider.tsx';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+    <React.StrictMode>
+        <WalletUiProvider>
+            <App />
+        </WalletUiProvider>
+    </React.StrictMode>,
+);
+```
+
+You should now be able to use the [components](/docs/react/components) and [hooks](/docs/react/hooks) in your Vite app.

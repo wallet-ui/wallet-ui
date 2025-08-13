@@ -1,0 +1,44 @@
+---
+title: useWalletUi
+description: The primary hook for interacting with wallet state.
+---
+
+The `useWalletUi` hook is the primary hook for interacting with the wallet state. It provides access to the connected wallet, account, cluster information, and functions to connect, disconnect, and copy the address.
+
+### Return Value
+
+The hook returns an object with the following properties:
+
+| Name         | Type                                 | Description                                                      |
+| ------------ | ------------------------------------ | ---------------------------------------------------------------- |
+| `account`    | `UiWalletAccount`                    | The currently selected wallet account.                           |
+| `wallet`     | `UiWallet`                           | The wallet that the current account belongs to.                  |
+| `connected`  | `boolean`                            | A boolean indicating if a wallet is connected.                   |
+| `wallets`    | `UiWallet[]`                         | An array of all detected wallets.                                |
+| `cluster`    | `SolanaCluster`                      | The currently selected Solana cluster.                           |
+| `client`     | `SolanaClient`                       | The Solana client instance for the current cluster.              |
+| `connect`    | `(account: UiWalletAccount) => void` | A function to set the active wallet account.                     |
+| `disconnect` | `() => void`                         | A function to disconnect the current wallet.                     |
+| `copy`       | `() => void`                         | A function to copy the current account address to the clipboard. |
+| `size`       | `WalletUiSize`                       | The default component size set in the provider.                  |
+
+### Example
+
+```tsx
+import { useWalletUi } from '@wallet-ui/react';
+
+function WalletStatus() {
+    const { connected, account, disconnect } = useWalletUi();
+
+    if (!connected) {
+        return <p>Not connected</p>;
+    }
+
+    return (
+        <div>
+            <p>Connected to {account?.address}</p>
+            <button onClick={disconnect}>Disconnect</button>
+        </div>
+    );
+}
+```

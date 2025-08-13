@@ -1,6 +1,16 @@
-# Wallet UI Monorepo
+# Wallet UI
 
-Work in progress.
+A modern UI component library for Solana apps, built on the Wallet Standard.
+
+This monorepo contains the core packages, documentation, and examples for Wallet UI.
+
+- `packages/core`: Framework-agnostic state management using Nanostores.
+- `packages/react`: React components and hooks.
+- `packages/tailwind`: Tailwind CSS presets for the components.
+- `docs`: The documentation and project website, built with Next.js and Fumadocs.
+- `examples`: Example applications demonstrating how to use Wallet UI.
+
+For comprehensive documentation and usage guides, please visit [wallet-ui.dev](https://wallet-ui.dev).
 
 ## Getting started
 

@@ -1,0 +1,37 @@
+---
+title: Clusters
+description: Configuring Solana clusters in Wallet UI.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+Wallet UI needs to know which Solana clusters your application supports. The core library provides simple helper functions to define these clusters.
+
+- `createSolanaDevnet()`
+- `createSolanaLocalnet()`
+- `createSolanaMainnet()`
+- `createSolanaTestnet()`
+
+Each of these functions returns a `SolanaCluster` object. You can also pass a custom RPC URL or a configuration object to override the default label or URL.
+
+<Callout type="info">
+    When using a public RPC endpoint for `mainnet-beta`, be aware of rate limits. For production applications, it is
+    highly recommended to use a dedicated RPC provider.
+</Callout>
+
+### Usage
+
+You provide the list of clusters to the `WalletUi` provider from the `@wallet-ui/react` package.
+
+```tsx
+import { createWalletUiConfig, WalletUi } from '@wallet-ui/react';
+import { createSolanaDevnet, createSolanaMainnet } from '@wallet-ui/core';
+
+const config = createWalletUiConfig({
+    clusters: [createSolanaMainnet('https://your-custom-rpc.com'), createSolanaDevnet()],
+});
+
+function App({ children }) {
+    return <WalletUi config={config}>{children}</WalletUi>;
+}
+```

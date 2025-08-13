@@ -1,0 +1,80 @@
+---
+title: useWalletUiSignAndSend
+description: A hook to easily sign and send a transaction.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+The `useWalletUiSignAndSend` hook provides a single function to take a set of instructions, sign them with a wallet, and send the transaction to the network.
+
+It simplifies the transaction lifecycle by automatically fetching the latest blockhash and constructing the transaction object for you.
+
+<Callout>
+    This hook is designed to be used with the `TransactionSendingSigner` returned from the
+    [`useWalletUiSigner`](./use-wallet-ui-signer) hook.
+</Callout>
+
+### Return Value
+
+The hook returns a single asynchronous function.
+
+**`signAndSend(ix, signer)`**
+
+- **`ix`**: `IInstruction | IInstruction[]` - A single instruction or an array of instructions to include in the transaction. These instructions should be created using a library like `gill`.
+- **`signer`**: `TransactionSendingSigner` - The signer object for the fee payer and signature.
+- **Returns**: `Promise<string>` - A promise that resolves to the base58 transaction signature.
+
+### Example
+
+This example demonstrates how to create a simple SOL transfer transaction and send it using the hook.
+
+```tsx
+import { useWalletUiSigner, useWalletUiSignAndSend } from '@wallet-ui/react';
+import { createTransferInstruction, getBase58Encoder } from 'gill';
+import { useState } from 'react';
+
+const LAMPORTS_PER_SOL = 1_000_000_000;
+// A random address to send 0.01 SOL to
+const MOCK_RECIPIENT = '9m5kFDqgpf7Ckzbox91Vcmx5n2p4J242eT7tBCaG5y6d';
+
+function SendTransactionButton() {
+    const signer = useWalletUiSigner();
+    const signAndSend = useWalletUiSignAndSend();
+    const [signature, setSignature] = useState<string | null>(null);
+    const [sending, setSending] = useState(false);
+
+    const handleClick = async () => {
+        if (!signer) return;
+        setSending(true);
+        try {
+            const transferIx = createTransferInstruction({
+                from: signer,
+                to: getBase58Encoder().encode(MOCK_RECIPIENT),
+                lamports: 0.01 * LAMPORTS_PER_SOL,
+            });
+            const sig = await signAndSend(transferIx, signer);
+            setSignature(sig);
+        } catch (e) {
+            console.error(e);
+            alert('Transaction failed. See console for details.');
+        } finally {
+            setSending(false);
+        }
+    };
+
+    if (!signer) {
+        return <p>Connect a wallet to send a transaction.</p>;
+    }
+
+    return (
+        <div>
+            <button onClick={handleClick} disabled={sending}>
+                {sending ? 'Sending...' : 'Send 0.01 SOL'}
+            </button>
+            {signature && <p>Signature: {signature}</p>}
+        </div>
+    );
+}
+```
+
+TBD: DEMO

@@ -3,5 +3,5 @@
     "description": "@wallet-ui/core",
     "icon": "Package",
     "root": true,
-    "pages": ["index"]
+    "pages": ["index", "clusters", "storage", "utilities"]
 }

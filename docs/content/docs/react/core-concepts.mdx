@@ -1,0 +1,32 @@
+---
+title: Core Concepts
+description: Understanding the architecture of Wallet UI.
+---
+
+Wallet UI is designed to be a modular and extensible library for building wallet interactions in your app. Understanding its core architecture will help you use it more effectively and customize it to your needs.
+
+## Architecture Overview
+
+The library is split into two main packages:
+
+### `@wallet-ui/core`
+
+This is the framework-agnostic engine of the library. It has no dependency on React. Its primary responsibilities are:
+
+- **State Management:** It uses [Nanostores](https://github.com/nanostores/nanostores) to create and manage the global state for the selected wallet, account, and cluster.
+- **Persistence:** It handles saving the user's wallet and cluster selection to `localStorage`, so their choices are remembered across sessions.
+- **Configuration:** It provides helper functions (e.g., `createSolanaDevnet`) for defining the clusters your application will support.
+
+### `@wallet-ui/react`
+
+This package provides the bindings to use the core functionality within a React application. It includes:
+
+- **The `WalletUi` Provider:** A single provider that wraps your application and sets up all the necessary contexts for state and the RPC client.
+- **React Hooks:** A set of hooks (e.g., `useWalletUi`, `useWalletUiSigner`) that allow your components to access wallet state and perform actions like connecting, disconnecting, and signing transactions.
+- **React Components:** A collection of pre-built, unstyled components (e.g., `WalletUiDropdown`) that you can use to get started quickly.
+
+## The Wallet Standard
+
+Wallet UI is built on top of the [Wallet Standard](https://github.com/wallet-standard/wallet-standard). This is a specification for how wallets should expose their functionality to apps.
+
+By adhering to this standard, Wallet UI can automatically detect and interact with any compliant wallet without needing custom integration code for each one. This makes your app more robust and future-proof.

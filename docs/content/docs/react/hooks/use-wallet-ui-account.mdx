@@ -1,0 +1,47 @@
+---
+title: useWalletUiAccount
+description: A hook to access the current wallet account and its setter.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+The `useWalletUiAccount` hook provides direct access to the currently selected wallet account and the React dispatcher to update it.
+
+<Callout>
+    For most common use cases, consider using the main [`useWalletUi`](./use-wallet-ui) hook. It offers a simpler API
+    with `connect()` and `disconnect()` functions instead of a raw state dispatcher.
+</Callout>
+
+### Return Value
+
+The hook returns an object with the following properties:
+
+| Name         | Type                                                    | Description                                          |
+| ------------ | ------------------------------------------------------- | ---------------------------------------------------- |
+| `account`    | `UiWalletAccount`                                       | The currently selected wallet account.               |
+| `wallet`     | `UiWallet`                                              | The wallet that the current account belongs to.      |
+| `cluster`    | `SolanaCluster`                                         | The currently selected Solana cluster.               |
+| `setAccount` | `React.Dispatch<React.SetStateAction<UiWalletAccount>>` | The React dispatcher to update the selected account. |
+
+### Example
+
+This example shows how you could manually clear the selected wallet.
+
+```tsx
+import { useWalletUiAccount } from '@wallet-ui/react';
+
+function AccountDetails() {
+    const { account, setAccount } = useWalletUiAccount();
+
+    if (!account) {
+        return <p>No account selected.</p>;
+    }
+
+    return (
+        <div>
+            <p>Account: {account.address}</p>
+            <button onClick={() => setAccount(undefined)}>Clear Account</button>
+        </div>
+    );
+}
+```

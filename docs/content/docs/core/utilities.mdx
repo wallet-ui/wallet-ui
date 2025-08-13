@@ -1,0 +1,14 @@
+---
+title: Utilities
+description: Utility functions in Wallet UI Core.
+---
+
+### `handleCopyText`
+
+A simple utility function that copies a given string to the user's clipboard using the `navigator.clipboard` API. It performs the necessary checks to ensure the API is available.
+
+```ts
+import { handleCopyText } from '@wallet-ui/core';
+
+handleCopyText('copy-me-pls');
+```

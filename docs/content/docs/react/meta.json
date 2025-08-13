@@ -5,6 +5,7 @@
     "root": true,
     "pages": [
         "getting-started",
+        "core-concepts",
         "---Guides---",
         "guides/next",
         "guides/vite",
@@ -14,6 +15,13 @@
         "components/dropdown",
         "components/cluster-dropdown",
         "---Hooks---",
-        "hooks/index"
+        "hooks/index",
+        "hooks/use-wallet-ui",
+        "hooks/use-wallet-ui-account",
+        "hooks/use-wallet-ui-cluster",
+        "hooks/use-wallet-ui-dropdown",
+        "hooks/use-wallet-ui-signer",
+        "hooks/use-wallet-ui-solana-client",
+        "hooks/use-wallet-ui-transaction-sign-and-send"
     ]
 }

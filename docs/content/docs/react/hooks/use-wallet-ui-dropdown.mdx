@@ -1,0 +1,39 @@
+---
+title: useWalletUiDropdown
+description: A hook that provides the logic for a wallet dropdown menu.
+---
+
+import { DocsReactHookUseWalletUiDropdown } from '../../../components/docs-react-hook-use-wallet-ui-dropdown';
+
+The `useWalletUiDropdown` hook provides all the necessary logic and props to build a wallet dropdown component. It handles the list of wallets, connection/disconnection actions, and the underlying menu state.
+
+This hook powers the standard [`WalletUiDropdown`](../components/dropdown) component. You can use this hook directly to build a completely custom dropdown UI.
+
+### Return Value
+
+The hook returns an object with the following properties:
+
+| Name          | Type                  | Description                                                                |
+| ------------- | --------------------- | -------------------------------------------------------------------------- |
+| `buttonProps` | `BaseButtonProps`     | Props to be spread onto a trigger button.                                  |
+| `connected`   | `boolean`             | A boolean indicating if a wallet is connected.                             |
+| `dropdown`    | `BaseDropdownControl` | The underlying menu control from Zag.js, containing the state machine API. |
+| `items`       | `BaseDropdownItem[]`  | An array of items to be rendered inside the dropdown menu.                 |
+
+### Example
+
+This example shows how to use the hook with the `BaseDropdown` component to create a functioning wallet dropdown.
+
+```tsx
+import { useWalletUiDropdown, BaseDropdown } from '@wallet-ui/react';
+
+function CustomWalletDropdown() {
+    const { buttonProps, items, dropdown } = useWalletUiDropdown({ size: 'md' });
+
+    return <BaseDropdown buttonProps={buttonProps} dropdown={dropdown} items={items} size="md" />;
+}
+```
+
+<div className="flex gap-4">
+    <DocsReactHookUseWalletUiDropdown size="md" />
+</div>

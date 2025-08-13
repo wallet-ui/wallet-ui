@@ -1,0 +1,38 @@
+---
+title: useWalletUiSigner
+description: A hook to get a transaction signer for the active wallet.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+The `useWalletUiSigner` hook is a convenience hook that provides a `TransactionSendingSigner` for the currently connected wallet account.
+
+This signer can be used with libraries like `gill` or other transaction-building tools to sign and send transactions on behalf of the user.
+
+<Callout>
+    This hook is a wrapper around `useWalletAccountTransactionSendingSigner` from the `@solana/react` package.
+</Callout>
+
+### Return Value
+
+The hook returns a `TransactionSendingSigner` object if a wallet is connected, otherwise it returns `undefined`.
+
+### Example
+
+This example demonstrates how to get the signer. Connect a wallet to see the signer's address appear.
+
+```tsx
+import { useWalletUiSigner } from '@wallet-ui/react';
+
+function SignerInfo() {
+    const signer = useWalletUiSigner();
+
+    if (!signer) {
+        return <p>Please connect a wallet to get a signer.</p>;
+    }
+
+    return <p>Signer for {signer.address} is available.</p>;
+}
+```
+
+TBD: DEMO

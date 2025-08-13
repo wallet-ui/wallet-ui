@@ -3,7 +3,7 @@ import { createTransaction, getBase58Decoder, signAndSendTransactionMessageWithS
 
 import { useWalletUi } from './use-wallet-ui';
 
-export function useWalletUiTransactionSignAndSend() {
+export function useWalletUiSignAndSend() {
     const { client } = useWalletUi();
 
     return async (ix: IInstruction | IInstruction[], signer: TransactionSendingSigner) => {

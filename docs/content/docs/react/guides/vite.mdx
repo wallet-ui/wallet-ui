@@ -24,34 +24,33 @@ npm install @wallet-ui/react @wallet-ui/tailwind
 
 ## 3. Set up Tailwind CSS
 
+For more information about styling, see the [Styling section](../styling).
+
 Wallet UI components are designed with Tailwind CSS. If you don't have it set up yet, follow these steps.
 
-First, install Tailwind and its peer dependencies, then generate the config files.
+First, install Tailwind and its peer dependencies.
 
 ```package-install
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
+npm install -D tailwindcss @tailwindcss/vite
 ```
 
-Next, configure your Tailwind CSS content paths in `tailwind.config.js`.
+Next, configure the Tailwind CSS plugin in your `vite.config.ts` (or `vite.config.js`) file.
 
-```js title="tailwind.config.js"
-/** @type {import('tailwindcss').Config} */
-export default {
-    content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-    theme: {
-        extend: {},
-    },
-    plugins: [],
-};
+```js title="vite.config.ts"
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+    plugins: [react(), tailwindcss()],
+});
 ```
 
 Finally, add the Tailwind directives and the Wallet UI styles to your main CSS file.
 
 ```css title="src/index.css"
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss';
 @import '@wallet-ui/tailwind/index.css';
 ```
 

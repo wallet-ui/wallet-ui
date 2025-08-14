@@ -1,0 +1,47 @@
+---
+title: WalletUiContext
+description: The main context for Wallet UI.
+---
+
+The `WalletUiContext` provides all the state and functions for Wallet UI.
+
+### `WalletUiContextValue`
+
+The context provides an object with the following properties:
+
+| Name          | Type                                 | Description                                                      |
+| ------------- | ------------------------------------ | ---------------------------------------------------------------- |
+| `account`     | `UiWalletAccount`                    | The currently selected wallet account.                           |
+| `accountKeys` | `string[]`                           | The keys of the account.                                         |
+| `client`      | `SolanaClient`                       | The Solana client instance for the current cluster.              |
+| `cluster`     | `SolanaCluster`                      | The currently selected Solana cluster.                           |
+| `connect`     | `(account: UiWalletAccount) => void` | A function to set the active wallet account.                     |
+| `connected`   | `boolean`                            | A boolean indicating if a wallet is connected.                   |
+| `copy`        | `() => void`                         | A function to copy the current account address to the clipboard. |
+| `disconnect`  | `() => void`                         | A function to disconnect the current wallet.                     |
+| `size`        | `WalletUiSize`                       | The default component size set in the provider.                  |
+| `wallet`      | `UiWallet`                           | The wallet that the current account belongs to.                  |
+| `wallets`     | `UiWallet[]`                         | An array of all detected wallets.                                |
+
+### Example
+
+This example shows how you could use the context to get the current account.
+
+```tsx
+import { useContext } from 'react';
+import { WalletUiContext } from '@wallet-ui/react';
+
+function AccountDetails() {
+    const { account } = useContext(WalletUiContext);
+
+    if (!account) {
+        return <p>No account selected.</p>;
+    }
+
+    return (
+        <div>
+            <p>Account: {account.address}</p>
+        </div>
+    );
+}
+```

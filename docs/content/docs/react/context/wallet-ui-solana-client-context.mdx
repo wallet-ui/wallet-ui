@@ -1,0 +1,29 @@
+---
+title: WalletUiSolanaClientContext
+description: The context for the Solana client.
+---
+
+The `WalletUiSolanaClientContext` provides the Solana client instance.
+
+### `SolanaClient`
+
+The context provides a `SolanaClient` object from the `gill` library.
+
+### Example
+
+This example shows how you could use the context to get the Solana client.
+
+```tsx
+import { useContext } from 'react';
+import { WalletUiSolanaClientContext } from '@wallet-ui/react';
+
+function SolanaClientDetails() {
+    const client = useContext(WalletUiSolanaClientContext);
+
+    return (
+        <div>
+            <p>Solana Client URL: {client.url}</p>
+        </div>
+    );
+}
+```

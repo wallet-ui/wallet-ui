@@ -1,0 +1,28 @@
+---
+title: WalletUiAccountContextProvider
+description: The provider for the WalletUiAccountContext.
+---
+
+The `WalletUiAccountContextProvider` is a React context provider that manages the state of the selected wallet account. It also handles saving and retrieving the selected wallet from local storage.
+
+This component is used internally by the main `WalletUi` provider and you probably won't need to use it directly.
+
+### Props
+
+| Name       | Type              | Description                                    |
+| ---------- | ----------------- | ---------------------------------------------- |
+| `children` | `React.ReactNode` | The content to render.                         |
+| `cluster`  | `SolanaCluster`   | The currently selected Solana cluster.         |
+| `storage`  | `StorageAccount`  | The storage to use for persisting the account. |
+
+### Example
+
+This example shows how you could use the provider.
+
+```tsx
+import { WalletUiAccountContextProvider } from '@wallet-ui/react';
+
+function MyApp({ children }) {
+    return <WalletUiAccountContextProvider>{children}</WalletUiAccountContextProvider>;
+}
+```

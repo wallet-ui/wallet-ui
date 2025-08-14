@@ -2,14 +2,19 @@ import { Card, Cards } from 'fumadocs-ui/components/card';
 
 const item = [
     {
-        id: 'dropdown',
-        name: 'WalletUiDropdown',
-        description: 'Dropdown that lists wallets, allows to connect and disconnect',
+        id: 'account-guard',
+        name: 'WalletUiAccountGuard',
+        description: 'A component that guards content based on wallet connection state.',
     },
     {
         id: 'cluster-dropdown',
         name: 'WalletUiClusterDropdown',
         description: 'Dropdown that lists clusters and allows to switch between them',
+    },
+    {
+        id: 'dropdown',
+        name: 'WalletUiDropdown',
+        description: 'Dropdown that lists wallets, allows to connect and disconnect',
     },
 ];
 

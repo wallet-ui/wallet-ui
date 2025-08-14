@@ -1,7 +1,7 @@
 ---
-'@wallet-ui/react': minor
-'@wallet-ui/core': minor
-'@wallet-ui/tailwind': minor
+'@wallet-ui/react': major
+'@wallet-ui/core': major
+'@wallet-ui/tailwind': major
 ---
 
 rename useWalletUiTransactionSignAndSend -> useWalletUiSignAndSend

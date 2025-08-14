@@ -1,5 +1,8 @@
-import { useWalletUiAccount, WalletUiAccountInfo, WalletUiDropdown } from '@wallet-ui/react';
 import React from 'react';
+
+import { useWalletUiAccount } from './use-wallet-ui-account';
+import { WalletUiAccountInfo } from './wallet-ui-account-context';
+import { WalletUiDropdown } from './wallet-ui-dropdown';
 
 export interface WalletUiAccountGuardProps {
     fallback?: React.ReactNode;

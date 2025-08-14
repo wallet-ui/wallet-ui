@@ -1,4 +1,4 @@
-import { WalletUiClusterDropdown, WalletUiDropdown } from '@wallet-ui/react';
+import { WalletUiAccountGuard, WalletUiClusterDropdown, WalletUiDropdown } from '@wallet-ui/react';
 import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { UiPanel, UiStack } from '../../ui/';
@@ -7,7 +7,6 @@ import { PlaygroundErrorBoundaryNotSupported } from '../playground-error-boundar
 import { PlaygroundSignAndSendTx } from './playground-sign-and-send-tx';
 import { PlaygroundSignInMenuButtons } from './playground-sign-in-menu-buttons';
 import { PlaygroundSignMessageBase } from './playground-sign-message-base';
-import { WalletUiAccountGuard } from './wallet-ui-account-guard';
 
 export function PlaygroundAccountSelected() {
     return (

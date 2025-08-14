@@ -19,6 +19,7 @@ export * from './use-wallet-ui-wallets';
 export * from './wallet-ui';
 export * from './wallet-ui-account-context';
 export * from './wallet-ui-account-context-provider';
+export * from './wallet-ui-account-guard';
 export * from './wallet-ui-button';
 export * from './wallet-ui-cluster-context';
 export * from './wallet-ui-cluster-context-provider';

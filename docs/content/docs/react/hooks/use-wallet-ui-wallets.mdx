@@ -1,0 +1,51 @@
+---
+title: useWalletUiWallets
+description: A hook to get a list of all detected wallets.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+The `useWalletUiWallets` hook provides a list of all wallets that have been detected by the Wallet Standard.
+
+<Callout>
+    For most common use cases, consider using the main [`useWalletUi`](./use-wallet-ui) hook, which manages the
+    currently selected wallet. This hook is for advanced use cases where you need to list all available wallets.
+</Callout>
+
+<Callout>
+    This hook filters the wallets to only include those that support the Solana blockchain. It does so by checking if
+    the wallet has a chain that starts with `solana:`.
+</Callout>
+
+### Usage
+
+This hook is useful when you want to build a custom UI that lists all the available wallets.
+
+```tsx
+import { useWalletUiWallets } from '@wallet-ui/react';
+
+function WalletList() {
+    const wallets = useWalletUiWallets();
+
+    return (
+        <div>
+            <h2>Available Wallets:</h2>
+            <ul>
+                {wallets.map(wallet => (
+                    <li key={wallet.name}>{wallet.name}</li>
+                ))}
+            </ul>
+        </div>
+    );
+}
+```
+
+### Return Value
+
+The hook returns an array of `UiWallet` objects.
+
+```ts
+export type UiWallet = Readonly<Wallet>;
+```
+
+The `Wallet` interface is defined by the [Wallet Standard](https://github.com/wallet-standard/wallet-standard).

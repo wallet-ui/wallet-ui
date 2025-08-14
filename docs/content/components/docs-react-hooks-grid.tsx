@@ -22,6 +22,11 @@ const items = [
         description: 'A hook that provides the logic for a wallet dropdown menu.',
     },
     {
+        id: 'use-wallet-ui-sign-and-send',
+        name: 'useWalletUiSignAndSend',
+        description: 'A hook to easily sign and send a transaction.',
+    },
+    {
         id: 'use-wallet-ui-signer',
         name: 'useWalletUiSigner',
         description: 'A hook to get a transaction signer for the active wallet.',
@@ -32,11 +37,15 @@ const items = [
         description: 'A hook to get the underlying Solana RPC client.',
     },
     {
-        id: 'use-wallet-ui-sign-and-send',
-        name: 'useWalletUiSignAndSend',
-        description: 'A hook to easily sign and send a transaction.',
+        id: 'use-wallet-ui-wallet',
+        name: 'useWalletUiWallet',
+        description: 'A hook to connect and disconnect a specific wallet.',
     },
-    // Add other hooks here as they are documented
+    {
+        id: 'use-wallet-ui-wallets',
+        name: 'useWalletUiWallets',
+        description: 'A hook to get a list of all detected wallets.',
+    },
 ];
 
 export function DocsReactHooksGrid() {

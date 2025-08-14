@@ -1,0 +1,41 @@
+---
+title: Account Guard
+description: A component that guards content based on wallet connection state.
+---
+
+import { DocsReactComponentAccountGuard } from '../../../components/docs-react-component-account-guard';
+
+The `WalletUiAccountGuard` is a component that conditionally renders content based on the wallet's connection status. This is useful to avoid boilerplate code in your application, as you can provide a fallback component to be rendered when the user is not connected. When the user is connected, the `render` prop will be called with the account and wallet information.
+
+## Usage
+
+It can be used to show different content to users who are connected versus those who are not.
+
+```tsx
+import { WalletUiAccountGuard } from '@wallet-ui/react';
+
+function MyComponent() {
+    return (
+        <WalletUiAccountGuard
+            render={({ account, wallet }) => (
+                <div>
+                    <p>This content is only visible when a wallet is connected.</p>
+                    <p>Account: {account.address}</p>
+                    <p>Wallet: {wallet.name}</p>
+                </div>
+            )}
+        />
+    );
+}
+```
+
+## Props
+
+| Name       | Type                                                            | Default | Description                                                                                   |
+| ---------- | --------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------- |
+| `render`   | `({ account: UiWalletAccount; wallet: UiWallet }) => ReactNode` |         | The function to render when a wallet is connected.                                            |
+| `fallback` | `ReactNode`                                                     | `null`  | The content to render when no wallet is connected. If not provided, nothing will be rendered. |
+
+## Example
+
+<DocsReactComponentAccountGuard />

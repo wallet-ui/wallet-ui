@@ -1,0 +1,50 @@
+---
+title: useWalletUiCluster
+description: A hook to access and manage the current Solana cluster.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+The `useWalletUiCluster` hook provides access to the currently selected Solana cluster, the list of all available clusters, and a function to switch the active cluster.
+
+<Callout>
+    For simply accessing the currently selected cluster, consider using the main [`useWalletUi`](./use-wallet-ui) hook.
+    This hook is more focused on managing the cluster state, such as switching between different clusters.
+</Callout>
+
+The available clusters are configured in the main `WalletUi` provider.
+
+### Return Value
+
+The hook returns an object with the following properties:
+
+| Name         | Type                                   | Description                                     |
+| ------------ | -------------------------------------- | ----------------------------------------------- |
+| `cluster`    | `SolanaCluster`                        | The currently selected Solana cluster object.   |
+| `clusters`   | `SolanaCluster[]`                      | An array of all available cluster objects.      |
+| `setCluster` | `(clusterId: SolanaClusterId) => void` | A function to set the active cluster by its ID. |
+
+### Example
+
+This example shows how to build a simple cluster selector.
+
+```tsx
+import { useWalletUiCluster } from '@wallet-ui/react';
+
+function ClusterSelector() {
+    const { cluster, clusters, setCluster } = useWalletUiCluster();
+
+    return (
+        <div>
+            <p>Current Cluster: {cluster.label}</p>
+            <div>
+                {clusters.map(c => (
+                    <button key={c.id} onClick={() => setCluster(c.id)} disabled={c.id === cluster.id}>
+                        Switch to {c.label}
+                    </button>
+                ))}
+            </div>
+        </div>
+    );
+}
+```

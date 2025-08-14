@@ -3,8 +3,8 @@ import { UiWalletAccount } from '@wallet-standard/react';
 
 import { useWalletUi } from './use-wallet-ui';
 
-export function useWalletUiSigner() {
-    const { account, cluster } = useWalletUi();
+export function useWalletUiSigner({ account }: { account: UiWalletAccount }) {
+    const { cluster } = useWalletUi();
 
-    return useWalletAccountTransactionSendingSigner(account as UiWalletAccount, cluster.id);
+    return useWalletAccountTransactionSendingSigner(account, cluster.id);
 }

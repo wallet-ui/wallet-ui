@@ -1,10 +1,10 @@
 import {
     getUiWalletAccountStorageKey,
     type UiWalletAccount,
-    useWalletAccountTransactionSendingSigner,
     useWallets,
     useWalletUi,
     useWalletUiCluster,
+    useWalletUiSigner,
 } from '@wallet-ui/react';
 import {
     assertIsTransactionMessageWithSingleSendingSigner,
@@ -43,8 +43,7 @@ export function PlaygroundSignAndSendTx({ account }: { account: UiWalletAccount 
             }
         }
     }, [recipientAccountStorageKey, wallets]);
-    const transactionSendingSigner = useWalletAccountTransactionSendingSigner(account, cluster.id);
-
+    const transactionSendingSigner = useWalletUiSigner({ account });
     async function submit() {
         resetError();
         setIsSendingTransaction(true);

@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 env:
   # Among other things, opts out of Turborepo telemetry
   # See https://consoledonottrack.com/
@@ -21,6 +24,8 @@ env:
 
 jobs:
   build-and-publish-snapshots-to-npm:
+    permissions:
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

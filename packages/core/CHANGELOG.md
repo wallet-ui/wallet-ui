@@ -1,5 +1,11 @@
 # @wallet-ui/core
 
+## 2.0.0
+
+### Major Changes
+
+- [#246](https://github.com/wallet-ui/wallet-ui/pull/246) [`b94b01b`](https://github.com/wallet-ui/wallet-ui/commit/b94b01b27c52ca9f887c54951e4c67075498075f) Thanks [@beeman](https://github.com/beeman)! - rename useWalletUiTransactionSignAndSend -> useWalletUiSignAndSend
+
 ## 1.1.1
 
 ### Patch Changes

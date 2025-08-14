@@ -1,5 +1,22 @@
 # @wallet-ui/react
 
+## 2.0.0
+
+### Major Changes
+
+- [#252](https://github.com/wallet-ui/wallet-ui/pull/252) [`8e8ed7b`](https://github.com/wallet-ui/wallet-ui/commit/8e8ed7bb75e30bd44d8474b95372363cb4b2cab1) Thanks [@beeman](https://github.com/beeman)! - prevent crash in `useWalletUiSigner` when wallet is disconnected
+
+- [#246](https://github.com/wallet-ui/wallet-ui/pull/246) [`b94b01b`](https://github.com/wallet-ui/wallet-ui/commit/b94b01b27c52ca9f887c54951e4c67075498075f) Thanks [@beeman](https://github.com/beeman)! - rename useWalletUiTransactionSignAndSend -> useWalletUiSignAndSend
+
+### Minor Changes
+
+- [#251](https://github.com/wallet-ui/wallet-ui/pull/251) [`0ea74c8`](https://github.com/wallet-ui/wallet-ui/commit/0ea74c844db64917cfb9b5cc20c30c3561e233b2) Thanks [@beeman](https://github.com/beeman)! - add `WalletUiAccountGuard` component
+
+### Patch Changes
+
+- Updated dependencies [[`b94b01b`](https://github.com/wallet-ui/wallet-ui/commit/b94b01b27c52ca9f887c54951e4c67075498075f)]:
+    - @wallet-ui/core@2.0.0
+
 ## 1.1.1
 
 ### Patch Changes

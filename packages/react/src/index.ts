@@ -1,5 +1,3 @@
-import './index.css';
-
 export * from './base-button';
 export * from './base-dropdown';
 export * from './base-modal';

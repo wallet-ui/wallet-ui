@@ -13,6 +13,7 @@
         "test:typecheck": "tsc"
     },
     "dependencies": {
+        "@wallet-ui/css": "workspace:*",
         "@wallet-ui/playground-react": "workspace:*",
         "@wallet-ui/react": "workspace:*",
         "gill": "^0.10.2",

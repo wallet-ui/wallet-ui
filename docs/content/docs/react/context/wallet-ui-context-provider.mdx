@@ -1,0 +1,27 @@
+---
+title: WalletUiContextProvider
+description: The provider for the WalletUiContext.
+---
+
+The `WalletUiContextProvider` is a React context provider that combines the other contexts and provides the main `WalletUiContext`.
+
+This component is used internally by the main `WalletUi` provider and you probably won't need to use it directly.
+
+### Props
+
+| Name       | Type              | Description                 |
+| ---------- | ----------------- | --------------------------- |
+| `children` | `React.ReactNode` | The content to render.      |
+| `size`     | `WalletUiSize`    | The default component size. |
+
+### Example
+
+This example shows how you could use the provider.
+
+```tsx
+import { WalletUiContextProvider } from '@wallet-ui/react';
+
+function MyApp({ children }) {
+    return <WalletUiContextProvider>{children}</WalletUiContextProvider>;
+}
+```

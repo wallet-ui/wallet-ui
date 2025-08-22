@@ -5,6 +5,10 @@ description: A dropdown that lists clusters and allows to switch between them
 
 import { DocsReactComponentClusterDropdown } from '../../../components/docs-react-component-cluster-dropdown';
 
+The `WalletUiClusterDropdown` is a pre-built component that allows users to switch between the Solana clusters you have configured in the `WalletUi` provider.
+
+The dropdown will automatically be populated with the clusters you provide.
+
 ## Usage
 
 ```tsx
@@ -14,6 +18,13 @@ function MyComponent() {
     return <WalletUiClusterDropdown />;
 }
 ```
+
+## Props
+
+| Name          | Type                   | Default |
+| ------------- | ---------------------- | ------- |
+| `size`        | `'sm' \| 'md' \| 'lg'` | `'md'`  |
+| `buttonProps` | `BaseButtonProps`      | `{}`    |
 
 ## Sizes
 

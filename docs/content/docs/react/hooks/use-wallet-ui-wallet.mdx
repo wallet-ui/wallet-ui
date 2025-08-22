@@ -1,0 +1,54 @@
+---
+title: useWalletUiWallet
+description: A hook to connect and disconnect a specific wallet.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+The `useWalletUiWallet` hook provides `connect` and `disconnect` functions for a specific wallet instance.
+
+<Callout>
+    For most common use cases, consider using the main [`useWalletUi`](./use-wallet-ui) hook, which manages the
+    currently selected wallet. This hook is for advanced use cases where you need to interact with a specific wallet
+    that is not the currently active one.
+</Callout>
+
+### Usage
+
+This hook is useful when you want to build a custom UI for a single wallet, for example, a dedicated "Connect to Phantom" button.
+
+```tsx
+import { useWalletUiWallet, useWalletUiWallets } from '@wallet-ui/react';
+
+function ConnectPhantom() {
+    const { wallets } = useWalletUiWallets();
+    const phantomWallet = wallets.find(wallet => wallet.name === 'Phantom');
+
+    if (!phantomWallet) {
+        return <p>Phantom wallet not found.</p>;
+    }
+
+    return <ConnectWallet wallet={phantomWallet} />;
+}
+
+function ConnectWallet({ wallet }) {
+    const { connect, connecting } = useWalletUiWallet({ wallet });
+
+    return (
+        <button onClick={() => connect()} disabled={connecting}>
+            {connecting ? 'Connecting...' : `Connect to ${wallet.name}`}
+        </button>
+    );
+}
+```
+
+### Return Value
+
+The hook returns an object with the following properties:
+
+| Name         | Type                  | Description                                            |
+| ------------ | --------------------- | ------------------------------------------------------ |
+| `connect`    | `() => Promise<void>` | A function to connect to the specified wallet.         |
+| `connecting` | `boolean`             | A boolean indicating if the connection is in progress. |
+| `disconnect` | `() => Promise<void>` | A function to disconnect from the specified wallet.    |
+| `wallet`     | `UiWallet`            | The wallet instance that the hook is interacting with. |

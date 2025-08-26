@@ -1,11 +1,11 @@
-import { useWalletUi } from '@wallet-ui/react';
+import { useWalletUiGill } from '@wallet-ui/react-gill';
 import { getMonikerFromGenesisHash } from 'gill';
 import React from 'react';
 import { UiCard } from '../../ui/';
 import { PlaygroundRunCommand } from './playground-run-command';
 
 export function PlaygroundClient() {
-    const { client } = useWalletUi();
+    const client = useWalletUiGill();
 
     const commandMap = new Map<string, () => Promise<unknown>>()
         .set('getLatestBlockhash', () =>

@@ -2,10 +2,10 @@ import {
     getUiWalletAccountStorageKey,
     type UiWalletAccount,
     useWallets,
-    useWalletUi,
     useWalletUiCluster,
     useWalletUiSigner,
 } from '@wallet-ui/react';
+import { useWalletUiGill } from '@wallet-ui/react-gill';
 import {
     assertIsTransactionMessageWithSingleSendingSigner,
     createTransactionMessage,
@@ -25,7 +25,7 @@ import { PlaygroundTxSuccess } from '../playground-tx-success';
 export function PlaygroundSignAndSendTx({ account }: { account: UiWalletAccount }) {
     const { error, hasError, setError, resetError } = useError();
     const { cluster } = useWalletUiCluster();
-    const { client } = useWalletUi();
+    const client = useWalletUiGill();
     const wallets = useWallets();
     const [isSendingTransaction, setIsSendingTransaction] = useState(false);
     const [lastSignature, setLastSignature] = useState<Uint8Array | undefined>();
@@ -44,6 +44,7 @@ export function PlaygroundSignAndSendTx({ account }: { account: UiWalletAccount 
         }
     }, [recipientAccountStorageKey, wallets]);
     const transactionSendingSigner = useWalletUiSigner({ account });
+
     async function submit() {
         resetError();
         setIsSendingTransaction(true);

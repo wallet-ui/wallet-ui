@@ -5,7 +5,6 @@ import { WalletUiAccountContextProvider } from './wallet-ui-account-context-prov
 import { WalletUiClusterContextProvider } from './wallet-ui-cluster-context-provider';
 import { WalletUiContextProviderProps } from './wallet-ui-context';
 import { WalletUiContextProvider } from './wallet-ui-context-provider';
-import { WalletUiSolanaClientContextProvider } from './wallet-ui-solana-client-context-provider';
 
 export interface WalletUiConfig extends Omit<WalletUiContextProviderProps, 'children'> {
     accountStorage?: StorageAccount;
@@ -30,11 +29,9 @@ export function WalletUi({ children, config: { accountStorage, clusters, cluster
                 storage={clusterStorage}
                 render={({ cluster }) => {
                     return (
-                        <WalletUiSolanaClientContextProvider urlOrMoniker={cluster.urlOrMoniker}>
-                            <WalletUiAccountContextProvider cluster={cluster} storage={accountStorage}>
-                                <WalletUiContextProvider {...config}>{children}</WalletUiContextProvider>
-                            </WalletUiAccountContextProvider>
-                        </WalletUiSolanaClientContextProvider>
+                        <WalletUiAccountContextProvider cluster={cluster} storage={accountStorage}>
+                            <WalletUiContextProvider {...config}>{children}</WalletUiContextProvider>
+                        </WalletUiAccountContextProvider>
                     );
                 }}
             />

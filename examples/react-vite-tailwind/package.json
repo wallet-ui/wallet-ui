@@ -16,6 +16,7 @@
         "@tailwindcss/vite": "^4.1.10",
         "@wallet-ui/playground-react": "workspace:*",
         "@wallet-ui/react": "workspace:*",
+        "@wallet-ui/react-gill": "workspace:*",
         "@wallet-ui/tailwind": "workspace:*",
         "gill": "^0.10.2",
         "react": "^19.1.0",

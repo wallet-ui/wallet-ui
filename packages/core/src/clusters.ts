@@ -1,6 +1,4 @@
-import type { DevnetUrl, LocalnetUrl, MainnetUrl, TestnetUrl } from 'gill';
-
-import { SolanaCluster } from './types/solana-cluster';
+import type { DevnetUrl, LocalnetUrl, MainnetUrl, SolanaCluster, TestnetUrl } from './types/solana-cluster';
 
 export type CreateSolanaProps = Partial<Pick<SolanaCluster, 'label' | 'urlOrMoniker'>> | string;
 

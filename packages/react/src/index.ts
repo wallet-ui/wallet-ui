@@ -10,8 +10,6 @@ export * from './use-wallet-ui-account';
 export * from './use-wallet-ui-cluster';
 export * from './use-wallet-ui-dropdown';
 export * from './use-wallet-ui-signer';
-export * from './use-wallet-ui-solana-client';
-export * from './use-wallet-ui-sign-and-send';
 export * from './use-wallet-ui-wallet';
 export * from './use-wallet-ui-wallets';
 export * from './wallet-ui';
@@ -33,8 +31,6 @@ export * from './wallet-ui-list';
 export * from './wallet-ui-list-button';
 export * from './wallet-ui-modal';
 export * from './wallet-ui-modal-trigger';
-export * from './wallet-ui-solana-client-context';
-export * from './wallet-ui-solana-client-context-provider';
 
 // Re-exports
 export * from '@solana/react';

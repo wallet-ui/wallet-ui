@@ -1,9 +1,9 @@
 import { SolanaClient, SolanaClientUrlOrMoniker } from 'gill';
 import { createContext, ReactNode } from 'react';
 
-export interface WalletUiSolanaClientContextProviderProps {
+export interface WalletUiGillContextProviderProps {
     children: ReactNode;
     urlOrMoniker: SolanaClientUrlOrMoniker;
 }
 
-export const WalletUiSolanaClientContext = createContext<SolanaClient>({} as SolanaClient);
+export const WalletUiGillContext = createContext<SolanaClient>({} as SolanaClient);

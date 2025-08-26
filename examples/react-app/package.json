@@ -16,6 +16,7 @@
         "@wallet-ui/css": "workspace:*",
         "@wallet-ui/playground-react": "workspace:*",
         "@wallet-ui/react": "workspace:*",
+        "@wallet-ui/react-gill": "workspace:*",
         "gill": "^0.10.2",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",

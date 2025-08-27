@@ -6,6 +6,7 @@ import {
     WalletUi,
     WalletUiConfig,
 } from '@wallet-ui/react';
+import { WalletUiGillProvider } from '@wallet-ui/react-gill';
 import React from 'react';
 
 const playgroundConfig = createWalletUiConfig({
@@ -27,5 +28,9 @@ export function PlaygroundProviders({
     children: React.ReactNode;
     config?: WalletUiConfig;
 }) {
-    return <WalletUi config={config}>{children}</WalletUi>;
+    return (
+        <WalletUi config={config}>
+            <WalletUiGillProvider>{children}</WalletUiGillProvider>
+        </WalletUi>
+    );
 }

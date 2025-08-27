@@ -7,10 +7,9 @@ describe('createSolanaCluster', () => {
         // Assert
         expect(result).toMatchInlineSnapshot(`
             {
-              "cluster": "devnet",
               "id": "solana:devnet",
               "label": "Devnet",
-              "urlOrMoniker": "devnet",
+              "url": "devnet",
             }
         `);
     });
@@ -20,10 +19,9 @@ describe('createSolanaCluster', () => {
         // Assert
         expect(result).toMatchInlineSnapshot(`
             {
-              "cluster": "devnet",
               "id": "solana:devnet",
               "label": "Devnet",
-              "urlOrMoniker": "devnet",
+              "url": "devnet",
             }
         `);
     });
@@ -34,10 +32,9 @@ describe('createSolanaCluster', () => {
         // Assert
         expect(result).toMatchInlineSnapshot(`
             {
-              "cluster": "localnet",
               "id": "solana:localnet",
               "label": "Localnet",
-              "urlOrMoniker": "localnet",
+              "url": "localnet",
             }
         `);
     });
@@ -48,10 +45,9 @@ describe('createSolanaCluster', () => {
         // Assert
         expect(result).toMatchInlineSnapshot(`
             {
-              "cluster": "testnet",
               "id": "solana:testnet",
               "label": "Testnet",
-              "urlOrMoniker": "testnet",
+              "url": "testnet",
             }
         `);
     });
@@ -61,10 +57,9 @@ describe('createSolanaCluster', () => {
         // Assert
         expect(result).toMatchInlineSnapshot(`
             {
-              "cluster": "localnet",
               "id": "solana:localnet",
               "label": "Localnet",
-              "urlOrMoniker": "http://host.docker.internal:8899",
+              "url": "http://host.docker.internal:8899",
             }
         `);
     });
@@ -72,15 +67,14 @@ describe('createSolanaCluster', () => {
         // Act
         const result = createSolanaLocalnet({
             label: 'Custom Local',
-            urlOrMoniker: 'http://host.docker.internal:8899',
+            url: 'http://host.docker.internal:8899',
         });
         // Assert
         expect(result).toMatchInlineSnapshot(`
             {
-              "cluster": "localnet",
               "id": "solana:localnet",
               "label": "Custom Local",
-              "urlOrMoniker": "http://host.docker.internal:8899",
+              "url": "http://host.docker.internal:8899",
             }
         `);
     });

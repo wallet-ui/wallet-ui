@@ -1,50 +1,52 @@
-import type { DevnetUrl, LocalnetUrl, MainnetUrl, SolanaCluster, TestnetUrl } from './types/solana-cluster';
+import type {
+    SolanaCluster,
+    SolanaDevnetUrl,
+    SolanaLocalnetUrl,
+    SolanaMainnetUrl,
+    SolanaTestnetUrl,
+} from './types/solana-cluster';
 
-export type CreateSolanaProps = Partial<Pick<SolanaCluster, 'label' | 'urlOrMoniker'>> | string;
+export type CreateSolanaProps = Partial<Pick<SolanaCluster, 'label' | 'url'>> | string;
 
-function createSolanaCluster<T extends DevnetUrl | LocalnetUrl | MainnetUrl | TestnetUrl>(
+function createSolanaCluster<T extends SolanaDevnetUrl | SolanaLocalnetUrl | SolanaMainnetUrl | SolanaTestnetUrl>(
     props: CreateSolanaProps,
-    { cluster, id, label, urlOrMoniker }: SolanaCluster,
-): Pick<SolanaCluster, 'cluster' | 'id' | 'label' | 'urlOrMoniker'> {
+    { id, label, url }: SolanaCluster,
+): Pick<SolanaCluster, 'id' | 'label' | 'url'> {
     if (typeof props === 'string') {
-        return { cluster, id, label, urlOrMoniker: props as T };
+        return { id, label, url: props as T };
     }
 
-    return { cluster, id, label: props.label ?? label, urlOrMoniker: props.urlOrMoniker ?? urlOrMoniker };
+    return { id, label: props.label ?? label, url: props.url ?? url };
 }
 
 export function createSolanaDevnet(props: CreateSolanaProps = {}): SolanaCluster {
-    return createSolanaCluster<DevnetUrl>(props, {
-        cluster: 'devnet',
+    return createSolanaCluster<SolanaDevnetUrl>(props, {
         id: 'solana:devnet',
         label: 'Devnet',
-        urlOrMoniker: 'devnet' as DevnetUrl,
+        url: 'devnet' as SolanaDevnetUrl,
     });
 }
 
 export function createSolanaLocalnet(props: CreateSolanaProps = {}): SolanaCluster {
     return createSolanaCluster(props, {
-        cluster: 'localnet',
         id: 'solana:localnet',
         label: 'Localnet',
-        urlOrMoniker: 'localnet' as LocalnetUrl,
+        url: 'localnet' as SolanaLocalnetUrl,
     });
 }
 
 export function createSolanaMainnet(props: CreateSolanaProps = {}): SolanaCluster {
     return createSolanaCluster(props, {
-        cluster: 'mainnet',
         id: 'solana:mainnet',
         label: 'Mainnet',
-        urlOrMoniker: 'mainnet' as MainnetUrl,
+        url: 'mainnet' as SolanaMainnetUrl,
     });
 }
 
 export function createSolanaTestnet(props: CreateSolanaProps = {}): SolanaCluster {
     return createSolanaCluster(props, {
-        cluster: 'testnet',
         id: 'solana:testnet',
         label: 'Testnet',
-        urlOrMoniker: 'testnet' as TestnetUrl,
+        url: 'testnet' as SolanaTestnetUrl,
     });
 }

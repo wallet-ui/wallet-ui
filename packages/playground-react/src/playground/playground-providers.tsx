@@ -12,7 +12,7 @@ const playgroundConfig = createWalletUiConfig({
     clusters: [
         createSolanaDevnet(),
         // Customize the clusters here
-        createSolanaLocalnet({ urlOrMoniker: 'http://localhost:8899' }),
+        createSolanaLocalnet({ url: 'http://localhost:8899' }),
         createSolanaTestnet('testnet'),
         // Enable mainnet when it's ready.
         // You will need a custom RPC URL for mainnet as the public RPC url can't be used for production.

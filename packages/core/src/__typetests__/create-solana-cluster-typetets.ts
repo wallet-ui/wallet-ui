@@ -10,7 +10,7 @@ import { SolanaCluster } from '../types/solana-cluster';
     {
         const result: SolanaCluster = createSolanaDevnet({
             label: 'Custom Devnet',
-            urlOrMoniker: 'https://api.devnet.solana.com',
+            url: 'https://api.devnet.solana.com',
         });
         result satisfies SolanaCluster;
     }
@@ -25,7 +25,7 @@ import { SolanaCluster } from '../types/solana-cluster';
     {
         const result: SolanaCluster = createSolanaLocalnet({
             label: 'Custom Local',
-            urlOrMoniker: 'http://host.docker.internal:8899',
+            url: 'http://host.docker.internal:8899',
         });
         result satisfies SolanaCluster;
     }
@@ -56,7 +56,7 @@ import { SolanaCluster } from '../types/solana-cluster';
     {
         const result: SolanaCluster = createSolanaMainnet({
             label: 'Custom Mainnet',
-            urlOrMoniker: 'https://api.mainnet-beta.solana.com',
+            url: 'https://api.mainnet-beta.solana.com',
         });
         result satisfies SolanaCluster;
     }

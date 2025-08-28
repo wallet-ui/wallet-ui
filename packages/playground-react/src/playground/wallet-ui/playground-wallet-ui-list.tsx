@@ -1,6 +1,6 @@
 import { UiWalletAccount, useWalletUi, WalletUiList } from '@wallet-ui/react';
 import React, { useState } from 'react';
-import { UiGroup, UiPanel, UiSizes, UiStack, uiStyleBorder } from '../../ui/';
+import { UiStack, uiStyleBorder } from '../../ui/';
 
 export function PlaygroundWalletUiList() {
     const { wallets } = useWalletUi();
@@ -16,19 +16,11 @@ export function PlaygroundWalletUiList() {
     }
 
     return (
-        <UiGroup style={{ alignItems: 'flex-start' }}>
-            <UiSizes
-                render={size => (
-                    <UiPanel key={size} title={<code>{size}</code>}>
-                        <UiStack>
-                            <div style={{ ...uiStyleBorder }}>
-                                <WalletUiList size={size} wallets={wallets} select={handleSelect} />
-                            </div>
-                            <pre>{selectedAccount ? selectedAccount.address : pending ? 'Pending...' : ''}</pre>
-                        </UiStack>
-                    </UiPanel>
-                )}
-            />
-        </UiGroup>
+        <UiStack>
+            <div style={{ ...uiStyleBorder }}>
+                <WalletUiList wallets={wallets} select={handleSelect} />
+            </div>
+            <pre>{selectedAccount ? selectedAccount.address : pending ? 'Pending...' : ''}</pre>
+        </UiStack>
     );
 }

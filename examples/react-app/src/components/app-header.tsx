@@ -21,7 +21,7 @@ export function AppHeader({ links }: { links: HeaderLink[] }) {
                 </nav>
             </div>
             <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>
-                <WalletUiClusterDropdown size="sm" />
+                <WalletUiClusterDropdown />
                 <a href="https://github.com/wallet-ui/wallet-ui" target="_blank" rel="noreferrer">
                     <img
                         src="https://img.shields.io/github/stars/wallet-ui/wallet-ui?style=social"

@@ -35,7 +35,7 @@ export function PlaygroundWalletInfo() {
                         }}
                     >
                         <a href="https://solana.com/solana-wallets" target="_blank" rel="noreferrer noopener">
-                            <WalletUiIconNoWallet size="lg" />
+                            <WalletUiIconNoWallet />
                         </a>
                         <span style={{ ...uiStyleTitle }}>You'll need a wallet on Solana to continue.</span>
                     </UiStack>
@@ -79,8 +79,8 @@ function PlaygroundWalletInfoItem({ item }: { item: PlaygroundWalletListItem }) 
     return (
         <a key={item.name} href={item.website} target="_blank" rel="noreferrer noopener">
             <UiGroup>
-                <WalletUiIcon size="lg" wallet={item} />
-                <WalletUiLabel size="lg" wallet={item} />
+                <WalletUiIcon wallet={item} />
+                <WalletUiLabel wallet={item} />
             </UiGroup>
         </a>
     );

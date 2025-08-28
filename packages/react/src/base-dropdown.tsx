@@ -2,7 +2,6 @@ import { UiWallet } from '@wallet-standard/react';
 import React, { HTMLAttributes } from 'react';
 
 import { BaseButton, BaseButtonProps } from './base-button';
-import { WalletUiSize } from './types/wallet-ui-size';
 import { BaseDropdownControl } from './use-base-dropdown';
 import { useWalletUiWallet } from './use-wallet-ui-wallet';
 import { WalletUiIcon } from './wallet-ui-icon';
@@ -32,19 +31,17 @@ export interface BaseDropdownProps {
     dropdown: BaseDropdownControl;
     items: BaseDropdownItem[];
     showIndicator?: boolean;
-    size?: WalletUiSize;
 }
 
-export function BaseDropdown({ buttonProps, dropdown, items, showIndicator, size = 'md' }: BaseDropdownProps) {
+export function BaseDropdown({ buttonProps, dropdown, items, showIndicator }: BaseDropdownProps) {
     const api = dropdown.api;
     const trigger = (
         <BaseButton
             {...api.getTriggerProps()}
-            size={size}
             rightSection={
                 showIndicator ? (
                     <span {...api.getIndicatorProps()}>
-                        <BaseDropdownChevronDown size={12} />
+                        <BaseDropdownChevronDown />
                     </span>
                 ) : null
             }
@@ -63,7 +60,6 @@ export function BaseDropdown({ buttonProps, dropdown, items, showIndicator, size
                                 {...api.getItemProps({ value: item.value })}
                                 key={item.value}
                                 item={item}
-                                size={size}
                                 afterClick={() => {
                                     if (item.disabled) {
                                         return;
@@ -81,35 +77,25 @@ export function BaseDropdown({ buttonProps, dropdown, items, showIndicator, size
     );
 }
 
-function BaseDropdownItem({ afterClick, item, size }: BaseDropdownItemRenderProps) {
+function BaseDropdownItem({ afterClick, item }: BaseDropdownItemRenderProps) {
     if (!item.wallet) {
-        return <BaseDropdownItemRender afterClick={afterClick} item={item} size={size} />;
+        return <BaseDropdownItemRender afterClick={afterClick} item={item} />;
     }
     switch (item.type) {
         case BaseDropdownItemType.Item:
-            return <BaseDropdownItemRender afterClick={afterClick} item={item} size={size} />;
+            return <BaseDropdownItemRender afterClick={afterClick} item={item} />;
         case BaseDropdownItemType.WalletConnect:
-            return (
-                <BaseDropdownItemWalletConnect afterClick={afterClick} item={item} size={size} wallet={item.wallet} />
-            );
+            return <BaseDropdownItemWalletConnect afterClick={afterClick} item={item} wallet={item.wallet} />;
         case BaseDropdownItemType.WalletCopy:
-            return <BaseDropdownItemRender afterClick={afterClick} item={item} size={size} />;
+            return <BaseDropdownItemRender afterClick={afterClick} item={item} />;
         case BaseDropdownItemType.WalletDisconnect:
-            return (
-                <BaseDropdownItemWalletDisconnect
-                    afterClick={afterClick}
-                    item={item}
-                    size={size}
-                    wallet={item.wallet}
-                />
-            );
+            return <BaseDropdownItemWalletDisconnect afterClick={afterClick} item={item} wallet={item.wallet} />;
     }
 }
 
 function BaseDropdownItemWalletConnect({
     afterClick,
     item,
-    size,
     wallet,
 }: BaseDropdownItemRenderProps & {
     wallet: UiWallet;
@@ -125,9 +111,8 @@ function BaseDropdownItemWalletConnect({
                     await connect();
                     return await item.handler();
                 },
-                leftSection: wallet ? <WalletUiIcon wallet={wallet} size={size} /> : undefined,
+                leftSection: wallet ? <WalletUiIcon wallet={wallet} /> : undefined,
             }}
-            size={size}
         />
     );
 }
@@ -135,7 +120,6 @@ function BaseDropdownItemWalletConnect({
 function BaseDropdownItemWalletDisconnect({
     afterClick,
     item,
-    size,
     wallet,
 }: BaseDropdownItemRenderProps & {
     wallet: UiWallet;
@@ -152,7 +136,6 @@ function BaseDropdownItemWalletDisconnect({
                     return await item.handler();
                 },
             }}
-            size={size}
         />
     );
 }
@@ -160,10 +143,9 @@ function BaseDropdownItemWalletDisconnect({
 interface BaseDropdownItemRenderProps {
     afterClick: () => void;
     item: BaseDropdownItem;
-    size: WalletUiSize;
 }
 
-function BaseDropdownItemRender({ afterClick, item, size }: BaseDropdownItemRenderProps) {
+function BaseDropdownItemRender({ afterClick, item }: BaseDropdownItemRenderProps) {
     function onClick() {
         if (item.disabled) {
             return;
@@ -174,7 +156,7 @@ function BaseDropdownItemRender({ afterClick, item, size }: BaseDropdownItemRend
     }
 
     return (
-        <button type="button" data-wu="base-dropdown-item" className={size} data-part="item" onClick={onClick}>
+        <button type="button" data-wu="base-dropdown-item" data-part="item" onClick={onClick}>
             {item.leftSection ? <span data-wu="base-dropdown-item-left-section">{item.leftSection}</span> : null}
             {item.label}
             {item.rightSection ? <span data-wu="base-dropdown-item-right-section">{item.rightSection}</span> : null}
@@ -182,12 +164,12 @@ function BaseDropdownItemRender({ afterClick, item, size }: BaseDropdownItemRend
     );
 }
 
-export function BaseDropdownChevronDown(props: HTMLAttributes<SVGElement> & { size?: number }) {
+export function BaseDropdownChevronDown(props: HTMLAttributes<SVGElement>) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width={props.size ?? 24}
-            height={props.size ?? 24}
+            width={12}
+            height={12}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"

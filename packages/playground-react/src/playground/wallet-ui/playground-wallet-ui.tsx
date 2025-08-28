@@ -8,7 +8,6 @@ import { PlaygroundBaseDropdown } from '../base-ui/playground-base-dropdown';
 import { PlaygroundBaseModal } from '../base-ui/playground-base-modal';
 import { PlaygroundClusterDropdown } from '../cluster/playground-cluster-dropdown';
 import { PlaygroundProviders } from '../playground-providers';
-import { PlaygroundWalletUiButton } from './playground-wallet-ui-button';
 import { PlaygroundWalletUiDropdown } from './playground-wallet-ui-dropdown';
 import { PlaygroundWalletUiIcon } from './playground-wallet-ui-icon';
 import { PlaygroundWalletUiIconClose } from './playground-wallet-ui-icon-close';
@@ -24,7 +23,6 @@ const cards = {
     BaseDropdown: <PlaygroundBaseDropdown />,
     BaseModal: <PlaygroundBaseModal />,
     WalletUiClusterDropdown: <PlaygroundClusterDropdown />,
-    WalletUiButton: <PlaygroundWalletUiButton />,
     WalletUiDropdown: <PlaygroundWalletUiDropdown />,
     WalletUiIcon: <PlaygroundWalletUiIcon />,
     WalletUiIconClose: <PlaygroundWalletUiIconClose />,

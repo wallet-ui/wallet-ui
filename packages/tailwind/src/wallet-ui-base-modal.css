@@ -25,20 +25,30 @@
     border-color: var(--wu-color-border);
     /* Position */
     @apply w-full overflow-hidden shadow-lg;
+    /* Position */
+    @apply max-w-sm mx-4;
     /* Shape */
-    @apply rounded-xl outline-0;
+    @apply rounded-lg outline-0;
+    /* Padding */
+    @apply p-2;
 }
 
 [data-scope='dialog'][data-part='content'] header {
     /* Content */
     @apply flex items-center justify-end;
-    /* Shape */
+    /* Padding */
     @apply pb-4;
+    /* Text */
+    @apply text-2xl;
 }
 
 [data-scope='dialog'][data-part='description'] {
     /* Content */
     @apply flex items-center justify-center;
+    /* Padding */
+    @apply pb-4 px-4;
+    /* Text */
+    @apply text-base;
     /* Text */
     color: var(--wu-color-foreground);
 }
@@ -51,6 +61,8 @@
     @apply cursor-pointer;
     /* Content */
     @apply flex items-center justify-center;
+    /* Shape */
+    @apply h-8 w-8 rounded-full;
     /* Text */
     color: var(--wu-color-foreground);
 
@@ -68,90 +80,6 @@
 
 [data-scope='dialog'][data-part='content'][data-state='closed'] {
     animation: anim-scale-out 200ms ease-in;
-}
-
-/* Responsive Styles */
-
-/* CONTENT */
-[data-scope='dialog'][data-part='content'].sm {
-    /* Position */
-    @apply max-w-xs;
-    /* Shape */
-    @apply p-2 rounded-md;
-}
-
-[data-scope='dialog'][data-part='content'].md {
-    /* Position */
-    @apply max-w-sm mx-4;
-    /* Shape */
-    @apply p-2 rounded-lg;
-}
-
-[data-scope='dialog'][data-part='content'].lg {
-    /* Position */
-    @apply max-w-lg mx-auto;
-    /* Shape */
-    @apply p-4 rounded-xl;
-}
-
-/* HEADER */
-[data-scope='dialog'][data-part='content'].sm header {
-    /* Shape */
-    @apply pb-2;
-    /* Text */
-    @apply text-sm;
-}
-
-[data-scope='dialog'][data-part='content'].md header {
-    /* Shape */
-    @apply pb-4;
-    /* Text */
-    @apply text-2xl;
-}
-
-[data-scope='dialog'][data-part='content'].lg header {
-    /* Shape */
-    @apply pb-4;
-    /* Text */
-    @apply text-3xl;
-}
-
-/* CLOSE TRIGGER */
-.sm [data-scope='dialog'][data-part='close-trigger'] {
-    /* Shape */
-    @apply h-6 w-6 rounded-full;
-}
-
-.md [data-scope='dialog'][data-part='close-trigger'] {
-    /* Shape */
-    @apply h-8 w-8 rounded-full;
-}
-
-.lg [data-scope='dialog'][data-part='close-trigger'] {
-    /* Shape */
-    @apply h-10 w-10 rounded-full;
-}
-
-/* DESCRIPTION */
-.sm [data-scope='dialog'][data-part='description'] {
-    /* Shape */
-    @apply pb-2 px-4;
-    /* Text */
-    @apply text-sm;
-}
-
-.md [data-scope='dialog'][data-part='description'] {
-    /* Shape */
-    @apply pb-4 px-4;
-    /* Text */
-    @apply text-base;
-}
-
-.lg [data-scope='dialog'][data-part='description'] {
-    /* Shape */
-    @apply pb-6 px-6;
-    /* Text */
-    @apply text-lg;
 }
 
 /* Define the animations */

@@ -1,25 +1,8 @@
 [data-wu='wallet-ui-label'] {
     /* Text color */
     color: var(--wu-color-foreground);
-}
-
-[data-wu='wallet-ui-label'].sm {
-    /* Size */
-    @apply text-xs;
-    /* Weight */
-    @apply font-light;
-}
-
-[data-wu='wallet-ui-label'].md {
     /* Size */
     @apply text-base;
     /* Weight */
     @apply font-normal;
-}
-
-[data-wu='wallet-ui-label'].lg {
-    /* Size */
-    @apply text-xl;
-    /* Weight */
-    @apply font-semibold;
 }

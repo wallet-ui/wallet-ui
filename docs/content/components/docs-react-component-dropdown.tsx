@@ -1,11 +1,11 @@
 'use client';
-import { WalletUiDropdown, WalletUiSize } from '@wallet-ui/react';
+import { WalletUiDropdown } from '@wallet-ui/react';
 import { DocsReactWalletProvider } from './docs-react-wallet-provider';
 
-export function DocsReactComponentDropdown({ size }: { size: WalletUiSize }) {
+export function DocsReactComponentDropdown() {
     return (
         <DocsReactWalletProvider>
-            <WalletUiDropdown size={size} />
+            <WalletUiDropdown />
         </DocsReactWalletProvider>
     );
 }

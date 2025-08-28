@@ -8,10 +8,9 @@ import {
     WalletUiIconNoWallet,
     WalletUiList,
     WalletUiListProps,
-    WalletUiSize,
 } from '@wallet-ui/react';
 import React from 'react';
-import { UiGroup, UiPanel, UiSizes, UiStack } from '../../ui/';
+import { UiGroup, UiStack } from '../../ui/';
 
 export function PlaygroundBaseModal() {
     const { wallets } = useWalletUi();
@@ -25,65 +24,35 @@ export function PlaygroundBaseModal() {
     return (
         <UiStack>
             <UiGroup style={{ alignItems: 'flex-start' }}>
-                <UiSizes
-                    render={size => (
-                        <UiPanel key={size} title={<code>{size}</code>}>
-                            <TestModalSimple size={size} />
-                        </UiPanel>
-                    )}
-                />
+                <TestModalSimple />
             </UiGroup>
             <UiGroup style={{ alignItems: 'flex-start' }}>
-                <UiSizes
-                    render={size => (
-                        <UiPanel key={size} title={<code>{size}</code>}>
-                            <TestModalCustom size={size} />
-                        </UiPanel>
-                    )}
-                />
+                <TestModalCustom />
             </UiGroup>
             <UiGroup style={{ alignItems: 'flex-start' }}>
-                <UiSizes
-                    render={size => (
-                        <UiPanel key={size} title={<code>{size}</code>}>
-                            <TestModalExternalTrigger size={size} />
-                        </UiPanel>
-                    )}
-                />
+                <TestModalExternalTrigger />
             </UiGroup>
             <UiGroup style={{ alignItems: 'flex-start' }}>
-                <UiSizes
-                    render={size => (
-                        <UiPanel key={size} title={<code>{size}</code>}>
-                            <TestModalWallets select={select} size={size} wallets={wallets} />
-                        </UiPanel>
-                    )}
-                />
+                <TestModalWallets select={select} wallets={wallets} />
             </UiGroup>
             <UiGroup style={{ alignItems: 'flex-start' }}>
-                <UiSizes
-                    render={size => (
-                        <UiPanel key={size} title={<code>{size}</code>}>
-                            <TestModalNoWallet size={size} />
-                        </UiPanel>
-                    )}
-                />
+                <TestModalNoWallet />
             </UiGroup>
         </UiStack>
     );
 }
 
-function TestModalSimple({ size }: { size: WalletUiSize }) {
+function TestModalSimple() {
     const modal = useBaseModal();
 
     return (
-        <BaseModal modal={modal} size={size} buttonLabel="Open">
+        <BaseModal modal={modal} buttonLabel="Open">
             THIS A SIMPLE MODAL
         </BaseModal>
     );
 }
 
-function TestModalCustom({ size }: { size: WalletUiSize }) {
+function TestModalCustom() {
     const modal = useBaseModal();
 
     return (
@@ -95,72 +64,44 @@ function TestModalCustom({ size }: { size: WalletUiSize }) {
                     leftSection: <span>🚀</span>,
                     rightSection: <span>🚀</span>,
                 }}
-                description={
-                    <span>
-                        This is the <b>{size}</b> size modal description
-                    </span>
-                }
-                size={size}
+                description={<span>This is the modal description</span>}
             >
                 <div>THIS IS A TEST OF A MODAL</div>
-                <BaseButton size={size} onClick={() => void modal.close()} label="External Close" />
+                <BaseButton onClick={() => void modal.close()} label="External Close" />
             </BaseModal>
-            <BaseButton size={size} onClick={() => void modal.open()} label="External Open" />
+            <BaseButton onClick={() => void modal.open()} label="External Open" />
         </UiGroup>
     );
 }
 
-function TestModalExternalTrigger({ size }: { size: WalletUiSize }) {
+function TestModalExternalTrigger() {
     const modal = useBaseModal();
 
     return (
         <UiGroup>
-            <BaseModal modal={modal} size={size}>
-                <BaseButton
-                    size={size}
-                    onClick={() => void modal.close()}
-                    style={{ width: '100%' }}
-                    label="External Close"
-                />
+            <BaseModal modal={modal}>
+                <BaseButton onClick={() => void modal.close()} style={{ width: '100%' }} label="External Close" />
             </BaseModal>
-            <BaseButton size={size} onClick={() => void modal.open()} label="External Trigger" />
+            <BaseButton onClick={() => void modal.open()} label="External Trigger" />
         </UiGroup>
     );
 }
 
-function TestModalWallets({
-    select,
-    size,
-    wallets,
-}: {
-    select: WalletUiListProps['select'];
-    size: WalletUiSize;
-    wallets: UiWallet[];
-}) {
+function TestModalWallets({ select, wallets }: { select: WalletUiListProps['select']; wallets: UiWallet[] }) {
     const modal = useBaseModal();
 
     return (
-        <BaseModal
-            modal={modal}
-            buttonLabel="Select Wallet"
-            description="Connect a wallet on Solana to continue"
-            size={size}
-        >
-            <WalletUiList size={size} wallets={wallets} select={select} />
+        <BaseModal modal={modal} buttonLabel="Select Wallet" description="Connect a wallet on Solana to continue">
+            <WalletUiList wallets={wallets} select={select} />
         </BaseModal>
     );
 }
 
-function TestModalNoWallet({ size }: { size: WalletUiSize }) {
+function TestModalNoWallet() {
     const modal = useBaseModal();
 
     return (
-        <BaseModal
-            modal={modal}
-            buttonLabel="No Wallet"
-            description="You'll need a wallet on Solana to continue"
-            size={size}
-        >
+        <BaseModal modal={modal} buttonLabel="No Wallet" description="You'll need a wallet on Solana to continue">
             <div
                 style={{
                     display: 'flex',
@@ -171,7 +112,7 @@ function TestModalNoWallet({ size }: { size: WalletUiSize }) {
                 }}
             >
                 <a href="https://solana.com/solana-wallets" target="_blank" rel="noreferrer noopener">
-                    <WalletUiIconNoWallet size={size} />
+                    <WalletUiIconNoWallet />
                 </a>
             </div>
         </BaseModal>

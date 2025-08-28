@@ -5,21 +5,13 @@
     @apply whitespace-nowrap;
     /* Behavior */
     @apply cursor-pointer select-none appearance-none disabled:cursor-not-allowed disabled:opacity-50;
+    /* Radius */
+    @apply rounded-lg;
+    /* Padding */
+    @apply px-2 py-2 rounded-lg;
 
     &:hover {
         /* Background */
         background: var(--wu-color-background-hover);
     }
-}
-
-[data-wu='wallet-ui-list-button'].sm {
-    @apply px-1 py-1 rounded-md;
-}
-
-[data-wu='wallet-ui-list-button'].md {
-    @apply px-2 py-2 rounded-lg;
-}
-
-[data-wu='wallet-ui-list-button'].lg {
-    @apply px-3 py-3 rounded-xl;
 }

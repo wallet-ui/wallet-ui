@@ -21,6 +21,12 @@
     @apply flex items-center justify-center gap-2 whitespace-nowrap;
     /* Disabled */
     @apply disabled:cursor-not-allowed disabled:opacity-50;
+    /* Padding */
+    @apply px-4 py-3;
+    /* Text size */
+    @apply text-base;
+    /* Text weight  */
+    @apply font-semibold;
 
     &:hover {
         /* Background  */
@@ -37,74 +43,16 @@
     }
 }
 
-/* Base Button Sizes */
-[data-wu='base-button'].sm {
-    /* Shape */
-    @apply px-3 py-1.5;
-    /* Text size */
-    @apply text-sm;
-    /* Text weight  */
-    @apply font-normal;
-}
-
-[data-wu='base-button'].md {
-    /* Shape */
-    @apply px-4 py-3;
-    /* Text size */
-    @apply text-base;
-    /* Text weight  */
-    @apply font-semibold;
-}
-
-[data-wu='base-button'].lg {
-    /* Shape */
-    @apply px-6 py-4;
-    /* Text size */
-    @apply text-lg;
-    /* Text weight  */
-    @apply font-bold;
-}
-
-/* Left Section Sizes */
-.sm [data-wu='base-button-left-section'] {
-    /* Composition */
-    @apply mr-1;
-    /* Text size */
-    @apply text-xs;
-}
-
-.md [data-wu='base-button-left-section'] {
+[data-wu='base-button-left-section'] {
     /* Composition */
     @apply mr-2;
     /* Text size */
     @apply text-sm;
 }
 
-.lg [data-wu='base-button-left-section'] {
-    /* Composition */
-    @apply mr-4;
-    /* Text size */
-    @apply text-xl;
-}
-
-/* Right Section Sizes */
-.sm [data-wu='base-button-right-section'] {
-    /* Composition */
-    @apply ml-1;
-    /* Text size */
-    @apply text-xs;
-}
-
-.md [data-wu='base-button-right-section'] {
+[data-wu='base-button-right-section'] {
     /* Composition */
     @apply ml-2;
     /* Text size */
     @apply text-sm;
-}
-
-.lg [data-wu='base-button-right-section'] {
-    /* Composition */
-    @apply ml-4;
-    /* Text size */
-    @apply text-xl;
 }

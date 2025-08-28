@@ -1,18 +1,12 @@
 import React from 'react';
 
-import { WalletUiSize } from './types/wallet-ui-size';
-import { WalletUiSvg } from './types/wallet-ui-svg';
-
-export interface BaseSvgProps extends WalletUiSvg {
-    size: WalletUiSize;
-    sizes: { [key: string]: number };
+export interface BaseSvgProps extends React.DetailedHTMLProps<React.SVGProps<SVGSVGElement>, SVGSVGElement> {
     viewBox: string;
 }
 
-export function BaseSvg({ sizes = {}, ...props }: BaseSvgProps) {
-    const size = props.size ? sizes[props.size] : 12;
+export function BaseSvg({ ...props }: BaseSvgProps) {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} {...props}>
+        <svg xmlns="http://www.w3.org/2000/svg" {...props}>
             {props.children}
         </svg>
     );

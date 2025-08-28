@@ -25,8 +25,8 @@ export function AppHeader({ links }: { links: { label: string; to: string }[] })
                 </ul>
             </div>
             <div className="flex items-center gap-4">
-                <WalletUiDropdown size="sm" />
-                <WalletUiClusterDropdown size="sm" />
+                <WalletUiDropdown />
+                <WalletUiClusterDropdown />
             </div>
         </nav>
     );

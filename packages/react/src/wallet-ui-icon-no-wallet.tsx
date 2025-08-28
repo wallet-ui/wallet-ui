@@ -2,9 +2,9 @@ import React from 'react';
 
 import { BaseSvg, BaseSvgProps } from './base-svg';
 
-export function WalletUiIconNoWallet({ size, ...props }: Omit<BaseSvgProps, 'sizes' | 'viewBox'>) {
+export function WalletUiIconNoWallet({ ...props }: Omit<BaseSvgProps, 'viewBox'>) {
     return (
-        <BaseSvg size={size} sizes={{ lg: 125, md: 100, sm: 75 }} fill="none" viewBox="0 0 97 96" {...props}>
+        <BaseSvg fill="none" height={100} width={100} viewBox="0 0 97 96" {...props}>
             <circle cx="48.5" cy="48" r="48" fill="url(#paint0_linear_880_5115)" fillOpacity="0.1"></circle>
             <circle
                 cx="48.5"

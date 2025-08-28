@@ -3,7 +3,6 @@ import React, { useMemo } from 'react';
 
 import { BaseButtonProps } from './base-button';
 import { BaseDropdownItem, BaseDropdownItemType } from './base-dropdown';
-import { WalletUiSize } from './types/wallet-ui-size';
 import { BaseDropdownControl, useBaseDropdown } from './use-base-dropdown';
 import { useWalletUi } from './use-wallet-ui';
 import { WalletUiIcon } from './wallet-ui-icon';
@@ -45,7 +44,7 @@ function getDropdownItemsWallets({
           ];
 }
 
-export function useWalletUiDropdown({ size = 'md' }: { size?: WalletUiSize } = {}): {
+export function useWalletUiDropdown(): {
     buttonProps: BaseButtonProps;
     connected: boolean;
     dropdown: BaseDropdownControl;
@@ -89,9 +88,9 @@ export function useWalletUiDropdown({ size = 'md' }: { size?: WalletUiSize } = {
     const buttonProps: BaseButtonProps = useMemo(() => {
         return {
             label: connected ? ((account ? ellipsify(account.address) : wallet?.name) ?? 'Connected') : 'Select Wallet',
-            leftSection: connected ? <WalletUiIcon size={size} wallet={wallet} /> : undefined,
+            leftSection: connected ? <WalletUiIcon wallet={wallet} /> : undefined,
         };
-    }, [account, connected, size, wallet]);
+    }, [account, connected, wallet]);
 
     return {
         buttonProps,

@@ -6,7 +6,7 @@ import { useWalletUiAccount } from './use-wallet-ui-account';
 import { useWalletUiWallets } from './use-wallet-ui-wallets';
 import { WalletUiContext, WalletUiContextProviderProps, WalletUiContextValue } from './wallet-ui-context';
 
-export function WalletUiContextProvider({ children, size = 'md' }: WalletUiContextProviderProps) {
+export function WalletUiContextProvider({ children }: WalletUiContextProviderProps) {
     const { account, accountKeys, cluster, setAccount, wallet } = useWalletUiAccount();
     const wallets = useWalletUiWallets();
     const connected = Boolean(wallet && wallet?.accounts.length > 0);
@@ -34,7 +34,6 @@ export function WalletUiContextProvider({ children, size = 'md' }: WalletUiConte
         connected,
         copy,
         disconnect,
-        size,
         wallet,
         wallets,
     };

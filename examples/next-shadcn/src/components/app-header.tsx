@@ -33,8 +33,8 @@ export function AppHeader({ links }: { links: { label: string; to: string }[] })
                 </ul>
             </div>
             <div className="flex items-center gap-4">
-                <AccountDropdown size="sm" />
-                <ClusterDropdown size="sm" />
+                <AccountDropdown />
+                <ClusterDropdown />
             </div>
         </nav>
     );

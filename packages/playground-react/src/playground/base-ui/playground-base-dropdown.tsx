@@ -7,21 +7,18 @@ import {
     useBaseDropdown,
     useWalletUi,
     WalletUiIcon,
-    WalletUiSize,
 } from '@wallet-ui/react';
 
 import React, { useMemo, useState } from 'react';
 import { ellipsify } from '../../lib/ellipsify';
-import { UiGroup, UiPanel, UiSizes } from '../../ui/';
 
 interface GetItemsOptions {
     handleWalletConnect: (wallet: UiWallet) => void;
     handleWalletDisconnect: () => void;
-    size?: WalletUiSize;
     wallets: UiWallet[];
 }
 
-function getItems({ handleWalletConnect, handleWalletDisconnect, wallets, size }: GetItemsOptions): BaseDropdownItem[] {
+function getItems({ handleWalletConnect, handleWalletDisconnect, wallets }: GetItemsOptions): BaseDropdownItem[] {
     if (!wallets.length) {
         return [
             {
@@ -36,23 +33,13 @@ function getItems({ handleWalletConnect, handleWalletDisconnect, wallets, size }
     return wallets.map(wallet => ({
         handler: async () => handleWalletConnect(wallet),
         label: wallet.name,
-        leftSection: <WalletUiIcon wallet={wallet} size={size} />,
+        leftSection: <WalletUiIcon wallet={wallet} />,
         value: wallet.name,
         type: BaseDropdownItemType.WalletConnect,
     }));
 }
 
-function useTestWalletDropdownItems({
-    account,
-    buttonSize = 'md',
-    itemSize = 'md',
-    wallets = [],
-}: {
-    account?: UiWalletAccount;
-    buttonSize?: WalletUiSize;
-    itemSize?: WalletUiSize;
-    wallets: UiWallet[];
-}) {
+function useTestWalletDropdownItems({ account, wallets = [] }: { account?: UiWalletAccount; wallets: UiWallet[] }) {
     const { selectedWallet, setSelectedWallet } = useTestWalletAccount();
     const [isConnected, setIsConnected] = useState(false);
 
@@ -71,16 +58,15 @@ function useTestWalletDropdownItems({
             getItems({
                 handleWalletConnect,
                 handleWalletDisconnect,
-                size: itemSize,
                 wallets,
             }),
-        [account, handleWalletConnect, handleWalletDisconnect, itemSize, isConnected, selectedWallet, wallets],
+        [account, handleWalletConnect, handleWalletDisconnect, isConnected, selectedWallet, wallets],
     );
 
     const buttonLabel = isConnected
         ? ((account?.address ? ellipsify(account.address) : selectedWallet?.name) ?? 'Connected')
         : 'Select Wallet';
-    const buttonLeftSection = selectedWallet ? <WalletUiIcon wallet={selectedWallet} size={buttonSize} /> : undefined;
+    const buttonLeftSection = selectedWallet ? <WalletUiIcon wallet={selectedWallet} /> : undefined;
 
     return {
         buttonLabel,
@@ -112,32 +98,23 @@ function useTestWalletAccount() {
 }
 
 export function PlaygroundBaseDropdown() {
-    return (
-        <UiGroup style={{ alignItems: 'flex-start' }}>
-            <UiSizes render={size => <TestReactPanelBaseDropdownItem key={size} size={size} />} />
-        </UiGroup>
-    );
+    return <TestReactPanelBaseDropdownItem />;
 }
 
-function TestReactPanelBaseDropdownItem({ size }: { size: WalletUiSize }) {
+function TestReactPanelBaseDropdownItem() {
     const { account, wallets } = useTestWalletAccount();
     const { items, buttonLabel, buttonLeftSection } = useTestWalletDropdownItems({
         account,
-        buttonSize: size,
-        itemSize: size,
         wallets,
     });
     const dropdown = useBaseDropdown();
 
     return (
-        <UiPanel key={size} title={<code>{size}</code>}>
-            <BaseDropdown
-                size={size}
-                dropdown={dropdown}
-                buttonProps={{ label: buttonLabel, leftSection: buttonLeftSection }}
-                items={items}
-                showIndicator
-            />
-        </UiPanel>
+        <BaseDropdown
+            dropdown={dropdown}
+            buttonProps={{ label: buttonLabel, leftSection: buttonLeftSection }}
+            items={items}
+            showIndicator
+        />
     );
 }

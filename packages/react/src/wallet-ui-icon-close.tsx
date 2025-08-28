@@ -2,14 +2,14 @@ import React from 'react';
 
 import { BaseSvg, BaseSvgProps } from './base-svg';
 
-export function WalletUiIconClose({ size = 'md', ...props }: Omit<BaseSvgProps, 'sizes' | 'viewBox'>) {
+export function WalletUiIconClose({ ...props }: Omit<BaseSvgProps, 'viewBox'>) {
     return (
         <BaseSvg
-            size={size}
-            sizes={{ lg: 16, md: 12, sm: 8 }}
             fill="none"
             stroke="currentColor"
             strokeWidth="3"
+            width={12}
+            height={12}
             viewBox="0 0 14 14"
             {...props}
         >

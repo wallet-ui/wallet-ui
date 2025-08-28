@@ -27,7 +27,6 @@ export function UiCard({
                 style={{ ...uiStylePadding, display: 'flex', justifyContent: 'stretch', width: '100%' }}
                 label={<div style={{ ...uiStyleTitle }}>{title}</div>}
                 onClick={() => handleToggle()}
-                size="sm"
             />
 
             {isOpen ? <UiStack style={{ ...uiStylePadding }}>{children}</UiStack> : null}

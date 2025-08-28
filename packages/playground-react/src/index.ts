@@ -15,7 +15,6 @@ export * from './ui/ui-card';
 export * from './ui/ui-group';
 export * from './ui/ui-icon-refresh';
 export * from './ui/ui-panel';
-export * from './ui/ui-sizes';
 export * from './ui/ui-stack';
 export * from './ui/use-open-state';
 

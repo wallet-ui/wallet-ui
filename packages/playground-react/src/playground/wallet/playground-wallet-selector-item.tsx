@@ -19,8 +19,8 @@ export function PlaygroundWalletSelectorItem({ wallet }: { wallet: UiWallet }) {
             key={wallet.name}
             title={
                 <UiGroup>
-                    <WalletUiIcon wallet={wallet} size="lg" />
-                    <WalletUiLabel wallet={wallet} size="lg" />
+                    <WalletUiIcon wallet={wallet} />
+                    <WalletUiLabel wallet={wallet} />
                 </UiGroup>
             }
         >

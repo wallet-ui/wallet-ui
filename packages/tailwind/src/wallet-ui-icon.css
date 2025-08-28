@@ -3,25 +3,8 @@
     @apply border-0;
     /* Position */
     @apply m-0;
-}
-
-[data-wu='wallet-ui-icon'].sm {
-    /* Radius */
-    @apply rounded-sm;
-    /* Shape */
-    @apply h-[16px] w-[16px];
-}
-
-[data-wu='wallet-ui-icon'].md {
     /* Radius */
     @apply rounded-md;
     /* Shape */
     @apply h-[24px] w-[24px];
-}
-
-[data-wu='wallet-ui-icon'].lg {
-    /* Radius */
-    @apply rounded-lg;
-    /* Shape */
-    @apply h-[32px] w-[32px];
 }

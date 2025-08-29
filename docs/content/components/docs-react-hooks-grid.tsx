@@ -32,11 +32,6 @@ const items = [
         description: 'A hook to get a transaction signer for the active wallet.',
     },
     {
-        id: 'use-wallet-ui-solana-client',
-        name: 'useWalletUiSolanaClient',
-        description: 'A hook to get the underlying Solana RPC client.',
-    },
-    {
         id: 'use-wallet-ui-wallet',
         name: 'useWalletUiWallet',
         description: 'A hook to connect and disconnect a specific wallet.',

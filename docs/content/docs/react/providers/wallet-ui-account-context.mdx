@@ -1,0 +1,42 @@
+---
+title: WalletUiAccountContext
+description: The context for the currently selected wallet account.
+---
+
+The `WalletUiAccountContext` provides information about the currently selected wallet account.
+
+### `WalletUiAccountState`
+
+The context provides an object with the following properties:
+
+| Name          | Type                                 | Description                                          |
+|---------------|--------------------------------------|------------------------------------------------------|
+| `account`     | `UiWalletAccount`                    | The currently selected wallet account.               |
+| `accountKeys` | `string[]`                           | The keys of the account.                             |
+| `cluster`     | `SolanaCluster`                      | The currently selected Solana cluster.               |
+| `setAccount`  | `(account: UiWalletAccount) => void` | The React dispatcher to update the selected account. |
+| `wallet`      | `UiWallet`                           | The wallet that the current account belongs to.      |
+
+
+### Example
+
+This example shows how you could use the context to get the current account.
+
+```tsx
+import { useContext } from 'react';
+import { WalletUiAccountContext } from '@wallet-ui/react';
+
+function AccountDetails() {
+    const { account } = useContext(WalletUiAccountContext);
+
+    if (!account) {
+        return <p>No account selected.</p>;
+    }
+
+    return (
+        <div>
+            <p>Account: {account.address}</p>
+        </div>
+    );
+}
+```

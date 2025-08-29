@@ -31,17 +31,6 @@ const items = [
         name: 'WalletUiContextProvider',
         description: 'The provider for the WalletUiContext.',
     },
-    {
-        id: 'wallet-ui-solana-client-context',
-        name: 'WalletUiSolanaClientContext',
-        description: 'The context for the Solana client.',
-    },
-    {
-        id: 'wallet-ui-solana-client-context-provider',
-        name: 'WalletUiSolanaClientContextProvider',
-        description: 'The provider for the WalletUiSolanaClientContext.',
-    },
-    // Add other contexts here as they are documented
 ];
 
 export function DocsReactContextGrid() {

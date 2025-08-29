@@ -1,16 +1,16 @@
 'use client';
-import { BaseDropdown, useWalletUiDropdown, WalletUiSize } from '@wallet-ui/react';
+import { BaseDropdown, useWalletUiDropdown } from '@wallet-ui/react';
 import { DocsReactWalletProvider } from './docs-react-wallet-provider';
 
-function Dropdown({ size }: { size: WalletUiSize }) {
-    const { buttonProps, items, dropdown } = useWalletUiDropdown({ size });
-    return <BaseDropdown buttonProps={buttonProps} dropdown={dropdown} items={items} size={size} />;
+function Dropdown() {
+    const { buttonProps, items, dropdown } = useWalletUiDropdown();
+    return <BaseDropdown buttonProps={buttonProps} dropdown={dropdown} items={items} />;
 }
 
-export function DocsReactHookUseWalletUiDropdown({ size }: { size: WalletUiSize }) {
+export function DocsReactHookUseWalletUiDropdown() {
     return (
         <DocsReactWalletProvider>
-            <Dropdown size={size} />
+            <Dropdown />
         </DocsReactWalletProvider>
     );
 }

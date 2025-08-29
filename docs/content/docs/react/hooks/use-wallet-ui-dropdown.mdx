@@ -14,7 +14,7 @@ This hook powers the standard [`WalletUiDropdown`](../components/dropdown) compo
 The hook returns an object with the following properties:
 
 | Name          | Type                  | Description                                                                |
-| ------------- | --------------------- | -------------------------------------------------------------------------- |
+|---------------|-----------------------|----------------------------------------------------------------------------|
 | `buttonProps` | `BaseButtonProps`     | Props to be spread onto a trigger button.                                  |
 | `connected`   | `boolean`             | A boolean indicating if a wallet is connected.                             |
 | `dropdown`    | `BaseDropdownControl` | The underlying menu control from Zag.js, containing the state machine API. |
@@ -28,12 +28,12 @@ This example shows how to use the hook with the `BaseDropdown` component to crea
 import { useWalletUiDropdown, BaseDropdown } from '@wallet-ui/react';
 
 function CustomWalletDropdown() {
-    const { buttonProps, items, dropdown } = useWalletUiDropdown({ size: 'md' });
+    const { buttonProps, items, dropdown } = useWalletUiDropdown();
 
-    return <BaseDropdown buttonProps={buttonProps} dropdown={dropdown} items={items} size="md" />;
+    return <BaseDropdown buttonProps={buttonProps} dropdown={dropdown} items={items} />;
 }
 ```
 
 <div className="flex gap-4">
-    <DocsReactHookUseWalletUiDropdown size="md" />
+    <DocsReactHookUseWalletUiDropdown />
 </div>

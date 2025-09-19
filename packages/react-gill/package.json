@@ -82,7 +82,7 @@
         "@wallet-ui/core": "workspace:*",
         "@wallet-ui/react": "workspace:*",
         "@zag-js/dialog": "1.15.2",
-        "@zag-js/menu": "1.15.2",
+        "@zag-js/menu": "1.24.2",
         "@zag-js/react": "1.15.2",
         "nanostores": "^1.0.1"
     },

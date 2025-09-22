@@ -4,12 +4,12 @@
     "private": true,
     "type": "module",
     "dependencies": {
-        "@inquirer/core": "^10.1.13",
-        "pino": "^9.7.0",
-        "pino-pretty": "^13.0.0"
+        "@inquirer/core": "^10.2.2",
+        "pino": "^9.11.0",
+        "pino-pretty": "^13.1.1"
     },
     "devDependencies": {
-        "@types/node": "^24.0.1",
-        "yoctocolors": "^2.1.1"
+        "@types/node": "^24.5.2",
+        "yoctocolors": "^2.1.2"
     }
 }

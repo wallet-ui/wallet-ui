@@ -12,9 +12,9 @@
     "whatwg-fetch": "^3.6.20"
   },
   "devDependencies": {
-    "@jest/types": "^30.0.0",
-    "undici": "^7.10.0",
-    "uuid": "^11.1.0",
+    "@jest/types": "^30.0.5",
+    "undici": "^7.16.0",
+    "uuid": "^13.0.0",
     "whatwg-fetch": "^3.6.20"
   },
   "engines": {

@@ -75,11 +75,11 @@
         "maintained node versions"
     ],
     "dependencies": {
-        "@nanostores/persistent": "1.0.0",
+        "@nanostores/persistent": "1.1.0",
         "nanostores": "1.0.1"
     },
     "devDependencies": {
-        "typescript": "^5.8.3"
+        "typescript": "^5.9.2"
     },
     "peerDependencies": {
         "@solana/kit": "^2.3.0"

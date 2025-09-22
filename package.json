@@ -58,7 +58,7 @@
         "pnpm": "^10",
         "yarn": "please-use-pnpm"
     },
-    "packageManager": "pnpm@10.14.0",
+    "packageManager": "pnpm@10.17.0",
     "pnpm": {
         "overrides": {
             "agadoo>rollup": "^4",

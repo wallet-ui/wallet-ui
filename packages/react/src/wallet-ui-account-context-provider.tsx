@@ -8,7 +8,7 @@ import {
     useWallets,
 } from '@wallet-standard/react';
 import { createStorageAccount, SolanaCluster, StorageAccount } from '@wallet-ui/core';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { WalletUiAccountContext } from './wallet-ui-account-context';
 
@@ -57,16 +57,19 @@ export function WalletUiAccountContextProvider({
         getSavedWalletAccount(wallets, accountId),
     );
 
-    function setAccount(setStateAction: React.SetStateAction<UiWalletAccount | undefined>) {
-        setAccountInternal(prevAccount => {
-            wasSetterInvoked = true;
-            const nextWalletAccount =
-                typeof setStateAction === 'function' ? setStateAction(prevAccount) : setStateAction;
-            const accountKey = nextWalletAccount ? getUiWalletAccountStorageKey(nextWalletAccount) : undefined;
-            storage.set(accountKey ? accountKey : undefined);
-            return nextWalletAccount;
-        });
-    }
+    const setAccount = useCallback(
+        (setStateAction: React.SetStateAction<UiWalletAccount | undefined>) => {
+            setAccountInternal(prevAccount => {
+                wasSetterInvoked = true;
+                const nextWalletAccount =
+                    typeof setStateAction === 'function' ? setStateAction(prevAccount) : setStateAction;
+                const accountKey = nextWalletAccount ? getUiWalletAccountStorageKey(nextWalletAccount) : undefined;
+                storage.set(accountKey ? accountKey : undefined);
+                return nextWalletAccount;
+            });
+        },
+        [storage],
+    );
 
     useEffect(() => {
         const savedWalletAccount = getSavedWalletAccount(wallets, accountId);
@@ -118,11 +121,12 @@ export function WalletUiAccountContextProvider({
 
     // Expose the error boundary reset keys to the context
     const accountKeys = useMemo(() => {
-        if (!account) {
+        if (!walletAccount) {
             return [];
         }
-        return [cluster.id, getUiWalletAccountStorageKey(account)].filter(Boolean);
-    }, [account, cluster.id]);
+        return [cluster.id, getUiWalletAccountStorageKey(walletAccount)].filter(Boolean);
+    }, [walletAccount, cluster.id]);
+
     return (
         <WalletUiAccountContext.Provider
             value={useMemo(
@@ -133,7 +137,7 @@ export function WalletUiAccountContextProvider({
                     setAccount,
                     wallet,
                 }),
-                [accountKeys, cluster, wallet, walletAccount],
+                [accountKeys, cluster, setAccount, wallet, walletAccount],
             )}
         >
             {children}

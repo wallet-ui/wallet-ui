@@ -76,10 +76,11 @@ export function useWalletUiDropdown(): {
                 label: 'Disconnect',
                 type: BaseDropdownItemType.WalletDisconnect,
                 value: 'disconnect',
+                wallet,
             },
             ...itemsWallets,
         ],
-        [copy, disconnect, dropdown, itemsWallets],
+        [copy, disconnect, dropdown, wallet, itemsWallets],
     );
     const items = useMemo(() => {
         return connected ? itemsConnected : itemsWallets;

@@ -17,7 +17,7 @@ export default function HomePage() {
 
             <section className="mx-auto space-y-3 flex flex-col items-center gap-2 ">
                 <p className="max-w-md text-fd-muted-foreground">
-                    Wallet UI is the modern UI for the
+                    Wallet UI is the modern UI for the{' '}
                     <Link
                         href="https://github.com/wallet-standard/wallet-standard"
                         className="text-fd-foreground font-semibold underline"

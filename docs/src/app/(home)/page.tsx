@@ -23,6 +23,7 @@ export default function HomePage() {
                         className="text-fd-foreground font-semibold underline"
                         external
                     >
+                        {' '}
                         Wallet Standard
                     </Link>
                     .

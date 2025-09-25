@@ -25,7 +25,7 @@
         "@swc/jest": "^0.2.39",
         "@types/jest": "^30.0.0",
         "@types/node": "^24.5.2",
-        "@typescript-eslint/eslint-plugin": "^8.44.0",
+        "@typescript-eslint/eslint-plugin": "^8.44.1",
         "@typescript-eslint/parser": "^8.44.1",
         "@wallet-ui/build-scripts": "workspace:*",
         "@wallet-ui/test-config": "workspace:*",

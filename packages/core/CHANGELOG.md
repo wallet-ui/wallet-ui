@@ -1,5 +1,19 @@
 # @wallet-ui/core
 
+## 2.0.0
+
+### Major Changes
+
+- [#262](https://github.com/wallet-ui/wallet-ui/pull/262) [`1051671`](https://github.com/wallet-ui/wallet-ui/commit/1051671506a6d1644cb23e0d5e1fcb0b05f3c03c) Thanks [@beeman](https://github.com/beeman)! - clean up SolanaCluster type
+
+- [#246](https://github.com/wallet-ui/wallet-ui/pull/246) [`b94b01b`](https://github.com/wallet-ui/wallet-ui/commit/b94b01b27c52ca9f887c54951e4c67075498075f) Thanks [@beeman](https://github.com/beeman)! - rename useWalletUiTransactionSignAndSend -> useWalletUiSignAndSend
+
+- [#261](https://github.com/wallet-ui/wallet-ui/pull/261) [`04f65bb`](https://github.com/wallet-ui/wallet-ui/commit/04f65bbb35f82d5d21c4332bc72363e4bfd9da87) Thanks [@beeman](https://github.com/beeman)! - move gill client into @wallet-ui/react-gill package
+
+### Patch Changes
+
+- [#286](https://github.com/wallet-ui/wallet-ui/pull/286) [`d25ee0c`](https://github.com/wallet-ui/wallet-ui/commit/d25ee0cc6de5e0456bb49ed3d026c59563b9b1ef) Thanks [@beeman](https://github.com/beeman)! - update dependencies
+
 ## 1.1.1
 
 ### Patch Changes
@@ -15,7 +29,6 @@
 - [#39](https://github.com/wallet-ui/wallet-ui/pull/39) [`d259001`](https://github.com/wallet-ui/wallet-ui/commit/d259001d8775f6290767a014c2e086b97b790747) Thanks [@beeman](https://github.com/beeman)! - migrate the code to use gill instead of @solana/web3.js@2
 
     ## Minor Changes
-
     - @wallet-ui/core
         - rename 'chain' to 'cluster'
         - export `SolanaClient`, `SolanaClientUrlOrMoniker` based on types from gill

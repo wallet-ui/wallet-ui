@@ -1,5 +1,17 @@
 # @wallet-ui/tailwind
 
+## 2.0.0
+
+### Major Changes
+
+- [#269](https://github.com/wallet-ui/wallet-ui/pull/269) [`f6fc749`](https://github.com/wallet-ui/wallet-ui/commit/f6fc74908385b8b44d4b7e3a7adef86dd6f40eee) Thanks [@beeman](https://github.com/beeman)! - remove WalletUiSize property
+
+- [#246](https://github.com/wallet-ui/wallet-ui/pull/246) [`b94b01b`](https://github.com/wallet-ui/wallet-ui/commit/b94b01b27c52ca9f887c54951e4c67075498075f) Thanks [@beeman](https://github.com/beeman)! - rename useWalletUiTransactionSignAndSend -> useWalletUiSignAndSend
+
+### Patch Changes
+
+- [#286](https://github.com/wallet-ui/wallet-ui/pull/286) [`d25ee0c`](https://github.com/wallet-ui/wallet-ui/commit/d25ee0cc6de5e0456bb49ed3d026c59563b9b1ef) Thanks [@beeman](https://github.com/beeman)! - update dependencies
+
 ## 1.1.1
 
 ### Patch Changes

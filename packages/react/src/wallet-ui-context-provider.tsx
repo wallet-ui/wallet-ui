@@ -1,6 +1,6 @@
 import { UiWalletAccount } from '@wallet-standard/react';
 import { handleCopyText } from '@wallet-ui/core';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { useWalletUiAccount } from './use-wallet-ui-account';
 import { useWalletUiWallets } from './use-wallet-ui-wallets';
@@ -11,32 +11,25 @@ export function WalletUiContextProvider({ children }: WalletUiContextProviderPro
     const wallets = useWalletUiWallets();
     const connected = Boolean(wallet && wallet?.accounts.length > 0);
 
-    function connect(account: UiWalletAccount) {
-        setAccount(account);
-    }
-
-    function disconnect() {
-        setAccount(undefined);
-    }
-
-    function copy() {
-        if (!account) {
-            return;
-        }
-        handleCopyText(account.address);
-    }
-
-    const value: WalletUiContextValue = {
-        account,
-        accountKeys,
-        cluster,
-        connect,
-        connected,
-        copy,
-        disconnect,
-        wallet,
-        wallets,
-    };
+    const value: WalletUiContextValue = useMemo(
+        () => ({
+            account,
+            accountKeys,
+            cluster,
+            connect: (account: UiWalletAccount) => setAccount(account),
+            connected,
+            copy: () => {
+                if (!account) {
+                    return;
+                }
+                handleCopyText(account.address);
+            },
+            disconnect: () => setAccount(undefined),
+            wallet,
+            wallets,
+        }),
+        [account, accountKeys, cluster, setAccount, connected, wallet, wallets],
+    );
 
     return <WalletUiContext.Provider value={value}>{children}</WalletUiContext.Provider>;
 }

@@ -23,18 +23,16 @@ export interface WalletUiProps {
 
 export function WalletUi({ children, config: { accountStorage, clusters, clusterStorage, ...config } }: WalletUiProps) {
     return (
-        <React.Fragment>
-            <WalletUiClusterContextProvider
-                clusters={clusters}
-                storage={clusterStorage}
-                render={({ cluster }) => {
-                    return (
-                        <WalletUiAccountContextProvider cluster={cluster} storage={accountStorage}>
-                            <WalletUiContextProvider {...config}>{children}</WalletUiContextProvider>
-                        </WalletUiAccountContextProvider>
-                    );
-                }}
-            />
-        </React.Fragment>
+        <WalletUiClusterContextProvider
+            clusters={clusters}
+            storage={clusterStorage}
+            render={({ cluster }) => {
+                return (
+                    <WalletUiAccountContextProvider cluster={cluster} storage={accountStorage}>
+                        <WalletUiContextProvider {...config}>{children}</WalletUiContextProvider>
+                    </WalletUiAccountContextProvider>
+                );
+            }}
+        />
     );
 }

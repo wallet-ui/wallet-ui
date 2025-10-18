@@ -19,7 +19,7 @@
         "@wallet-ui/react": "workspace:*",
         "@wallet-ui/tailwind": "workspace:*",
         "fumadocs-core": "15.7.13",
-        "fumadocs-docgen": "^3.0.0",
+        "fumadocs-docgen": "^3.0.2",
         "fumadocs-mdx": "12.0.0",
         "fumadocs-ui": "15.7.13",
         "import-in-the-middle": "^1.14.2",

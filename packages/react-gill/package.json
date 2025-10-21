@@ -94,7 +94,7 @@
         "react": "^19.1.1",
         "react-error-boundary": "^6.0.0",
         "react-test-renderer": "^19.1.1",
-        "typescript": "^5.9.2"
+        "typescript": "^5.9.3"
     },
     "peerDependencies": {
         "gill": "^0.11.0",

@@ -19,7 +19,7 @@
         "@types/react-dom": "^19.1.9"
     },
     "peerDependencies": {
-        "gill": "^0.11.0"
+        "gill": "^0.14.0"
     },
     "engines": {
         "node": ">=20.18.0"

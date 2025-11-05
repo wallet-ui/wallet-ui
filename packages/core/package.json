@@ -82,7 +82,7 @@
         "typescript": "^5.9.2"
     },
     "peerDependencies": {
-        "@solana/kit": "^2.3.0"
+        "@solana/kit": "^5.0.0"
     },
     "engines": {
         "node": ">=20.18.0"

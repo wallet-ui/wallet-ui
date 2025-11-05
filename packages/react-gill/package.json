@@ -97,7 +97,7 @@
         "typescript": "^5.9.2"
     },
     "peerDependencies": {
-        "gill": "^0.11.0",
+        "gill": "^0.14.0",
         "react": ">=18"
     },
     "engines": {

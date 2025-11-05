@@ -17,7 +17,7 @@
         "@wallet-ui/playground-react": "workspace:*",
         "@wallet-ui/react": "workspace:*",
         "@wallet-ui/react-gill": "workspace:*",
-        "gill": "^0.11.0",
+        "gill": "^0.14.0",
         "react": "^19.1.1",
         "react-dom": "^19.1.1",
         "react-error-boundary": "^6.0.0",

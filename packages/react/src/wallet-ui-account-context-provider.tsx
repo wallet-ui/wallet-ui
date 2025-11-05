@@ -37,20 +37,19 @@ function getSavedWalletAccount(
     return wallet.accounts.find(a => a.address === savedAccountAddress);
 }
 
+export interface WalletUiAccountContextProviderProps {
+    children: React.ReactNode;
+    cluster: SolanaCluster;
+    storage?: StorageAccount;
+}
+
 /**
  * Saves the selected wallet account's storage key to the browser's local storage. In future
  * sessions it will try to return that same wallet account, or at least one from the same brand of
  * wallet if the wallet from which it came is still in the Wallet Standard registry.
  */
-export function WalletUiAccountContextProvider({
-    children,
-    cluster,
-    storage = createStorageAccount(),
-}: {
-    children: React.ReactNode;
-    cluster: SolanaCluster;
-    storage?: StorageAccount;
-}) {
+export function WalletUiAccountContextProvider({ children, cluster, storage }: WalletUiAccountContextProviderProps) {
+    storage = storage ?? createStorageAccount();
     const wallets = useWallets();
     const accountId = useStore(storage.value);
     const [account, setAccountInternal] = useState<UiWalletAccount | undefined>(() =>

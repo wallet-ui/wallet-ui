@@ -3,7 +3,7 @@ description: Sets up Node and its package manager, then installs all dependencie
 
 inputs:
   version:
-    default: 'lts/*'
+    default: '24'
     type: string
 
 runs:
@@ -12,7 +12,7 @@ runs:
     - name: Install package manager
       uses: pnpm/action-setup@v3
       with:
-        version: 10.17.0
+        version: 10.20.0
 
     - name: Setup Node
       uses: actions/setup-node@v4

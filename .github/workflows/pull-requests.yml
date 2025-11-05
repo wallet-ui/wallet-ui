@@ -28,8 +28,7 @@ jobs:
     strategy:
       matrix:
         node:
-          - 'current'
-          - 'lts/*'
+          - 'lts/krypton'
 
     name: Build & Test on Node ${{ matrix.node }}
     steps:

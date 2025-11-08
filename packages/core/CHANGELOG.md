@@ -1,5 +1,11 @@
 # @wallet-ui/core
 
+## 2.1.0
+
+### Minor Changes
+
+- [#321](https://github.com/wallet-ui/wallet-ui/pull/321) [`a9eb7e2`](https://github.com/wallet-ui/wallet-ui/commit/a9eb7e21790b4bf7c30317e49234d39e611cd615) Thanks [@beeman](https://github.com/beeman)! - update @solana/kit and gill versions
+
 ## 2.0.0
 
 ### Major Changes

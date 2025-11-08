@@ -112,7 +112,7 @@ function TestModalNoWallet() {
                 }}
             >
                 <a href="https://solana.com/solana-wallets" target="_blank" rel="noreferrer noopener">
-                    <WalletUiIconNoWallet />
+                    <WalletUiIconNoWallet  />
                 </a>
             </div>
         </BaseModal>

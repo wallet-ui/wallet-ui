@@ -4,11 +4,9 @@ on:
   workflow_dispatch:
     branches:
       - main
-      - backport/**
   push:
     branches:
       - main
-      - backport/**
 
 permissions:
   contents: read

@@ -3,19 +3,20 @@ import { execSync } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-import { getPackages } from '@manypkg/get-packages';
-import { Octokit, RestEndpointMethodTypes } from '@octokit/rest';
+import { RestEndpointMethodTypes } from '@octokit/rest';
 import minimist from 'minimist';
 import remarkParse from 'remark-parse';
 import remarkStringify from 'remark-stringify';
 import { unified } from 'unified';
 
+import { ORG_NAME, REPO_NAME } from './constants.js';
+import { getCurrentLinkedVersion } from './current-linked-version.js';
+import { getGitHubApi } from './github-api.js';
+import { getPriorRelease } from './prior-release.js';
+
 type Level = string;
 type PackageName = string;
 type ReleaseNotesTextContent = string;
-
-const ORG_NAME = 'wallet-ui';
-const REPO_NAME = 'wallet-ui';
 
 function isDefined<T>(value: T | null | undefined): value is NonNullable<T> {
     return value !== null && value !== undefined;
@@ -23,62 +24,11 @@ function isDefined<T>(value: T | null | undefined): value is NonNullable<T> {
 
 const config = minimist(process.argv.slice(2), {
     boolean: 'dry-run',
-    string: 'token',
-});
-const GITHUB_TOKEN = config.token ?? process.env.GH_TOKEN;
-if (typeof GITHUB_TOKEN !== 'string') {
-    console.error(
-        'The required --token argument was not provided. Please use it to supply a GitHub token with write permissions',
-    );
-    process.exit(1);
-}
-
-const api = new Octokit({
-    auth: GITHUB_TOKEN,
 });
 
-const [
-    packages,
-    {
-        data: { tag_name: priorReleaseVersion },
-    },
-] = await Promise.all([
-    /**
-     * Get a list of all the packages, their paths, and their `package.json` files.
-     */
-    (async () => {
-        const { packages } = await getPackages(import.meta.dirname);
-        return packages.filter(p => p.relativeDir.startsWith('packages/'));
-    })(),
-    /**
-     * Get the version of the prior release
-     */
-    api.repos.getLatestRelease({ owner: ORG_NAME, repo: REPO_NAME }),
-]);
+const { packages, tag, version } = await getCurrentLinkedVersion();
 
-/**
- * Compute the version that they all share. Fail unless they all share the same version.
- */
-let version: string | undefined;
-for (const {
-    packageJson: { private: isPrivate, version: packageVersion },
-} of packages) {
-    if (isPrivate) {
-        continue;
-    }
-    if (!version) {
-        version = packageVersion;
-    } else if (version !== packageVersion) {
-        throw new Error('Expected all versions to be identical');
-    }
-}
-if (!version) {
-    throw new Error('Found no packages');
-}
-const tag = `v${version}`;
-if (!config['dry-run'] && tag === priorReleaseVersion) {
-    throw new Error(`There is already a latest release on GitHub for ${tag}`);
-}
+const { makeLatest, priorRelease } = await getPriorRelease(version);
 
 /**
  * Read in all of their changelogs and grab the entries related to that version.
@@ -147,9 +97,9 @@ const releaseNotesByPackage = Object.fromEntries(
                         if (!match) {
                             throw new Error(
                                 'Expected third-level headings to be of the form ' +
-                                    '"{Patch|Minor|Major} Changes". ' +
-                                    '`create-github-releases.ts` needs to be updated to ' +
-                                    'handle whatever the new format is.',
+                                '"{Patch|Minor|Major} Changes". ' +
+                                '`create-github-releases.ts` needs to be updated to ' +
+                                'handle whatever the new format is.',
                             );
                         }
                         const [_, level] = match;
@@ -214,7 +164,7 @@ const releaseDateString =
     String(releaseDate.getDate()).padStart(2, '0');
 const aggregateReleaseNotes =
     `# @solana/${REPO_NAME}\n\n` +
-    `## [${tag}](https://github.com/${ORG_NAME}/${REPO_NAME}/compare/${priorReleaseVersion}...${tag}) (${releaseDateString})\n\n` +
+    `## [${tag}](https://github.com/${ORG_NAME}/${REPO_NAME}/compare/${priorRelease?.tag_name}...${tag}) (${releaseDateString})\n\n` +
     Object.keys(releaseNotesByLevel)
         .toSorted((a, b) =>
             a === b ? 0 : a === 'Major' ? -1 : b === 'Major' ? 1 : a === 'Minor' ? -1 : b === 'Minor' ? 1 : 0,
@@ -236,7 +186,7 @@ const aggregateReleaseNotes =
  */
 const createReleaseParams: RestEndpointMethodTypes['repos']['createRelease']['parameters'] = {
     body: aggregateReleaseNotes,
-    make_latest: 'true',
+    make_latest: makeLatest ? 'true' : 'false',
     name: tag,
     owner: ORG_NAME,
     repo: REPO_NAME,
@@ -247,5 +197,6 @@ const createReleaseParams: RestEndpointMethodTypes['repos']['createRelease']['pa
 if (config['dry-run']) {
     console.log(createReleaseParams);
 } else {
-    await api.rest.repos.createRelease();
+    const api = getGitHubApi();
+    await api.rest.repos.createRelease(createReleaseParams);
 }

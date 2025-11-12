@@ -8,6 +8,7 @@
     "scripts": {
         "build": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} build",
         "changeset:publish": "turbo publish-packages --concurrency=${TURBO_CONCURRENCY:-95.84%} && echo 'published=true' >> $GITHUB_OUTPUT",
+        "clean": "find . -type d \\( -name 'node_modules' -o -name 'android' -o -name 'build' -o -name 'dist' -o -name '.turbo' -o -name '.wxt' -o -name '.expo' -o -name '.astro' -o -name '.wrangler' \\) -prune -exec rm -rf '{}' +",
         "compile": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} compile:js compile:typedefs",
         "lint": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} test:lint",
         "style:fix": "turbo  run --concurrency=${TURBO_CONCURRENCY:-95.84%} style:fix && pnpm prettier --log-level warn --ignore-unknown --write '{.,!packages}/*'",

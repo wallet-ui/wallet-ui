@@ -1,10 +1,9 @@
-import { ellipsify } from '@/utils/ellipsify';
-import { Network } from './network';
-import { useNetworkGetGenesisHash } from '@/features/network/use-network-get-genesis-hash';
 import { Text } from 'react-native';
+import { ellipsify } from '@/utils/ellipsify';
+import { useNetworkGetGenesisHash } from './use-network-get-genesis-hash';
 
-export function NetworkFeatureGetGenesisHash({ network }: { network: Network }) {
-    const { data, isLoading } = useNetworkGetGenesisHash({ network });
+export function NetworkFeatureGetGenesisHash() {
+    const { data, isLoading } = useNetworkGetGenesisHash();
 
     return <Text>Genesis Hash: {isLoading ? 'Loading...' : `${ellipsify(data, 8)}`}</Text>;
 }

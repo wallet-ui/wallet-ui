@@ -1,27 +1,35 @@
-import { useWalletUi } from '@/features/solana/use-wallet-ui';
-import { Button, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { ellipsify } from '@/utils/ellipsify';
 import React from 'react';
 import { AccountFeatureGetBalance } from '@/features/account/account-feature-get-balance';
+import { useMobileWalletAdapter } from '@wallet-ui/react-native-web3js';
+import { appStyles } from '@/constants/app-styles';
+import { AccountFeatureSignMessage } from '@/features/account/account-feature-sign-message';
+import { AccountFeatureSignTransaction } from '@/features/account/account-feature-sign-transaction';
+import { AccountFeatureSignIn } from '@/features/account/account-feature-sign-in';
+import { AccountFeatureDisconnect } from '@/features/account/account-feature-disconnect';
+import { AccountFeatureConnect } from '@/features/account/account-feature-connect';
 
 export function AccountFeatureIndex() {
-    const { account, connect, disconnect } = useWalletUi();
+    const { account } = useMobileWalletAdapter();
 
     return (
-        <View>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Account</Text>
-            <View style={{ gap: 8 }}>
-                <Button disabled={!account} title="Disconnect" onPress={disconnect} />
-                <Button disabled={!!account} title="Connect" onPress={connect} />
-                {account ? (
-                    <>
+        <View style={appStyles.stack}>
+            <Text style={appStyles.title}>Account</Text>
+            {account ? (
+                <View style={appStyles.stack}>
+                    <View style={appStyles.card}>
                         <Text>Connected to {ellipsify(account.publicKey.toString(), 8)}</Text>
                         <AccountFeatureGetBalance publicKey={account.publicKey} />
-                    </>
-                ) : (
-                    <Text>Connect your wallet.</Text>
-                )}
-            </View>
+                    </View>
+                    <AccountFeatureSignIn publicKey={account.publicKey} />
+                    <AccountFeatureSignMessage publicKey={account.publicKey} />
+                    <AccountFeatureSignTransaction publicKey={account.publicKey} />
+                    <AccountFeatureDisconnect />
+                </View>
+            ) : (
+                <AccountFeatureConnect />
+            )}
         </View>
     );
 }

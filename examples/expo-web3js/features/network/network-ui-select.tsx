@@ -1,27 +1,30 @@
-import { Network } from '@/features/network/network';
 import { Button, View } from 'react-native';
 import React from 'react';
+import { SolanaCluster } from '@wallet-ui/react-native-web3js';
+import { appStyles } from '@/constants/app-styles';
 
 export function NetworkUiSelect({
     networks,
     selectedNetwork,
     setSelectedNetwork,
 }: {
-    networks: Network[];
-    selectedNetwork: Network;
-    setSelectedNetwork: (network: Network) => void;
+    networks: SolanaCluster[];
+    selectedNetwork: SolanaCluster;
+    setSelectedNetwork: (network: SolanaCluster) => void;
 }) {
     return (
-        <View style={{ gap: 8 }}>
-            {networks.map(network => (
-                <View key={network.id}>
-                    <Button
-                        disabled={selectedNetwork.id === network.id}
-                        onPress={() => setSelectedNetwork(network)}
-                        title={network.name}
-                    />
-                </View>
-            ))}
+        <View style={appStyles.stack}>
+            {networks
+                .filter(i => i.id !== selectedNetwork.id)
+                .map(network => (
+                    <View key={network.id}>
+                        <Button
+                            disabled={selectedNetwork.id === network.id}
+                            onPress={() => setSelectedNetwork(network)}
+                            title={`Connect to ${network.label}`}
+                        />
+                    </View>
+                ))}
         </View>
     );
 }

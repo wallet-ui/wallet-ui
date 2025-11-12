@@ -1,44 +1,40 @@
-import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
+import { createContext, ReactNode, useMemo, useState } from 'react';
 import { AppConfig } from '@/constants/app-config';
-import { Network, NetworkCluster } from './network';
+import { SolanaCluster } from '@wallet-ui/react-native-web3js';
 
-export interface NetworkProviderContext {
+export interface NetworkProviderContextValue {
     getExplorerUrl(path: string): string;
-    networks: Network[];
-    selectedNetwork: Network;
-    setSelectedNetwork: (cluster: Network) => void;
+    networks: SolanaCluster[];
+    selectedNetwork: SolanaCluster;
+    setSelectedNetwork: (network: SolanaCluster) => void;
 }
 
-const Context = createContext<NetworkProviderContext>({} as NetworkProviderContext);
+export const NetworkProviderContext = createContext<NetworkProviderContextValue>({} as NetworkProviderContextValue);
 
 export function NetworkProvider({ children }: { children: ReactNode }) {
-    const [selectedNetwork, setSelectedNetwork] = useState<Network>(AppConfig.networks[0]);
-    const value: NetworkProviderContext = useMemo(
+    const [selectedNetwork, setSelectedNetwork] = useState<SolanaCluster>(AppConfig.networks[0]);
+    const value: NetworkProviderContextValue = useMemo(
         () => ({
             selectedNetwork,
-            networks: [...AppConfig.networks].sort((a, b) => a.name.localeCompare(b.name)),
-            setSelectedNetwork: (cluster: Network) => setSelectedNetwork(cluster),
+            networks: [...AppConfig.networks].sort((a, b) => a.label.localeCompare(b.label)),
+            setSelectedNetwork: (network: SolanaCluster) => setSelectedNetwork(network),
             getExplorerUrl: (path: string) =>
-                `https://explorer.solana.com/${path}${getClusterUrlParam(selectedNetwork)}`,
+                `https://explorer.solana.com/${path}${getExplorerUrlParam(selectedNetwork)}`,
         }),
         [selectedNetwork, setSelectedNetwork],
     );
-    return <Context.Provider value={value}>{children}</Context.Provider>;
+    return <NetworkProviderContext.Provider value={value}>{children}</NetworkProviderContext.Provider>;
 }
 
-export function useNetwork() {
-    return useContext(Context);
-}
-
-function getClusterUrlParam(cluster: Network): string {
-    switch (cluster.cluster) {
-        case NetworkCluster.Devnet:
+function getExplorerUrlParam(network: SolanaCluster): string {
+    switch (network.id) {
+        case 'solana:devnet':
             return `?cluster=devnet`;
-        case NetworkCluster.Mainnet:
-            return '';
-        case NetworkCluster.Testnet:
+        case 'solana:testnet':
             return `?cluster=testnet`;
+        case 'solana:localnet':
+            return `?cluster=custom&customUrl=${encodeURIComponent(network.url)}`;
         default:
-            return `?cluster=custom&customUrl=${encodeURIComponent(cluster.endpoint)}`;
+            return '';
     }
 }

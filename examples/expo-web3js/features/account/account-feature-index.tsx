@@ -1,11 +1,11 @@
-import { useWalletUi } from '@/features/solana/use-wallet-ui';
 import { Button, Text, View } from 'react-native';
 import { ellipsify } from '@/utils/ellipsify';
 import React from 'react';
 import { AccountFeatureGetBalance } from '@/features/account/account-feature-get-balance';
+import { useSolanaMobile } from '@wallet-ui/react-native-web3js';
 
 export function AccountFeatureIndex() {
-    const { account, connect, disconnect } = useWalletUi();
+    const { account, connect, disconnect } = useSolanaMobile();
 
     return (
         <View>

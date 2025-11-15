@@ -1,9 +1,9 @@
-import { useNetwork } from '@/features/network/network-provider';
-import { NetworkFeatureGetVersion } from '@/features/network/network-feature-get-version';
-import { NetworkFeatureGetGenesisHash } from '@/features/network/network-feature-get-genesis-hash';
 import React from 'react';
-import { NetworkUiSelect } from '@/features/network/network-ui-select';
 import { Text, View } from 'react-native';
+import { NetworkFeatureGetVersion } from './network-feature-get-version';
+import { NetworkFeatureGetGenesisHash } from './network-feature-get-genesis-hash';
+import { NetworkUiSelect } from './network-ui-select';
+import { useNetwork } from './use-network';
 
 export function NetworkFeatureIndex() {
     const { selectedNetwork, networks, setSelectedNetwork } = useNetwork();
@@ -15,8 +15,8 @@ export function NetworkFeatureIndex() {
                 selectedNetwork={selectedNetwork}
                 setSelectedNetwork={setSelectedNetwork}
             />
-            <NetworkFeatureGetVersion network={selectedNetwork} />
-            <NetworkFeatureGetGenesisHash network={selectedNetwork} />
+            <NetworkFeatureGetVersion />
+            <NetworkFeatureGetGenesisHash />
         </View>
     );
 }

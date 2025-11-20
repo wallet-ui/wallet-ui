@@ -10,13 +10,12 @@ The `WalletUiAccountContext` provides information about the currently selected w
 The context provides an object with the following properties:
 
 | Name          | Type                                 | Description                                          |
-|---------------|--------------------------------------|------------------------------------------------------|
+| ------------- | ------------------------------------ | ---------------------------------------------------- |
 | `account`     | `UiWalletAccount`                    | The currently selected wallet account.               |
 | `accountKeys` | `string[]`                           | The keys of the account.                             |
 | `cluster`     | `SolanaCluster`                      | The currently selected Solana cluster.               |
 | `setAccount`  | `(account: UiWalletAccount) => void` | The React dispatcher to update the selected account. |
 | `wallet`      | `UiWallet`                           | The wallet that the current account belongs to.      |
-
 
 ### Example
 

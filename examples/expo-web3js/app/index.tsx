@@ -4,13 +4,14 @@ import { AppConfig } from '@/constants/app-config';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React from 'react';
+import { appStyles } from '@/constants/app-styles';
 
 export default function HomeScreen() {
     return (
-        <View style={{ flex: 1 }}>
-            <SafeAreaView style={{ flex: 1, gap: 16, paddingHorizontal: 16 }}>
-                <View>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>App Config</Text>
+        <SafeAreaView style={appStyles.screen}>
+            <View style={appStyles.stack}>
+                <Text style={appStyles.title}>App Config</Text>
+                <View style={appStyles.card}>
                     <Text>
                         Name <Text style={{ fontWeight: 'bold' }}>{AppConfig.name}</Text>
                     </Text>
@@ -20,7 +21,7 @@ export default function HomeScreen() {
                 </View>
                 <AccountFeatureIndex />
                 <NetworkFeatureIndex />
-            </SafeAreaView>
-        </View>
+            </View>
+        </SafeAreaView>
     );
 }

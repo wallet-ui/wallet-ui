@@ -1,11 +1,10 @@
-import { Network } from '@/features/network/network';
-import { useConnection } from '@/features/solana/solana-provider';
 import { useQuery } from '@tanstack/react-query';
+import { useMobileWalletAdapter } from '@wallet-ui/react-native-web3js';
 
-export function useNetworkGetGenesisHash({ network }: { network: Network }) {
-    const connection = useConnection();
+export function useNetworkGetGenesisHash() {
+    const { clusterId, connection } = useMobileWalletAdapter();
     return useQuery({
-        queryKey: ['get-genesis-hash', network.id],
+        queryKey: ['getGenesisHash', clusterId],
         queryFn: () => connection.getGenesisHash(),
     });
 }

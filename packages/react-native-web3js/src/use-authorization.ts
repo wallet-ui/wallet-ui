@@ -10,15 +10,17 @@ import {
     DeauthorizeAPI,
     SignInPayload,
 } from '@solana-mobile/mobile-wallet-adapter-protocol';
-import { toUint8Array } from 'js-base64';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useCallback, useMemo } from 'react';
-import { useNetwork } from '@/features/network/network-provider';
 import { WalletIcon } from '@wallet-standard/core';
-import { ellipsify } from '@/utils/ellipsify';
-import { AppConfig } from '@/constants/app-config';
+import { SolanaClusterId } from '@wallet-ui/core';
+import { toUint8Array } from 'js-base64';
+import { useCallback, useMemo } from 'react';
 
-const identity: AppIdentity = { name: AppConfig.name, uri: AppConfig.uri };
+function ellipsify(str = '', len = 4, delimiter = '..') {
+    const limit = len * 2 + delimiter.length;
+
+    return str.length > limit ? str.slice(0, len) + delimiter + str.slice(-len) : str;
+}
 
 export type Account = Readonly<{
     address: Base64EncodedAddress;
@@ -28,17 +30,22 @@ export type Account = Readonly<{
     publicKey: PublicKey;
 }>;
 
-type WalletAuthorization = Readonly<{
+export type WalletAuthorization = Readonly<{
     accounts: Account[];
     authToken: AuthToken;
     selectedAccount: Account;
 }>;
 
+function getPublicKeyFromAddress(address: Base64EncodedAddress): PublicKey {
+    const publicKeyByteArray = toUint8Array(address);
+    return new PublicKey(publicKeyByteArray);
+}
+
 function getAccountFromAuthorizedAccount(account: AuthorizedAccount): Account {
     const publicKey = getPublicKeyFromAddress(account.address);
     return {
         address: account.address,
-        // TODO: Fix?
+        // TODO: Fix upstream?
         displayAddress: (account as unknown as { display_address: string }).display_address,
         icon: account.icon,
         label: account.label ?? ellipsify(publicKey.toString(), 8),
@@ -69,23 +76,17 @@ function getAuthorizationFromAuthorizationResult(
     };
 }
 
-function getPublicKeyFromAddress(address: Base64EncodedAddress): PublicKey {
-    const publicKeyByteArray = toUint8Array(address);
-    return new PublicKey(publicKeyByteArray);
-}
+const AUTHORIZATION_STORAGE_KEY = 'authorization-cache';
 
-function cacheReviver(key: string, value: any) {
+const queryKey = ['wallet-authorization'];
+
+function cacheReviver(key: string, value: unknown) {
     if (key === 'publicKey') {
         return new PublicKey(value as PublicKeyInitData); // the PublicKeyInitData should match the actual data structure stored in AsyncStorage
     } else {
         return value;
     }
 }
-
-const AUTHORIZATION_STORAGE_KEY = 'authorization-cache';
-
-const queryKey = ['wallet-authorization'];
-
 function usePersistAuthorization() {
     const queryClient = useQueryClient();
     return useMutation({
@@ -100,13 +101,13 @@ function usePersistAuthorization() {
 
 function useFetchAuthorization() {
     return useQuery({
-        queryKey,
         queryFn: async (): Promise<WalletAuthorization | null> => {
             const cacheFetchResult = await AsyncStorage.getItem(AUTHORIZATION_STORAGE_KEY);
 
             // Return prior authorization, if found.
             return cacheFetchResult ? JSON.parse(cacheFetchResult, cacheReviver) : null;
         },
+        queryKey,
     });
 }
 
@@ -115,8 +116,7 @@ function useInvalidateAuthorizations() {
     return () => client.invalidateQueries({ queryKey });
 }
 
-export function useAuthorization() {
-    const { selectedNetwork } = useNetwork();
+export function useAuthorization({ clusterId, identity }: { clusterId: SolanaClusterId; identity: AppIdentity }) {
     const fetchQuery = useFetchAuthorization();
     const invalidateAuthorizations = useInvalidateAuthorizations();
     const persistMutation = usePersistAuthorization();
@@ -136,26 +136,26 @@ export function useAuthorization() {
     const authorizeSession = useCallback(
         async (wallet: AuthorizeAPI) => {
             const authorizationResult = await wallet.authorize({
-                identity,
-                chain: selectedNetwork.id,
                 auth_token: fetchQuery.data?.authToken,
+                chain: clusterId,
+                identity,
             });
             return (await handleAuthorizationResult(authorizationResult)).selectedAccount;
         },
-        [fetchQuery.data?.authToken, handleAuthorizationResult, selectedNetwork.id],
+        [fetchQuery.data?.authToken, clusterId, identity, handleAuthorizationResult],
     );
 
     const authorizeSessionWithSignIn = useCallback(
         async (wallet: AuthorizeAPI, signInPayload: SignInPayload) => {
             const authorizationResult = await wallet.authorize({
-                identity,
-                chain: selectedNetwork.id,
                 auth_token: fetchQuery.data?.authToken,
+                chain: clusterId,
+                identity,
                 sign_in_payload: signInPayload,
             });
             return (await handleAuthorizationResult(authorizationResult)).selectedAccount;
         },
-        [fetchQuery.data?.authToken, handleAuthorizationResult, selectedNetwork.id],
+        [fetchQuery.data?.authToken, clusterId, identity, handleAuthorizationResult],
     );
 
     const deauthorizeSession = useCallback(

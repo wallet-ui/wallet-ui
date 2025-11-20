@@ -1,5 +1,12 @@
 # @wallet-ui/react
 
+## 2.2.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @wallet-ui/core@2.2.0
+
 ## 2.1.0
 
 ### Minor Changes

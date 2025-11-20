@@ -35,9 +35,14 @@ export default function HomePage() {
             </section>
 
             <Card
-                title="Getting Started"
+                title="Getting Started with React"
                 href="/docs/react/getting-started"
-                description="Get started with Wallet UI and React"
+                description="Get started with Wallet UI for React"
+            />
+            <Card
+                title="Getting Started with React Native"
+                href="/docs/react-native/getting-started"
+                description="Get started with Wallet UI for React Native Web3js"
             />
             <p className="text-fd-muted-foreground">
                 Wallet UI supports what Wallet Standard supports, which is currently Solana and React.

@@ -1,0 +1,74 @@
+---
+title: useAuthorization
+description: A low-level hook for managing wallet authorization.
+---
+
+The `useAuthorization` hook is a low-level hook for managing wallet authorization. It is used internally by the `useMobileWallet` hook and is not meant to be used directly in most cases.
+
+### Parameters
+
+The hook accepts an object with the following properties:
+
+| Name       | Type          | Description                               |
+| ---------- | ------------- | ----------------------------------------- |
+| `chain`    | `Chain`       | The blockchain chain to connect to.       |
+| `identity` | `AppIdentity` | The identity of the app connecting to the |
+|            |               | wallet.                                   |
+
+### Return Value
+
+The hook returns an object with the following properties:
+
+| Name                         | Type                                                                       | Description                                                 |
+| ---------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| `accounts`                   | `Account[] \| null`                                                        | An array of all authorized accounts.                        |
+| `authorizeSession`           | `(wallet: AuthorizeAPI) => Promise<Account>`                               | A function to authorize a new session.                      |
+| `authorizeSessionWithSignIn` | `(wallet: AuthorizeAPI, signInPayload: SignInPayload) => Promise<Account>` | A function to authorize a new session with sign-in.         |
+| `deauthorizeSession`         | `(wallet: DeauthorizeAPI) => Promise<void>`                                | A function to deauthorize the current session.              |
+| `deauthorizeSessions`        | `() => Promise<void>`                                                      | A function to deauthorize all sessions.                     |
+| `isLoading`                  | `boolean`                                                                  | A boolean indicating if the authorization state is loading. |
+| `selectedAccount`            | `Account \| null`                                                          | The currently selected wallet account.                      |
+
+### The `Account` Object
+
+The `Account` object represents a user's wallet account that has been authorized for use with the dApp. It has the following properties:
+
+| Name        | Type                  | Description                                                 |
+|-------------|-----------------------|-------------------------------------------------------------|
+| `address`   | `string`              | The base58-encoded string representation of the public key. |
+| `label`     | `string \| undefined` | An optional, user-defined label for the account.            |
+| `publicKey` | `PublicKey`           | A `PublicKey` object from `@solana/web3.js`.                |
+
+### Example
+
+```tsx
+import { useAuthorization } from '@wallet-ui/react-native-web3js';
+import { useCallback } from 'react';
+import { Button, Text, View } from 'react-native';
+
+function MyComponent() {
+    const { accounts, authorizeSession, selectedAccount } = useAuthorization({
+        chain: 'solana:mainnet',
+        identity: {
+            name: 'My App',
+        },
+    });
+
+    const handleConnect = useCallback(async () => {
+        // This is a simplified example. In a real app, you would
+        // get the wallet object from a wallet adapter.
+        const wallet = getWallet();
+        await authorizeSession(wallet);
+    }, [authorizeSession]);
+
+    return (
+        <View>
+            {selectedAccount ? (
+                <Text>Connected to {selectedAccount.address}</Text>
+            ) : (
+                <Button title="Connect" onPress={handleConnect} />
+            )}
+        </View>
+    );
+}
+```

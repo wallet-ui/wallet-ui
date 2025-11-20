@@ -1,0 +1,45 @@
+---
+title: MobileWalletProvider
+description: Provides the mobile wallet context to its children.
+---
+
+The `MobileWalletProvider` is a React context provider that makes the mobile wallet connection and identity available to all its child components. It should wrap your application's root component or any part of your component tree that needs access to mobile wallet functionalities.
+
+### Props
+
+The `MobileWalletProvider` accepts the following props:
+
+| Name                 | Type                             | Description                                                                                                                                  | Default                       |
+| -------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `chain`              | `Chain`                          | The blockchain chain to connect to (e.g., `'solana:mainnet'`, `'solana:devnet'`).                                                            |                               |
+| `children`           | `ReactNode`                      | The child components that will have access to the mobile wallet context.                                                                     |                               |
+| `commitmentOrConfig` | `Commitment \| ConnectionConfig` | Optional. The commitment level or connection configuration for the Solana connection.                                                        | `{ commitment: 'confirmed' }` |
+| `endpoint`           | `string`                         | The URL of the Solana RPC endpoint to connect to.                                                                                            |                               |
+| `identity`           | `AppIdentity`                    | An object representing the identity of your application. It should include at least a `name` property. Example: `{ name: 'My Wallet App' }`. |                               |
+
+### Example
+
+```tsx
+import { MobileWalletProvider } from '@wallet-ui/react-native-web3js';
+import React from 'react';
+import { AppRegistry } from 'react-native';
+import App from './App';
+
+const chain = 'solana:devnet';
+const endpoint = 'https://api.devnet.solana.com';
+const appIdentity = {
+    name: 'My Wallet App',
+    uri: 'https://mywalletapp.com', // Optional: URI for your app
+    icon: 'https://mywalletapp.com/icon.png', // Optional: Icon for your app
+};
+
+function Root() {
+    return (
+        <MobileWalletProvider chain={chain} endpoint={endpoint} identity={appIdentity}>
+            <App />
+        </MobileWalletProvider>
+    );
+}
+
+AppRegistry.registerComponent('MyWalletApp', () => Root);
+```

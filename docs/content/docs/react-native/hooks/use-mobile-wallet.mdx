@@ -1,0 +1,105 @@
+---
+title: useMobileWallet
+description: The primary hook for interacting with the mobile wallet.
+---
+
+The `useMobileWallet` hook is the primary hook for interacting with the mobile wallet. It provides a convenient API for connecting, disconnecting, signing transactions, and signing messages.
+
+### Return Value
+
+The hook returns an object with the following properties:
+
+| Name                         | Type                                                                                                          | Description                                                            |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `chain`                      | `Chain`                                                                                                       | The blockchain chain configured in the `MobileWalletProvider`.         |
+| `connection`                 | `Connection`                                                                                                  | The Solana connection object configured in the `MobileWalletProvider`. |
+| `identity`                   | `AppIdentity`                                                                                                 | The app identity configured in the `MobileWalletProvider`.             |
+| `accounts`                   | `Account[] \| null`                                                                                           | An array of all authorized accounts.                                   |
+| `authorizeSession`           | `(wallet: AuthorizeAPI) => Promise<Account>`                                                                  | A function to authorize a new session (internal).                      |
+| `authorizeSessionWithSignIn` | `(wallet: AuthorizeAPI, signInPayload: SignInPayload) => Promise<Account>`                                    | A function to authorize a new session with sign-in (internal).         |
+| `deauthorizeSession`         | `(wallet: DeauthorizeAPI) => Promise<void>`                                                                   | A function to deauthorize the current session (internal).              |
+| `deauthorizeSessions`        | `() => Promise<void>`                                                                                         | A function to deauthorize all sessions (internal).                     |
+| `isLoading`                  | `boolean`                                                                                                     | A boolean indicating if the authorization state is loading.            |
+| `account`                    | `Account \| null`                                                                                             | The currently selected wallet account.                                 |
+| `connect`                    | `() => Promise<Account>`                                                                                      | A function to connect to a wallet.                                     |
+| `connectAnd`                 | `(cb: (wallet: AuthorizeAPI) => Promise<Account \| void>) => Promise<Account \| void>`                        | A function to connect and execute a callback.                          |
+| `disconnect`                 | `() => Promise<void>`                                                                                         | A function to disconnect the current wallet.                           |
+| `signAndSendTransaction`     | `(transaction: Transaction \| VersionedTransaction, minContextSlot: number) => Promise<TransactionSignature>` | A function to sign and send a transaction.                             |
+| `signIn`                     | `(signInPayload: SignInPayload) => Promise<Account>`                                                          | A function to sign in with a wallet.                                   |
+| `signMessage`                | `(message: Uint8Array) => Promise<Uint8Array>`                                                                | A function to sign a message.                                          |
+
+### The `Account` Object
+
+The `Account` object represents a user's wallet account that has been authorized for use with the dApp. It has the following properties:
+
+| Name        | Type                  | Description                                                 |
+|-------------|-----------------------|-------------------------------------------------------------|
+| `address`   | `string`              | The base58-encoded string representation of the public key. |
+| `label`     | `string \| undefined` | An optional, user-defined label for the account.            |
+| `publicKey` | `PublicKey`           | A `PublicKey` object from `@solana/web3.js`.                |
+
+### Example
+
+```tsx
+import { useMobileWallet } from '@wallet-ui/react-native-web3js';
+import { useCallback } from 'react';
+import { PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
+import { Button, Text, View } from 'react-native';
+
+function WalletConnector() {
+    const { account, connect, disconnect, signAndSendTransaction } = useMobileWallet();
+
+    const handleConnect = useCallback(async () => {
+        try {
+            await connect();
+            console.log('Wallet connected!');
+        } catch (error) {
+            console.error('Failed to connect wallet', error);
+        }
+    }, [connect]);
+
+    const handleDisconnect = useCallback(async () => {
+        try {
+            await disconnect();
+            console.log('Wallet disconnected!');
+        } catch (error) {
+            console.error('Failed to disconnect wallet', error);
+        }
+    }, [disconnect]);
+
+    const handleSendTransaction = useCallback(async () => {
+        if (!account) return;
+
+        // Example: Create a dummy transaction
+        // In a real app, you would construct a valid transaction here
+        const transaction = new Transaction().add(
+            SystemProgram.transfer({
+                fromPubkey: account.publicKey,
+                toPubkey: new PublicKey('SOME_OTHER_PUBLIC_KEY'), // Replace with a valid public key
+                lamports: 1000,
+            }),
+        );
+
+        try {
+            const signature = await signAndSendTransaction(transaction, 0);
+            console.log('Transaction sent:', signature);
+        } catch (error) {
+            console.error('Failed to send transaction:', error);
+        }
+    }, [account, signAndSendTransaction]);
+
+    return (
+        <View>
+            {account ? (
+                <>
+                    <Text>Connected to: {account.address}</Text>
+                    <Button title="Disconnect" onPress={handleDisconnect} />
+                    <Button title="Send Dummy Transaction" onPress={handleSendTransaction} />
+                </>
+            ) : (
+                <Button title="Connect Wallet" onPress={handleConnect} />
+            )}
+        </View>
+    );
+}
+```

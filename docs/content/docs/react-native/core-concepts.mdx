@@ -1,0 +1,28 @@
+---
+title: Core Concepts
+description: Understanding the architecture of Wallet UI for React Native.
+---
+
+Wallet UI is designed to be a modular and extensible library for building wallet interactions in your app. Understanding its core architecture will help you use it more effectively and customize it to your needs.
+
+## Architecture Overview
+
+### `@wallet-ui/react-native-web3js`
+
+This is the main package for integrating Wallet UI into a React Native application. It provides the necessary components and hooks to connect your dApp with a mobile wallet that supports the Mobile Wallet Adapter standard.
+
+Key features include:
+
+-   **`MobileWalletProvider`**: A context provider that sets up the connection to the wallet and makes it available throughout your component tree.
+-   **`useMobileWallet` hook**: The primary hook for interacting with the wallet. It allows you to connect, disconnect, get account details, and request signatures for transactions and messages.
+-   **Low-level hooks**: For more advanced use cases, the package also exports hooks like `useAuthorization` for fine-grained control over the wallet authorization process.
+
+## Mobile Wallet Adapter
+
+Mobile Wallet Adapter is an open protocol that allows mobile dApps to connect with mobile wallet applications. It defines a secure communication channel between the dApp and the wallet, enabling actions like:
+
+-   Authorizing a connection with one or more accounts.
+-   Requesting to sign and send transactions.
+-   Requesting to sign messages.
+
+The `@wallet-ui/react-native-web3js` package is an implementation of the client-side of this protocol, allowing your React Native application to act as a dApp and interact with any Mobile Wallet Adapter-compatible wallet installed on the user's device. This architecture decouples your dApp from any specific wallet implementation, giving users a choice of which wallet they want to use.

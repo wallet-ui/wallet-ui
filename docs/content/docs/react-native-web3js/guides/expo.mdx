@@ -1,0 +1,138 @@
+---
+title: Getting started with Expo
+description: Set up Wallet UI for React Native Web3js with Expo
+---
+
+## Generate new application
+
+If you start from scratch, you can use [create-expo-app](https://docs.expo.dev/more/create-expo/) to create new Expo application:
+
+```package-install
+npx create-expo-app@latest
+```
+
+## Install dependencies
+
+Now that you have a Expo app (either a new or existing one), you can install the dependencies:
+
+```package-install
+npm install @wallet-ui/react-native-web3js @wallet-ui/core
+```
+
+## Enable development builds
+
+Wallet UI for React Native Web3.js works with Expo [development builds](https://docs.expo.dev/develop/development-builds/introduction/).
+
+### Install the expo-dev-client
+
+```package-install
+npx expo install expo-dev-client
+```
+
+### Build the app
+
+Ensure you setup your environment guides for [Android](https://docs.expo.dev/workflow/android-studio-emulator/) development.
+
+Once you have everything set up, run the following command:
+
+```package-install
+npx expo run:android
+```
+
+### Start the dev server
+
+After building the app it will start the bundler automatically.
+
+But if you closed the bundler or are working on a dev client you built earlier, start the bundler with:
+
+```package-install
+npx expo start
+```
+
+
+## Configure your app
+
+You need to configure your Expo app the load certain polyfills.
+
+### Add polyfills
+
+Install `react-native-quick-crypto` package:
+
+```package-install
+npm install react-native-quick-crypto
+```
+
+Create a file called `polyfill.js` in the root of your project:
+
+```js
+// polyfill.js
+import { install } from 'react-native-quick-crypto'
+
+install()
+```
+
+Next, create a file called `index.js` in the root of your project:
+
+```js
+// index.js
+import './polyfill';
+import 'expo-router/entry';
+```
+
+Lastly, update the `main` property in `package.json` and set the value to `./index.js`:
+
+```json5
+{
+  "name": "your-expo-app",
+  "main": "./index.js",
+  "version": "1.0.0",
+  "scripts": {
+    // scripts
+  },
+  "dependencies": {
+    // dependencies
+  },
+  // Etc...
+}
+```
+
+### Add Mobile Wallet Adapter Provider
+
+With this configured, create a file called `app-providers.tsx` to configure you application-wide providers :
+
+```tsx title="src/components/app-providers.tsx"
+import { ReactNode } from 'react';
+import { MobileWalletAdapterProvider } from '@wallet-ui/react-native-web3js';
+
+const clusterId = 'solana:devnet'
+const endpoint = 'https://api.devnet.solana.com'
+export function AppProviders({ children }: { children: ReactNode }) {
+    return <MobileWalletAdapterProvider
+        clusterId={clusterId}
+        endpoint={endpoint}
+        identity={{ name: 'Wallet UI Example Web3js Expo' }}
+    >
+        {children}
+    </MobileWalletAdapterProvider>;
+}
+```
+
+### Add provider to your layout
+
+Open your root layout and wrap use the `AppProviders` you just created:
+
+```tsx title="src/app/_layout.tsx"
+import { AppProviders } from '@/components/app-providers';
+
+export default function RootLayout() {
+  return (
+    <AppProviders>
+      {/*  Existing components */}
+    </AppProviders>
+  );
+}
+
+```
+
+
+You should now be able to use the [hooks](/docs/react-native-web3js/hooks) in your app.

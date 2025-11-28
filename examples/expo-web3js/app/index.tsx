@@ -13,10 +13,10 @@ export default function HomeScreen() {
                 <Text style={appStyles.title}>App Config</Text>
                 <View style={appStyles.card}>
                     <Text>
-                        Name <Text style={{ fontWeight: 'bold' }}>{AppConfig.name}</Text>
+                        Name <Text style={{ fontWeight: 'bold' }}>{AppConfig.identity.name}</Text>
                     </Text>
                     <Text>
-                        URL <Text style={{ fontWeight: 'bold' }}>{AppConfig.uri}</Text>
+                        URL <Text style={{ fontWeight: 'bold' }}>{AppConfig.identity.uri}</Text>
                     </Text>
                 </View>
                 <AccountFeatureIndex />

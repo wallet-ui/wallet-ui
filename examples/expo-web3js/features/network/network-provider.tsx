@@ -1,8 +1,9 @@
 import { createContext, ReactNode, useMemo, useState } from 'react';
-import { AppConfig } from '@/constants/app-config';
-import { SolanaCluster } from '@wallet-ui/react-native-web3js';
+import { SolanaCluster, SolanaClusterId } from '@wallet-ui/react-native-web3js';
 
 export interface NetworkProviderContextValue {
+    chain: SolanaClusterId;
+    endpoint: string;
     getExplorerUrl(path: string): string;
     networks: SolanaCluster[];
     selectedNetwork: SolanaCluster;
@@ -11,19 +12,27 @@ export interface NetworkProviderContextValue {
 
 export const NetworkProviderContext = createContext<NetworkProviderContextValue>({} as NetworkProviderContextValue);
 
-export function NetworkProvider({ children }: { children: ReactNode }) {
-    const [selectedNetwork, setSelectedNetwork] = useState<SolanaCluster>(AppConfig.networks[0]);
+export function NetworkProvider({
+    networks,
+    render,
+}: {
+    networks: SolanaCluster[];
+    render: (value: NetworkProviderContextValue) => ReactNode;
+}) {
+    const [selectedNetwork, setSelectedNetwork] = useState<SolanaCluster>(networks[0]);
     const value: NetworkProviderContextValue = useMemo(
         () => ({
-            selectedNetwork,
-            networks: [...AppConfig.networks].sort((a, b) => a.label.localeCompare(b.label)),
-            setSelectedNetwork: (network: SolanaCluster) => setSelectedNetwork(network),
+            chain: selectedNetwork.id,
+            endpoint: selectedNetwork.url,
             getExplorerUrl: (path: string) =>
                 `https://explorer.solana.com/${path}${getExplorerUrlParam(selectedNetwork)}`,
+            networks: [...networks].sort((a, b) => a.label.localeCompare(b.label)),
+            selectedNetwork,
+            setSelectedNetwork: (network: SolanaCluster) => setSelectedNetwork(network),
         }),
-        [selectedNetwork, setSelectedNetwork],
+        [networks, selectedNetwork, setSelectedNetwork],
     );
-    return <NetworkProviderContext.Provider value={value}>{children}</NetworkProviderContext.Provider>;
+    return <NetworkProviderContext.Provider value={value}>{render(value)}</NetworkProviderContext.Provider>;
 }
 
 function getExplorerUrlParam(network: SolanaCluster): string {

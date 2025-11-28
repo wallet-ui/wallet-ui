@@ -1,19 +1,13 @@
 import { clusterApiUrl } from '@solana/web3.js';
-import { SolanaCluster } from '@wallet-ui/react-native-web3js';
+import { AppIdentity, createSolanaDevnet, createSolanaTestnet, SolanaCluster } from '@wallet-ui/react-native-web3js';
 
 export class AppConfig {
-    static name = 'web3js-expo';
-    static uri = 'https://example.com';
+    static identity: AppIdentity = {
+        name: 'web3js-expo',
+        uri: 'https://example.com',
+    };
     static networks: SolanaCluster[] = [
-        {
-            id: 'solana:devnet',
-            label: 'Devnet',
-            url: clusterApiUrl('devnet'),
-        },
-        {
-            id: 'solana:testnet',
-            label: 'Testnet',
-            url: clusterApiUrl('testnet'),
-        },
+        createSolanaDevnet({ url: clusterApiUrl('devnet') }),
+        createSolanaTestnet({ url: clusterApiUrl('testnet') }),
     ];
 }

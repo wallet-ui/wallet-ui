@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "android": "expo run:android",
+    "dev": "expo start --clear --dev-client --reset-cache",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "ios": "expo run:ios",

@@ -1,14 +1,16 @@
-import { PublicKey } from '@solana/web3.js';
 import { Button, View } from 'react-native';
 import { appStyles } from '@/constants/app-styles';
-import { useMobileWalletAdapter } from '@wallet-ui/react-native-web3js';
-import { AppConfig } from '@/constants/app-config';
+import { Account, useMobileWallet } from '@wallet-ui/react-native-web3js';
 
-export function AccountFeatureSignIn({ publicKey }: { publicKey: PublicKey }) {
-    const { signIn } = useMobileWalletAdapter();
+export function AccountFeatureSignIn({ account }: { account?: Account }) {
+    const { chain, identity, signIn } = useMobileWallet();
     async function submit() {
         try {
-            await signIn({ address: publicKey.toString(), uri: AppConfig.uri });
+            await signIn({
+                address: account?.publicKey.toString(),
+                chainId: chain,
+                uri: identity.uri,
+            });
             console.log('Signed in!');
         } catch (e) {
             console.log(`Error signing in: ${e}`);
@@ -16,7 +18,7 @@ export function AccountFeatureSignIn({ publicKey }: { publicKey: PublicKey }) {
     }
     return (
         <View style={appStyles.stack}>
-            <Button onPress={submit} title="Sign In" />
+            <Button onPress={submit} title={`Sign In ${account ? `with ${account.label}` : 'and connect'}`} />
         </View>
     );
 }

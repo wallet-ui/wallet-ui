@@ -52,7 +52,7 @@
     "react-native-worklets": "0.5.1"
   },
   "devDependencies": {
-    "@types/react": "^19.1.13",
+    "@types/react": "^19.1.17",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
     "prettier": "^3.6.2",

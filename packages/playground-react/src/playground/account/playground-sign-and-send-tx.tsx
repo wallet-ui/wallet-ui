@@ -7,17 +7,20 @@ import {
 } from '@wallet-ui/react';
 import { useWalletUiGill } from '@wallet-ui/react-gill';
 import {
+    appendTransactionMessageInstruction,
     assertIsTransactionMessageWithSingleSendingSigner,
     createTransactionMessage,
     pipe,
     setTransactionMessageFeePayerSigner,
     setTransactionMessageLifetimeUsingBlockhash,
     signAndSendTransactionMessageWithSigners,
+    address
 } from 'gill';
 import type { SyntheticEvent } from 'react';
 import React, { useMemo, useState } from 'react';
 import { solStringToLamports } from '../../lib/sol-string-to-lamports';
 import { useError } from '../../lib/use-error';
+import { getTransferSolInstruction } from '@solana-program/system';
 
 import { PlaygroundErrorPanel } from '../playground-error-panel';
 import { PlaygroundTxSuccess } from '../playground-tx-success';
@@ -59,16 +62,15 @@ export function PlaygroundSignAndSendTx({ account }: { account: UiWalletAccount 
                 createTransactionMessage({ version: 0 }),
                 m => setTransactionMessageFeePayerSigner(transactionSendingSigner, m),
                 m => setTransactionMessageLifetimeUsingBlockhash(latestBlockhash, m),
-                // m =>
-                //     appendTransactionMessageInstruction(
-                // TODO: Gill does not export this getTransferSolInstruction?
-                //         getTransferSolInstruction({
-                //             amount,
-                //             destination: address(recipientAccount.address),
-                //             source: transactionSendingSigner,
-                //         }),
-                //         m,
-                //     ),
+                m =>
+                    appendTransactionMessageInstruction(
+                        getTransferSolInstruction({
+                            amount,
+                            destination: address(recipientAccount.address),
+                            source: transactionSendingSigner,
+                        }),
+                        m,
+                    ),
             );
             assertIsTransactionMessageWithSingleSendingSigner(message);
             const signature = await signAndSendTransactionMessageWithSigners(message);

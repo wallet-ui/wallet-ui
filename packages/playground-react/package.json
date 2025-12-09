@@ -19,7 +19,8 @@
         "@types/react-dom": "^19.1.11"
     },
     "peerDependencies": {
-        "gill": "^0.14.0"
+        "gill": "^0.14.0",
+        "@solana-program/system": "^0.10.0"
     },
     "engines": {
         "node": ">=20.18.0"

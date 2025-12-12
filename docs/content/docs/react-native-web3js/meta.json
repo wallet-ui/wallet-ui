@@ -1,0 +1,16 @@
+{
+    "title": "React Native Web3js SDK",
+    "description": "@wallet-ui/react-native-web3js",
+    "icon": "Package",
+    "root": true,
+    "pages": [
+        "getting-started",
+        "core-concepts",
+        "---Guides---",
+        "guides/expo",
+        "---Hooks---",
+        "hooks/index",
+        "---Providers---",
+        "providers/index"
+    ]
+}

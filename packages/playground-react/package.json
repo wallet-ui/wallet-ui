@@ -8,8 +8,8 @@
     "dependencies": {
         "@wallet-ui/react": "workspace:*",
         "@wallet-ui/react-gill": "workspace:*",
-        "react": "^19.1.2",
-        "react-dom": "^19.1.2",
+        "react": "^19.1.4",
+        "react-dom": "^19.1.4",
         "react-error-boundary": "^6.0.0",
         "react-router": "^7.9.1",
         "ws": "^8.18.3"

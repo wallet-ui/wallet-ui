@@ -92,7 +92,7 @@
         "@types/react-test-renderer": "^19.1.0",
         "react": "19.1.0",
         "react-error-boundary": "^6.0.0",
-        "react-test-renderer": "^19.1.2",
+        "react-test-renderer": "^19.1.4",
         "typescript": "^5.9.2"
     },
     "peerDependencies": {

@@ -8,6 +8,8 @@ import {
     Chain,
     DeauthorizeAPI,
     SignInPayload,
+    SolanaMobileWalletAdapterProtocolError,
+    SolanaMobileWalletAdapterProtocolErrorCode,
 } from '@solana-mobile/mobile-wallet-adapter-protocol';
 import { WalletIcon } from '@wallet-standard/core';
 import { useCallback, useMemo } from 'react';
@@ -49,25 +51,54 @@ export function useAuthorization({ chain, identity }: { chain: Chain; identity: 
 
     const authorizeSession = useCallback(
         async (wallet: AuthorizeAPI) => {
-            const authorizationResult = await wallet.authorize({
-                auth_token: fetchQuery.data?.authToken,
-                chain,
-                identity,
-            });
-            return (await handleAuthorizationResult(authorizationResult)).selectedAccount;
+            try {
+                const authorizationResult = await wallet.authorize({
+                    auth_token: fetchQuery.data?.authToken,
+                    chain,
+                    identity,
+                });
+                return (await handleAuthorizationResult(authorizationResult)).selectedAccount;
+            } catch (error) {
+                if (
+                    error instanceof SolanaMobileWalletAdapterProtocolError &&
+                    error.code === SolanaMobileWalletAdapterProtocolErrorCode.ERROR_AUTHORIZATION_FAILED
+                ) {
+                    const retryResult = await wallet.authorize({
+                        chain,
+                        identity,
+                    });
+                    return (await handleAuthorizationResult(retryResult)).selectedAccount;
+                }
+                throw error;
+            }
         },
         [fetchQuery.data?.authToken, chain, identity, handleAuthorizationResult],
     );
 
     const authorizeSessionWithSignIn = useCallback(
         async (wallet: AuthorizeAPI, signInPayload: SignInPayload) => {
-            const authorizationResult = await wallet.authorize({
-                auth_token: fetchQuery.data?.authToken,
-                chain,
-                identity,
-                sign_in_payload: signInPayload,
-            });
-            return (await handleAuthorizationResult(authorizationResult)).selectedAccount;
+            try {
+                const authorizationResult = await wallet.authorize({
+                    auth_token: fetchQuery.data?.authToken,
+                    chain,
+                    identity,
+                    sign_in_payload: signInPayload,
+                });
+                return (await handleAuthorizationResult(authorizationResult)).selectedAccount;
+            } catch (error) {
+                if (
+                    error instanceof SolanaMobileWalletAdapterProtocolError &&
+                    error.code === SolanaMobileWalletAdapterProtocolErrorCode.ERROR_AUTHORIZATION_FAILED
+                ) {
+                    const retryResult = await wallet.authorize({
+                        chain,
+                        identity,
+                        sign_in_payload: signInPayload,
+                    });
+                    return (await handleAuthorizationResult(retryResult)).selectedAccount;
+                }
+                throw error;
+            }
         },
         [fetchQuery.data?.authToken, chain, identity, handleAuthorizationResult],
     );

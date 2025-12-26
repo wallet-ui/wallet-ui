@@ -9,7 +9,6 @@
     "format:check": "prettier --check .",
     "ios": "expo run:ios",
     "lint": "expo lint",
-    "reset-project": "node ./scripts/reset-project.js",
     "start": "expo start",
     "web": "expo start --web"
   },

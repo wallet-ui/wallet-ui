@@ -1,0 +1,43 @@
+import { TransactionMessage, VersionedTransaction } from '@solana/web3.js';
+import { Button, View } from 'react-native';
+import { appStyles } from '@/constants/app-styles';
+import { createMemoInstruction } from '@solana/spl-memo';
+import { useMobileWallet } from '@/src';
+import { Address } from '@solana/kit';
+
+export function AccountFeatureSignTransaction({ publicKey }: { publicKey: Address }) {
+    const { client, signAndSendTransaction } = useMobileWallet();
+
+    async function submit() {
+        try {
+            const {
+                context: { slot: minContextSlot },
+                value: latestBlockhash,
+            } = await client.rpc.getLatestBlockhash().send();
+
+            const message = new TransactionMessage({
+                payerKey: publicKey,
+                recentBlockhash: latestBlockhash.blockhash,
+                instructions: [
+                    // You can add more instructions here
+                    createMemoInstruction('Hello from Mobile Wallet Adapter'),
+                ],
+            }).compileToLegacyMessage();
+
+            const transaction = new VersionedTransaction(message);
+
+            const signature = await signAndSendTransaction(transaction, minContextSlot);
+
+            await connection.confirmTransaction({ signature, ...latestBlockhash }, 'confirmed');
+
+            console.log(`Signed transaction: ${signature}!`);
+        } catch (e) {
+            console.log(`Error signing transaction: ${e}`);
+        }
+    }
+    return (
+        <View style={appStyles.stack}>
+            <Button onPress={submit} title="Sign transaction" />
+        </View>
+    );
+}

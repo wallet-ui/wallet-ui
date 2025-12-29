@@ -1,4 +1,4 @@
-import { lamports } from 'gill';
+import { lamports } from '@solana/kit';
 
 export function solStringToLamports(solQuantityString: string) {
     if (Number.isNaN(parseFloat(solQuantityString))) {

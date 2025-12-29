@@ -1,5 +1,5 @@
+import type { Address, ReadonlyUint8Array } from '@solana/kit';
 import { type UiWalletAccount, useWalletAccountMessageSigner } from '@wallet-ui/react';
-import type { Address, ReadonlyUint8Array } from 'gill';
 import { useCallback } from 'react';
 
 export interface UiWalletAccountWithSignMessage {

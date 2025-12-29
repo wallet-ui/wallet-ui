@@ -1,5 +1,5 @@
 import { BaseButton, useWalletUiCluster } from '@wallet-ui/react';
-import type { ReadonlyUint8Array } from 'gill';
+import type { ReadonlyUint8Array } from '@solana/kit';
 import type { SyntheticEvent } from 'react';
 import React, { useState } from 'react';
 import { useError } from '../../lib/use-error';

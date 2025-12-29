@@ -2,6 +2,7 @@ export * from './clusters';
 export * from './create-storage';
 export * from './create-storage-account';
 export * from './create-storage-cluster';
+export * from './get-explorer-url';
 export * from './handle-copy-text';
 export * from './storage';
 export * from './types/solana-cluster';

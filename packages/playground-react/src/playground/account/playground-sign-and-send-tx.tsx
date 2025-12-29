@@ -1,12 +1,5 @@
 import {
-    getUiWalletAccountStorageKey,
-    type UiWalletAccount,
-    useWallets,
-    useWalletUiCluster,
-    useWalletUiSigner,
-} from '@wallet-ui/react';
-import { useWalletUiGill } from '@wallet-ui/react-gill';
-import {
+    address,
     appendTransactionMessageInstruction,
     assertIsTransactionMessageWithSingleSendingSigner,
     createTransactionMessage,
@@ -14,8 +7,15 @@ import {
     setTransactionMessageFeePayerSigner,
     setTransactionMessageLifetimeUsingBlockhash,
     signAndSendTransactionMessageWithSigners,
-    address
-} from 'gill';
+} from '@solana/kit';
+import {
+    getUiWalletAccountStorageKey,
+    type UiWalletAccount,
+    useWallets,
+    useWalletUiCluster,
+    useWalletUiSigner,
+} from '@wallet-ui/react';
+import { useWalletUiGill } from '@wallet-ui/react-gill';
 import type { SyntheticEvent } from 'react';
 import React, { useMemo, useState } from 'react';
 import { solStringToLamports } from '../../lib/sol-string-to-lamports';

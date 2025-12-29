@@ -1,6 +1,5 @@
-import { SolanaCluster } from '@wallet-ui/react';
-import { getSolanaClusterMoniker } from '@wallet-ui/react-gill';
-import { getBase58Decoder, getExplorerLink, ReadonlyUint8Array } from 'gill';
+import { getBase58Decoder, ReadonlyUint8Array } from '@solana/kit';
+import { getExplorerUrl, SolanaCluster } from '@wallet-ui/react';
 import React from 'react';
 
 export function PlaygroundTxSuccess({
@@ -20,7 +19,7 @@ export function PlaygroundTxSuccess({
             <blockquote>{transaction}</blockquote>
             <div>
                 <a
-                    href={getExplorerLink({ cluster: getSolanaClusterMoniker(cluster.id), transaction })}
+                    href={getExplorerUrl({ network: cluster, path: `/tx/${transaction}`, provider: 'solana' })}
                     target="_blank"
                 >
                     View this transaction

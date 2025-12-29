@@ -1,6 +1,6 @@
 import { useWalletUiGill } from '@wallet-ui/react-gill';
-import { getMonikerFromGenesisHash } from 'gill';
 import React from 'react';
+import { getSolanaNetworkFromGenesisHash } from '../../lib/get-solana-network-from-genesis-hash';
 import { UiCard } from '../../ui/';
 import { PlaygroundRunCommand } from './playground-run-command';
 
@@ -20,7 +20,7 @@ export function PlaygroundClient() {
                 .send()
                 .then(genesisHash => ({
                     genesisHash,
-                    cluster: getMonikerFromGenesisHash(genesisHash),
+                    cluster: getSolanaNetworkFromGenesisHash(genesisHash),
                 })),
         );
 

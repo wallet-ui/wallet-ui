@@ -1,5 +1,16 @@
 # @wallet-ui/react
 
+## 2.2.0
+
+### Minor Changes
+
+- [#341](https://github.com/wallet-ui/wallet-ui/pull/341) [`a57ddd6`](https://github.com/wallet-ui/wallet-ui/commit/a57ddd694b6556e45b7fc4adbb8877428d610f6d) Thanks [@shibu0x](https://github.com/shibu0x)! - implement invalid auth_token retry handling
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @wallet-ui/core@2.2.0
+
 ## 2.1.0
 
 ### Minor Changes

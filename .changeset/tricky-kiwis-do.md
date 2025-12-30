@@ -4,4 +4,4 @@
 '@wallet-ui/react': minor
 ---
 
-Minor version bump
+implement invalid auth_token retry handling

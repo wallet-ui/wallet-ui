@@ -6,7 +6,7 @@ import { WalletUiGillContext } from './wallet-ui-gill-context';
 
 export function WalletUiGillProvider({ children, url }: { children: ReactNode; url?: string }) {
     const { cluster } = useWalletUiCluster();
-    const urlOrMoniker = useMemo(() => url ?? cluster.url, [cluster.url, url]);
+    const urlOrMoniker = useMemo(() => url ?? cluster.http, [cluster.http, url]);
     return (
         <WalletUiGillContext.Provider value={useMemo(() => createSolanaClient({ urlOrMoniker }), [urlOrMoniker])}>
             {children}

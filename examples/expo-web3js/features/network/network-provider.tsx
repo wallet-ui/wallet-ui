@@ -23,7 +23,7 @@ export function NetworkProvider({
     const value: NetworkProviderContextValue = useMemo(
         () => ({
             chain: selectedNetwork.id,
-            endpoint: selectedNetwork.url,
+            endpoint: selectedNetwork.http,
             getExplorerUrl: (path: string) =>
                 `https://explorer.solana.com/${path}${getExplorerUrlParam(selectedNetwork)}`,
             networks: [...networks].sort((a, b) => a.label.localeCompare(b.label)),
@@ -42,7 +42,7 @@ function getExplorerUrlParam(network: SolanaCluster): string {
         case 'solana:testnet':
             return `?cluster=testnet`;
         case 'solana:localnet':
-            return `?cluster=custom&customUrl=${encodeURIComponent(network.url)}`;
+            return `?cluster=custom&customUrl=${encodeURIComponent(network.http)}`;
         default:
             return '';
     }

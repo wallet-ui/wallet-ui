@@ -7,9 +7,10 @@ describe('createSolanaCluster', () => {
         // Assert
         expect(result).toMatchInlineSnapshot(`
             {
+              "http": "https://api.devnet.solana.com",
               "id": "solana:devnet",
               "label": "Devnet",
-              "url": "devnet",
+              "url": "https://api.devnet.solana.com",
             }
         `);
     });
@@ -19,9 +20,10 @@ describe('createSolanaCluster', () => {
         // Assert
         expect(result).toMatchInlineSnapshot(`
             {
+              "http": "https://api.devnet.solana.com",
               "id": "solana:devnet",
               "label": "Devnet",
-              "url": "devnet",
+              "url": "https://api.devnet.solana.com",
             }
         `);
     });
@@ -32,9 +34,10 @@ describe('createSolanaCluster', () => {
         // Assert
         expect(result).toMatchInlineSnapshot(`
             {
+              "http": "http://localhost:8899",
               "id": "solana:localnet",
               "label": "Localnet",
-              "url": "localnet",
+              "url": "http://localhost:8899",
             }
         `);
     });
@@ -45,9 +48,10 @@ describe('createSolanaCluster', () => {
         // Assert
         expect(result).toMatchInlineSnapshot(`
             {
+              "http": "https://api.testnet.solana.com",
               "id": "solana:testnet",
               "label": "Testnet",
-              "url": "testnet",
+              "url": "https://api.testnet.solana.com",
             }
         `);
     });
@@ -57,6 +61,7 @@ describe('createSolanaCluster', () => {
         // Assert
         expect(result).toMatchInlineSnapshot(`
             {
+              "http": "http://host.docker.internal:8899",
               "id": "solana:localnet",
               "label": "Localnet",
               "url": "http://host.docker.internal:8899",
@@ -66,15 +71,17 @@ describe('createSolanaCluster', () => {
     it('should create a SolanaCluster with a custom label', () => {
         // Act
         const result = createSolanaLocalnet({
+            http: 'http://host.docker.internal:8899',
             label: 'Custom Local',
-            url: 'http://host.docker.internal:8899',
         });
         // Assert
         expect(result).toMatchInlineSnapshot(`
             {
+              "http": "http://host.docker.internal:8899",
               "id": "solana:localnet",
               "label": "Custom Local",
               "url": "http://host.docker.internal:8899",
+              "ws": "ws://localhost:8900",
             }
         `);
     });

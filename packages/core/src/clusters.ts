@@ -1,3 +1,5 @@
+import { devnet, mainnet, testnet } from '@solana/kit';
+
 import type {
     SolanaCluster,
     SolanaDevnetUrl,
@@ -6,47 +8,58 @@ import type {
     SolanaTestnetUrl,
 } from './types/solana-cluster';
 
-export type CreateSolanaProps = Partial<Pick<SolanaCluster, 'label' | 'url'>> | string;
+export type CreateSolanaProps =
+    | string
+    | (Partial<Pick<SolanaCluster, 'http' | 'label' | 'url' | 'ws'>> & { http: string });
 
 function createSolanaCluster<T extends SolanaDevnetUrl | SolanaLocalnetUrl | SolanaMainnetUrl | SolanaTestnetUrl>(
     props: CreateSolanaProps,
-    { id, label, url }: SolanaCluster,
-): Pick<SolanaCluster, 'id' | 'label' | 'url'> {
+    { id, label, http: defaultHttp, ws: defaultWs }: { http: T; id: SolanaCluster['id']; label: string; ws?: string },
+): SolanaCluster {
     if (typeof props === 'string') {
-        return { id, label, url: props as T };
+        const http = props as T;
+        return { http, id, label, url: http };
     }
 
-    return { id, label: props.label ?? label, url: props.url ?? url };
+    const httpUrl = props.http ?? props.url ?? defaultHttp;
+    return {
+        http: httpUrl,
+        id,
+        label: props.label ?? label,
+        url: httpUrl,
+        ws: props.ws ?? defaultWs,
+    };
 }
 
-export function createSolanaDevnet(props: CreateSolanaProps = {}): SolanaCluster {
+export function createSolanaDevnet(props: CreateSolanaProps = 'https://api.devnet.solana.com'): SolanaCluster {
     return createSolanaCluster<SolanaDevnetUrl>(props, {
+        http: devnet(typeof props === 'string' ? props : props.http),
         id: 'solana:devnet',
         label: 'Devnet',
-        url: 'devnet' as SolanaDevnetUrl,
     });
 }
 
-export function createSolanaLocalnet(props: CreateSolanaProps = {}): SolanaCluster {
+export function createSolanaLocalnet(props: CreateSolanaProps = 'http://localhost:8899'): SolanaCluster {
     return createSolanaCluster(props, {
+        http: (typeof props === 'string' ? props : props.http) as SolanaLocalnetUrl,
         id: 'solana:localnet',
         label: 'Localnet',
-        url: 'localnet' as SolanaLocalnetUrl,
+        ws: 'ws://localhost:8900',
     });
 }
 
-export function createSolanaMainnet(props: CreateSolanaProps = {}): SolanaCluster {
+export function createSolanaMainnet(props: CreateSolanaProps): SolanaCluster {
     return createSolanaCluster(props, {
+        http: mainnet(typeof props === 'string' ? props : props.http),
         id: 'solana:mainnet',
         label: 'Mainnet',
-        url: 'mainnet' as SolanaMainnetUrl,
     });
 }
 
-export function createSolanaTestnet(props: CreateSolanaProps = {}): SolanaCluster {
+export function createSolanaTestnet(props: CreateSolanaProps = 'https://api.testnet.solana.com'): SolanaCluster {
     return createSolanaCluster(props, {
+        http: testnet(typeof props === 'string' ? props : props.http),
         id: 'solana:testnet',
         label: 'Testnet',
-        url: 'testnet' as SolanaTestnetUrl,
     });
 }

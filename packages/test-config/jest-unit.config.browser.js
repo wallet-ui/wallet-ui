@@ -1,9 +1,13 @@
-import type { Config } from '@jest/types';
+import { createRequire } from 'module';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-import commonConfig from './jest-unit.config.common';
+import commonConfig from './jest-unit.config.common.js';
 
-const config: Partial<Config.InitialProjectOptions> = {
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
+
+const config = {
     ...commonConfig,
     displayName: {
         color: 'grey',
@@ -30,7 +34,7 @@ const config: Partial<Config.InitialProjectOptions> = {
     ],
     testEnvironment: path.resolve(__dirname, 'browser-environment.ts'),
     testEnvironmentOptions: {},
-    testPathIgnorePatterns: [...(commonConfig.testPathIgnorePatterns ?? []), '-test.node.ts$'],
+    testPathIgnorePatterns: [...(commonConfig.testPathIgnorePatterns ?? []), '-test.node.js$'],
 };
 
 export default config;

@@ -1,6 +1,4 @@
-import type { Config } from '@jest/types';
-
-const config: Partial<Config.InitialProjectOptions> = {
+const config = {
     displayName: {
         color: 'magentaBright',
         name: 'Prettier',
@@ -8,7 +6,7 @@ const config: Partial<Config.InitialProjectOptions> = {
     moduleFileExtensions: ['js', 'ts', 'json', 'md'],
     runner: 'prettier',
     testMatch: ['<rootDir>/src/**', '<rootDir>*'],
-    testPathIgnorePatterns: ['README.md', 'CHANGELOG.md'],
+    testPathIgnorePatterns: ['CHANGELOG.md'],
 };
 
 export default config;

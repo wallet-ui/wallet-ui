@@ -1,6 +1,4 @@
-import type { Config } from '@jest/types';
-
-const config: Partial<Config.InitialProjectOptions> = {
+const config = {
     displayName: {
         color: 'cyanBright',
         name: 'ESLint',

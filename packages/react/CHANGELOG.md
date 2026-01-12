@@ -1,5 +1,14 @@
 # @wallet-ui/react
 
+## 2.2.1
+
+### Patch Changes
+
+- [#369](https://github.com/wallet-ui/wallet-ui/pull/369) [`6ae8da3`](https://github.com/wallet-ui/wallet-ui/commit/6ae8da31f67fa4a166437f6ed49894da7df06c54) Thanks [@beeman](https://github.com/beeman)! - replace `@solana/signers` with `@solana/kit` as a peer dependency
+
+- Updated dependencies []:
+    - @wallet-ui/core@2.2.1
+
 ## 2.2.0
 
 ### Minor Changes

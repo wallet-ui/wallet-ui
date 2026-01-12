@@ -10,7 +10,7 @@
         "start": "next start",
         "style:fix": "next lint --fix && pnpm prettier --log-level warn --ignore-unknown --write ./*",
         "test:lint": "next lint",
-        "test:prettier": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../node_modules/@wallet-ui/test-config/jest-prettier.config.ts --rootDir . --silent",
+        "test:prettier": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../node_modules/@wallet-ui/test-config/jest-prettier.config.js --rootDir . --silent",
         "test:typecheck": "tsc"
     },
     "dependencies": {

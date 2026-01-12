@@ -96,7 +96,6 @@
         "typescript": "^5.9.2"
     },
     "peerDependencies": {
-        "@solana/signers": "2.3.0",
         "react": ">=18"
     },
     "engines": {

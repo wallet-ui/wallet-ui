@@ -1,6 +1,6 @@
+import type { TransactionSendingSigner } from '@solana/kit';
 import { useWalletAccountTransactionSendingSigner } from '@solana/react';
-import { TransactionSendingSigner } from '@solana/signers';
-import { UiWalletAccount } from '@wallet-standard/react';
+import type { UiWalletAccount } from '@wallet-standard/react';
 
 import { useWalletUi } from './use-wallet-ui';
 

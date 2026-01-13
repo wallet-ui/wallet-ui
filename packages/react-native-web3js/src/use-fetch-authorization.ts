@@ -3,7 +3,6 @@ import { PublicKey, PublicKeyInitData } from '@solana/web3.js';
 import { useQuery } from '@tanstack/react-query';
 
 import { WalletAuthorization } from './use-authorization';
-import { useQueryConfig } from './use-query-config';
 
 function cacheReviver(key: string, value: unknown) {
     if (key === 'publicKey') {
@@ -13,8 +12,7 @@ function cacheReviver(key: string, value: unknown) {
     }
 }
 
-export function useFetchAuthorization() {
-    const { queryKey, storageKey } = useQueryConfig();
+export function useFetchAuthorization({ queryKey, storageKey }: { queryKey: string[]; storageKey: string }) {
     return useQuery({
         queryFn: async (): Promise<WalletAuthorization | null> => {
             const cacheFetchResult = await AsyncStorage.getItem(storageKey);

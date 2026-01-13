@@ -15,9 +15,7 @@ import { WalletIcon } from '@wallet-standard/core';
 import { useCallback, useMemo } from 'react';
 
 import { getAuthorizationFromAuthorizationResult } from './get-authorization-from-authorization-result';
-import { useFetchAuthorization } from './use-fetch-authorization';
-import { useInvalidateAuthorizations } from './use-invalidate-authorizations';
-import { usePersistAuthorization } from './use-persist-authorization';
+import { useAuthorizationStorage } from './use-authorization-storage';
 
 export type Account = Readonly<{
     address: Base64EncodedAddress;
@@ -33,27 +31,22 @@ export type WalletAuthorization = Readonly<{
 }>;
 
 export function useAuthorization({ chain, identity }: { chain: Chain; identity: AppIdentity }) {
-    const fetchQuery = useFetchAuthorization();
-    const invalidateAuthorizations = useInvalidateAuthorizations();
-    const persistMutation = usePersistAuthorization();
+    const { accounts, authToken, isLoading, persist, selectedAccount } = useAuthorizationStorage();
 
     const handleAuthorizationResult = useCallback(
         async (authorizationResult: AuthorizationResult): Promise<WalletAuthorization> => {
-            const nextAuthorization = getAuthorizationFromAuthorizationResult(
-                authorizationResult,
-                fetchQuery.data?.selectedAccount,
-            );
-            await persistMutation.mutateAsync(nextAuthorization);
+            const nextAuthorization = getAuthorizationFromAuthorizationResult(authorizationResult, selectedAccount);
+            await persist(nextAuthorization);
             return nextAuthorization;
         },
-        [fetchQuery.data?.selectedAccount, persistMutation],
+        [selectedAccount, persist],
     );
 
     const authorizeSession = useCallback(
         async (wallet: AuthorizeAPI) => {
             try {
                 const authorizationResult = await wallet.authorize({
-                    auth_token: fetchQuery.data?.authToken,
+                    auth_token: authToken,
                     chain,
                     identity,
                 });
@@ -72,14 +65,14 @@ export function useAuthorization({ chain, identity }: { chain: Chain; identity: 
                 throw error;
             }
         },
-        [fetchQuery.data?.authToken, chain, identity, handleAuthorizationResult],
+        [authToken, chain, identity, handleAuthorizationResult],
     );
 
     const authorizeSessionWithSignIn = useCallback(
         async (wallet: AuthorizeAPI, signInPayload: SignInPayload) => {
             try {
                 const authorizationResult = await wallet.authorize({
-                    auth_token: fetchQuery.data?.authToken,
+                    auth_token: authToken,
                     chain,
                     identity,
                     sign_in_payload: signInPayload,
@@ -100,43 +93,42 @@ export function useAuthorization({ chain, identity }: { chain: Chain; identity: 
                 throw error;
             }
         },
-        [fetchQuery.data?.authToken, chain, identity, handleAuthorizationResult],
+        [authToken, chain, identity, handleAuthorizationResult],
     );
 
     const deauthorizeSession = useCallback(
         async (wallet: DeauthorizeAPI) => {
-            if (fetchQuery.data?.authToken == null) {
+            if (authToken == null) {
                 return;
             }
-            await wallet.deauthorize({ auth_token: fetchQuery.data.authToken });
-            await persistMutation.mutateAsync(null);
+            await wallet.deauthorize({ auth_token: authToken });
+            await persist(null);
         },
-        [fetchQuery.data?.authToken, persistMutation],
+        [authToken, persist],
     );
 
     const deauthorizeSessions = useCallback(async () => {
-        await invalidateAuthorizations();
-        await persistMutation.mutateAsync(null);
-    }, [invalidateAuthorizations, persistMutation]);
+        await persist(null, true);
+    }, [persist]);
 
     return useMemo(
         () => ({
-            accounts: fetchQuery.data?.accounts ?? null,
+            accounts,
             authorizeSession,
             authorizeSessionWithSignIn,
             deauthorizeSession,
             deauthorizeSessions,
-            isLoading: fetchQuery.isLoading,
-            selectedAccount: fetchQuery.data?.selectedAccount ?? null,
+            isLoading,
+            selectedAccount,
         }),
         [
+            accounts,
             authorizeSession,
             authorizeSessionWithSignIn,
             deauthorizeSession,
             deauthorizeSessions,
-            fetchQuery.data?.accounts,
-            fetchQuery.data?.selectedAccount,
-            fetchQuery.isLoading,
+            isLoading,
+            selectedAccount,
         ],
     );
 }

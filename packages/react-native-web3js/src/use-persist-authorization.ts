@@ -1,13 +1,16 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { WalletAuthorization } from './use-authorization';
+import { WalletAuthorization, WalletAuthorizationCache } from './use-authorization';
 
-export function usePersistAuthorization({ queryKey, storageKey }: { queryKey: string[]; storageKey: string }) {
+export function usePersistAuthorization({ cache, queryKey }: { cache: WalletAuthorizationCache; queryKey: string[] }) {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (auth: WalletAuthorization | null): Promise<void> => {
-            await AsyncStorage.setItem(storageKey, JSON.stringify(auth));
+            if (auth) {
+                await cache.set(auth);
+            } else {
+                await cache.clear();
+            }
         },
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey });

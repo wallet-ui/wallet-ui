@@ -9,13 +9,14 @@ The `MobileWalletProvider` is a React context provider that makes the mobile wal
 
 The `MobileWalletProvider` accepts the following props:
 
-| Name                 | Type                             | Description                                                                                                                                  | Default                       |
-| -------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `chain`              | `Chain`                          | The blockchain chain to connect to (e.g., `'solana:mainnet'`, `'solana:devnet'`).                                                            |                               |
-| `children`           | `ReactNode`                      | The child components that will have access to the mobile wallet context.                                                                     |                               |
-| `commitmentOrConfig` | `Commitment \| ConnectionConfig` | Optional. The commitment level or connection configuration for the Solana connection.                                                        | `{ commitment: 'confirmed' }` |
-| `endpoint`           | `string`                         | The URL of the Solana RPC endpoint to connect to.                                                                                            |                               |
-| `identity`           | `AppIdentity`                    | An object representing the identity of your application. It should include at least a `name` property. Example: `{ name: 'My Wallet App' }`. |                               |
+| Name                 | Type                                      | Description                                                                                                                                  | Default                       |
+| -------------------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `cache`              | `Cache<WalletAuthorization> \| undefined` | Optional. A cache instance for storing authorization data. Defaults to a cache that uses `AsyncStorage`.                                     |                               |
+| `chain`              | `Chain`                                   | The blockchain chain to connect to (e.g., `'solana:mainnet'`, `'solana:devnet'`).                                                            |                               |
+| `children`           | `ReactNode`                               | The child components that will have access to the mobile wallet context.                                                                     |                               |
+| `commitmentOrConfig` | `Commitment \| ConnectionConfig`          | Optional. The commitment level or connection configuration for the Solana connection.                                                        | `{ commitment: 'confirmed' }` |
+| `endpoint`           | `string`                                  | The URL of the Solana RPC endpoint to connect to.                                                                                            |                               |
+| `identity`           | `AppIdentity`                             | An object representing the identity of your application. It should include at least a `name` property. Example: `{ name: 'My Wallet App' }`. |                               |
 
 ### Example
 

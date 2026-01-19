@@ -9,11 +9,25 @@ The `useAuthorization` hook is a low-level hook for managing wallet authorizatio
 
 The hook accepts an object with the following properties:
 
-| Name       | Type          | Description                               |
-| ---------- | ------------- | ----------------------------------------- |
-| `chain`    | `Chain`       | The blockchain chain to connect to.       |
-| `identity` | `AppIdentity` | The identity of the app connecting to the |
-|            |               | wallet.                                   |
+| Name       | Type                                      | Description                                                |
+| ---------- | ----------------------------------------- | ---------------------------------------------------------- |
+| `cache`    | `Cache<WalletAuthorization> \| undefined` | Optional. A cache instance for storing authorization data. |
+| `chain`    | `Chain`                                   | The blockchain chain to connect to.                        |
+| `identity` | `AppIdentity`                             | The identity of the app connecting to the wallet.          |
+
+If no `cache` is provided, a default cache that uses `AsyncStorage` will be used.
+
+### The `Cache` Object
+
+The `Cache` object is an interface that defines the contract for a cache implementation. It has the following methods:
+
+| Name    | Type                            | Description                       |
+| ------- | ------------------------------- | --------------------------------- |
+| `clear` | `() => Promise<void>`           | Clears the cache.                 |
+| `get`   | `() => Promise<T \| undefined>` | Retrieves an item from the cache. |
+| `set`   | `(value: T) => Promise<void>`   | Sets an item in the cache.        |
+
+You can provide your own implementation of the `Cache` interface to customize how authorization data is stored.
 
 ### Return Value
 

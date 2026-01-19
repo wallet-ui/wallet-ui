@@ -1,15 +1,14 @@
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Account, WalletAuthorization } from './use-authorization';
+import { Account, WalletAuthorization, WalletAuthorizationCache } from './use-authorization';
 import { useFetchAuthorization } from './use-fetch-authorization';
 import { usePersistAuthorization } from './use-persist-authorization';
 
-export function useAuthorizationStorage() {
+export function useAuthorizationStorage({ cache }: { cache: WalletAuthorizationCache }) {
     const queryKey = ['wallet-authorization'];
-    const storageKey = 'authorization-cache';
     const queryClient = useQueryClient();
-    const fetchQuery = useFetchAuthorization({ queryKey, storageKey });
-    const persistMutation = usePersistAuthorization({ queryKey, storageKey });
+    const fetchQuery = useFetchAuthorization({ cache, queryKey });
+    const persistMutation = usePersistAuthorization({ cache, queryKey });
 
     async function persist(next: WalletAuthorization | null, invalidate = false) {
         await persistMutation.mutateAsync(next);

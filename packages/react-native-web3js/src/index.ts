@@ -1,4 +1,5 @@
 export * from './mobile-wallet-provider';
+export * from './cache';
 export * from './use-authorization';
 export * from './use-mobile-wallet';
 

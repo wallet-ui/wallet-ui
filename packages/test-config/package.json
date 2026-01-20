@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@jest/types": "^30.0.5",
-    "undici": "^7.16.0",
+    "undici": "^7.18.2",
     "uuid": "^13.0.0",
     "whatwg-fetch": "^3.6.20"
   },

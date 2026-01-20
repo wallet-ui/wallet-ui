@@ -1,5 +1,16 @@
 # @wallet-ui/react-native-web3js
 
+## 2.2.2
+
+### Patch Changes
+
+- [#374](https://github.com/wallet-ui/wallet-ui/pull/374) [`2818faf`](https://github.com/wallet-ui/wallet-ui/commit/2818faf7dd47d9b2614706ab2eb8e6f36de4ac79) Thanks [@beeman](https://github.com/beeman)! - abstract storage logic into a cache interface
+
+- [#371](https://github.com/wallet-ui/wallet-ui/pull/371) [`0f0de27`](https://github.com/wallet-ui/wallet-ui/commit/0f0de27d22a53dfe873a0221ff8832d2e0cd83bf) Thanks [@beeman](https://github.com/beeman)! - clean up and isolate usage of authorization storage
+
+- Updated dependencies []:
+    - @wallet-ui/core@2.2.2
+
 ## 2.2.1
 
 ### Patch Changes

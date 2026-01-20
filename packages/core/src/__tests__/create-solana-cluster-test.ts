@@ -9,7 +9,7 @@ describe('createSolanaCluster', () => {
             {
               "id": "solana:devnet",
               "label": "Devnet",
-              "url": "devnet",
+              "url": "https://api.devnet.solana.com",
             }
         `);
     });
@@ -21,7 +21,7 @@ describe('createSolanaCluster', () => {
             {
               "id": "solana:devnet",
               "label": "Devnet",
-              "url": "devnet",
+              "url": "https://api.devnet.solana.com",
             }
         `);
     });
@@ -34,7 +34,7 @@ describe('createSolanaCluster', () => {
             {
               "id": "solana:localnet",
               "label": "Localnet",
-              "url": "localnet",
+              "url": "http://localhost:8899",
             }
         `);
     });
@@ -47,7 +47,7 @@ describe('createSolanaCluster', () => {
             {
               "id": "solana:testnet",
               "label": "Testnet",
-              "url": "testnet",
+              "url": "https://api.testnet.solana.com",
             }
         `);
     });
@@ -75,6 +75,7 @@ describe('createSolanaCluster', () => {
               "id": "solana:localnet",
               "label": "Custom Local",
               "url": "http://host.docker.internal:8899",
+              "urlWs": "ws://host.docker.internal:8900",
             }
         `);
     });

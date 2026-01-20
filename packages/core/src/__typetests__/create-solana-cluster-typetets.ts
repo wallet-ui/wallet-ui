@@ -38,7 +38,10 @@ import { SolanaCluster } from '../types/solana-cluster';
         result satisfies SolanaCluster;
     }
     {
-        const result: SolanaCluster = createSolanaTestnet({ label: 'Custom Testnet' });
+        const result: SolanaCluster = createSolanaTestnet({
+            label: 'Custom Testnet',
+            url: 'https://api.testnet.solana.com',
+        });
         result satisfies SolanaCluster;
     }
     {
@@ -46,7 +49,7 @@ import { SolanaCluster } from '../types/solana-cluster';
         result satisfies SolanaCluster;
     }
     {
-        const result: SolanaCluster = createSolanaMainnet();
+        const result: SolanaCluster = createSolanaMainnet('https://api.mainnet-beta.solana.com');
         result satisfies SolanaCluster;
     }
     {

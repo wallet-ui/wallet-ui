@@ -78,7 +78,7 @@ Lastly, update the `main` property in `package.json` and set the value to `./ind
 Next, install the dependencies:
 
 ```package-install
-npm install @wallet-ui/react-native-web3js @tanstack/react-query
+npm install @wallet-ui/react-native-web3js
 ```
 
 ## Build the app
@@ -110,18 +110,15 @@ With this configured, create a file called `components/app-providers.tsx` to con
 ```tsx title="components/app-providers.tsx"
 import { ReactNode } from 'react';
 import { MobileWalletProvider } from '@wallet-ui/react-native-web3js';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-const queryClient = new QueryClient();
 const chain = 'solana:devnet';
 const endpoint = 'https://api.devnet.solana.com';
+
 export function AppProviders({ children }: { children: ReactNode }) {
     return (
-        <QueryClientProvider client={queryClient}>
-            <MobileWalletProvider chain={chain} endpoint={endpoint} identity={{ name: 'Wallet UI Example Expo' }}>
-                {children}
-            </MobileWalletProvider>
-        </QueryClientProvider>
+        <MobileWalletProvider chain={chain} endpoint={endpoint} identity={{ name: 'Wallet UI Example Expo' }}>
+            {children}
+        </MobileWalletProvider>
     );
 }
 ```

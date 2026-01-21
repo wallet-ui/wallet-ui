@@ -17,7 +17,7 @@ import { useCallback, useMemo } from 'react';
 import { createAsyncStorageCache } from './async-storage-cache';
 import { Cache } from './cache';
 import { getAuthorizationFromAuthorizationResult } from './get-authorization-from-authorization-result';
-import { useAuthorizationStorage } from './use-authorization-storage';
+import { useAuthorizationStore } from './use-authorization-store';
 
 export type Account = Readonly<{
     address: Base64EncodedAddress;
@@ -40,7 +40,7 @@ export type WalletAuthorizationProps = Readonly<{
 export function useAuthorization({ cache, chain, identity }: WalletAuthorizationProps) {
     const memoizedCache = useMemo(() => cache ?? createAsyncStorageCache<WalletAuthorization>(), [cache]);
 
-    const { accounts, authToken, isLoading, persist, selectedAccount } = useAuthorizationStorage({
+    const { accounts, authToken, persist, selectedAccount } = useAuthorizationStore({
         cache: memoizedCache,
     });
 
@@ -119,7 +119,7 @@ export function useAuthorization({ cache, chain, identity }: WalletAuthorization
     );
 
     const deauthorizeSessions = useCallback(async () => {
-        await persist(null, true);
+        await persist(null);
     }, [persist]);
 
     return useMemo(
@@ -129,7 +129,6 @@ export function useAuthorization({ cache, chain, identity }: WalletAuthorization
             authorizeSessionWithSignIn,
             deauthorizeSession,
             deauthorizeSessions,
-            isLoading,
             selectedAccount,
         }),
         [
@@ -138,7 +137,6 @@ export function useAuthorization({ cache, chain, identity }: WalletAuthorization
             authorizeSessionWithSignIn,
             deauthorizeSession,
             deauthorizeSessions,
-            isLoading,
             selectedAccount,
         ],
     );

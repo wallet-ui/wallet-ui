@@ -1,6 +1,7 @@
 export * from './mobile-wallet-provider';
 export * from './cache';
 export * from './use-authorization';
+export * from './authorization-store';
 export * from './use-mobile-wallet';
 
 export type { AppIdentity, SignInPayload } from '@solana-mobile/mobile-wallet-adapter-protocol';

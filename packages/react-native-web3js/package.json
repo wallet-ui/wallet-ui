@@ -74,17 +74,18 @@
         "maintained node versions"
     ],
     "dependencies": {
+        "@nanostores/react": "^1.0.0",
         "@react-native-async-storage/async-storage": "^2.2.0",
+        "@solana-mobile/mobile-wallet-adapter-protocol": "^2.2.3",
+        "@solana-mobile/mobile-wallet-adapter-protocol-web3js": "^2.2.3",
         "@solana/react": "3.0.3",
         "@solana/wallet-standard-features": "1.3.0",
         "@solana/web3.js": "^1.98.4",
-        "@solana-mobile/mobile-wallet-adapter-protocol": "^2.2.3",
-        "@solana-mobile/mobile-wallet-adapter-protocol-web3js": "^2.2.3",
-        "@tanstack/react-query": "^5.90.2",
         "@wallet-standard/core": "1.1.1",
         "@wallet-standard/react": "1.0.1",
         "@wallet-ui/core": "workspace:*",
-        "js-base64": "^3.7.8"
+        "js-base64": "^3.7.8",
+        "nanostores": "^1.1.0"
     },
     "devDependencies": {
         "@types/react": "^19.1.17",

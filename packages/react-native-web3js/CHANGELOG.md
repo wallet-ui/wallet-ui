@@ -1,5 +1,26 @@
 # @wallet-ui/react-native-web3js
 
+## 3.0.0
+
+### Major Changes
+
+- [#379](https://github.com/wallet-ui/wallet-ui/pull/379) [`b3468f8`](https://github.com/wallet-ui/wallet-ui/commit/b3468f8619a7b1064d7d0ee8ca4f7bb2ba479c80) Thanks [@beeman](https://github.com/beeman)! - BREAKING: Migrate from TanStack Query to nanostores for authorization state management
+    - Replace TanStack Query hooks with nanostores authorization store
+    - Remove `@tanstack/react-query` peer dependency
+    - Add `nanostores` and `@nanostores/react` as dependencies
+    - Remove `useAuthorizationStorage`, `useFetchAuthorization`, `usePersistAuthorization` hooks
+    - Add `createAuthorizationStore` factory and `useAuthorizationStore` hook
+    - Simplify setup: TanStack Query provider no longer required
+
+- [#381](https://github.com/wallet-ui/wallet-ui/pull/381) [`b102991`](https://github.com/wallet-ui/wallet-ui/commit/b102991a29400b5a00b4efdbba39fc02f84a0f15) Thanks [@beeman](https://github.com/beeman)! - Refactor: deprecate `Account.publicKey` in favor of `Account.address` in `react-native-web3js` package.
+
+### Patch Changes
+
+- [#382](https://github.com/wallet-ui/wallet-ui/pull/382) [`7c2108e`](https://github.com/wallet-ui/wallet-ui/commit/7c2108e9ac17d59dfaa19b561a1bc65d101a32ac) Thanks [@beeman](https://github.com/beeman)! - fix(react-native-web3js): ensure to initialize a single store
+
+- Updated dependencies [[`0264164`](https://github.com/wallet-ui/wallet-ui/commit/0264164a9b131b636d22564300163b97b759ee31)]:
+    - @wallet-ui/core@3.0.0
+
 ## 2.2.2
 
 ### Patch Changes

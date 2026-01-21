@@ -19,11 +19,11 @@ export function AccountFeatureIndex() {
                 <View style={appStyles.stack}>
                     <View style={appStyles.card}>
                         <Text>Connected to {account.label}</Text>
-                        <AccountFeatureGetBalance publicKey={account.publicKey} />
+                        <AccountFeatureGetBalance address={account.address} />
                     </View>
                     <AccountFeatureSignIn account={account} />
-                    <AccountFeatureSignMessage publicKey={account.publicKey} />
-                    <AccountFeatureSignTransaction publicKey={account.publicKey} />
+                    <AccountFeatureSignMessage address={account.address} />
+                    <AccountFeatureSignTransaction address={account.address} />
                     <AccountFeatureDisconnect />
                 </View>
             ) : (

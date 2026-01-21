@@ -7,7 +7,7 @@ export function AccountFeatureSignIn({ account }: { account?: Account }) {
     const { signIn } = useMobileWallet();
     async function submit() {
         try {
-            await signIn({ address: account?.publicKey?.toString(), uri: AppConfig.identity.uri });
+            await signIn({ address: account?.address?.toString(), uri: AppConfig.identity.uri });
             console.log('Signed in!');
         } catch (e) {
             console.log(`Error signing in: ${e}`);

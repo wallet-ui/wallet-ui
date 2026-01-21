@@ -20,9 +20,13 @@ import { getAuthorizationFromAuthorizationResult } from './get-authorization-fro
 import { useAuthorizationStore } from './use-authorization-store';
 
 export type Account = Readonly<{
-    address: Base64EncodedAddress;
+    address: PublicKey;
+    addressBase64: Base64EncodedAddress;
     icon?: WalletIcon;
     label?: string;
+    /**
+     * @deprecated Use `address` instead.
+     */
     publicKey: PublicKey;
 }>;
 

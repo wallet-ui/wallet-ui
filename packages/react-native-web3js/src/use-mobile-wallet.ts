@@ -58,7 +58,7 @@ export function useMobileWallet() {
             await transact(async wallet => {
                 const authResult = await authorizeSession(wallet);
                 const signedMessages = await wallet.signMessages({
-                    addresses: [authResult.address],
+                    addresses: [authResult.addressBase64],
                     payloads: [message],
                 });
                 return signedMessages[0];

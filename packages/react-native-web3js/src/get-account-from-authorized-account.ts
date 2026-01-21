@@ -10,12 +10,13 @@ function ellipsify(str = '', len = 4, delimiter = '..') {
 }
 
 export function getAccountFromAuthorizedAccount(account: AuthorizedAccount): Account {
-    const publicKey = getPublicKeyFromAddress(account.address);
+    const address = getPublicKeyFromAddress(account.address);
 
     return {
-        address: account.address,
+        address,
+        addressBase64: account.address,
         icon: account.icon,
-        label: account.label ?? ellipsify(publicKey.toString(), 8),
-        publicKey,
+        label: account.label ?? ellipsify(address.toString(), 8),
+        publicKey: address,
     };
 }

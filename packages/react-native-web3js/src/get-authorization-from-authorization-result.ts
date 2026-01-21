@@ -12,7 +12,7 @@ export function getAuthorizationFromAuthorizationResult(
         // We have yet to select an account.
         previouslySelectedAccount == null ||
         // The previously selected account is no longer in the set of authorized addresses.
-        !authorizationResult.accounts.some(({ address }) => address === previouslySelectedAccount.address)
+        !authorizationResult.accounts.some(({ address }) => address === previouslySelectedAccount.addressBase64)
     ) {
         const firstAccount = authorizationResult.accounts[0];
         selectedAccount = getAccountFromAuthorizedAccount(firstAccount);

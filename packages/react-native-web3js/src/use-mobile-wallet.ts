@@ -8,8 +8,14 @@ import { Account, useAuthorization } from './use-authorization';
 
 export function useMobileWallet() {
     const ctx = useContext(MobileWalletProviderContext);
-    const { authorizeSessionWithSignIn, authorizeSession, deauthorizeSessions, selectedAccount, ...authorization } =
-        useAuthorization(ctx);
+    const {
+        authorizeSessionWithSignIn,
+        authorizeSession,
+        deauthorizeSessions,
+        selectedAccount,
+        accounts,
+        deauthorizeSession,
+    } = useAuthorization(ctx);
 
     const connect = useCallback(
         async (): Promise<Account> => await transact(async wallet => await authorizeSession(wallet)),
@@ -63,20 +69,22 @@ export function useMobileWallet() {
     return useMemo(
         () => ({
             ...ctx,
-            ...authorization,
             account: selectedAccount,
+            accounts,
             connect,
             connectAnd,
+            deauthorizeSession,
             disconnect,
             signAndSendTransaction,
             signIn,
             signMessage,
         }),
         [
-            authorization,
+            accounts,
             connect,
             connectAnd,
             ctx,
+            deauthorizeSession,
             disconnect,
             selectedAccount,
             signAndSendTransaction,

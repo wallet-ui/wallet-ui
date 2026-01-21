@@ -14,7 +14,7 @@ import {
 import { WalletIcon } from '@wallet-standard/core';
 import { useCallback, useMemo } from 'react';
 
-import { createAsyncStorageCache } from './async-storage-cache';
+import { AuthorizationStore } from './authorization-store';
 import { Cache } from './cache';
 import { getAuthorizationFromAuthorizationResult } from './get-authorization-from-authorization-result';
 import { useAuthorizationStore } from './use-authorization-store';
@@ -36,12 +36,11 @@ export type WalletAuthorizationProps = Readonly<{
     cache?: WalletAuthorizationCache;
     chain: Chain;
     identity: AppIdentity;
+    store: AuthorizationStore;
 }>;
-export function useAuthorization({ cache, chain, identity }: WalletAuthorizationProps) {
-    const memoizedCache = useMemo(() => cache ?? createAsyncStorageCache<WalletAuthorization>(), [cache]);
-
+export function useAuthorization({ chain, identity, store }: WalletAuthorizationProps) {
     const { accounts, authToken, persist, selectedAccount } = useAuthorizationStore({
-        cache: memoizedCache,
+        store,
     });
 
     const handleAuthorizationResult = useCallback(

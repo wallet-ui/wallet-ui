@@ -1,5 +1,12 @@
 # @wallet-ui/react
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies [[`0264164`](https://github.com/wallet-ui/wallet-ui/commit/0264164a9b131b636d22564300163b97b759ee31)]:
+    - @wallet-ui/core@3.0.0
+
 ## 2.2.2
 
 ### Patch Changes

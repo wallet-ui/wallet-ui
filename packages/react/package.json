@@ -1,6 +1,6 @@
 {
     "name": "@wallet-ui/react",
-    "version": "2.2.2",
+    "version": "3.0.0",
     "description": "React components for Wallet UI",
     "exports": {
         ".": {

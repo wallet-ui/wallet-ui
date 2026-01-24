@@ -18,6 +18,8 @@ For comprehensive documentation and usage guides, please visit [wallet-ui.dev](h
 git clone https://github.com/wallet-ui/wallet-ui.git
 cd wallet-ui
 pnpm install
+# If you want to install rules for your AI agents (see below).
+pnpm ruler apply --local-only
 ```
 
 ## Development
@@ -47,6 +49,19 @@ pnpm run style:fix
 ```shell
 pnpm run test
 ```
+
+### AI Agents
+
+We use [Ruler](https://github.com/beeman/ruler) to centralize AI agent instructions, coding guidelines, and project context.
+You can find these resources in the `.ruler` directory.
+
+To sync the instructions for your preferred AI agents, run:
+
+```shell
+pnpm ruler apply --local-only
+```
+
+This will update the project's agent-specific configuration files (like `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, etc.) based on the shared definitions in `.ruler`.
 
 ## Support
 

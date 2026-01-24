@@ -31,3 +31,29 @@ test-ledger/
 
 # tsup
 tsup.config.package.bundled_*.mjs
+
+
+# START Ruler Generated Files
+/.agent/rules/ruler.md
+/.agent/rules/ruler.md.bak
+/.agents/skills
+/.claude/skills
+/.codex/skills
+/.cursor/skills
+/.gemini/settings.json
+/.gemini/settings.json.bak
+/.gemini/skills
+/.mcp.json
+/.mcp.json.bak
+/.opencode/skill
+/.pi/skills
+/.roo/skills
+/.skillz
+/.vibe/skills
+/AGENTS.md
+/AGENTS.md.bak
+/CLAUDE.md
+/CLAUDE.md.bak
+/opencode.json
+/opencode.json.bak
+# END Ruler Generated Files

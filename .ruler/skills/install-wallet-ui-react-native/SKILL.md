@@ -151,8 +151,10 @@ export function ConnectWallet() {
 
 ### Sign Message
 
+**IMPORTANT**: The `signMessage` function expects a `Uint8Array`. Use `TextEncoder` to convert plain strings to bytes. Do NOT use `toUint8Array` for plain text - that helper is for decoding base64 strings.
+
 ```tsx
-import { useMobileWallet, toUint8Array } from '@wallet-ui/react-native-web3js';
+import { useMobileWallet } from '@wallet-ui/react-native-web3js';
 import { Button } from 'react-native';
 
 export function SignMessageButton() {
@@ -161,8 +163,9 @@ export function SignMessageButton() {
     const handleSign = async () => {
         try {
             const message = "Verify this message";
-            const signature = await signMessage(toUint8Array(message));
-            console.log('Signed:', signature);
+            const messageBytes = new TextEncoder().encode(message);
+            const signature = await signMessage(messageBytes);
+            console.log('Signed:', Buffer.from(signature).toString('base64'));
         } catch (error) {
             console.error('Signing failed:', error);
         }
@@ -171,6 +174,56 @@ export function SignMessageButton() {
     return <Button title="Sign Message" onPress={handleSign} />;
 }
 ```
+
+**Encoding Reference:**
+- `new TextEncoder().encode(str)` - converts plain string → Uint8Array (UTF-8 bytes)
+- `toUint8Array(base64Str)` - decodes base64 string → Uint8Array
+
+### Sign In with Solana (SIWS)
+
+Use the `signIn` method for authentication using the Sign In With Solana (SIWS) standard. This is different from `signMessage` - it follows the SIWS spec and returns a structured result that can be verified server-side.
+
+```tsx
+import { useMobileWallet } from '@wallet-ui/react-native-web3js';
+import { useState } from 'react';
+import { Button, Text, View } from 'react-native';
+
+export function SignInButton() {
+    const { account, signIn } = useMobileWallet();
+    const [signedIn, setSignedIn] = useState(false);
+
+    const handleSignIn = async () => {
+        try {
+            await signIn({
+                domain: 'your-app-domain.com',
+                statement: 'Sign in to Your App',
+            });
+            setSignedIn(true);
+        } catch (error) {
+            console.error('Sign in failed:', error);
+        }
+    };
+
+    if (!account) return null;
+
+    if (signedIn) {
+        return <Text>Signed in with Solana</Text>;
+    }
+
+    return <Button title="Sign In with Solana" onPress={handleSignIn} />;
+}
+```
+
+**SignInPayload Options:**
+- `domain` - Your app's domain (required for verification)
+- `statement` - Human-readable message shown to user
+- `uri` - URI of your app
+- `version` - SIWS version (default: "1")
+- `chainId` - Chain identifier (e.g., "mainnet", "devnet")
+- `nonce` - Random string for replay protection
+- `issuedAt` - ISO timestamp
+- `expirationTime` - ISO timestamp for expiration
+- `resources` - Array of resource URIs
 
 ### Sign and Send Transaction
 
@@ -223,18 +276,22 @@ export function SendTransactionButton() {
     -   Ensure `polyfill.js` is imported at the VERY TOP of `index.js`.
     -   Ensure `package.json` points to `index.js`.
 
-2.  **Build Failures**:
+2.  **"input is not valid base64 encoded data"** (when signing messages):
+    -   You're using `toUint8Array()` with a plain string. That helper expects base64 input.
+    -   **Fix**: Use `new TextEncoder().encode(message)` for plain text messages.
+
+4.  **Build Failures**:
     -   Ensure `expo-dev-client` is installed.
     -   Re-run `npx expo run:android` or `npx expo run:ios` to rebuild the native app after adding native dependencies like `react-native-quick-crypto`.
 
-3.  **Wallet not connecting**:
+5.  **Wallet not connecting**:
     -   Ensure a compatible wallet (e.g., Phantom, Solflare) is installed on the simulator/device.
     -   Ensure the scheme in `app.json` allows deep linking (though MWA usually handles this via intent/universal links).
 
-4.  **"Objects are not valid as a React child"**:
+6.  **"Objects are not valid as a React child"**:
     -   This usually happens when trying to render a `PublicKey` object (like `account.address`) directly in a `Text` component.
     -   **Fix**: Call `.toString()` or `.toBase58()` on the object (e.g., `{account.address.toString()}`).
 
-5.  **"SolanaMobileWalletAdapterProtocolError: -32602"**:
+7.  **"SolanaMobileWalletAdapterProtocolError: -32602"**:
     -   This occurs if `identity.icon` is set to an absolute URL (e.g., `https://...`).
     -   **Fix**: Ensure `identity.icon` is a relative path (e.g., `/icon.png`) relative to your `identity.uri`, or remove the icon property entirely during development.

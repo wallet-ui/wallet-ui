@@ -1,0 +1,185 @@
+---
+title: Getting started with Expo
+description: Set up Wallet UI for React Native with Expo
+---
+
+## Generate new application
+
+If you start from scratch, you can use [create-expo-app](https://docs.expo.dev/more/create-expo/) to create new Expo application:
+
+```package-install
+npx create-expo-app@latest
+```
+
+## Reset the project
+
+If you want to start with a minimal template, run the `reset-project` script:
+
+```package-install
+npm run reset-project
+```
+
+## Configure your app
+
+You need to configure your Expo app by doing the following:
+
+### Install the expo-dev-client
+
+Wallet UI for React Native works with Expo [development builds](https://docs.expo.dev/develop/development-builds/introduction/).
+
+```package-install
+npx expo install expo-dev-client
+```
+
+### Add polyfills
+
+Install `react-native-quick-crypto` package to enable the required polyfills.
+
+```package-install
+npm install react-native-quick-crypto
+```
+
+Create a file called `polyfill.js` in the root of your project:
+
+```js
+// polyfill.js
+import { install } from 'react-native-quick-crypto';
+
+install();
+```
+
+Next, create a file called `index.js` in the root of your project:
+
+```js
+// index.js
+import './polyfill';
+import 'expo-router/entry';
+```
+
+Lastly, update the `main` property in `package.json` and set the value to `./index.js`:
+
+```json5
+{
+    name: 'your-expo-app',
+    main: './index.js',
+    version: '1.0.0',
+    scripts: {
+        // scripts
+    },
+    dependencies: {
+        // dependencies
+    },
+    // Etc...
+}
+```
+
+### Install dependencies
+
+Next, install the dependencies:
+
+```package-install
+npm install @wallet-ui/react-native-web3js
+```
+
+## Build the app
+
+Ensure you set up your environment for [Android](https://docs.expo.dev/workflow/android-studio-emulator/) development.
+
+Once you have everything set up, run the following command:
+
+```package-install
+npx expo run:android
+```
+
+## Start the dev server
+
+After building the app it will start the bundler automatically.
+
+But if you closed the bundler or are working on a dev client you built earlier, start the bundler with:
+
+```package-install
+npx expo start
+```
+
+## Add Mobile Wallet Adapter Provider
+
+### Create App Providers
+
+With this configured, create a file called `components/app-providers.tsx` to configure your application-wide providers :
+
+```tsx title="components/app-providers.tsx"
+import { ReactNode } from 'react';
+import { MobileWalletProvider } from '@wallet-ui/react-native-web3js';
+
+const chain = 'solana:devnet';
+const endpoint = 'https://api.devnet.solana.com';
+
+export function AppProviders({ children }: { children: ReactNode }) {
+    return (
+        <MobileWalletProvider chain={chain} endpoint={endpoint} identity={{ name: 'Wallet UI Example Expo' }}>
+            {children}
+        </MobileWalletProvider>
+    );
+}
+```
+
+### Add provider to your layout
+
+Open your root layout and wrap it with the `AppProviders` you just created:
+
+```tsx title="app/_layout.tsx"
+import { AppProviders } from '@/components/app-providers';
+
+export default function RootLayout() {
+    return <AppProviders>{/*  Existing components */}</AppProviders>;
+}
+```
+
+You can now use the [hooks](/docs/react-native/web3js/hooks) in your app.
+
+## Connect to a wallet
+
+After setting up the `AppProviders`, you can use the `useMobileWallet` hook to connect to a wallet, disconnect, and get the account information.
+
+Here is an example of a component that you can add to your `app/index.tsx` file to display the connection status and connect/disconnect buttons.
+
+```tsx title="app/index.tsx"
+import { useMobileWallet } from '@wallet-ui/react-native-web3js';
+import { useCallback } from 'react';
+import { Button, Text, View } from 'react-native';
+
+export default function App() {
+    const { account, connect, disconnect } = useMobileWallet();
+
+    const handleConnect = useCallback(async () => {
+        try {
+            await connect();
+            console.log('Wallet connected!');
+        } catch (error) {
+            console.error('Failed to connect wallet', error);
+        }
+    }, [connect]);
+
+    const handleDisconnect = useCallback(async () => {
+        try {
+            await disconnect();
+            console.log('Wallet disconnected!');
+        } catch (error) {
+            console.error('Failed to disconnect wallet', error);
+        }
+    }, [disconnect]);
+
+    return (
+        <View style={{ padding: 16, flex: 1, justifyContent: 'center' }}>
+            {account ? (
+                <>
+                    <Text>Connected to: {account.address}</Text>
+                    <Button title="Disconnect" onPress={handleDisconnect} />
+                </>
+            ) : (
+                <Button title="Connect Wallet" onPress={handleConnect} />
+            )}
+        </View>
+    );
+}
+```

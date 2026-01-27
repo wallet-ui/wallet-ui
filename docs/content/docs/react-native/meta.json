@@ -4,15 +4,21 @@
     "icon": "Package",
     "root": true,
     "pages": [
-        "getting-started",
-        "core-concepts",
-        "---Guides---",
-        "guides/expo",
-        "---Hooks---",
-        "hooks/index",
-        "hooks/use-authorization",
-        "hooks/use-mobile-wallet",
-        "---Providers---",
-        "providers/index"
+        "---Kit (@solana/kit)---",
+        "kit/getting-started",
+        "kit/core-concepts",
+        "kit/guides/expo",
+        "kit/hooks/index",
+        "kit/hooks/use-authorization",
+        "kit/hooks/use-mobile-wallet",
+        "kit/providers/index",
+        "---Web3.js (@solana/web3.js)---",
+        "web3js/getting-started",
+        "web3js/core-concepts",
+        "web3js/guides/expo",
+        "web3js/hooks/index",
+        "web3js/hooks/use-authorization",
+        "web3js/hooks/use-mobile-wallet",
+        "web3js/providers/index"
     ]
 }

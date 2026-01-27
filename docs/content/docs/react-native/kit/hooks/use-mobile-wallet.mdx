@@ -1,0 +1,90 @@
+---
+title: useMobileWallet
+description: The primary hook for interacting with the mobile wallet.
+---
+
+The `useMobileWallet` hook is the primary hook for interacting with the mobile wallet. It provides a convenient API for connecting, disconnecting, signing transactions, signing messages, and obtaining transaction signers.
+
+### Return Value
+
+The hook returns an object with the following properties:
+
+| Name                     | Type                                                                                               | Description                                                                                   |
+| ------------------------ | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `client`                 | `Client`                                                                                           | The Solana RPC client with `rpc` and `rpcSubscriptions` properties.                           |
+| `identity`               | `AppIdentity`                                                                                      | The app identity configured in the `MobileWalletProvider`.                                    |
+| `accounts`               | `Account[] \| null`                                                                                | An array of all authorized accounts.                                                          |
+| `account`                | `Account \| null`                                                                                  | The currently selected wallet account.                                                        |
+| `chain`                  | `SolanaClusterId`                                                                                  | The current cluster identifier (e.g., `'solana:devnet'`).                                     |
+| `connect`                | `() => Promise<Account>`                                                                           | A function to connect to a wallet.                                                            |
+| `connectAnd`             | `(cb: (wallet: AuthorizeAPI) => Promise<Account \| void>) => Promise<Account \| void>`             | A function to connect and execute a callback.                                                 |
+| `disconnect`             | `() => Promise<void>`                                                                              | A function to disconnect the current wallet.                                                  |
+| `deauthorizeSession`     | `(wallet: DeauthorizeAPI) => Promise<void>`                                                        | A function to deauthorize the current session (internal).                                     |
+| `getTransactionSigner`   | `(address: Address, minContextSlot: bigint) => TransactionSendingSigner`                           | A function that returns a `TransactionSendingSigner` for use with `@solana/kit` transactions. |
+| `sendTransaction`        | `(instructions: Instruction[]) => Promise<string>`                                                 | A high-level helper to create, sign, and send a transaction from a list of instructions.      |
+| `signAndSendTransaction` | `(transaction: Transaction \| Transaction[], minContextSlot: bigint) => Promise<SignatureBytes[]>` | A function to sign and send one or more transactions.                                         |
+| `signIn`                 | `(signInPayload: SignInPayload) => Promise<Account>`                                               | A function to sign in with a wallet.                                                          |
+| `signMessage`            | `(message: Uint8Array) => Promise<Uint8Array>`                                                     | A function to sign a message.                                                                 |
+
+### The `Account` Object
+
+The `Account` object represents a user's wallet account that has been authorized for use with the dApp. It has the following properties:
+
+| Name            | Type                   | Description                                                 |
+| --------------- | ---------------------- | ----------------------------------------------------------- |
+| `address`       | `Address`              | The wallet address as an `Address` type from `@solana/kit`. |
+| `addressBase64` | `Base64EncodedAddress` | The base64-encoded address.                                 |
+| `icon`          | `WalletIcon`           | Optional. The wallet icon.                                  |
+| `label`         | `string \| undefined`  | An optional, user-defined label for the account.            |
+
+### The `Client` Object
+
+The `Client` object provides access to the Solana RPC:
+
+| Name               | Type                                              | Description                          |
+| ------------------ | ------------------------------------------------- | ------------------------------------ |
+| `rpc`              | `ReturnType<typeof createSolanaRpc>`              | The Solana RPC client.               |
+| `rpcSubscriptions` | `ReturnType<typeof createSolanaRpcSubscriptions>` | The Solana RPC subscriptions client. |
+
+### Example
+
+```tsx
+import { useMobileWallet } from '@wallet-ui/react-native-kit';
+import { useCallback } from 'react';
+import { Button, Text, View } from 'react-native';
+
+function WalletConnector() {
+    const { account, client, connect, disconnect, signAndSendTransaction, getTransactionSigner } = useMobileWallet();
+
+    const handleConnect = useCallback(async () => {
+        try {
+            await connect();
+            console.log('Wallet connected!');
+        } catch (error) {
+            console.error('Failed to connect wallet', error);
+        }
+    }, [connect]);
+
+    const handleDisconnect = useCallback(async () => {
+        try {
+            await disconnect();
+            console.log('Wallet disconnected!');
+        } catch (error) {
+            console.error('Failed to disconnect wallet', error);
+        }
+    }, [disconnect]);
+
+    return (
+        <View>
+            {account ? (
+                <>
+                    <Text>Connected to: {account.address}</Text>
+                    <Button title="Disconnect" onPress={handleDisconnect} />
+                </>
+            ) : (
+                <Button title="Connect Wallet" onPress={handleConnect} />
+            )}
+        </View>
+    );
+}
+```

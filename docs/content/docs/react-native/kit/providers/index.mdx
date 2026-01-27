@@ -1,0 +1,143 @@
+---
+title: MobileWalletProvider
+description: Provides the mobile wallet context to its children.
+---
+
+The `MobileWalletProvider` is a React context provider that makes the mobile wallet connection, RPC client, and identity available to all its child components. It should wrap your application's root component or any part of your component tree that needs access to mobile wallet functionalities.
+
+### Props
+
+The `MobileWalletProvider` accepts the following props:
+
+| Name           | Type                                                         | Description                                                                                                                                  | Default |
+| -------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `cache`        | `WalletAuthorizationCache`                                   | Optional. A cache instance for storing authorization data. Defaults to a cache that uses `AsyncStorage`.                                     |         |
+| `children`     | `ReactNode`                                                  | The child components that will have access to the mobile wallet context.                                                                     |         |
+| `cluster`      | `Pick<SolanaCluster, 'id' \| 'url' \| 'urlWs'>`              | A cluster configuration object. Use helpers like `createSolanaDevnet()` from `@wallet-ui/core`.                                              |         |
+| `createClient` | `(cluster: Pick<SolanaCluster, 'url' \| 'urlWs'>) => Client` | Optional. A function to create a custom RPC client. By default, creates a client using `createSolanaRpc` and `createSolanaRpcSubscriptions`. |         |
+| `identity`     | `AppIdentity`                                                | An object representing the identity of your application. It should include at least a `name` property. Example: `{ name: 'My Wallet App' }`. |         |
+
+### The `SolanaCluster` Object
+
+The `cluster` prop expects an object with the following properties:
+
+| Name    | Type              | Description                                                           |
+| ------- | ----------------- | --------------------------------------------------------------------- |
+| `id`    | `SolanaClusterId` | The cluster identifier (e.g., `'solana:devnet'`, `'solana:mainnet'`). |
+| `url`   | `string`          | The URL of the Solana RPC endpoint.                                   |
+| `urlWs` | `string`          | Optional. The WebSocket URL for RPC subscriptions.                    |
+
+You can use the helper functions from `@wallet-ui/core` to create cluster configurations:
+
+- `createSolanaDevnet()` - Creates a devnet cluster configuration.
+- `createSolanaMainnet(url)` - Creates a mainnet cluster configuration (requires a URL).
+- `createSolanaTestnet()` - Creates a testnet cluster configuration.
+- `createSolanaLocalnet()` - Creates a localnet cluster configuration.
+
+### The `Client` Object
+
+The `Client` object provides access to the Solana RPC and is made available via the `useMobileWallet` hook:
+
+| Name               | Type                                              | Description                          |
+| ------------------ | ------------------------------------------------- | ------------------------------------ |
+| `rpc`              | `ReturnType<typeof createSolanaRpc>`              | The Solana RPC client.               |
+| `rpcSubscriptions` | `ReturnType<typeof createSolanaRpcSubscriptions>` | The Solana RPC subscriptions client. |
+
+By default, the provider creates a client using `createSolanaRpc` and `createSolanaRpcSubscriptions` from `@solana/kit`. You can override this behavior with the `createClient` prop.
+
+### Example
+
+```tsx
+import { MobileWalletProvider } from '@wallet-ui/react-native-kit';
+import { createSolanaDevnet } from '@wallet-ui/react-native-kit';
+import React from 'react';
+import { AppRegistry } from 'react-native';
+import App from './App';
+
+const cluster = createSolanaDevnet();
+const appIdentity = {
+    name: 'My Wallet App',
+    uri: 'https://mywalletapp.com', // Optional: URI for your app
+    icon: 'https://mywalletapp.com/icon.png', // Optional: Icon for your app
+};
+
+function Root() {
+    return (
+        <MobileWalletProvider cluster={cluster} identity={appIdentity}>
+            <App />
+        </MobileWalletProvider>
+    );
+}
+
+AppRegistry.registerComponent('MyWalletApp', () => Root);
+```
+
+### Custom RPC Client
+
+You can provide your own client implementation using the `createClient` prop. This is useful when you need to customize the RPC transport, add middleware, or use a different RPC provider.
+
+The `createClient` function receives the cluster's `url` and `urlWs` and must return an object with `rpc` and `rpcSubscriptions` properties:
+
+```tsx
+import { createSolanaRpc, createSolanaRpcSubscriptions } from '@solana/kit';
+import { MobileWalletProvider, Client } from '@wallet-ui/react-native-kit';
+import { createSolanaDevnet } from '@wallet-ui/react-native-kit';
+
+const cluster = createSolanaDevnet();
+
+function createMyClient(cluster: { url: string; urlWs?: string }): Client {
+    const rpc = createSolanaRpc(cluster.url);
+    const wsUrl = cluster.urlWs ?? cluster.url.replace(/^http/, 'ws');
+    const rpcSubscriptions = createSolanaRpcSubscriptions(wsUrl);
+    return { rpc, rpcSubscriptions };
+}
+
+function Root() {
+    return (
+        <MobileWalletProvider cluster={cluster} createClient={createMyClient} identity={{ name: 'My App' }}>
+            <App />
+        </MobileWalletProvider>
+    );
+}
+```
+
+### Using `@solana/kit-plugins`
+
+For more advanced client setups, you can use [`@solana/kit-plugins`](https://github.com/anza-xyz/kit-plugins) which provides a modular plugin system for assembling Solana clients with features like transaction planning, payer management, and more.
+
+```package-install
+npm install @solana/kit-plugins
+```
+
+You can use the `rpc` plugin from `@solana/kit-plugins` inside your `createClient` function to configure the RPC connection, then pair it with a subscriptions client:
+
+```tsx
+import { createEmptyClient } from '@solana/kit';
+import { rpc } from '@solana/kit-plugins';
+import { MobileWalletProvider } from '@wallet-ui/react-native-kit';
+import { createSolanaDevnet } from '@wallet-ui/react-native-kit';
+
+const cluster = createSolanaDevnet();
+
+async function createMyClient(cluster: { url: string; urlWs?: string }) {
+    const urlWs = cluster.urlWs ?? cluster.url.replace(/^http/, 'ws');
+    const client = await createEmptyClient().use(rpc(cluster.url, { url: urlWs }));
+    return { rpc: client.rpc, rpcSubscriptions: client.rpcSubscriptions };
+}
+
+function Root() {
+    return (
+        <MobileWalletProvider cluster={cluster} createClient={createMyClient} identity={{ name: 'My App' }}>
+            <App />
+        </MobileWalletProvider>
+    );
+}
+```
+
+See the [`@solana/kit-plugins` documentation](https://github.com/anza-xyz/kit-plugins) for the full list of available plugins, including:
+
+- **`@solana/kit-plugin-rpc`** — Connect to Solana clusters (`rpc`, `localhostRpc`)
+- **`@solana/kit-plugin-payer`** — Manage transaction fee payers (`payer`, `payerFromFile`, `generatedPayer`)
+- **`@solana/kit-plugin-instruction-plan`** — Transaction planning and execution (`transactionPlanner`, `sendInstructionPlans`)
+- **`@solana/kit-plugin-airdrop`** — Request SOL from faucets
+- **`@solana/kit-plugin-litesvm`** — Local testing without an RPC connection

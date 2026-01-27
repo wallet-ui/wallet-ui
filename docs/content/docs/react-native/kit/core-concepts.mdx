@@ -1,0 +1,46 @@
+---
+title: Core Concepts
+description: Understanding the architecture of Wallet UI React Native Kit.
+---
+
+Wallet UI is designed to be a modular and extensible library for building wallet interactions in your app. Understanding its core architecture will help you use it more effectively and customize it to your needs.
+
+## Architecture Overview
+
+### `@wallet-ui/react-native-kit`
+
+This is the main package for integrating Wallet UI into a React Native application using `@solana/kit`. It provides the necessary components and hooks to connect your dApp with a mobile wallet that supports the Mobile Wallet Adapter standard.
+
+Key features include:
+
+- **`MobileWalletProvider`**: A context provider that sets up the wallet connection and RPC client, making them available throughout your component tree.
+- **`useMobileWallet` hook**: The primary hook for interacting with the wallet. It allows you to connect, disconnect, get account details, request signatures for transactions and messages, and obtain a `TransactionSendingSigner`.
+- **Low-level hooks**: For more advanced use cases, the package also exports hooks like `useAuthorization` for fine-grained control over the wallet authorization process.
+
+## Key differences from Web3.js SDK
+
+The Kit SDK uses `@solana/kit` instead of `@solana/web3.js`. This means:
+
+- **`Client` instead of `Connection`**: The provider exposes a `client` object with `rpc` and `rpcSubscriptions` instead of a `Connection` object.
+- **`SolanaCluster` instead of chain + endpoint**: Configuration uses a `cluster` prop (a `SolanaCluster` object with `id`, `url`, and optional `urlWs`) instead of separate `chain` and `endpoint` props.
+- **`Address` instead of `PublicKey`**: Account addresses use the `Address` type from `@solana/kit` instead of `PublicKey` from `@solana/web3.js`.
+- **`Transaction` from `@solana/kit`**: Transactions use the Kit `Transaction` type instead of `Transaction`/`VersionedTransaction` from `@solana/web3.js`.
+- **`TransactionSendingSigner`**: The `useMobileWallet` hook provides a `getTransactionSigner` method that returns a `TransactionSendingSigner` compatible with `@solana/kit` transaction pipelines.
+
+## Custom RPC Client
+
+The `MobileWalletProvider` creates a default RPC client using `createSolanaRpc` and `createSolanaRpcSubscriptions` from `@solana/kit`. You can customize this by passing a `createClient` function to the provider.
+
+For advanced use cases, you can also use [`@solana/kit-plugins`](https://github.com/anza-xyz/kit-plugins) which provides a modular plugin system for assembling Solana clients with features like transaction planning, payer management, and more.
+
+See the [MobileWalletProvider](/docs/react-native/kit/providers) documentation for examples.
+
+## Mobile Wallet Adapter
+
+Mobile Wallet Adapter is an open protocol that allows mobile dApps to connect with mobile wallet applications. It defines a secure communication channel between the dApp and the wallet, enabling actions like:
+
+- Authorizing a connection with one or more accounts.
+- Requesting to sign and send transactions.
+- Requesting to sign messages.
+
+The `@wallet-ui/react-native-kit` package is an implementation of the client-side of this protocol, allowing your React Native application to act as a dApp and interact with any Mobile Wallet Adapter-compatible wallet installed on the user's device. This architecture decouples your dApp from any specific wallet implementation, giving users a choice of which wallet they want to use.

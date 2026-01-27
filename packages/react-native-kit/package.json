@@ -1,0 +1,106 @@
+{
+    "name": "@wallet-ui/react-native-kit",
+    "version": "3.0.0",
+    "description": "React components for Wallet UI",
+    "exports": {
+        ".": {
+            "edge-light": {
+                "import": "./dist/index.node.mjs",
+                "require": "./dist/index.node.cjs"
+            },
+            "workerd": {
+                "import": "./dist/index.node.mjs",
+                "require": "./dist/index.node.cjs"
+            },
+            "browser": {
+                "import": "./dist/index.browser.mjs",
+                "require": "./dist/index.browser.cjs"
+            },
+            "node": {
+                "import": "./dist/index.node.mjs",
+                "require": "./dist/index.node.cjs"
+            },
+            "react-native": "./dist/index.native.mjs",
+            "types": "./dist/types/index.d.ts"
+        }
+    },
+    "browser": {
+        "./dist/index.node.cjs": "./dist/index.browser.cjs",
+        "./dist/index.node.mjs": "./dist/index.browser.mjs"
+    },
+    "main": "./dist/index.node.cjs",
+    "module": "./dist/index.node.mjs",
+    "react-native": "./dist/index.native.mjs",
+    "types": "./dist/types/index.d.ts",
+    "type": "commonjs",
+    "files": [
+        "./dist/"
+    ],
+    "sideEffects": false,
+    "keywords": [
+        "blockchain",
+        "solana",
+        "web3"
+    ],
+    "scripts": {
+        "compile:js": "tsup --config build-scripts/tsup.config.package.ts",
+        "compile:typedefs": "tsc -p ./tsconfig.declarations.json",
+        "dev": "jest -c ../../node_modules/@wallet-ui/test-config/jest-dev.config.js --rootDir . --watch",
+        "prepublishOnly": "pnpm pkg delete devDependencies",
+        "publish-impl": "npm view $npm_package_name@$npm_package_version > /dev/null 2>&1 || (pnpm publish --tag ${PUBLISH_TAG:-canary} --access public --no-git-checks && (([ \"$PUBLISH_TAG\" != \"canary\" ] && pnpm dist-tag add $npm_package_name@$npm_package_version latest) || true))",
+        "publish-packages": "pnpm prepublishOnly && pnpm publish-impl",
+        "style:fix": "pnpm eslint --fix src && pnpm prettier --log-level warn --ignore-unknown --write ./*",
+        "test:lint": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../../node_modules/@wallet-ui/test-config/jest-lint.config.js --rootDir . --silent",
+        "test:prettier": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../../node_modules/@wallet-ui/test-config/jest-prettier.config.js --rootDir . --silent",
+        "test:treeshakability:browser": "true # agadoo dist/index.browser.mjs",
+        "test:treeshakability:native": "true # agadoo dist/index.native.mjs",
+        "test:treeshakability:node": "true # agadoo dist/index.node.mjs",
+        "test:typecheck": "tsc --noEmit",
+        "test:unit:browser": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../../node_modules/@wallet-ui/test-config/jest-unit.config.browser.js --rootDir . --silent",
+        "test:unit:node": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../../node_modules/@wallet-ui/test-config/jest-unit.config.node.js --rootDir . --silent"
+    },
+    "author": "beeman <beeman@beeman.nl>",
+    "homepage": "https://wallet-ui.dev",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wallet-ui/wallet-ui"
+    },
+    "bugs": {
+        "url": "https://github.com/wallet-ui/wallet-ui/issues"
+    },
+    "browserslist": [
+        "supports bigint and not dead",
+        "maintained node versions"
+    ],
+    "dependencies": {
+        "@nanostores/react": "^1.0.0",
+        "@react-native-async-storage/async-storage": "^2.2.0",
+        "@solana-mobile/mobile-wallet-adapter-protocol": "^2.2.5",
+        "@solana-mobile/mobile-wallet-adapter-protocol-kit": "^0.2.2",
+        "@solana/react": "3.0.3",
+        "@solana/wallet-standard-features": "1.3.0",
+        "@solana-program/memo": "^0.10.0",
+        "@solana/kit": "^5.1.0",
+        "@wallet-standard/core": "1.1.1",
+        "@wallet-standard/react": "1.0.1",
+        "@wallet-ui/core": "workspace:*",
+        "js-base64": "^3.7.8",
+        "nanostores": "^1.1.0"
+    },
+    "devDependencies": {
+        "@types/react": "^19.1.17",
+        "@types/react-dom": "^19.1.11",
+        "@types/react-test-renderer": "^19.1.0",
+        "react": "19.1.0",
+        "react-error-boundary": "^6.0.0",
+        "react-test-renderer": "^19.1.4",
+        "typescript": "^5.9.2"
+    },
+    "peerDependencies": {
+        "react": ">=18"
+    },
+    "engines": {
+        "node": ">=20.18.0"
+    }
+}

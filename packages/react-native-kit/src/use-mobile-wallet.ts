@@ -1,4 +1,17 @@
-import { Address, SignatureBytes, Transaction, TransactionSendingSigner } from '@solana/kit';
+import {
+    Address,
+    appendTransactionMessageInstructions,
+    createTransactionMessage,
+    getBase58Decoder,
+    Instruction,
+    pipe,
+    setTransactionMessageFeePayerSigner,
+    setTransactionMessageLifetimeUsingBlockhash,
+    signAndSendTransactionMessageWithSigners,
+    SignatureBytes,
+    Transaction,
+    TransactionSendingSigner,
+} from '@solana/kit';
 import { AuthorizeAPI, SignInPayload } from '@solana-mobile/mobile-wallet-adapter-protocol';
 import { transact } from '@solana-mobile/mobile-wallet-adapter-protocol-kit';
 import { useCallback, useContext, useMemo } from 'react';
@@ -6,6 +19,7 @@ import { useCallback, useContext, useMemo } from 'react';
 import { MobileWalletProviderContext } from './mobile-wallet-provider';
 import { Account, useAuthorization } from './use-authorization';
 
+const decoder = getBase58Decoder();
 export function useMobileWallet() {
     const ctx = useContext(MobileWalletProviderContext);
     const {
@@ -74,6 +88,31 @@ export function useMobileWallet() {
         [signAndSendTransaction],
     );
 
+    const sendTransaction = useCallback(
+        async (instructions: Instruction[]) => {
+            if (!selectedAccount) {
+                throw new Error('No account selected');
+            }
+            const {
+                context: { slot: minContextSlot },
+                value: latestBlockhash,
+            } = await ctx.client.rpc.getLatestBlockhash().send();
+
+            const signer = getTransactionSigner(selectedAccount.address, minContextSlot);
+
+            const transactionMessage = pipe(
+                createTransactionMessage({ version: 0 }),
+                tx => appendTransactionMessageInstructions(instructions, tx),
+                tx => setTransactionMessageFeePayerSigner(signer, tx),
+                tx => setTransactionMessageLifetimeUsingBlockhash(latestBlockhash, tx),
+            );
+
+            const signatureBytes = await signAndSendTransactionMessageWithSigners(transactionMessage);
+            return decoder.decode(signatureBytes);
+        },
+        [ctx.client.rpc, getTransactionSigner, selectedAccount],
+    );
+
     return useMemo(
         () => ({
             ...ctx,
@@ -84,6 +123,7 @@ export function useMobileWallet() {
             deauthorizeSession,
             disconnect,
             getTransactionSigner,
+            sendTransaction,
             signAndSendTransaction,
             signIn,
             signMessage,
@@ -97,6 +137,7 @@ export function useMobileWallet() {
             disconnect,
             getTransactionSigner,
             selectedAccount,
+            sendTransaction,
             signAndSendTransaction,
             signIn,
             signMessage,

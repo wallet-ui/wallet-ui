@@ -1,6 +1,6 @@
 ---
 title: Getting started with Expo
-description: Set up Wallet UI for React Native with Expo
+description: Set up Wallet UI React Native Kit with Expo
 ---
 
 ## Generate new application
@@ -78,7 +78,7 @@ Lastly, update the `main` property in `package.json` and set the value to `./ind
 Next, install the dependencies:
 
 ```package-install
-npm install @wallet-ui/react-native-web3js
+npm install @wallet-ui/react-native-kit
 ```
 
 ## Build the app
@@ -105,18 +105,18 @@ npx expo start
 
 ### Create App Providers
 
-With this configured, create a file called `components/app-providers.tsx` to configure your application-wide providers :
+With this configured, create a file called `components/app-providers.tsx` to configure your application-wide providers:
 
 ```tsx title="components/app-providers.tsx"
 import { ReactNode } from 'react';
-import { MobileWalletProvider } from '@wallet-ui/react-native-web3js';
+import { MobileWalletProvider } from '@wallet-ui/react-native-kit';
+import { createSolanaDevnet } from '@wallet-ui/react-native-kit';
 
-const chain = 'solana:devnet';
-const endpoint = 'https://api.devnet.solana.com';
+const cluster = createSolanaDevnet();
 
 export function AppProviders({ children }: { children: ReactNode }) {
     return (
-        <MobileWalletProvider chain={chain} endpoint={endpoint} identity={{ name: 'Wallet UI Example Expo' }}>
+        <MobileWalletProvider cluster={cluster} identity={{ name: 'Wallet UI Example Expo' }}>
             {children}
         </MobileWalletProvider>
     );
@@ -135,7 +135,7 @@ export default function RootLayout() {
 }
 ```
 
-You can now use the [hooks](/docs/react-native/hooks) in your app.
+You can now use the [hooks](/docs/react-native/kit/hooks) in your app.
 
 ## Connect to a wallet
 
@@ -144,7 +144,7 @@ After setting up the `AppProviders`, you can use the `useMobileWallet` hook to c
 Here is an example of a component that you can add to your `app/index.tsx` file to display the connection status and connect/disconnect buttons.
 
 ```tsx title="app/index.tsx"
-import { useMobileWallet } from '@wallet-ui/react-native-web3js';
+import { useMobileWallet } from '@wallet-ui/react-native-kit';
 import { useCallback } from 'react';
 import { Button, Text, View } from 'react-native';
 

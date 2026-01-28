@@ -1,5 +1,12 @@
 # @wallet-ui/react-native-web3js
 
+## 3.1.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @wallet-ui/core@3.1.0
+
 ## 3.0.0
 
 ### Major Changes

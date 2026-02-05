@@ -81,24 +81,41 @@ export function useAuthorization({ chain, identity, store }: WalletAuthorization
     const authorizeSessionWithSignIn = useCallback(
         async (wallet: AuthorizeAPI, signInPayload: SignInPayload) => {
             try {
-                const authorizationResult = await wallet.authorize({
+                const result = await wallet.authorize({
                     auth_token: authToken,
                     chain,
                     identity,
                     sign_in_payload: signInPayload,
                 });
-                return (await handleAuthorizationResult(authorizationResult)).selectedAccount;
+                const { selectedAccount } = await handleAuthorizationResult(result);
+
+                if (!result.sign_in_result) {
+                    throw new Error('Sign in result not retrieved.');
+                }
+                return {
+                    account: selectedAccount,
+                    message: result.sign_in_result.signed_message,
+                    signature: result.sign_in_result.signature,
+                };
             } catch (error) {
                 if (
                     error instanceof SolanaMobileWalletAdapterProtocolError &&
                     error.code === SolanaMobileWalletAdapterProtocolErrorCode.ERROR_AUTHORIZATION_FAILED
                 ) {
-                    const retryResult = await wallet.authorize({
+                    const result = await wallet.authorize({
                         chain,
                         identity,
                         sign_in_payload: signInPayload,
                     });
-                    return (await handleAuthorizationResult(retryResult)).selectedAccount;
+                    if (!result.sign_in_result) {
+                        throw new Error('Sign in result not retrieved.');
+                    }
+                    const { selectedAccount } = await handleAuthorizationResult(result);
+                    return {
+                        account: selectedAccount,
+                        message: result.sign_in_result.signed_message,
+                        signature: result.sign_in_result.signature,
+                    };
                 }
                 throw error;
             }

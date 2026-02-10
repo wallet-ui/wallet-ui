@@ -25,6 +25,7 @@ The hook returns an object with the following properties:
 | `connectAnd`                 | `(cb: (wallet: AuthorizeAPI) => Promise<Account \| void>) => Promise<Account \| void>`                        | A function to connect and execute a callback.                          |
 | `disconnect`                 | `() => Promise<void>`                                                                                         | A function to disconnect the current wallet.                           |
 | `signAndSendTransaction`     | `(transaction: Transaction \| VersionedTransaction, minContextSlot: number) => Promise<TransactionSignature>` | A function to sign and send a transaction.                             |
+| `signTransaction`            | `(transaction: Transaction \| VersionedTransaction \| (Transaction \| VersionedTransaction)[]) => Promise<Transaction \| VersionedTransaction \| (Transaction \| VersionedTransaction)[]>` | A function to sign one or more transactions without sending them.      |
 | `signIn`                     | `(signInPayload: SignInPayload) => Promise<Account>`                                                          | A function to sign in with a wallet.                                   |
 | `signMessage`                | `(message: Uint8Array) => Promise<Uint8Array>`                                                                | A function to sign a message.                                          |
 

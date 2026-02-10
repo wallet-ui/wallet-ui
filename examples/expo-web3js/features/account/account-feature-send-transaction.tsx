@@ -4,7 +4,7 @@ import { appStyles } from '@/constants/app-styles';
 import { createMemoInstruction } from '@solana/spl-memo';
 import { useMobileWallet } from '@wallet-ui/react-native-web3js';
 
-export function AccountFeatureSignTransaction({ address }: { address: PublicKey }) {
+export function AccountFeatureSendTransaction({ address }: { address: PublicKey }) {
     const { connection, signAndSendTransaction } = useMobileWallet();
 
     async function submit() {
@@ -29,14 +29,14 @@ export function AccountFeatureSignTransaction({ address }: { address: PublicKey 
 
             await connection.confirmTransaction({ signature, ...latestBlockhash }, 'confirmed');
 
-            console.log(`Signed transaction: ${signature}!`);
+            console.log(`Sent transaction: ${signature}!`);
         } catch (e) {
-            console.log(`Error signing transaction: ${e}`);
+            console.log(`Error sending transaction: ${e}`);
         }
     }
     return (
         <View style={appStyles.stack}>
-            <Button onPress={submit} title="Sign transaction" />
+            <Button onPress={submit} title="Send transaction" />
         </View>
     );
 }

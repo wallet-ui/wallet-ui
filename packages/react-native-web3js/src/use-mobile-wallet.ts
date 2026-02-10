@@ -66,6 +66,19 @@ export function useMobileWallet() {
         [authorizeSession],
     );
 
+    const signTransaction = useCallback(
+        async <T extends Transaction | VersionedTransaction, K extends T | T[]>(transaction: K): Promise<K> =>
+            await transact(async wallet => {
+                await authorizeSession(wallet);
+                const signedTxs = await wallet.signTransactions({
+                    transactions: Array.isArray(transaction) ? transaction : [transaction],
+                });
+                return Array.isArray(transaction) ? signedTxs : signedTxs[0];
+            }),
+
+        [authorizeSession],
+    );
+
     return useMemo(
         () => ({
             ...ctx,
@@ -78,6 +91,7 @@ export function useMobileWallet() {
             signAndSendTransaction,
             signIn,
             signMessage,
+            signTransaction,
         }),
         [
             accounts,
@@ -90,6 +104,7 @@ export function useMobileWallet() {
             signAndSendTransaction,
             signIn,
             signMessage,
+            signTransaction,
         ],
     );
 }

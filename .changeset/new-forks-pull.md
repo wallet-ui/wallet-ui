@@ -3,4 +3,4 @@
 '@wallet-ui/react-native-web3js': minor
 ---
 
-feat(react-native-kit, react-native-web3js): add signTransaction helper to useMobileWallet
+add signTransaction function to useMobileWallet hook

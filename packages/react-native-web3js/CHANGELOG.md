@@ -1,5 +1,16 @@
 # @wallet-ui/react-native-web3js
 
+## 3.2.0
+
+### Minor Changes
+
+- [#400](https://github.com/wallet-ui/wallet-ui/pull/400) [`1a61c39`](https://github.com/wallet-ui/wallet-ui/commit/1a61c3901e1324e780d6cced5f331eb9b85db94b) Thanks [@MattMsh](https://github.com/MattMsh)! - add signTransaction function to useMobileWallet hook
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @wallet-ui/core@3.2.0
+
 ## 3.1.0
 
 ### Patch Changes

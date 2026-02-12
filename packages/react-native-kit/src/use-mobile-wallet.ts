@@ -89,6 +89,18 @@ export function useMobileWallet() {
         [authorizeSession],
     );
 
+    const signMessages = useCallback(
+        async (messages: Uint8Array[]): Promise<Uint8Array[]> =>
+            await transact(async wallet => {
+                const authResult = await authorizeSession(wallet);
+                return await wallet.signMessages({
+                    addresses: messages.map(() => authResult.addressBase64),
+                    payloads: messages,
+                });
+            }),
+        [authorizeSession],
+    );
+
     const getTransactionSigner = useCallback(
         (address: Address, minContextSlot: bigint): TransactionSendingSigner => {
             return {
@@ -140,6 +152,7 @@ export function useMobileWallet() {
             signAndSendTransaction,
             signIn,
             signMessage,
+            signMessages,
             signTransaction,
         }),
         [
@@ -155,6 +168,7 @@ export function useMobileWallet() {
             signAndSendTransaction,
             signIn,
             signMessage,
+            signMessages,
             signTransaction,
         ],
     );

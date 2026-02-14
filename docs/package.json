@@ -24,7 +24,7 @@
         "fumadocs-ui": "15.7.13",
         "import-in-the-middle": "^1.14.2",
         "lucide-react": "^0.544.0",
-        "next": "15.5.9",
+        "next": "15.5.10",
         "react": "^19.1.4",
         "react-dom": "^19.1.4",
         "require-in-the-middle": "^7.5.2"

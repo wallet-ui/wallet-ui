@@ -44,7 +44,7 @@ export function useMobileWallet() {
     );
 
     const signIn = useCallback(
-        async (signInPayload: SignInPayload): Promise<Account> =>
+        async (signInPayload: SignInPayload): Promise<{ account: Account; message: string; signature: string }> =>
             await transact(async wallet => await authorizeSessionWithSignIn(wallet, signInPayload)),
         [authorizeSessionWithSignIn],
     );

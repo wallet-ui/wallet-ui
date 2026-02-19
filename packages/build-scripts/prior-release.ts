@@ -57,7 +57,6 @@ export async function getPriorRelease(version: string): Promise<{
         }
     });
     const makeLatest = releases.every(release => {
-        console.log('makeLatest', release);
         return cmpVersions('v2.0.0'.replace(/^v/, ''), version.replace(/^v/, '')) <= 0;
     });
     return {

@@ -28,7 +28,12 @@ const config = minimist(process.argv.slice(2), {
 
 const { packages, tag, version } = await getCurrentLinkedVersion();
 
-const { makeLatest, priorRelease } = await getPriorRelease(version);
+const { makeLatest, priorRelease, releaseAlreadyExists } = await getPriorRelease(version);
+
+if (releaseAlreadyExists && !config['dry-run']) {
+    console.log(`Release for tag ${tag} already exists, skipping creation.`);
+    process.exit(0);
+}
 
 /**
  * Read in all of their changelogs and grab the entries related to that version.

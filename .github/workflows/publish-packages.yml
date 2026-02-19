@@ -128,7 +128,7 @@ jobs:
       - name: Validate that a package at the given version has already been published
         run: |
           echo '${{ github.event.inputs.version }}' | grep -E "^([0-9]+\.){0,2}[0-9]+$" > /dev/null || echo 'Version must be of the form X.Y.Z'
-          pnpm view '@solana/kit@${{ github.event.inputs.version }}'
+          pnpm view '@wallet-ui/core@${{ github.event.inputs.version }}'
 
   tag-release-manually:
     permissions:

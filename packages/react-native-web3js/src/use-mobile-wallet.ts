@@ -39,16 +39,15 @@ export function useMobileWallet() {
 
     const signAndSendTransaction = useCallback(
         async (
-            transaction: Transaction | VersionedTransaction,
+            transaction: Transaction | VersionedTransaction | (Transaction | VersionedTransaction)[],
             minContextSlot: number,
-        ): Promise<TransactionSignature> =>
+        ): Promise<TransactionSignature[]> =>
             await transact(async wallet => {
                 await authorizeSession(wallet);
-                const signatures = await wallet.signAndSendTransactions({
+                return await wallet.signAndSendTransactions({
                     minContextSlot,
-                    transactions: [transaction],
+                    transactions: Array.isArray(transaction) ? transaction : [transaction],
                 });
-                return signatures[0];
             }),
         [authorizeSession],
     );
@@ -91,21 +90,6 @@ export function useMobileWallet() {
         [authorizeSession],
     );
 
-    const signAndSendTransactions = useCallback(
-        async (
-            transactions: (Transaction | VersionedTransaction)[],
-            minContextSlot: number,
-        ): Promise<TransactionSignature[]> =>
-            await transact(async wallet => {
-                await authorizeSession(wallet);
-                return await wallet.signAndSendTransactions({
-                    minContextSlot,
-                    transactions,
-                });
-            }),
-        [authorizeSession],
-    );
-
     return useMemo(
         () => ({
             ...ctx,
@@ -116,7 +100,6 @@ export function useMobileWallet() {
             deauthorizeSession,
             disconnect,
             signAndSendTransaction,
-            signAndSendTransactions,
             signIn,
             signMessage,
             signMessages,
@@ -131,7 +114,6 @@ export function useMobileWallet() {
             disconnect,
             selectedAccount,
             signAndSendTransaction,
-            signAndSendTransactions,
             signIn,
             signMessage,
             signMessages,

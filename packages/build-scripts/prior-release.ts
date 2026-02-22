@@ -25,6 +25,7 @@ export async function getPriorRelease(version: string): Promise<{
     makeLatest: boolean;
     priorRelease: RestEndpointMethodTypes['repos']['listReleases']['response']['data'][number] | undefined;
     releases: RestEndpointMethodTypes['repos']['listReleases']['response']['data'];
+    releaseAlreadyExists: boolean;
 }> {
     const [_, major] = version.match(SEMVER_REGEX)!;
 
@@ -37,9 +38,7 @@ export async function getPriorRelease(version: string): Promise<{
             repo: REPO_NAME,
         }),
     );
-    if (!config['dry-run'] && releases.some(({ tag_name: releaseTagName }) => releaseTagName === `v${version}`)) {
-        throw new Error(`There is already a latest release on GitHub for v${version}`);
-    }
+    const releaseAlreadyExists = releases.some(({ tag_name: releaseTagName }) => releaseTagName === `v${version}`);
     let priorRelease: RestEndpointMethodTypes['repos']['listReleases']['response']['data'][number] | undefined;
     releases.forEach(release => {
         const candidateVersion = release.tag_name.replace(/^v/, '');
@@ -57,12 +56,12 @@ export async function getPriorRelease(version: string): Promise<{
         }
     });
     const makeLatest = releases.every(release => {
-        console.log('makeLatest', release);
         return cmpVersions('v2.0.0'.replace(/^v/, ''), version.replace(/^v/, '')) <= 0;
     });
     return {
         makeLatest,
         priorRelease,
         releases,
+        releaseAlreadyExists,
     };
 }

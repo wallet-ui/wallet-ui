@@ -64,14 +64,15 @@ export function useMobileWallet() {
     );
 
     const signMessage = useCallback(
-        async (message: Uint8Array): Promise<Uint8Array> =>
+        async <K extends Uint8Array | Uint8Array[]>(message: K): Promise<K> =>
             await transact(async wallet => {
                 const authResult = await authorizeSession(wallet);
-                const signedMessages = await wallet.signMessages({
-                    addresses: [authResult.addressBase64],
-                    payloads: [message],
+                const payloads: Uint8Array[] = Array.isArray(message) ? message : [message];
+                const signed = await wallet.signMessages({
+                    addresses: payloads.map(() => authResult.addressBase64),
+                    payloads,
                 });
-                return signedMessages[0];
+                return (Array.isArray(message) ? signed : signed[0]) as K;
             }),
         [authorizeSession],
     );
@@ -86,18 +87,6 @@ export function useMobileWallet() {
                 return Array.isArray(transaction) ? signedTxs : signedTxs[0];
             }),
 
-        [authorizeSession],
-    );
-
-    const signMessages = useCallback(
-        async (messages: Uint8Array[]): Promise<Uint8Array[]> =>
-            await transact(async wallet => {
-                const authResult = await authorizeSession(wallet);
-                return await wallet.signMessages({
-                    addresses: messages.map(() => authResult.addressBase64),
-                    payloads: messages,
-                });
-            }),
         [authorizeSession],
     );
 
@@ -152,7 +141,6 @@ export function useMobileWallet() {
             signAndSendTransaction,
             signIn,
             signMessage,
-            signMessages,
             signTransaction,
         }),
         [
@@ -168,7 +156,6 @@ export function useMobileWallet() {
             signAndSendTransaction,
             signIn,
             signMessage,
-            signMessages,
             signTransaction,
         ],
     );

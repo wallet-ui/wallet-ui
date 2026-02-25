@@ -10,15 +10,16 @@ runs:
   using: composite
   steps:
     - name: Install package manager
-      uses: pnpm/action-setup@v3
+      uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4
       with:
-        version: 10.20.0
+        version: 10.30.2
 
     - name: Setup Node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
       with:
         node-version: ${{ inputs.version }}
         cache: 'pnpm'
+        registry-url: 'https://registry.npmjs.org'
 
     - name: Install dependencies
       shell: bash

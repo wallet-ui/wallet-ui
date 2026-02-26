@@ -10,6 +10,7 @@ node_modules
 *.pem
 tmp
 dist
+.env
 
 # debug
 npm-debug.log*

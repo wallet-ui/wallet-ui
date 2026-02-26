@@ -19,15 +19,15 @@
     "devDependencies": {
         "@changesets/changelog-github": "^0.5.1",
         "@changesets/cli": "^2.29.7",
-        "@eslint/js": "^9.39.2",
-        "@eslint/json": "^0.14.0",
+        "@eslint/js": "^10.0.1",
+        "@eslint/json": "^1.0.1",
         "@solana/eslint-config-solana": "^5.0.0",
         "@solana/prettier-config-solana": "0.0.5",
         "@swc/jest": "^0.2.39",
         "@types/jest": "^30.0.0",
         "@types/node": "^24.5.2",
-        "@typescript-eslint/eslint-plugin": "^8.52.0",
-        "@typescript-eslint/parser": "^8.52.0",
+        "@typescript-eslint/eslint-plugin": "^8.56.1",
+        "@typescript-eslint/parser": "^8.56.1",
         "@wallet-ui/build-scripts": "workspace:*",
         "@wallet-ui/test-config": "workspace:*",
         "@wallet-ui/test-matchers": "workspace:*",
@@ -60,7 +60,7 @@
         "pnpm": "^10",
         "yarn": "please-use-pnpm"
     },
-    "packageManager": "pnpm@10.20.0+sha512.cf9998222162dd85864d0a8102e7892e7ba4ceadebbf5a31f9c2fce48dfce317a9c53b9f6464d1ef9042cba2e02ae02a9f7c143a2b438cd93c91840f0192b9dd",
+    "packageManager": "pnpm@10.30.2",
     "pnpm": {
         "overrides": {
             "agadoo>rollup": "^4",

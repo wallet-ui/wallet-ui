@@ -6,7 +6,7 @@
         "./index.ts"
     ],
     "dependencies": {
-        "@solana/kit": "^5.1.0",
+        "@solana/kit": "^6.1.0",
         "@wallet-ui/react": "workspace:*",
         "@wallet-ui/react-gill": "workspace:*",
         "react": "^19.1.4",

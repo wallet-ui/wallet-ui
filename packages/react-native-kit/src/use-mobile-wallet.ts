@@ -64,14 +64,15 @@ export function useMobileWallet() {
     );
 
     const signMessage = useCallback(
-        async (message: Uint8Array): Promise<Uint8Array> =>
+        async <K extends Uint8Array | Uint8Array[]>(message: K): Promise<K> =>
             await transact(async wallet => {
                 const authResult = await authorizeSession(wallet);
-                const signedMessages = await wallet.signMessages({
-                    addresses: [authResult.addressBase64],
-                    payloads: [message],
+                const payloads: Uint8Array[] = Array.isArray(message) ? message : [message];
+                const signed = await wallet.signMessages({
+                    addresses: payloads.map(() => authResult.addressBase64),
+                    payloads,
                 });
-                return signedMessages[0];
+                return (Array.isArray(message) ? signed : signed[0]) as K;
             }),
         [authorizeSession],
     );

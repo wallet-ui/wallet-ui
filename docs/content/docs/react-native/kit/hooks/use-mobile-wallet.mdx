@@ -25,7 +25,7 @@ The hook returns an object with the following properties:
 | `signAndSendTransaction` | `(transaction: Transaction \| Transaction[], minContextSlot: bigint) => Promise<SignatureBytes[]>` | A function to sign and send one or more transactions.                                         |
 | `signTransaction`        | `(transaction: Transaction \| Transaction[]) => Promise<Transaction \| Transaction[]>`             | A function to sign one or more transactions without sending them.                             |
 | `signIn`                 | `(signInPayload: SignInPayload) => Promise<Account>`                                               | A function to sign in with a wallet.                                                          |
-| `signMessage`            | `(message: Uint8Array) => Promise<Uint8Array>`                                                     | A function to sign a message.                                                                 |
+| `signMessage`            | `(message: Uint8Array \| Uint8Array[]) => Promise<Uint8Array \| Uint8Array[]>`                     | A function to sign one or more messages.                                                       |
 
 ### The `Account` Object
 

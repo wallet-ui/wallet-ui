@@ -1,6 +1,6 @@
 {
     "name": "@wallet-ui/react-native-web3js",
-    "version": "3.2.0",
+    "version": "3.2.1",
     "description": "React components for Wallet UI",
     "exports": {
         ".": {

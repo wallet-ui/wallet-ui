@@ -21,7 +21,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write
 
 env:
   # Among other things, opts out of Turborepo telemetry

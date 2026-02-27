@@ -8,7 +8,6 @@ import {
     setTransactionMessageFeePayerSigner,
     setTransactionMessageLifetimeUsingBlockhash,
     signAndSendTransactionMessageWithSigners,
-    SignatureBytes,
     Transaction,
     TransactionSendingSigner,
 } from '@solana/kit';
@@ -17,6 +16,7 @@ import { transact } from '@solana-mobile/mobile-wallet-adapter-protocol-kit';
 import { useCallback, useContext, useMemo } from 'react';
 
 import { MobileWalletProviderContext } from './mobile-wallet-provider';
+import { TransactionSignatures } from './types';
 import { Account, useAuthorization } from './use-authorization';
 
 const decoder = getBase58Decoder();
@@ -52,13 +52,21 @@ export function useMobileWallet() {
     const disconnect = useCallback(async (): Promise<void> => await deauthorizeSessions(), [deauthorizeSessions]);
 
     const signAndSendTransaction = useCallback(
-        async (transaction: Transaction | Transaction[], minContextSlot: bigint): Promise<SignatureBytes[]> =>
+        async <T extends Transaction | Transaction[]>(
+            transaction: T,
+            minContextSlot: bigint,
+        ): Promise<TransactionSignatures<T>> =>
             await transact(async wallet => {
                 await authorizeSession(wallet);
-                return await wallet.signAndSendTransactions({
+                const isTransactionsArray = Array.isArray(transaction);
+                const signatures = await wallet.signAndSendTransactions({
                     minContextSlot: Number(minContextSlot),
-                    transactions: Array.isArray(transaction) ? transaction : [transaction],
+                    transactions: isTransactionsArray ? transaction : [transaction],
                 });
+
+                return isTransactionsArray
+                    ? (signatures as TransactionSignatures<T>)
+                    : (signatures[0] as TransactionSignatures<T>);
             }),
         [authorizeSession],
     );

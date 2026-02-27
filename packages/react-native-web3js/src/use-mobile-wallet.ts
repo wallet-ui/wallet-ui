@@ -1,9 +1,10 @@
-import { Transaction, TransactionSignature, VersionedTransaction } from '@solana/web3.js';
+import { Transaction, VersionedTransaction } from '@solana/web3.js';
 import { AuthorizeAPI, SignInPayload } from '@solana-mobile/mobile-wallet-adapter-protocol';
 import { transact } from '@solana-mobile/mobile-wallet-adapter-protocol-web3js';
 import { useCallback, useContext, useMemo } from 'react';
 
 import { MobileWalletProviderContext } from './mobile-wallet-provider';
+import { TransactionSignatures } from './types';
 import { Account, useAuthorization } from './use-authorization';
 
 export function useMobileWallet() {
@@ -38,16 +39,23 @@ export function useMobileWallet() {
     const disconnect = useCallback(async (): Promise<void> => await deauthorizeSessions(), [deauthorizeSessions]);
 
     const signAndSendTransaction = useCallback(
-        async (
-            transaction: (Transaction | VersionedTransaction)[] | Transaction | VersionedTransaction,
+        async <T extends Transaction | VersionedTransaction, K extends T | T[]>(
+            transaction: K,
             minContextSlot: number,
-        ): Promise<TransactionSignature[]> =>
+        ): Promise<TransactionSignatures<K>> =>
             await transact(async wallet => {
                 await authorizeSession(wallet);
-                return await wallet.signAndSendTransactions({
+
+                const isTransactionsArray = Array.isArray(transaction);
+
+                const signatures = await wallet.signAndSendTransactions({
                     minContextSlot,
-                    transactions: Array.isArray(transaction) ? transaction : [transaction],
+                    transactions: isTransactionsArray ? transaction : [transaction],
                 });
+
+                return isTransactionsArray
+                    ? (signatures as TransactionSignatures<K>)
+                    : (signatures[0] as TransactionSignatures<K>);
             }),
         [authorizeSession],
     );

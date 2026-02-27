@@ -1,5 +1,18 @@
 # @wallet-ui/react-native-kit
 
+## 3.3.0
+
+### Minor Changes
+
+- [#431](https://github.com/wallet-ui/wallet-ui/pull/431) [`2bdd302`](https://github.com/wallet-ui/wallet-ui/commit/2bdd302d836fec8883a86c556b14f3837c0c5294) Thanks [@MattMsh](https://github.com/MattMsh)! - enhance signAndSendTransaction return type
+
+### Patch Changes
+
+- [#405](https://github.com/wallet-ui/wallet-ui/pull/405) [`fe20545`](https://github.com/wallet-ui/wallet-ui/commit/fe20545b054e97b661f852ddd6e9a64de70b8b9d) Thanks [@pratikbuilds](https://github.com/pratikbuilds)! - feat(mwa): signMessage accepts single or array of messages, signMessages removed
+
+- Updated dependencies []:
+    - @wallet-ui/core@3.3.0
+
 ## 3.2.1
 
 ### Patch Changes

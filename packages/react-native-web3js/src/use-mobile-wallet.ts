@@ -3,6 +3,7 @@ import { AuthorizeAPI, SignInPayload } from '@solana-mobile/mobile-wallet-adapte
 import { transact } from '@solana-mobile/mobile-wallet-adapter-protocol-web3js';
 import { useCallback, useContext, useMemo } from 'react';
 
+import { SignInOutput } from './convert-sign-in-result';
 import { MobileWalletProviderContext } from './mobile-wallet-provider';
 import { TransactionSignatures } from './types';
 import { Account, useAuthorization } from './use-authorization';
@@ -31,7 +32,7 @@ export function useMobileWallet() {
     );
 
     const signIn = useCallback(
-        async (signInPayload: SignInPayload): Promise<Account> =>
+        async (signInPayload: SignInPayload): Promise<SignInOutput> =>
             await transact(async wallet => await authorizeSessionWithSignIn(wallet, signInPayload)),
         [authorizeSessionWithSignIn],
     );

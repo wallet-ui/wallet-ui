@@ -41,7 +41,7 @@ export default function HomePage() {
             />
             <Card
                 title="Getting Started with React Native"
-                href="/docs/react-native/getting-started"
+                href="/docs/react-native/kit/getting-started"
                 description="Get started with Wallet UI for React Native Web3js"
             />
             <p className="text-fd-muted-foreground">

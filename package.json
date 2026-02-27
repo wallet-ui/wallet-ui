@@ -18,7 +18,7 @@
     },
     "devDependencies": {
         "@changesets/changelog-github": "^0.5.1",
-        "@changesets/cli": "^2.29.7",
+        "@changesets/cli": "^2.29.8",
         "@eslint/js": "^10.0.1",
         "@eslint/json": "^1.0.1",
         "@solana/eslint-config-solana": "^5.0.0",

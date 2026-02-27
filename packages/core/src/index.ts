@@ -5,5 +5,6 @@ export * from './create-storage-cluster';
 export * from './get-explorer-url';
 export * from './handle-copy-text';
 export * from './storage';
+export * from './string-to-uint8-array';
 export * from './types/solana-cluster';
 export * from './types/solana-cluster-id';

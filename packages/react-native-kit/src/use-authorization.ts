@@ -16,6 +16,7 @@ import { useCallback, useMemo } from 'react';
 
 import { AuthorizationStore } from './authorization-store';
 import { Cache } from './cache';
+import { convertSignInResult, SignInOutput } from './convert-sign-in-result';
 import { getAuthorizationFromAuthorizationResult } from './get-authorization-from-authorization-result';
 import { useAuthorizationStore } from './use-authorization-store';
 
@@ -79,26 +80,35 @@ export function useAuthorization({ chain, identity, store }: WalletAuthorization
     );
 
     const authorizeSessionWithSignIn = useCallback(
-        async (wallet: AuthorizeAPI, signInPayload: SignInPayload) => {
+        async (wallet: AuthorizeAPI, signInPayload: SignInPayload): Promise<SignInOutput> => {
             try {
-                const authorizationResult = await wallet.authorize({
+                const result = await wallet.authorize({
                     auth_token: authToken,
                     chain,
                     identity,
                     sign_in_payload: signInPayload,
                 });
-                return (await handleAuthorizationResult(authorizationResult)).selectedAccount;
+                const { selectedAccount: account } = await handleAuthorizationResult(result);
+
+                if (!result.sign_in_result) {
+                    throw new Error('Sign in result not retrieved.');
+                }
+                return convertSignInResult({ account, signInResult: result.sign_in_result });
             } catch (error) {
                 if (
                     error instanceof SolanaMobileWalletAdapterProtocolError &&
                     error.code === SolanaMobileWalletAdapterProtocolErrorCode.ERROR_AUTHORIZATION_FAILED
                 ) {
-                    const retryResult = await wallet.authorize({
+                    const result = await wallet.authorize({
                         chain,
                         identity,
                         sign_in_payload: signInPayload,
                     });
-                    return (await handleAuthorizationResult(retryResult)).selectedAccount;
+                    if (!result.sign_in_result) {
+                        throw new Error('Sign in result not retrieved.', { cause: error });
+                    }
+                    const { selectedAccount: account } = await handleAuthorizationResult(result);
+                    return convertSignInResult({ account, signInResult: result.sign_in_result });
                 }
                 throw error;
             }

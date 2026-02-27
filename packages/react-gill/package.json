@@ -1,6 +1,6 @@
 {
     "name": "@wallet-ui/react-gill",
-    "version": "3.2.1",
+    "version": "3.3.0",
     "description": "React components for Wallet UI",
     "exports": {
         ".": {

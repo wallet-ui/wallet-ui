@@ -1,5 +1,13 @@
 # @wallet-ui/react-gill
 
+## 3.3.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @wallet-ui/core@3.3.0
+    - @wallet-ui/react@3.3.0
+
 ## 3.2.1
 
 ### Patch Changes

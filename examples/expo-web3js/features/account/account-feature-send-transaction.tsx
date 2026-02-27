@@ -25,11 +25,13 @@ export function AccountFeatureSendTransaction({ address }: { address: PublicKey 
 
             const transaction = new VersionedTransaction(message);
 
-            const signature = await signAndSendTransaction(transaction, minContextSlot);
+            const signatures = await signAndSendTransaction(transaction, minContextSlot);
 
-            await connection.confirmTransaction({ signature, ...latestBlockhash }, 'confirmed');
+            for (const signature of signatures) {
+                await connection.confirmTransaction({ signature, ...latestBlockhash }, 'confirmed');
+            }
 
-            console.log(`Sent transaction: ${signature}!`);
+            console.log(`Sent ${signatures.length} transaction(s): ${signatures.join(', ')}!`);
         } catch (e) {
             console.log(`Error sending transaction: ${e}`);
         }

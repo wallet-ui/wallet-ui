@@ -9,6 +9,7 @@ export * from './playground/playground-providers';
 export * from './playground/wallet-ui/playground-ui';
 export * from './playground/wallet-ui/playground-wallet-ui';
 export * from './playground/wallet/playground-wallet';
+export * from './playground/solana-client-provider';
 export * from './ui-client-render';
 export * from './ui/ui-box';
 export * from './ui/ui-card';

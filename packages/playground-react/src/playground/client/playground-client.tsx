@@ -1,11 +1,11 @@
-import { useWalletUiGill } from '@wallet-ui/react-gill';
 import React from 'react';
 import { getSolanaNetworkFromGenesisHash } from '../../lib/get-solana-network-from-genesis-hash';
 import { UiCard } from '../../ui/';
 import { PlaygroundRunCommand } from './playground-run-command';
+import { useSolanaClient } from '../solana-client-provider';
 
 export function PlaygroundClient() {
-    const client = useWalletUiGill();
+    const client = useSolanaClient();
 
     const commandMap = new Map<string, () => Promise<unknown>>()
         .set('getLatestBlockhash', () =>

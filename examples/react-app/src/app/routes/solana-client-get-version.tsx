@@ -1,9 +1,9 @@
-import { useWalletUiGill } from '@wallet-ui/react-gill';
+import { useSolanaClient } from '@wallet-ui/playground-react';
 import { useState } from 'react';
 
 export function SolanaClientGetVersion() {
     const [version, setVersion] = useState('');
-    const client = useWalletUiGill();
+    const client = useSolanaClient();
 
     return (
         <div>

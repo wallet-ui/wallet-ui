@@ -6,16 +6,15 @@ import {
     pipe,
     setTransactionMessageFeePayerSigner,
     setTransactionMessageLifetimeUsingBlockhash,
-    signAndSendTransactionMessageWithSigners,
+    signAndSendTransactionMessageWithSigners
 } from '@solana/kit';
 import {
     getUiWalletAccountStorageKey,
     type UiWalletAccount,
     useWallets,
     useWalletUiCluster,
-    useWalletUiSigner,
+    useWalletUiSigner
 } from '@wallet-ui/react';
-import { useWalletUiGill } from '@wallet-ui/react-gill';
 import type { SyntheticEvent } from 'react';
 import React, { useMemo, useState } from 'react';
 import { solStringToLamports } from '../../lib/sol-string-to-lamports';
@@ -24,11 +23,12 @@ import { getTransferSolInstruction } from '@solana-program/system';
 
 import { PlaygroundErrorPanel } from '../playground-error-panel';
 import { PlaygroundTxSuccess } from '../playground-tx-success';
+import { useSolanaClient } from '../solana-client-provider';
 
 export function PlaygroundSignAndSendTx({ account }: { account: UiWalletAccount }) {
     const { error, hasError, setError, resetError } = useError();
     const { cluster } = useWalletUiCluster();
-    const client = useWalletUiGill();
+    const client = useSolanaClient();
     const wallets = useWallets();
     const [isSendingTransaction, setIsSendingTransaction] = useState(false);
     const [lastSignature, setLastSignature] = useState<Uint8Array | undefined>();

@@ -3,7 +3,8 @@ title: useWalletUiSignAndSend
 description: A hook to easily sign and send a transaction.
 ---
 
-import { Callout } from 'fumadocs-ui/components/callout';
+
+import {Callout} from 'fumadocs-ui/components/callout';
 
 The `useWalletUiSignAndSend` hook provides a single function to take a set of instructions, sign them with a wallet, and send the transaction to the network.
 
@@ -20,7 +21,7 @@ The hook returns a single asynchronous function.
 
 **`signAndSend(ix, signer)`**
 
-- **`ix`**: `IInstruction | IInstruction[]` - A single instruction or an array of instructions to include in the transaction. These instructions should be created using a library like `gill`.
+- **`ix`**: `IInstruction | IInstruction[]` - A single instruction or an array of instructions to include in the transaction. These instructions should be created using a library like `@solana/kit`.
 - **`signer`**: `TransactionSendingSigner` - The signer object for the fee payer and signature.
 - **Returns**: `Promise<string>` - A promise that resolves to the base58 transaction signature.
 
@@ -30,7 +31,7 @@ This example demonstrates how to create a simple SOL transfer transaction and se
 
 ```tsx
 import { useWalletUiSigner, useWalletUiSignAndSend } from '@wallet-ui/react';
-import { createTransferInstruction, getBase58Encoder } from 'gill';
+import { createTransferInstruction, getBase58Encoder } from '@solana/kit';
 import { useState } from 'react';
 
 const LAMPORTS_PER_SOL = 1_000_000_000;

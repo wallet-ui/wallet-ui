@@ -4,12 +4,11 @@ import {
     createSolanaTestnet,
     createWalletUiConfig,
     WalletUi,
-    WalletUiConfig,
 } from '@wallet-ui/react';
-import { WalletUiGillProvider } from '@wallet-ui/react-gill';
 import React from 'react';
+import { SolanaClientProvider } from './solana-client-provider';
 
-const playgroundConfig = createWalletUiConfig({
+const config = createWalletUiConfig({
     clusters: [
         createSolanaDevnet(),
         // Customize the clusters here
@@ -21,16 +20,10 @@ const playgroundConfig = createWalletUiConfig({
     ],
 });
 
-export function PlaygroundProviders({
-    children,
-    config = playgroundConfig,
-}: {
-    children: React.ReactNode;
-    config?: WalletUiConfig;
-}) {
+export function PlaygroundProviders({ children }: { children: React.ReactNode }) {
     return (
         <WalletUi config={config}>
-            <WalletUiGillProvider>{children}</WalletUiGillProvider>
+            <SolanaClientProvider>{children}</SolanaClientProvider>
         </WalletUi>
     );
 }

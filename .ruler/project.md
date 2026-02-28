@@ -15,7 +15,6 @@ These directories contain the core libraries that are published to npm. They are
 
 - **`@wallet-ui/core`**: Framework-agnostic core logic, state management (using `nanostores`), and utilities.
 - **`@wallet-ui/react`**: React adapters, hooks (`useWalletUi`), and providers (`WalletUiProvider`) for web applications.
-- **`@wallet-ui/react-gill`**: Specialized React components and hooks for interacting with the `gill` Solana client.
 - **`@wallet-ui/react-native-web3js`**: React Native adapters and hooks for mobile applications.
 - **`@wallet-ui/css`**: Base CSS styles for Wallet UI components.
 - **`@wallet-ui/tailwind`**: Tailwind CSS configuration and preset styles for Wallet UI.

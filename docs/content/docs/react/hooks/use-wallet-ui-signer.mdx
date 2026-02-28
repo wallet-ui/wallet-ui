@@ -3,11 +3,12 @@ title: useWalletUiSigner
 description: A hook to get a transaction signer for the active wallet.
 ---
 
-import { Callout } from 'fumadocs-ui/components/callout';
+
+import {Callout} from 'fumadocs-ui/components/callout';
 
 The `useWalletUiSigner` hook is a convenience hook that provides a `TransactionSendingSigner` for the currently connected wallet account.
 
-This signer can be used with libraries like `gill` or other transaction-building tools to sign and send transactions on behalf of the user.
+This signer can be used with libraries like `@solana/kit` or other transaction-building tools to sign and send transactions on behalf of the user.
 
 <Callout>
     This hook is a wrapper around `useWalletAccountTransactionSendingSigner` from the `@solana/react` package.

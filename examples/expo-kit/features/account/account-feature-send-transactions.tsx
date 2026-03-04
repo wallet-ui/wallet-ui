@@ -15,7 +15,7 @@ import {
 import { useState } from 'react';
 
 export function AccountFeatureSendTransactions({ address }: { address: Address }) {
-    const { signAndSendTransaction, getTransactionSigner, client } = useMobileWallet();
+    const { signAndSendTransactions, getTransactionSigner, client } = useMobileWallet();
     const [title, setTitle] = useState('Send Multiple Transactions');
 
     async function submit() {
@@ -42,7 +42,7 @@ export function AccountFeatureSendTransactions({ address }: { address: Address }
                 ),
             );
 
-            const signatureBytes = await signAndSendTransaction(transactions, minContextSlot);
+            const signatureBytes = await signAndSendTransactions(transactions, minContextSlot);
             const decoder = getBase58Decoder();
 
             for (const sig of signatureBytes) {

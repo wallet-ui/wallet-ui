@@ -5,7 +5,7 @@ import { toUint8Array, useMobileWallet } from '@wallet-ui/react-native-web3js';
 import { useState } from 'react';
 
 export function AccountFeatureSignMessages({ address }: { address: PublicKey }) {
-    const { signMessage } = useMobileWallet();
+    const { signMessages } = useMobileWallet();
     const [title, setTitle] = useState('Sign Multiple Messages');
     async function submit() {
         try {
@@ -13,7 +13,7 @@ export function AccountFeatureSignMessages({ address }: { address: PublicKey }) 
                 toUint8Array(`Message 1 from ${address.toString()}`),
                 toUint8Array(`Message 2 from ${address.toString()}`),
             ];
-            const signedMessages = await signMessage(messages);
+            const signedMessages = await signMessages(messages);
             setTitle(`${signedMessages.length} Messages Signed!`);
             console.log(`${signedMessages.length} messages signed!`);
         } catch (e) {

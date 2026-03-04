@@ -13,7 +13,7 @@ import {
 } from '@solana/kit';
 
 export function AccountFeatureSignTransaction({ address }: { address: Address }) {
-    const { signTransaction, getTransactionSigner, client } = useMobileWallet();
+    const { signTransactions, getTransactionSigner, client } = useMobileWallet();
 
     async function submit() {
         try {
@@ -35,7 +35,7 @@ export function AccountFeatureSignTransaction({ address }: { address: Address })
                 tx => setTransactionMessageLifetimeUsingBlockhash(latestBlockhash, tx),
             );
 
-            const signedTransaction = await signTransaction(transactionMessage);
+            const signedTransaction = await signTransactions(transactionMessage);
 
             console.log('Transaction signed successfully!', signedTransaction);
         } catch (e) {

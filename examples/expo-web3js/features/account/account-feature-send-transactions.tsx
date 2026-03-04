@@ -6,7 +6,7 @@ import { useMobileWallet } from '@wallet-ui/react-native-web3js';
 import { useState } from 'react';
 
 export function AccountFeatureSendTransactions({ address }: { address: PublicKey }) {
-    const { connection, signAndSendTransaction } = useMobileWallet();
+    const { connection, signAndSendTransactions } = useMobileWallet();
     const [title, setTitle] = useState('Send Multiple Transactions');
 
     async function submit() {
@@ -25,7 +25,7 @@ export function AccountFeatureSendTransactions({ address }: { address: PublicKey
                 return new VersionedTransaction(message);
             });
 
-            const signatures = await signAndSendTransaction(transactions, minContextSlot);
+            const signatures = await signAndSendTransactions(transactions, minContextSlot);
 
             for (const signature of signatures) {
                 await connection.confirmTransaction({ signature, ...latestBlockhash }, 'confirmed');

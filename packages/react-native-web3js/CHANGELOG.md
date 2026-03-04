@@ -1,5 +1,14 @@
 # @wallet-ui/react-native-web3js
 
+## 4.0.1
+
+### Patch Changes
+
+- [#445](https://github.com/wallet-ui/wallet-ui/pull/445) [`7fbb49b`](https://github.com/wallet-ui/wallet-ui/commit/7fbb49bc924fe77f1e13a02db3af446a1cfdd5c1) Thanks [@beeman](https://github.com/beeman)! - export symbols from convert-sign-in-result
+
+- Updated dependencies []:
+    - @wallet-ui/core@4.0.1
+
 ## 4.0.0
 
 ### Major Changes

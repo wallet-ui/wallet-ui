@@ -49,7 +49,12 @@ export function PlaygroundSignMessageBase({
                     <BaseButton label="Sign Message" disabled={!text || isSigningMessage} type="submit" />
                 </div>
                 {lastSignature ? (
-                    <PlaygroundTxSuccess cluster={cluster} signature={lastSignature} title={'You Signed a Message!'} />
+                    <PlaygroundTxSuccess
+                        cluster={cluster}
+                        showExplorerLink={false}
+                        signature={lastSignature}
+                        title={'You Signed a Message!'}
+                    />
                 ) : null}
                 {hasError ? (
                     <PlaygroundErrorPanel error={error} onClose={() => resetError()} title="Failed to sign message" />

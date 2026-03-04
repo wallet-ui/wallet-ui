@@ -4,10 +4,12 @@ import React from 'react';
 
 export function PlaygroundTxSuccess({
     cluster,
+    showExplorerLink = true,
     signature,
     title,
 }: {
     cluster: SolanaCluster;
+    showExplorerLink?: boolean;
     signature: Uint8Array | ReadonlyUint8Array;
     title: string;
 }) {
@@ -17,15 +19,17 @@ export function PlaygroundTxSuccess({
             <div>{title}</div>
             <span>Signature:</span>
             <blockquote>{transaction}</blockquote>
-            <div>
-                <a
-                    href={getExplorerUrl({ network: cluster, path: `/tx/${transaction}`, provider: 'solana' })}
-                    target="_blank"
-                >
-                    View this transaction
-                </a>{' '}
-                on Explorer
-            </div>
+            {showExplorerLink ? (
+                <div>
+                    <a
+                        href={getExplorerUrl({ network: cluster, path: `/tx/${transaction}`, provider: 'solana' })}
+                        target="_blank"
+                    >
+                        View this transaction
+                    </a>{' '}
+                    on Explorer
+                </div>
+            ) : null}
         </div>
     );
 }

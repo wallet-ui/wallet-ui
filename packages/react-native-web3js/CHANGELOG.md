@@ -1,5 +1,22 @@
 # @wallet-ui/react-native-web3js
 
+## 4.0.0
+
+### Major Changes
+
+- [#437](https://github.com/wallet-ui/wallet-ui/pull/437) [`e7dc7a7`](https://github.com/wallet-ui/wallet-ui/commit/e7dc7a714c6b204692b80d621b939e54d155730a) Thanks [@beeman](https://github.com/beeman)! - sign in should return message and signature
+
+- [#438](https://github.com/wallet-ui/wallet-ui/pull/438) [`40973a7`](https://github.com/wallet-ui/wallet-ui/commit/40973a7d8ebb24c279e318136c79414ada89973d) Thanks [@beeman](https://github.com/beeman)! - remove @wallet-ui/react-gill package
+
+### Minor Changes
+
+- [#443](https://github.com/wallet-ui/wallet-ui/pull/443) [`1dfcaae`](https://github.com/wallet-ui/wallet-ui/commit/1dfcaae077a93ca9cece1623089a863a4badc07d) Thanks [@beeman](https://github.com/beeman)! - Add plural wallet method names and keep singular names as deprecated aliases.
+
+### Patch Changes
+
+- Updated dependencies [[`1eebc40`](https://github.com/wallet-ui/wallet-ui/commit/1eebc4046573984b9b1666ad7e0865c4fa076bc5), [`40973a7`](https://github.com/wallet-ui/wallet-ui/commit/40973a7d8ebb24c279e318136c79414ada89973d)]:
+    - @wallet-ui/core@4.0.0
+
 ## 3.3.0
 
 ### Minor Changes

@@ -39,7 +39,7 @@ export function useMobileWallet() {
 
     const disconnect = useCallback(async (): Promise<void> => await deauthorizeSessions(), [deauthorizeSessions]);
 
-    const signAndSendTransaction = useCallback(
+    const signAndSendTransactions = useCallback(
         async <T extends Transaction | VersionedTransaction, K extends T | T[]>(
             transaction: K,
             minContextSlot: number,
@@ -61,7 +61,7 @@ export function useMobileWallet() {
         [authorizeSession],
     );
 
-    const signMessage = useCallback(
+    const signMessages = useCallback(
         async <K extends Uint8Array | Uint8Array[]>(message: K): Promise<K> =>
             await transact(async wallet => {
                 const authResult = await authorizeSession(wallet);
@@ -75,7 +75,7 @@ export function useMobileWallet() {
         [authorizeSession],
     );
 
-    const signTransaction = useCallback(
+    const signTransactions = useCallback(
         async <T extends Transaction | VersionedTransaction, K extends T | T[]>(transaction: K): Promise<K> =>
             await transact(async wallet => {
                 await authorizeSession(wallet);
@@ -88,6 +88,36 @@ export function useMobileWallet() {
         [authorizeSession],
     );
 
+    /** @deprecated Use signAndSendTransactions instead. */
+    const signAndSendTransaction = useCallback(
+        async <T extends Transaction | VersionedTransaction, K extends T | T[]>(
+            transaction: K,
+            minContextSlot: number,
+        ): Promise<TransactionSignatures<K>> => {
+            console.warn('[wallet-ui] `signAndSendTransaction` is deprecated. Use `signAndSendTransactions` instead.');
+            return await signAndSendTransactions(transaction, minContextSlot);
+        },
+        [signAndSendTransactions],
+    );
+
+    /** @deprecated Use signMessages instead. */
+    const signMessage = useCallback(
+        async <K extends Uint8Array | Uint8Array[]>(message: K): Promise<K> => {
+            console.warn('[wallet-ui] `signMessage` is deprecated. Use `signMessages` instead.');
+            return await signMessages(message);
+        },
+        [signMessages],
+    );
+
+    /** @deprecated Use signTransactions instead. */
+    const signTransaction = useCallback(
+        async <T extends Transaction | VersionedTransaction, K extends T | T[]>(transaction: K): Promise<K> => {
+            console.warn('[wallet-ui] `signTransaction` is deprecated. Use `signTransactions` instead.');
+            return await signTransactions(transaction);
+        },
+        [signTransactions],
+    );
+
     return useMemo(
         () => ({
             ...ctx,
@@ -98,9 +128,12 @@ export function useMobileWallet() {
             deauthorizeSession,
             disconnect,
             signAndSendTransaction,
+            signAndSendTransactions,
             signIn,
             signMessage,
+            signMessages,
             signTransaction,
+            signTransactions,
         }),
         [
             accounts,
@@ -111,9 +144,12 @@ export function useMobileWallet() {
             disconnect,
             selectedAccount,
             signAndSendTransaction,
+            signAndSendTransactions,
             signIn,
             signMessage,
+            signMessages,
             signTransaction,
+            signTransactions,
         ],
     );
 }

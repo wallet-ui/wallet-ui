@@ -10,3 +10,4 @@ export * from '@wallet-ui/core';
 export { toUint8Array, fromUint8Array } from 'js-base64';
 export { createDefaultClient } from './create-default-client';
 export type { Client } from './client';
+export { convertSignInResult } from './convert-sign-in-result';

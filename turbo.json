@@ -43,7 +43,16 @@
                 "test:treeshakability:native",
                 "test:treeshakability:node"
             ],
-            "passThroughEnv": ["ACTIONS_ID_TOKEN_REQUEST_TOKEN", "ACTIONS_ID_TOKEN_REQUEST_URL", "GH_TOKEN", "GITHUB_*", "NODE_AUTH_TOKEN", "NPM_CONFIG_USERCONFIG", "NPM_TOKEN", "PUBLISH_TAG"]
+            "passThroughEnv": [
+                "ACTIONS_ID_TOKEN_REQUEST_TOKEN",
+                "ACTIONS_ID_TOKEN_REQUEST_URL",
+                "GH_TOKEN",
+                "GITHUB_*",
+                "NODE_AUTH_TOKEN",
+                "NPM_CONFIG_USERCONFIG",
+                "NPM_TOKEN",
+                "PUBLISH_TAG"
+            ]
         },
         "style:fix": {
             "inputs": ["$TURBO_DEFAULT$", "*"],

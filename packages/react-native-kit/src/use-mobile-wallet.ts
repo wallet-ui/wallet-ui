@@ -52,7 +52,7 @@ export function useMobileWallet() {
 
     const disconnect = useCallback(async (): Promise<void> => await deauthorizeSessions(), [deauthorizeSessions]);
 
-    const signAndSendTransaction = useCallback(
+    const signAndSendTransactions = useCallback(
         async <T extends Transaction | Transaction[]>(
             transaction: T,
             minContextSlot: bigint,
@@ -72,7 +72,7 @@ export function useMobileWallet() {
         [authorizeSession],
     );
 
-    const signMessage = useCallback(
+    const signMessages = useCallback(
         async <K extends Uint8Array | Uint8Array[]>(message: K): Promise<K> =>
             await transact(async wallet => {
                 const authResult = await authorizeSession(wallet);
@@ -86,7 +86,7 @@ export function useMobileWallet() {
         [authorizeSession],
     );
 
-    const signTransaction = useCallback(
+    const signTransactions = useCallback(
         async <T extends Transaction | Transaction[]>(transaction: T): Promise<T> =>
             await transact(async wallet => {
                 await authorizeSession(wallet);
@@ -104,15 +104,15 @@ export function useMobileWallet() {
             return {
                 address,
                 signAndSendTransactions: async (transactions: Transaction[]) => {
-                    return await signAndSendTransaction(transactions, minContextSlot);
+                    return await signAndSendTransactions(transactions, minContextSlot);
                 },
             };
         },
-        [signAndSendTransaction],
+        [signAndSendTransactions],
     );
 
-    const sendTransaction = useCallback(
-        async (instructions: Instruction[]) => {
+    const sendTransactions = useCallback(
+        async (instructions: Instruction[]): Promise<string> => {
             if (!selectedAccount) {
                 throw new Error('No account selected');
             }
@@ -136,6 +136,45 @@ export function useMobileWallet() {
         [ctx.client.rpc, getTransactionSigner, selectedAccount],
     );
 
+    /** @deprecated Use sendTransactions instead. */
+    const sendTransaction = useCallback(
+        async (instructions: Instruction[]): Promise<string> => {
+            console.warn('[wallet-ui] `sendTransaction` is deprecated. Use `sendTransactions` instead.');
+            return await sendTransactions(instructions);
+        },
+        [sendTransactions],
+    );
+
+    /** @deprecated Use signAndSendTransactions instead. */
+    const signAndSendTransaction = useCallback(
+        async <T extends Transaction | Transaction[]>(
+            transaction: T,
+            minContextSlot: bigint,
+        ): Promise<TransactionSignatures<T>> => {
+            console.warn('[wallet-ui] `signAndSendTransaction` is deprecated. Use `signAndSendTransactions` instead.');
+            return await signAndSendTransactions(transaction, minContextSlot);
+        },
+        [signAndSendTransactions],
+    );
+
+    /** @deprecated Use signMessages instead. */
+    const signMessage = useCallback(
+        async <K extends Uint8Array | Uint8Array[]>(message: K): Promise<K> => {
+            console.warn('[wallet-ui] `signMessage` is deprecated. Use `signMessages` instead.');
+            return await signMessages(message);
+        },
+        [signMessages],
+    );
+
+    /** @deprecated Use signTransactions instead. */
+    const signTransaction = useCallback(
+        async <T extends Transaction | Transaction[]>(transaction: T): Promise<T> => {
+            console.warn('[wallet-ui] `signTransaction` is deprecated. Use `signTransactions` instead.');
+            return await signTransactions(transaction);
+        },
+        [signTransactions],
+    );
+
     return useMemo(
         () => ({
             ...ctx,
@@ -147,10 +186,14 @@ export function useMobileWallet() {
             disconnect,
             getTransactionSigner,
             sendTransaction,
+            sendTransactions,
             signAndSendTransaction,
+            signAndSendTransactions,
             signIn,
             signMessage,
+            signMessages,
             signTransaction,
+            signTransactions,
         }),
         [
             accounts,
@@ -162,10 +205,14 @@ export function useMobileWallet() {
             getTransactionSigner,
             selectedAccount,
             sendTransaction,
+            sendTransactions,
             signAndSendTransaction,
+            signAndSendTransactions,
             signIn,
             signMessage,
+            signMessages,
             signTransaction,
+            signTransactions,
         ],
     );
 }

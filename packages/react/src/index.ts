@@ -35,4 +35,13 @@ export * from '@solana/react';
 export * from '@solana/wallet-standard-features';
 export * from '@wallet-standard/core';
 export * from '@wallet-standard/react';
+export {
+    getWalletAccountFeature,
+    getWalletFeature,
+    uiWalletAccountBelongsToUiWallet,
+    type UiWalletHandle,
+    type UiWallet,
+    type UiWalletAccount,
+    uiWalletAccountsAreSame,
+} from '@wallet-standard/ui';
 export * from '@wallet-ui/core';

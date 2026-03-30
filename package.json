@@ -47,10 +47,10 @@
         "jest-watch-master": "^1.0.0",
         "jest-watch-select-projects": "^2.0.0",
         "jest-watch-typeahead": "^3.0.1",
-        "pkg-pr-new": "^0.0.60",
+        "pkg-pr-new": "^0.0.66",
         "prettier": "^3.6.2",
         "ts-node": "^10.9.2",
-        "tsup": "^8.5.0",
+        "tsup": "^8.5.1",
         "turbo": "^2.5.6",
         "typescript": "^5.9.2"
     },

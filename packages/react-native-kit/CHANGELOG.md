@@ -1,5 +1,12 @@
 # @wallet-ui/react-native-kit
 
+## 4.0.2
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @wallet-ui/core@4.0.2
+
 ## 4.0.1
 
 ### Patch Changes

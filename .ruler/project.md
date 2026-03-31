@@ -41,6 +41,14 @@ Run these commands from the root directory:
 - **Setup Live Test Validator**: `pnpm test:live-with-test-validator:setup` (Required for running examples with localnet)
 - **Run Live Tests**: `pnpm test:live-with-test-validator`
 
+### Clean Checkout Build Notes
+
+- Example apps are **not** standalone from a pristine checkout. Workspace packages such as `@wallet-ui/react` and `@wallet-ui/playground-react` export built `dist/` artifacts, so a direct example build can fail before prerendering if those workspace packages have not been compiled yet.
+- What is missing today is an automatic example-local prebuild path. There is no example `build` hook that compiles required workspace packages first, and the workspace packages do not expose source entrypoints that let the examples build cleanly without prebuilt `dist/`.
+- For reliable builds or debugging from a clean checkout, prefer a root Turbo build that includes dependencies. For the Next.js examples, use `pnpm turbo run build --force --filter=next-shadcn --filter=@wallet-ui/example-next-tailwind`.
+- After the relevant workspace packages have been built, direct example commands such as `pnpm --dir examples/next-shadcn build` and `pnpm --dir examples/next-tailwind build` become meaningful for app-only verification.
+- If a clean direct example build fails with `Module not found: Can't resolve '@wallet-ui/react'`, treat that as a workspace build prerequisite problem, not as proof of a Next.js prerender or storage regression.
+
 ### Running Examples
 
 To run a specific example:

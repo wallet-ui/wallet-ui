@@ -1,5 +1,14 @@
 # @wallet-ui/react
 
+## 4.0.2
+
+### Patch Changes
+
+- [#448](https://github.com/wallet-ui/wallet-ui/pull/448) [`a583ae1`](https://github.com/wallet-ui/wallet-ui/commit/a583ae1aa7fdad2a89783a10bd2e9209fde9cc25) Thanks [@beeman](https://github.com/beeman)! - Re-export Wallet Standard feature helpers from `@wallet-ui/react`.
+
+- Updated dependencies []:
+    - @wallet-ui/core@4.0.2
+
 ## 4.0.1
 
 ### Patch Changes

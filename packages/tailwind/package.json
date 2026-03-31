@@ -1,6 +1,6 @@
 {
     "name": "@wallet-ui/tailwind",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "description": "Tailwind CSS for Wallet UI",
     "exports": {
         ".": {

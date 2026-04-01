@@ -79,7 +79,7 @@
         "nanostores": "1.0.1"
     },
     "devDependencies": {
-        "typescript": "^5.9.2"
+        "typescript": "^6.0.2"
     },
     "peerDependencies": {
         "@solana/kit": "^6.1.0"

@@ -20,14 +20,14 @@
         "@changesets/changelog-github": "^0.5.1",
         "@changesets/cli": "^2.29.8",
         "@eslint/js": "^10.0.1",
-        "@eslint/json": "^1.0.1",
+        "@eslint/json": "^1.2.0",
         "@solana/eslint-config-solana": "^5.0.0",
         "@solana/prettier-config-solana": "0.0.5",
         "@swc/jest": "^0.2.39",
         "@types/jest": "^30.0.0",
         "@types/node": "^24.5.2",
-        "@typescript-eslint/eslint-plugin": "^8.56.1",
-        "@typescript-eslint/parser": "^8.56.1",
+        "@typescript-eslint/eslint-plugin": "^8.58.0",
+        "@typescript-eslint/parser": "^8.58.0",
         "@wallet-ui/build-scripts": "workspace:*",
         "@wallet-ui/test-config": "workspace:*",
         "@wallet-ui/test-matchers": "workspace:*",
@@ -52,7 +52,7 @@
         "ts-node": "^10.9.2",
         "tsup": "^8.5.1",
         "turbo": "^2.5.6",
-        "typescript": "^5.9.2"
+        "typescript": "^6.0.2"
     },
     "engines": {
         "node": ">=20.18.0",

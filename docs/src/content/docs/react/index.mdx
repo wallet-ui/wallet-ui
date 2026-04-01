@@ -1,0 +1,57 @@
+---
+title: React SDK
+description: Start here for Wallet UI React setup, concepts, guides, and API docs.
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+The React SDK includes setup guides, foundational concepts, prebuilt components, hooks, providers, and styling references for integrating Wallet UI into a React application.
+
+Use these docs when you want a fast path to a working wallet experience without giving up control over state, rendering, or styling.
+
+## Start here
+
+<CardGrid stagger>
+	<LinkCard
+		href="./getting-started"
+		title="Getting started"
+		description="Install the React SDK and wire up Wallet UI in a new app."
+	/>
+	<LinkCard
+		href="./core-concepts"
+		title="Core concepts"
+		description="Understand the wallet state model and the primitives exposed by the SDK."
+	/>
+	<LinkCard
+		href="./guides/vite"
+		title="Framework guides"
+		description="Follow setup guides for Vite or Next.js."
+	/>
+</CardGrid>
+
+## Browse the API surface
+
+<CardGrid stagger>
+	<LinkCard
+		href="./components/"
+		title="Components"
+		description="Use the prebuilt dropdown and account guard components."
+	/>
+	<LinkCard
+		href="./hooks/"
+		title="Hooks"
+		description="Build custom flows with the React hooks exposed by Wallet UI."
+	/>
+	<LinkCard
+		href="./providers/"
+		title="Providers"
+		description="Configure the context providers that power wallet state in your app."
+	/>
+	<LinkCard
+		href="./styling/"
+		title="Styling"
+		description="Choose between the packaged CSS and Tailwind styling options."
+	/>
+</CardGrid>
+
+If you want the quickest path, start with [Getting started](./getting-started), add the provider, then choose whether to ship the built-in [components](./components/) or build your own flows from the [hooks](./hooks/).

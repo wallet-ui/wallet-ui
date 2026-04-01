@@ -1,0 +1,163 @@
+---
+title: useMobileWallet
+description: The primary hook for interacting with the mobile wallet across the Wallet UI React Native packages.
+---
+
+import { TabItem, Tabs } from '@astrojs/starlight/components';
+
+The `useMobileWallet` hook is the primary hook for interacting with the mobile wallet. Both variants support connect, disconnect, signing messages, and signing transactions, but the exposed client types and helper methods differ.
+
+The wallet lifecycle methods are largely shared. The main differences are the client object returned by the hook, the transaction helper surface, and the account types.
+
+<Tabs syncKey="rn-sdk">
+	<TabItem label="Kit">
+		### Return value
+
+		| Name                     | Type                                                                                               | Description                                              |
+		| ------------------------ | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+		| `client`                 | `Client`                                                                                           | The Solana RPC client with `rpc` and `rpcSubscriptions`. |
+		| `identity`               | `AppIdentity`                                                                                      | The app identity configured in `MobileWalletProvider`.   |
+		| `accounts`               | `Account[] \| null`                                                                                | An array of all authorized accounts.                     |
+		| `account`                | `Account \| null`                                                                                  | The currently selected wallet account.                   |
+		| `chain`                  | `SolanaClusterId`                                                                                  | The current cluster identifier.                          |
+		| `connect`                | `() => Promise<Account>`                                                                           | Connect to a wallet.                                     |
+		| `connectAnd`             | `(cb: (wallet: AuthorizeAPI) => Promise<Account \| void>) => Promise<Account \| void>`            | Connect and execute a callback.                          |
+		| `disconnect`             | `() => Promise<void>`                                                                              | Disconnect the current wallet.                           |
+		| `deauthorizeSession`     | `(wallet: DeauthorizeAPI) => Promise<void>`                                                        | Deauthorize the current session.                         |
+		| `getTransactionSigner`   | `(address: Address, minContextSlot: bigint) => TransactionSendingSigner`                           | Return a signer for Kit transaction pipelines.           |
+		| `sendTransaction`        | `(instructions: Instruction[]) => Promise<string>`                                                 | Create, sign, and send a transaction from instructions.  |
+		| `signAndSendTransaction` | `(transaction: Transaction \| Transaction[], minContextSlot: bigint) => Promise<SignatureBytes[]>` | Sign and send one or more Kit transactions.              |
+		| `signTransaction`        | `(transaction: Transaction \| Transaction[]) => Promise<Transaction \| Transaction[]>`             | Sign one or more Kit transactions without sending them.  |
+		| `signIn`                 | `(signInPayload: SignInPayload) => Promise<Account>`                                               | Sign in with a wallet.                                   |
+		| `signMessage`            | `(message: Uint8Array \| Uint8Array[]) => Promise<Uint8Array \| Uint8Array[]>`                     | Sign one or more messages.                               |
+
+		### Account object
+
+		| Name            | Type                   | Description                                                 |
+		| --------------- | ---------------------- | ----------------------------------------------------------- |
+		| `address`       | `Address`              | The wallet address as an `Address` type from `@solana/kit`. |
+		| `addressBase64` | `Base64EncodedAddress` | The base64-encoded address.                                 |
+		| `icon`          | `WalletIcon`           | Optional. The wallet icon.                                  |
+		| `label`         | `string \| undefined`  | An optional, user-defined label for the account.            |
+
+		### Client access
+
+		| Name               | Type                                              | Description                          |
+		| ------------------ | ------------------------------------------------- | ------------------------------------ |
+		| `rpc`              | `ReturnType<typeof createSolanaRpc>`              | The Solana RPC client.               |
+		| `rpcSubscriptions` | `ReturnType<typeof createSolanaRpcSubscriptions>` | The Solana RPC subscriptions client. |
+
+		### Example
+
+		```tsx
+		import { useMobileWallet } from '@wallet-ui/react-native-kit';
+		import { useCallback } from 'react';
+		import { Button, Text, View } from 'react-native';
+
+		function WalletConnector() {
+		    const { account, connect, disconnect } = useMobileWallet();
+
+		    const handleConnect = useCallback(async () => {
+		        await connect();
+		    }, [connect]);
+
+		    const handleDisconnect = useCallback(async () => {
+		        await disconnect();
+		    }, [disconnect]);
+
+		    return (
+		        <View>
+		            {account ? (
+		                <>
+		                    <Text>Connected to: {account.address}</Text>
+		                    <Button title="Disconnect" onPress={handleDisconnect} />
+		                </>
+		            ) : (
+		                <Button title="Connect Wallet" onPress={handleConnect} />
+		            )}
+		        </View>
+		    );
+		}
+		```
+	</TabItem>
+	<TabItem label="Web3.js">
+		### Return value
+
+		| Name                         | Type                                                                                                                                                                                 | Description                                                 |
+		| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- |
+		| `chain`                      | `Chain`                                                                                                                                                                              | The blockchain chain configured in `MobileWalletProvider`.  |
+		| `connection`                 | `Connection`                                                                                                                                                                         | The Solana connection configured in `MobileWalletProvider`. |
+		| `identity`                   | `AppIdentity`                                                                                                                                                                        | The app identity configured in `MobileWalletProvider`.      |
+		| `accounts`                   | `Account[] \| null`                                                                                                                                                                  | An array of all authorized accounts.                        |
+		| `authorizeSession`           | `(wallet: AuthorizeAPI) => Promise<Account>`                                                                                                                                         | Authorize a new session.                                    |
+		| `authorizeSessionWithSignIn` | `(wallet: AuthorizeAPI, signInPayload: SignInPayload) => Promise<Account>`                                                                                                           | Authorize a new session with sign-in.                       |
+		| `deauthorizeSession`         | `(wallet: DeauthorizeAPI) => Promise<void>`                                                                                                                                          | Deauthorize the current session.                            |
+		| `deauthorizeSessions`        | `() => Promise<void>`                                                                                                                                                                | Deauthorize all sessions.                                   |
+		| `isLoading`                  | `boolean`                                                                                                                                                                            | Whether the authorization state is still loading.           |
+		| `account`                    | `Account \| null`                                                                                                                                                                    | The currently selected wallet account.                      |
+		| `connect`                    | `() => Promise<Account>`                                                                                                                                                             | Connect to a wallet.                                        |
+		| `connectAnd`                 | `(cb: (wallet: AuthorizeAPI) => Promise<Account \| void>) => Promise<Account \| void>`                                                                                              | Connect and execute a callback.                             |
+		| `disconnect`                 | `() => Promise<void>`                                                                                                                                                                | Disconnect the current wallet.                              |
+		| `signAndSendTransaction`     | `(transaction: (Transaction \| VersionedTransaction)[] \| Transaction \| VersionedTransaction, minContextSlot: number) => Promise<TransactionSignature[]>`                         | Sign and send one or more web3.js transactions.             |
+		| `signTransaction`            | `(transaction: Transaction \| VersionedTransaction \| (Transaction \| VersionedTransaction)[]) => Promise<Transaction \| VersionedTransaction \| (Transaction \| VersionedTransaction)[]>` | Sign one or more transactions without sending them.         |
+		| `signIn`                     | `(signInPayload: SignInPayload) => Promise<Account>`                                                                                                                                 | Sign in with a wallet.                                      |
+		| `signMessage`                | `(message: Uint8Array \| Uint8Array[]) => Promise<Uint8Array \| Uint8Array[]>`                                                                                                       | Sign one or more messages.                                  |
+
+		### Account object
+
+		| Name        | Type                  | Description                                                 |
+		| ----------- | --------------------- | ----------------------------------------------------------- |
+		| `address`   | `string`              | The base58-encoded string representation of the public key. |
+		| `label`     | `string \| undefined` | An optional, user-defined label for the account.            |
+		| `publicKey` | `PublicKey`           | A `PublicKey` object from `@solana/web3.js`.                |
+
+		### Example
+
+		```tsx
+		import { useMobileWallet } from '@wallet-ui/react-native-web3js';
+		import { useCallback } from 'react';
+		import { PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
+		import { Button, Text, View } from 'react-native';
+
+		function WalletConnector() {
+		    const { account, connect, disconnect, signAndSendTransaction } = useMobileWallet();
+
+		    const handleConnect = useCallback(async () => {
+		        await connect();
+		    }, [connect]);
+
+		    const handleDisconnect = useCallback(async () => {
+		        await disconnect();
+		    }, [disconnect]);
+
+		    const handleSendTransaction = useCallback(async () => {
+		        if (!account) return;
+
+		        const transaction = new Transaction().add(
+		            SystemProgram.transfer({
+		                fromPubkey: account.publicKey,
+		                toPubkey: new PublicKey('SOME_OTHER_PUBLIC_KEY'),
+		                lamports: 1000,
+		            }),
+		        );
+
+		        await signAndSendTransaction(transaction, 0);
+		    }, [account, signAndSendTransaction]);
+
+		    return (
+		        <View>
+		            {account ? (
+		                <>
+		                    <Text>Connected to: {account.address}</Text>
+		                    <Button title="Disconnect" onPress={handleDisconnect} />
+		                    <Button title="Send Dummy Transaction" onPress={handleSendTransaction} />
+		                </>
+		            ) : (
+		                <Button title="Connect Wallet" onPress={handleConnect} />
+		            )}
+		        </View>
+		    );
+		}
+		```
+	</TabItem>
+</Tabs>

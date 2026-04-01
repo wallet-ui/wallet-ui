@@ -1,0 +1,46 @@
+---
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+const items = [
+	{ href: './use-wallet-ui', title: 'useWalletUi', description: 'The primary hook for interacting with wallet state.' },
+	{
+		href: './use-wallet-ui-account',
+		title: 'useWalletUiAccount',
+		description: 'A hook to access the current wallet account and its setter.',
+	},
+	{
+		href: './use-wallet-ui-cluster',
+		title: 'useWalletUiCluster',
+		description: 'A hook to access and manage the current Solana cluster.',
+	},
+	{
+		href: './use-wallet-ui-dropdown',
+		title: 'useWalletUiDropdown',
+		description: 'A hook that provides the logic for a wallet dropdown menu.',
+	},
+	{
+		href: './use-wallet-ui-sign-and-send',
+		title: 'useWalletUiSignAndSend',
+		description: 'A hook to easily sign and send a transaction.',
+	},
+	{
+		href: './use-wallet-ui-signer',
+		title: 'useWalletUiSigner',
+		description: 'A hook to get a transaction signer for the active wallet.',
+	},
+	{
+		href: './use-wallet-ui-wallet',
+		title: 'useWalletUiWallet',
+		description: 'A hook to connect and disconnect a specific wallet.',
+	},
+	{
+		href: './use-wallet-ui-wallets',
+		title: 'useWalletUiWallets',
+		description: 'A hook to get a list of all detected wallets.',
+	},
+];
+---
+
+<CardGrid stagger>
+	{items.map((item) => <LinkCard {...item} />)}
+</CardGrid>

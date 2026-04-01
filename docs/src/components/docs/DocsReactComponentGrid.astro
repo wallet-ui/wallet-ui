@@ -1,0 +1,25 @@
+---
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+const items = [
+	{
+		href: './account-guard',
+		title: 'WalletUiAccountGuard',
+		description: 'A component that guards content based on wallet connection state.',
+	},
+	{
+		href: './cluster-dropdown',
+		title: 'WalletUiClusterDropdown',
+		description: 'Dropdown that lists clusters and allows switching between them.',
+	},
+	{
+		href: './dropdown',
+		title: 'WalletUiDropdown',
+		description: 'Dropdown that lists wallets and allows connect and disconnect actions.',
+	},
+];
+---
+
+<CardGrid stagger>
+	{items.map((item) => <LinkCard {...item} />)}
+</CardGrid>

@@ -1,0 +1,48 @@
+---
+title: Clusters
+description: Configuring Solana clusters in Wallet UI.
+---
+
+import Callout from '../../../components/docs/Callout.astro';
+
+Wallet UI needs to know which Solana clusters your application supports. The core library provides simple helper functions to define these clusters.
+
+- `createSolanaDevnet()`
+- `createSolanaLocalnet()`
+- `createSolanaMainnet()`
+- `createSolanaTestnet()`
+
+Each helper returns a `SolanaCluster` object. You can pass a custom RPC URL directly, or provide a configuration object when you want to override the default label or endpoint details.
+
+<Callout type="info">
+    When using a public RPC endpoint for `mainnet`, be aware of rate limits. For production applications, it is
+    highly recommended to use a dedicated RPC provider.
+</Callout>
+
+## Typical usage
+
+Most apps expose a small set of clusters, then choose one of them as the active RPC target through the Wallet UI provider configuration.
+
+### Usage
+
+You provide the list of clusters to the `WalletUi` provider from the `@wallet-ui/react` package.
+
+```tsx
+import { createWalletUiConfig, WalletUi } from '@wallet-ui/react';
+import { createSolanaDevnet, createSolanaMainnet } from '@wallet-ui/core';
+
+const config = createWalletUiConfig({
+    clusters: [createSolanaMainnet('https://your-custom-rpc.com'), createSolanaDevnet()],
+});
+
+function App({ children }) {
+    return <WalletUi config={config}>{children}</WalletUi>;
+}
+```
+
+## Choosing clusters deliberately
+
+- Use `devnet` for most early integration and QA work.
+- Add `localnet` when your team runs a local validator during feature development.
+- Add `mainnet` only when you are ready to point users at production infrastructure.
+- Prefer a dedicated RPC URL for production traffic instead of the public default endpoint.

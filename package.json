@@ -2,7 +2,7 @@
     "name": "wallet-ui-monorepo",
     "private": true,
     "workspaces": [
-        "docs/*",
+        "docs",
         "packages/*"
     ],
     "scripts": {

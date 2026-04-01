@@ -1,0 +1,50 @@
+---
+title: Core concepts
+description: Shared architecture concepts for Wallet UI React Native, with kit and web3.js differences called out.
+---
+
+import { TabItem, Tabs } from '@astrojs/starlight/components';
+
+Wallet UI is a modular React Native SDK for mobile wallet interactions. Both package variants use the same Mobile Wallet Adapter flow, while the Solana client and transaction types differ.
+
+## Architecture overview
+
+Both React Native packages provide:
+
+- `MobileWalletProvider` to configure wallet access at the app boundary
+- `useMobileWallet` as the main hook for connect, disconnect, signing, and account access
+- `useAuthorization` for lower-level authorization control
+- Mobile Wallet Adapter support so the app can connect to any compatible installed wallet
+
+## Package-specific differences
+
+<Tabs syncKey="rn-sdk">
+	<TabItem label="Kit">
+		`@wallet-ui/react-native-kit` is built on top of `@solana/kit`.
+
+		- It exposes a `client` object with `rpc` and `rpcSubscriptions` instead of a `Connection`.
+		- Provider configuration uses a `cluster` object instead of separate `chain` and `endpoint` props.
+		- Account addresses use the Kit `Address` type instead of `PublicKey`.
+		- Transactions use Kit transaction types, and `useMobileWallet` adds `getTransactionSigner()` and `sendTransaction()` helpers.
+		- The provider can build a default client with `createSolanaRpc()` and `createSolanaRpcSubscriptions()`, or accept a custom `createClient` implementation.
+	</TabItem>
+	<TabItem label="Web3.js">
+		`@wallet-ui/react-native-web3js` is built on top of `@solana/web3.js`.
+
+		- It exposes a standard `Connection` through `useMobileWallet`.
+		- Provider configuration uses `chain` plus `endpoint`.
+		- Account objects expose `publicKey: PublicKey` and a base58 `address` string.
+		- Transaction signing uses `Transaction` and `VersionedTransaction` from `@solana/web3.js`.
+	</TabItem>
+</Tabs>
+
+## Mobile Wallet Adapter
+
+Mobile Wallet Adapter is the shared protocol both packages implement. It defines the secure connection between your app and a wallet for:
+
+- authorizing accounts
+- signing messages
+- signing transactions
+- signing and sending transactions
+
+Because both packages target the same protocol, the end-user wallet flow is the same even when the app-facing client types differ.

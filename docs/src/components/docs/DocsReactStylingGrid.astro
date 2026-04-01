@@ -1,0 +1,20 @@
+---
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+const items = [
+	{
+		href: './css',
+		title: 'Plain CSS',
+		description: 'Use the pre-built CSS file to style the `@wallet-ui/react` components.',
+	},
+	{
+		href: './tailwind',
+		title: 'Tailwind CSS',
+		description: 'Use the Tailwind CSS package to style the `@wallet-ui/react` components.',
+	},
+];
+---
+
+<CardGrid stagger>
+	{items.map((item) => <LinkCard {...item} />)}
+</CardGrid>

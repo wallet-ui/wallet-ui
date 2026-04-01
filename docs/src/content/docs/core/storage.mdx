@@ -1,0 +1,38 @@
+---
+title: Storage
+description: Persisting state in Wallet UI.
+---
+
+Wallet UI persists the user's selected wallet and cluster choice to `localStorage` so that their preferences are remembered across sessions. This is handled by `nanostores`, a tiny state manager.
+
+The core library exports two functions to configure this persistence:
+
+- `createStorageAccount()`: Manages the state for the selected wallet account.
+- `createStorageCluster()`: Manages the state for the selected cluster.
+
+By default, you do not need to call these functions. Reach for them when you want to customize the `localStorage` keys, avoid collisions across multiple apps on the same domain, or make the stored data easier to inspect during debugging.
+
+## When customization helps
+
+- You host multiple wallet-enabled apps under the same origin.
+- You want environment-specific keys for staging versus production.
+- You are migrating an existing app and want storage keys that match the rest of your application.
+
+### Usage
+
+```tsx
+import { createWalletUiConfig, WalletUi } from '@wallet-ui/react';
+import { createStorageAccount, createStorageCluster, createSolanaDevnet } from '@wallet-ui/core';
+
+const config = createWalletUiConfig({
+    clusters: [createSolanaDevnet()],
+    accountStorage: createStorageAccount({ key: 'my-app-wallet-account' }),
+    clusterStorage: createStorageCluster({ key: 'my-app-wallet-cluster' }),
+});
+
+function App({ children }) {
+    return <WalletUi config={config}>{children}</WalletUi>;
+}
+```
+
+If you are happy with the default key names, leave storage configuration out and let Wallet UI manage persistence for you.

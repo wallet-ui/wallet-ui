@@ -1,45 +1,80 @@
-# docs
+# Wallet UI Docs
 
-This is a Next.js application generated with
-[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
+Documentation site for Wallet UI, covering the React SDK, React Native SDK, and the shared core package.
 
-Run development server:
+## Live site
+
+- https://wallet-ui-astro.wallet-ui.workers.dev
+
+## Local development
 
 ```bash
-npm run dev
-# or
+pnpm install
 pnpm dev
-# or
-yarn dev
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+Useful checks before finishing work:
 
-## Explore
+```bash
+pnpm check
+pnpm build
+```
 
-In the project, you can see:
+Additional project commands:
 
-- `lib/source.ts`: Code for content source adapter, [`loader()`](https://fumadocs.dev/docs/headless/source-api) provides the interface to access your content.
-- `app/layout.config.tsx`: Shared options for layouts, optional but preferred to keep.
+```bash
+pnpm preview
+pnpm deploy
+```
 
-| Route                     | Description                                            |
-| ------------------------- | ------------------------------------------------------ |
-| `app/(home)`              | The route group for your landing page and other pages. |
-| `app/docs`                | The documentation layout and pages.                    |
-| `app/api/search/route.ts` | The Route Handler for search.                          |
+## What lives here
 
-### Fumadocs MDX
+- Public docs content for Wallet UI packages and guides
+- Branded assets, generated social previews, and site metadata
+- Cloudflare deployment configuration for the docs site
 
-A `source.config.ts` config file has been included, you can customise different options like frontmatter schema.
+## Content structure
 
-Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
+- [`src/content/docs/index.mdx`](./src/content/docs/index.mdx): docs homepage
+- [`src/content/docs/react/`](./src/content/docs/react/): React SDK guides and API references
+- [`src/content/docs/react-native/`](./src/content/docs/react-native/): React Native package selection, guides, and references
+- [`src/content/docs/core/`](./src/content/docs/core/): framework-agnostic core package docs
+- [`src/components/docs/`](./src/components/docs/): reusable Starlight/Astro docs components
 
-## Learn More
+## Deployment
 
-To learn more about Next.js and Fumadocs, take a look at the following
-resources:
+The site is deployed on Cloudflare Workers.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Fumadocs](https://fumadocs.vercel.app) - learn about Fumadocs
+- Cloudflare Workers Builds should connect this repository and deploy the configured production branch.
+- GitHub Actions in this repo are CI only: install, `pnpm check`, `pnpm build`, and a safe Wrangler dry-run validation.
+- `pnpm deploy` is an authenticated manual Wrangler deploy, not the normal day-to-day deployment path.
+
+### Cloudflare setup
+
+1. Connect this repository to the target Cloudflare account.
+2. Use the Worker service name `wallet-ui-astro`.
+3. Configure the production branch for the Worker build.
+4. Confirm the deployed site is live at `https://wallet-ui-astro.wallet-ui.workers.dev`.
+5. If a custom hostname is added later, bind it to the same Worker in Cloudflare and proxy its DNS record.
+
+## Analytics and observability
+
+Cloudflare Web Analytics is enabled when `PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN` is set in the Cloudflare build environment:
+
+```bash
+PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN=<cloudflare-web-analytics-site-token>
+```
+
+1. In Cloudflare, create or open the Web Analytics site for the target hostname.
+2. Copy the site token from the Cloudflare Web Analytics snippet.
+3. Set `PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN` in the Cloudflare build/deploy environment for this project.
+4. Deploy the site and confirm pageviews begin appearing in Cloudflare Web Analytics.
+
+Worker observability is enabled in `wrangler.toml`:
+
+```toml
+[observability]
+enabled = true
+```
+
+This keeps request and error telemetry enabled at the Worker level from repo config.

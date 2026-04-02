@@ -40,6 +40,7 @@ Run these commands from the root directory:
 - **Run Unit Tests**: `pnpm test` (runs browser and node unit tests)
 - **Setup Live Test Validator**: `pnpm test:live-with-test-validator:setup` (Required for running examples with localnet)
 - **Run Live Tests**: `pnpm test:live-with-test-validator`
+- Prefix turbo commands with `FORCE=true` when you need uncached results during verification or debugging.
 
 ### Clean Checkout Build Notes
 

@@ -2,6 +2,7 @@ name = "wallet-ui-docs"
 compatibility_date = "2026-03-29"
 compatibility_flags = ["nodejs_compat"]
 workers_dev = false
+preview_urls = true
 
 [observability]
 enabled = true

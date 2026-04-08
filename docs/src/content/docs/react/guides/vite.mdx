@@ -12,11 +12,11 @@ This guide will walk you through setting up Wallet UI in a new or existing Vite 
 If you're starting from scratch, you can use `create-vite` to generate a new React and TypeScript project.
 
 <PackageManagerTabs
-	npm={`npm create vite@latest my-vite-app -- --template react-ts
+    npm={`npm create vite@latest my-vite-app -- --template react-ts
 cd my-vite-app`}
-	pnpm={`pnpm dlx create-vite@latest my-vite-app --template react-ts
+    pnpm={`pnpm dlx create-vite@latest my-vite-app --template react-ts
 cd my-vite-app`}
-	bun={`bunx create-vite@latest my-vite-app --template react-ts
+    bun={`bunx create-vite@latest my-vite-app --template react-ts
 cd my-vite-app`}
 />
 
@@ -25,9 +25,9 @@ cd my-vite-app`}
 Install the required Wallet UI packages.
 
 <PackageManagerTabs
-	npm="npm install @wallet-ui/react @wallet-ui/tailwind"
-	pnpm="pnpm add @wallet-ui/react @wallet-ui/tailwind"
-	bun="bun add @wallet-ui/react @wallet-ui/tailwind"
+    npm="npm install @wallet-ui/react @wallet-ui/tailwind"
+    pnpm="pnpm add @wallet-ui/react @wallet-ui/tailwind"
+    bun="bun add @wallet-ui/react @wallet-ui/tailwind"
 />
 
 ## 3. Set up Tailwind CSS
@@ -39,9 +39,9 @@ Wallet UI components are designed with Tailwind CSS. If you don't have it set up
 First, install Tailwind and its peer dependencies.
 
 <PackageManagerTabs
-	npm="npm install -D tailwindcss @tailwindcss/vite"
-	pnpm="pnpm add -D tailwindcss @tailwindcss/vite"
-	bun="bun add --dev tailwindcss @tailwindcss/vite"
+    npm="npm install -D tailwindcss @tailwindcss/vite"
+    pnpm="pnpm add -D tailwindcss @tailwindcss/vite"
+    bun="bun add --dev tailwindcss @tailwindcss/vite"
 />
 
 Next, configure the Tailwind CSS plugin in your `vite.config.ts` (or `vite.config.js`) file.

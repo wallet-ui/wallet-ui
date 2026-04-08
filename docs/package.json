@@ -1,37 +1,37 @@
 {
-  "name": "@wallet-ui/docs",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "astro": "astro",
-    "build": "astro build",
-    "check": "astro check",
-    "check:dead-links": "pnpm build && pnpm check:dead-links:dist",
-    "check:dead-links:dist": "node scripts/check-dead-links.mjs",
-    "compile:js": "astro build",
-    "deploy": "wrangler deploy",
-    "dev": "astro dev --port 3080",
-    "preview": "astro preview",
-    "start": "astro dev --port 3080",
-    "style:fix": "pnpm prettier --log-level warn --ignore-unknown --write .",
-    "test:lint": "pnpm prettier --log-level warn --check .",
-    "test:prettier": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../node_modules/@wallet-ui/test-config/jest-prettier.config.js --rootDir . --silent",
-    "test:typecheck": "astro check"
-  },
-  "dependencies": {
-    "@astrojs/cloudflare": "^13.1.6",
-    "@astrojs/starlight": "^0.38.1",
-    "@astrojs/starlight-tailwind": "^5.0.0",
-    "@catppuccin/starlight": "^2.0.1",
-    "@tailwindcss/vite": "^4.1.18",
-    "astro": "^6.0.1",
-    "sharp": "^0.34.2",
-    "tailwindcss": "^4.1.18"
-  },
-  "devDependencies": {
-    "@astrojs/check": "^0.9.7",
-    "typescript": "^5.9.2",
-    "wrangler": "^4.9.1"
-  }
+    "name": "@wallet-ui/docs",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "astro": "astro",
+        "build": "astro build",
+        "check": "astro check",
+        "check:dead-links": "pnpm build && pnpm check:dead-links:dist",
+        "check:dead-links:dist": "node scripts/check-dead-links.mjs",
+        "compile:js": "astro build",
+        "deploy": "wrangler deploy",
+        "dev": "astro dev --port 3080",
+        "preview": "astro preview",
+        "start": "astro dev --port 3080",
+        "style:fix": "pnpm prettier --log-level warn --ignore-unknown --write .",
+        "test:lint": "pnpm prettier --log-level warn --check .",
+        "test:prettier": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../node_modules/@wallet-ui/test-config/jest-prettier.config.js --rootDir . --silent",
+        "test:typecheck": "astro check"
+    },
+    "dependencies": {
+        "@astrojs/cloudflare": "^13.1.6",
+        "@astrojs/starlight": "^0.38.1",
+        "@astrojs/starlight-tailwind": "^5.0.0",
+        "@catppuccin/starlight": "^2.0.1",
+        "@tailwindcss/vite": "^4.1.18",
+        "astro": "^6.0.1",
+        "sharp": "^0.34.2",
+        "tailwindcss": "^4.1.18"
+    },
+    "devDependencies": {
+        "@astrojs/check": "^0.9.7",
+        "typescript": "^5.9.2",
+        "wrangler": "^4.9.1"
+    }
 }

@@ -11,9 +11,9 @@ import PackageManagerTabs from '../../../../components/docs/PackageManagerTabs.a
 Start from a new Expo app:
 
 <PackageManagerTabs
-	npm="npx create-expo-app@latest"
-	pnpm="pnpm dlx create-expo-app@latest"
-	bun="bunx create-expo-app@latest"
+    npm="npx create-expo-app@latest"
+    pnpm="pnpm dlx create-expo-app@latest"
+    bun="bunx create-expo-app@latest"
 />
 
 ## Install development build dependencies
@@ -21,36 +21,36 @@ Start from a new Expo app:
 Wallet UI for React Native works with Expo [development builds](https://docs.expo.dev/develop/development-builds/introduction/).
 
 <PackageManagerTabs
-	npm="npx expo install expo-dev-client"
-	pnpm="pnpm dlx expo install expo-dev-client"
-	bun="bunx expo install expo-dev-client"
+    npm="npx expo install expo-dev-client"
+    pnpm="pnpm dlx expo install expo-dev-client"
+    bun="bunx expo install expo-dev-client"
 />
 
 Install the native dependencies required by Mobile Wallet Adapter:
 
 <PackageManagerTabs
-	npm="npx expo install expo-linking expo-secure-store react-native-get-random-values react-native-url-polyfill"
-	pnpm="pnpm dlx expo install expo-linking expo-secure-store react-native-get-random-values react-native-url-polyfill"
-	bun="bunx expo install expo-linking expo-secure-store react-native-get-random-values react-native-url-polyfill"
+    npm="npx expo install expo-linking expo-secure-store react-native-get-random-values react-native-url-polyfill"
+    pnpm="pnpm dlx expo install expo-linking expo-secure-store react-native-get-random-values react-native-url-polyfill"
+    bun="bunx expo install expo-linking expo-secure-store react-native-get-random-values react-native-url-polyfill"
 />
 
 ## Install Wallet UI
 
 <Tabs syncKey="rn-sdk">
-	<TabItem label="Kit">
-		<PackageManagerTabs
-			npm="npm install @wallet-ui/react-native-kit"
-			pnpm="pnpm add @wallet-ui/react-native-kit"
-			bun="bun add @wallet-ui/react-native-kit"
-		/>
-	</TabItem>
-	<TabItem label="Web3.js">
-		<PackageManagerTabs
-			npm="npm install @wallet-ui/react-native-web3js"
-			pnpm="pnpm add @wallet-ui/react-native-web3js"
-			bun="bun add @wallet-ui/react-native-web3js"
-		/>
-	</TabItem>
+    <TabItem label="Kit">
+        <PackageManagerTabs
+            npm="npm install @wallet-ui/react-native-kit"
+            pnpm="pnpm add @wallet-ui/react-native-kit"
+            bun="bun add @wallet-ui/react-native-kit"
+        />
+    </TabItem>
+    <TabItem label="Web3.js">
+        <PackageManagerTabs
+            npm="npm install @wallet-ui/react-native-web3js"
+            pnpm="pnpm add @wallet-ui/react-native-web3js"
+            bun="bun add @wallet-ui/react-native-web3js"
+        />
+    </TabItem>
 </Tabs>
 
 ## Build the app
@@ -58,11 +58,11 @@ Install the native dependencies required by Mobile Wallet Adapter:
 Create and run a development build:
 
 <PackageManagerTabs
-	npm={`npx expo run:ios
+    npm={`npx expo run:ios
 npx expo run:android`}
-	pnpm={`pnpm dlx expo run:ios
+    pnpm={`pnpm dlx expo run:ios
 pnpm dlx expo run:android`}
-	bun={`bunx expo run:ios
+    bun={`bunx expo run:ios
 bunx expo run:android`}
 />
 
@@ -76,34 +76,35 @@ Create `components/app-providers.tsx` and configure `MobileWalletProvider` with 
 		import { ReactNode } from 'react';
 		import { MobileWalletProvider, createSolanaDevnet } from '@wallet-ui/react-native-kit';
 
-		const cluster = createSolanaDevnet();
+    	const cluster = createSolanaDevnet();
 
-		export function AppProviders({ children }: { children: ReactNode }) {
-		    return (
-		        <MobileWalletProvider cluster={cluster} identity={{ name: 'Wallet UI Example Expo' }}>
-		            {children}
-		        </MobileWalletProvider>
-		    );
-		}
-		```
-	</TabItem>
-	<TabItem label="Web3.js">
-		```tsx title="components/app-providers.tsx"
-		import { ReactNode } from 'react';
-		import { MobileWalletProvider } from '@wallet-ui/react-native-web3js';
+    	export function AppProviders({ children }: { children: ReactNode }) {
+    	    return (
+    	        <MobileWalletProvider cluster={cluster} identity={{ name: 'Wallet UI Example Expo' }}>
+    	            {children}
+    	        </MobileWalletProvider>
+    	    );
+    	}
+    	```
+    </TabItem>
+    <TabItem label="Web3.js">
+    	```tsx title="components/app-providers.tsx"
+    	import { ReactNode } from 'react';
+    	import { MobileWalletProvider } from '@wallet-ui/react-native-web3js';
 
-		const chain = 'solana:devnet';
-		const endpoint = 'https://api.devnet.solana.com';
+    	const chain = 'solana:devnet';
+    	const endpoint = 'https://api.devnet.solana.com';
 
-		export function AppProviders({ children }: { children: ReactNode }) {
-		    return (
-		        <MobileWalletProvider chain={chain} endpoint={endpoint} identity={{ name: 'Wallet UI Example Expo' }}>
-		            {children}
-		        </MobileWalletProvider>
-		    );
-		}
-		```
-	</TabItem>
+    	export function AppProviders({ children }: { children: ReactNode }) {
+    	    return (
+    	        <MobileWalletProvider chain={chain} endpoint={endpoint} identity={{ name: 'Wallet UI Example Expo' }}>
+    	            {children}
+    	        </MobileWalletProvider>
+    	    );
+    	}
+    	```
+    </TabItem>
+
 </Tabs>
 
 Wrap the app with the provider:
@@ -134,62 +135,63 @@ Add a simple connection component to confirm the provider is working.
 		import { useCallback } from 'react';
 		import { Button, Text, View } from 'react-native';
 
-		export default function IndexScreen() {
-		    const { account, connect, disconnect } = useMobileWallet();
+    	export default function IndexScreen() {
+    	    const { account, connect, disconnect } = useMobileWallet();
 
-		    const handleConnect = useCallback(async () => {
-		        await connect();
-		    }, [connect]);
+    	    const handleConnect = useCallback(async () => {
+    	        await connect();
+    	    }, [connect]);
 
-		    const handleDisconnect = useCallback(async () => {
-		        await disconnect();
-		    }, [disconnect]);
+    	    const handleDisconnect = useCallback(async () => {
+    	        await disconnect();
+    	    }, [disconnect]);
 
-		    return (
-		        <View>
-		            {account ? (
-		                <>
-		                    <Text>Connected to: {account.address}</Text>
-		                    <Button title="Disconnect" onPress={handleDisconnect} />
-		                </>
-		            ) : (
-		                <Button title="Connect Wallet" onPress={handleConnect} />
-		            )}
-		        </View>
-		    );
-		}
-		```
-	</TabItem>
-	<TabItem label="Web3.js">
-		```tsx title="app/index.tsx"
-		import { useMobileWallet } from '@wallet-ui/react-native-web3js';
-		import { useCallback } from 'react';
-		import { Button, Text, View } from 'react-native';
+    	    return (
+    	        <View>
+    	            {account ? (
+    	                <>
+    	                    <Text>Connected to: {account.address}</Text>
+    	                    <Button title="Disconnect" onPress={handleDisconnect} />
+    	                </>
+    	            ) : (
+    	                <Button title="Connect Wallet" onPress={handleConnect} />
+    	            )}
+    	        </View>
+    	    );
+    	}
+    	```
+    </TabItem>
+    <TabItem label="Web3.js">
+    	```tsx title="app/index.tsx"
+    	import { useMobileWallet } from '@wallet-ui/react-native-web3js';
+    	import { useCallback } from 'react';
+    	import { Button, Text, View } from 'react-native';
 
-		export default function IndexScreen() {
-		    const { account, connect, disconnect } = useMobileWallet();
+    	export default function IndexScreen() {
+    	    const { account, connect, disconnect } = useMobileWallet();
 
-		    const handleConnect = useCallback(async () => {
-		        await connect();
-		    }, [connect]);
+    	    const handleConnect = useCallback(async () => {
+    	        await connect();
+    	    }, [connect]);
 
-		    const handleDisconnect = useCallback(async () => {
-		        await disconnect();
-		    }, [disconnect]);
+    	    const handleDisconnect = useCallback(async () => {
+    	        await disconnect();
+    	    }, [disconnect]);
 
-		    return (
-		        <View>
-		            {account ? (
-		                <>
-		                    <Text>Connected to: {account.address}</Text>
-		                    <Button title="Disconnect" onPress={handleDisconnect} />
-		                </>
-		            ) : (
-		                <Button title="Connect Wallet" onPress={handleConnect} />
-		            )}
-		        </View>
-		    );
-		}
-		```
-	</TabItem>
+    	    return (
+    	        <View>
+    	            {account ? (
+    	                <>
+    	                    <Text>Connected to: {account.address}</Text>
+    	                    <Button title="Disconnect" onPress={handleDisconnect} />
+    	                </>
+    	            ) : (
+    	                <Button title="Connect Wallet" onPress={handleConnect} />
+    	            )}
+    	        </View>
+    	    );
+    	}
+    	```
+    </TabItem>
+
 </Tabs>

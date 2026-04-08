@@ -16,21 +16,22 @@ Choose the package that matches the Solana client stack already used by your app
 	<TabItem label="Kit">
 		Use `@wallet-ui/react-native-kit` if your app is built around `@solana/kit` and you want the Kit-native RPC client, `Address` types, and transaction helpers.
 
-		<PackageManagerTabs
-			npm="npm install @wallet-ui/react-native-kit"
-			pnpm="pnpm add @wallet-ui/react-native-kit"
-			bun="bun add @wallet-ui/react-native-kit"
-		/>
-	</TabItem>
-	<TabItem label="Web3.js">
-		Use `@wallet-ui/react-native-web3js` if your app already uses `@solana/web3.js`, `Connection`, `PublicKey`, and the web3.js transaction model.
+    	<PackageManagerTabs
+    		npm="npm install @wallet-ui/react-native-kit"
+    		pnpm="pnpm add @wallet-ui/react-native-kit"
+    		bun="bun add @wallet-ui/react-native-kit"
+    	/>
+    </TabItem>
+    <TabItem label="Web3.js">
+    	Use `@wallet-ui/react-native-web3js` if your app already uses `@solana/web3.js`, `Connection`, `PublicKey`, and the web3.js transaction model.
 
-		<PackageManagerTabs
-			npm="npm install @wallet-ui/react-native-web3js"
-			pnpm="pnpm add @wallet-ui/react-native-web3js"
-			bun="bun add @wallet-ui/react-native-web3js"
-		/>
-	</TabItem>
+    	<PackageManagerTabs
+    		npm="npm install @wallet-ui/react-native-web3js"
+    		pnpm="pnpm add @wallet-ui/react-native-web3js"
+    		bun="bun add @wallet-ui/react-native-web3js"
+    	/>
+    </TabItem>
+
 </Tabs>
 
 ## Starter templates
@@ -40,24 +41,24 @@ Starter templates are available for both React Native packages.
 ### Kit
 
 <PackageManagerTabs
-	npm={`npx create-solana-dapp@latest -t kit-expo-minimal
+    npm={`npx create-solana-dapp@latest -t kit-expo-minimal
 npx create-solana-dapp@latest -t kit-expo-uniwind`}
-	pnpm={`pnpm dlx create-solana-dapp@latest -t kit-expo-minimal
+    pnpm={`pnpm dlx create-solana-dapp@latest -t kit-expo-minimal
 pnpm dlx create-solana-dapp@latest -t kit-expo-uniwind`}
-	bun={`bunx create-solana-dapp@latest -t kit-expo-minimal
+    bun={`bunx create-solana-dapp@latest -t kit-expo-minimal
 bunx create-solana-dapp@latest -t kit-expo-uniwind`}
 />
 
 ### Web3.js
 
 <PackageManagerTabs
-	npm={`npx create-solana-dapp@latest -t web3js-expo-minimal
+    npm={`npx create-solana-dapp@latest -t web3js-expo-minimal
 npx create-solana-dapp@latest -t web3js-expo
 npx create-solana-dapp@latest -t web3js-expo-paper`}
-	pnpm={`pnpm dlx create-solana-dapp@latest -t web3js-expo-minimal
+    pnpm={`pnpm dlx create-solana-dapp@latest -t web3js-expo-minimal
 pnpm dlx create-solana-dapp@latest -t web3js-expo
 pnpm dlx create-solana-dapp@latest -t web3js-expo-paper`}
-	bun={`bunx create-solana-dapp@latest -t web3js-expo-minimal
+    bun={`bunx create-solana-dapp@latest -t web3js-expo-minimal
 bunx create-solana-dapp@latest -t web3js-expo
 bunx create-solana-dapp@latest -t web3js-expo-paper`}
 />
@@ -65,14 +66,14 @@ bunx create-solana-dapp@latest -t web3js-expo-paper`}
 ## Setup guides
 
 <CardGrid stagger>
-	<LinkCard
-		href="/react-native/guides/expo/"
-		title="Expo"
-		description="Set up Wallet UI in Expo with shared steps and package-specific code examples."
-	/>
-	<LinkCard
-		href="/react-native/core-concepts/"
-		title="Core concepts"
-		description="Review the shared architecture and the important kit vs. web3.js differences."
-	/>
+    <LinkCard
+        href="/react-native/guides/expo/"
+        title="Expo"
+        description="Set up Wallet UI in Expo with shared steps and package-specific code examples."
+    />
+    <LinkCard
+        href="/react-native/core-concepts/"
+        title="Core concepts"
+        description="Review the shared architecture and the important kit vs. web3.js differences."
+    />
 </CardGrid>

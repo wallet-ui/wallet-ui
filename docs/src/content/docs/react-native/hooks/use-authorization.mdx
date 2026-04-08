@@ -23,129 +23,130 @@ The authorization flow is shared across both packages. The main differences are 
 	<TabItem label="Kit">
 		### Parameters
 
-		| Name       | Type                       | Description                                                |
-		| ---------- | -------------------------- | ---------------------------------------------------------- |
-		| `cache`    | `WalletAuthorizationCache` | Optional. A cache instance for storing authorization data. |
-		| `chain`    | `Chain`                    | The blockchain chain to connect to.                        |
-		| `identity` | `AppIdentity`              | The identity of the app connecting to the wallet.          |
-		| `store`    | `AuthorizationStore`       | The authorization store instance.                          |
+    	| Name       | Type                       | Description                                                |
+    	| ---------- | -------------------------- | ---------------------------------------------------------- |
+    	| `cache`    | `WalletAuthorizationCache` | Optional. A cache instance for storing authorization data. |
+    	| `chain`    | `Chain`                    | The blockchain chain to connect to.                        |
+    	| `identity` | `AppIdentity`              | The identity of the app connecting to the wallet.          |
+    	| `store`    | `AuthorizationStore`       | The authorization store instance.                          |
 
-		These parameters are provided automatically when `useAuthorization` is used inside `MobileWalletProvider`.
+    	These parameters are provided automatically when `useAuthorization` is used inside `MobileWalletProvider`.
 
-		### Return value
+    	### Return value
 
-		| Name                         | Type                                                                       | Description                                         |
-		| ---------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------- |
-		| `accounts`                   | `Account[] \| null`                                                        | An array of all authorized accounts.                |
-		| `authorizeSession`           | `(wallet: AuthorizeAPI) => Promise<Account>`                               | A function to authorize a new session.              |
-		| `authorizeSessionWithSignIn` | `(wallet: AuthorizeAPI, signInPayload: SignInPayload) => Promise<Account>` | A function to authorize a new session with sign-in. |
-		| `deauthorizeSession`         | `(wallet: DeauthorizeAPI) => Promise<void>`                                | A function to deauthorize the current session.      |
-		| `deauthorizeSessions`        | `() => Promise<void>`                                                      | A function to deauthorize all sessions.             |
-		| `selectedAccount`            | `Account \| null`                                                          | The currently selected wallet account.              |
+    	| Name                         | Type                                                                       | Description                                         |
+    	| ---------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------- |
+    	| `accounts`                   | `Account[] \| null`                                                        | An array of all authorized accounts.                |
+    	| `authorizeSession`           | `(wallet: AuthorizeAPI) => Promise<Account>`                               | A function to authorize a new session.              |
+    	| `authorizeSessionWithSignIn` | `(wallet: AuthorizeAPI, signInPayload: SignInPayload) => Promise<Account>` | A function to authorize a new session with sign-in. |
+    	| `deauthorizeSession`         | `(wallet: DeauthorizeAPI) => Promise<void>`                                | A function to deauthorize the current session.      |
+    	| `deauthorizeSessions`        | `() => Promise<void>`                                                      | A function to deauthorize all sessions.             |
+    	| `selectedAccount`            | `Account \| null`                                                          | The currently selected wallet account.              |
 
-		### Account object
+    	### Account object
 
-		| Name            | Type                   | Description                                                 |
-		| --------------- | ---------------------- | ----------------------------------------------------------- |
-		| `address`       | `Address`              | The wallet address as an `Address` type from `@solana/kit`. |
-		| `addressBase64` | `Base64EncodedAddress` | The base64-encoded address.                                 |
-		| `icon`          | `WalletIcon`           | Optional. The wallet icon.                                  |
-		| `label`         | `string \| undefined`  | An optional, user-defined label for the account.            |
+    	| Name            | Type                   | Description                                                 |
+    	| --------------- | ---------------------- | ----------------------------------------------------------- |
+    	| `address`       | `Address`              | The wallet address as an `Address` type from `@solana/kit`. |
+    	| `addressBase64` | `Base64EncodedAddress` | The base64-encoded address.                                 |
+    	| `icon`          | `WalletIcon`           | Optional. The wallet icon.                                  |
+    	| `label`         | `string \| undefined`  | An optional, user-defined label for the account.            |
 
-		### Example
+    	### Example
 
-		```tsx
-		import { createAsyncStorageCache, createAuthorizationStore, useAuthorization } from '@wallet-ui/react-native-kit';
-		import { useCallback } from 'react';
-		import { Button, Text, View } from 'react-native';
+    	```tsx
+    	import { createAsyncStorageCache, createAuthorizationStore, useAuthorization } from '@wallet-ui/react-native-kit';
+    	import { useCallback } from 'react';
+    	import { Button, Text, View } from 'react-native';
 
-		const cache = createAsyncStorageCache();
-		const store = createAuthorizationStore({ cache });
+    	const cache = createAsyncStorageCache();
+    	const store = createAuthorizationStore({ cache });
 
-		function MyComponent() {
-		    const { authorizeSession, selectedAccount } = useAuthorization({
-		        chain: 'solana:mainnet',
-		        identity: { name: 'My App' },
-		        store,
-		        cache,
-		    });
+    	function MyComponent() {
+    	    const { authorizeSession, selectedAccount } = useAuthorization({
+    	        chain: 'solana:mainnet',
+    	        identity: { name: 'My App' },
+    	        store,
+    	        cache,
+    	    });
 
-		    const handleConnect = useCallback(async () => {
-		        const wallet = getWallet();
-		        await authorizeSession(wallet);
-		    }, [authorizeSession]);
+    	    const handleConnect = useCallback(async () => {
+    	        const wallet = getWallet();
+    	        await authorizeSession(wallet);
+    	    }, [authorizeSession]);
 
-		    return (
-		        <View>
-		            {selectedAccount ? (
-		                <Text>Connected to {selectedAccount.address}</Text>
-		            ) : (
-		                <Button title="Connect" onPress={handleConnect} />
-		            )}
-		        </View>
-		    );
-		}
-		```
-	</TabItem>
-	<TabItem label="Web3.js">
-		### Parameters
+    	    return (
+    	        <View>
+    	            {selectedAccount ? (
+    	                <Text>Connected to {selectedAccount.address}</Text>
+    	            ) : (
+    	                <Button title="Connect" onPress={handleConnect} />
+    	            )}
+    	        </View>
+    	    );
+    	}
+    	```
+    </TabItem>
+    <TabItem label="Web3.js">
+    	### Parameters
 
-		| Name       | Type                                      | Description                                                |
-		| ---------- | ----------------------------------------- | ---------------------------------------------------------- |
-		| `cache`    | `Cache<WalletAuthorization> \| undefined` | Optional. A cache instance for storing authorization data. |
-		| `chain`    | `Chain`                                   | The blockchain chain to connect to.                        |
-		| `identity` | `AppIdentity`                             | The identity of the app connecting to the wallet.          |
+    	| Name       | Type                                      | Description                                                |
+    	| ---------- | ----------------------------------------- | ---------------------------------------------------------- |
+    	| `cache`    | `Cache<WalletAuthorization> \| undefined` | Optional. A cache instance for storing authorization data. |
+    	| `chain`    | `Chain`                                   | The blockchain chain to connect to.                        |
+    	| `identity` | `AppIdentity`                             | The identity of the app connecting to the wallet.          |
 
-		If no `cache` is provided, a default cache backed by `AsyncStorage` is used.
+    	If no `cache` is provided, a default cache backed by `AsyncStorage` is used.
 
-		### Return value
+    	### Return value
 
-		| Name                         | Type                                                                       | Description                                                 |
-		| ---------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------- |
-		| `accounts`                   | `Account[] \| null`                                                        | An array of all authorized accounts.                        |
-		| `authorizeSession`           | `(wallet: AuthorizeAPI) => Promise<Account>`                               | A function to authorize a new session.                      |
-		| `authorizeSessionWithSignIn` | `(wallet: AuthorizeAPI, signInPayload: SignInPayload) => Promise<Account>` | A function to authorize a new session with sign-in.         |
-		| `deauthorizeSession`         | `(wallet: DeauthorizeAPI) => Promise<void>`                                | A function to deauthorize the current session.              |
-		| `deauthorizeSessions`        | `() => Promise<void>`                                                      | A function to deauthorize all sessions.                     |
-		| `isLoading`                  | `boolean`                                                                  | A boolean indicating if the authorization state is loading. |
-		| `selectedAccount`            | `Account \| null`                                                          | The currently selected wallet account.                      |
+    	| Name                         | Type                                                                       | Description                                                 |
+    	| ---------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------- |
+    	| `accounts`                   | `Account[] \| null`                                                        | An array of all authorized accounts.                        |
+    	| `authorizeSession`           | `(wallet: AuthorizeAPI) => Promise<Account>`                               | A function to authorize a new session.                      |
+    	| `authorizeSessionWithSignIn` | `(wallet: AuthorizeAPI, signInPayload: SignInPayload) => Promise<Account>` | A function to authorize a new session with sign-in.         |
+    	| `deauthorizeSession`         | `(wallet: DeauthorizeAPI) => Promise<void>`                                | A function to deauthorize the current session.              |
+    	| `deauthorizeSessions`        | `() => Promise<void>`                                                      | A function to deauthorize all sessions.                     |
+    	| `isLoading`                  | `boolean`                                                                  | A boolean indicating if the authorization state is loading. |
+    	| `selectedAccount`            | `Account \| null`                                                          | The currently selected wallet account.                      |
 
-		### Account object
+    	### Account object
 
-		| Name        | Type                  | Description                                                 |
-		| ----------- | --------------------- | ----------------------------------------------------------- |
-		| `address`   | `string`              | The base58-encoded string representation of the public key. |
-		| `label`     | `string \| undefined` | An optional, user-defined label for the account.            |
-		| `publicKey` | `PublicKey`           | A `PublicKey` object from `@solana/web3.js`.                |
+    	| Name        | Type                  | Description                                                 |
+    	| ----------- | --------------------- | ----------------------------------------------------------- |
+    	| `address`   | `string`              | The base58-encoded string representation of the public key. |
+    	| `label`     | `string \| undefined` | An optional, user-defined label for the account.            |
+    	| `publicKey` | `PublicKey`           | A `PublicKey` object from `@solana/web3.js`.                |
 
-		### Example
+    	### Example
 
-		```tsx
-		import { useAuthorization } from '@wallet-ui/react-native-web3js';
-		import { useCallback } from 'react';
-		import { Button, Text, View } from 'react-native';
+    	```tsx
+    	import { useAuthorization } from '@wallet-ui/react-native-web3js';
+    	import { useCallback } from 'react';
+    	import { Button, Text, View } from 'react-native';
 
-		function MyComponent() {
-		    const { authorizeSession, selectedAccount } = useAuthorization({
-		        chain: 'solana:mainnet',
-		        identity: { name: 'My App' },
-		    });
+    	function MyComponent() {
+    	    const { authorizeSession, selectedAccount } = useAuthorization({
+    	        chain: 'solana:mainnet',
+    	        identity: { name: 'My App' },
+    	    });
 
-		    const handleConnect = useCallback(async () => {
-		        const wallet = getWallet();
-		        await authorizeSession(wallet);
-		    }, [authorizeSession]);
+    	    const handleConnect = useCallback(async () => {
+    	        const wallet = getWallet();
+    	        await authorizeSession(wallet);
+    	    }, [authorizeSession]);
 
-		    return (
-		        <View>
-		            {selectedAccount ? (
-		                <Text>Connected to {selectedAccount.address}</Text>
-		            ) : (
-		                <Button title="Connect" onPress={handleConnect} />
-		            )}
-		        </View>
-		    );
-		}
-		```
-	</TabItem>
+    	    return (
+    	        <View>
+    	            {selectedAccount ? (
+    	                <Text>Connected to {selectedAccount.address}</Text>
+    	            ) : (
+    	                <Button title="Connect" onPress={handleConnect} />
+    	            )}
+    	        </View>
+    	    );
+    	}
+    	```
+    </TabItem>
+
 </Tabs>

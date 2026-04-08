@@ -14,100 +14,101 @@ The provider always supplies app identity, authorization state, and wallet acces
 	<TabItem label="Kit">
 		### Props
 
-		| Name           | Type                                                         | Description                                                                                                                                     | Default |
-		| -------------- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-		| `cache`        | `WalletAuthorizationCache`                                   | Optional. A cache instance for storing authorization data. Defaults to a cache that uses `AsyncStorage`.                                       |         |
-		| `children`     | `ReactNode`                                                  | Child components that should receive the mobile wallet context.                                                                                 |         |
-		| `cluster`      | `Pick<SolanaCluster, 'id' \| 'url' \| 'urlWs'>`              | Cluster configuration. Helpers like `createSolanaDevnet()` create the expected shape.                                                           |         |
-		| `createClient` | `(cluster: Pick<SolanaCluster, 'url' \| 'urlWs'>) => Client` | Optional. A function to create a custom RPC client. By default the provider creates one with `createSolanaRpc()` and `createSolanaRpcSubscriptions()`. |         |
-		| `identity`     | `AppIdentity`                                                | The application identity shown to the wallet.                                                                                                   |         |
+    	| Name           | Type                                                         | Description                                                                                                                                     | Default |
+    	| -------------- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+    	| `cache`        | `WalletAuthorizationCache`                                   | Optional. A cache instance for storing authorization data. Defaults to a cache that uses `AsyncStorage`.                                       |         |
+    	| `children`     | `ReactNode`                                                  | Child components that should receive the mobile wallet context.                                                                                 |         |
+    	| `cluster`      | `Pick<SolanaCluster, 'id' \| 'url' \| 'urlWs'>`              | Cluster configuration. Helpers like `createSolanaDevnet()` create the expected shape.                                                           |         |
+    	| `createClient` | `(cluster: Pick<SolanaCluster, 'url' \| 'urlWs'>) => Client` | Optional. A function to create a custom RPC client. By default the provider creates one with `createSolanaRpc()` and `createSolanaRpcSubscriptions()`. |         |
+    	| `identity`     | `AppIdentity`                                                | The application identity shown to the wallet.                                                                                                   |         |
 
-		### Network configuration
+    	### Network configuration
 
-		Kit expects a `cluster` object with:
+    	Kit expects a `cluster` object with:
 
-		| Name    | Type              | Description                                             |
-		| ------- | ----------------- | ------------------------------------------------------- |
-		| `id`    | `SolanaClusterId` | The cluster identifier, for example `'solana:devnet'`. |
-		| `url`   | `string`          | The Solana RPC endpoint.                                |
-		| `urlWs` | `string`          | Optional WebSocket endpoint for subscriptions.          |
+    	| Name    | Type              | Description                                             |
+    	| ------- | ----------------- | ------------------------------------------------------- |
+    	| `id`    | `SolanaClusterId` | The cluster identifier, for example `'solana:devnet'`. |
+    	| `url`   | `string`          | The Solana RPC endpoint.                                |
+    	| `urlWs` | `string`          | Optional WebSocket endpoint for subscriptions.          |
 
-		Helpers available in the docs include:
+    	Helpers available in the docs include:
 
-		- `createSolanaDevnet()`
-		- `createSolanaMainnet(url)`
-		- `createSolanaTestnet()`
-		- `createSolanaLocalnet()`
+    	- `createSolanaDevnet()`
+    	- `createSolanaMainnet(url)`
+    	- `createSolanaTestnet()`
+    	- `createSolanaLocalnet()`
 
-		### Example
+    	### Example
 
-		```tsx
-		import { MobileWalletProvider, createSolanaDevnet } from '@wallet-ui/react-native-kit';
-		import React from 'react';
-		import { AppRegistry } from 'react-native';
-		import App from './App';
+    	```tsx
+    	import { MobileWalletProvider, createSolanaDevnet } from '@wallet-ui/react-native-kit';
+    	import React from 'react';
+    	import { AppRegistry } from 'react-native';
+    	import App from './App';
 
-		const cluster = createSolanaDevnet();
-		const appIdentity = {
-		    name: 'My Wallet App',
-		    uri: 'https://mywalletapp.com',
-		    icon: 'https://mywalletapp.com/icon.png',
-		};
+    	const cluster = createSolanaDevnet();
+    	const appIdentity = {
+    	    name: 'My Wallet App',
+    	    uri: 'https://mywalletapp.com',
+    	    icon: 'https://mywalletapp.com/icon.png',
+    	};
 
-		function Root() {
-		    return (
-		        <MobileWalletProvider cluster={cluster} identity={appIdentity}>
-		            <App />
-		        </MobileWalletProvider>
-		    );
-		}
+    	function Root() {
+    	    return (
+    	        <MobileWalletProvider cluster={cluster} identity={appIdentity}>
+    	            <App />
+    	        </MobileWalletProvider>
+    	    );
+    	}
 
-		AppRegistry.registerComponent('MyWalletApp', () => Root);
-		```
-	</TabItem>
-	<TabItem label="Web3.js">
-		### Props
+    	AppRegistry.registerComponent('MyWalletApp', () => Root);
+    	```
+    </TabItem>
+    <TabItem label="Web3.js">
+    	### Props
 
-		| Name                 | Type                                      | Description                                                         | Default                       |
-		| -------------------- | ----------------------------------------- | ------------------------------------------------------------------- | ----------------------------- |
-		| `cache`              | `Cache<WalletAuthorization> \| undefined` | Optional. A cache instance for storing authorization data.          |                               |
-		| `chain`              | `Chain`                                   | The blockchain chain to connect to, for example `'solana:devnet'`. |                               |
-		| `children`           | `ReactNode`                               | Child components that should receive the mobile wallet context.     |                               |
-		| `commitmentOrConfig` | `Commitment \| ConnectionConfig`          | Optional commitment level or connection configuration.              | `{ commitment: 'confirmed' }` |
-		| `endpoint`           | `string`                                  | The Solana RPC endpoint URL.                                        |                               |
-		| `identity`           | `AppIdentity`                             | The application identity shown to the wallet.                       |                               |
+    	| Name                 | Type                                      | Description                                                         | Default                       |
+    	| -------------------- | ----------------------------------------- | ------------------------------------------------------------------- | ----------------------------- |
+    	| `cache`              | `Cache<WalletAuthorization> \| undefined` | Optional. A cache instance for storing authorization data.          |                               |
+    	| `chain`              | `Chain`                                   | The blockchain chain to connect to, for example `'solana:devnet'`. |                               |
+    	| `children`           | `ReactNode`                               | Child components that should receive the mobile wallet context.     |                               |
+    	| `commitmentOrConfig` | `Commitment \| ConnectionConfig`          | Optional commitment level or connection configuration.              | `{ commitment: 'confirmed' }` |
+    	| `endpoint`           | `string`                                  | The Solana RPC endpoint URL.                                        |                               |
+    	| `identity`           | `AppIdentity`                             | The application identity shown to the wallet.                       |                               |
 
-		### Network configuration
+    	### Network configuration
 
-		Web3.js expects `chain` plus `endpoint`, which map directly to the chain identifier and `Connection` endpoint URL used by `@solana/web3.js`.
+    	Web3.js expects `chain` plus `endpoint`, which map directly to the chain identifier and `Connection` endpoint URL used by `@solana/web3.js`.
 
-		### Example
+    	### Example
 
-		```tsx
-		import { MobileWalletProvider } from '@wallet-ui/react-native-web3js';
-		import React from 'react';
-		import { AppRegistry } from 'react-native';
-		import App from './App';
+    	```tsx
+    	import { MobileWalletProvider } from '@wallet-ui/react-native-web3js';
+    	import React from 'react';
+    	import { AppRegistry } from 'react-native';
+    	import App from './App';
 
-		const chain = 'solana:devnet';
-		const endpoint = 'https://api.devnet.solana.com';
-		const appIdentity = {
-		    name: 'My Wallet App',
-		    uri: 'https://mywalletapp.com',
-		    icon: 'https://mywalletapp.com/icon.png',
-		};
+    	const chain = 'solana:devnet';
+    	const endpoint = 'https://api.devnet.solana.com';
+    	const appIdentity = {
+    	    name: 'My Wallet App',
+    	    uri: 'https://mywalletapp.com',
+    	    icon: 'https://mywalletapp.com/icon.png',
+    	};
 
-		function Root() {
-		    return (
-		        <MobileWalletProvider chain={chain} endpoint={endpoint} identity={appIdentity}>
-		            <App />
-		        </MobileWalletProvider>
-		    );
-		}
+    	function Root() {
+    	    return (
+    	        <MobileWalletProvider chain={chain} endpoint={endpoint} identity={appIdentity}>
+    	            <App />
+    	        </MobileWalletProvider>
+    	    );
+    	}
 
-		AppRegistry.registerComponent('MyWalletApp', () => Root);
-		```
-	</TabItem>
+    	AppRegistry.registerComponent('MyWalletApp', () => Root);
+    	```
+    </TabItem>
+
 </Tabs>
 
 ## Advanced Kit client customization
@@ -141,9 +142,9 @@ function Root() {
 ### `@solana/kit-plugins`
 
 <PackageManagerTabs
-	npm="npm install @solana/kit-plugins"
-	pnpm="pnpm add @solana/kit-plugins"
-	bun="bun add @solana/kit-plugins"
+    npm="npm install @solana/kit-plugins"
+    pnpm="pnpm add @solana/kit-plugins"
+    bun="bun add @solana/kit-plugins"
 />
 
 ```tsx

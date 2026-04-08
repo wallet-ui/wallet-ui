@@ -97,7 +97,13 @@
             "dependsOn": ["compile:js"]
         },
         "@wallet-ui/docs#build": {
-            "dependsOn": ["^compile:js", "^compile:typedefs"],
+            "dependsOn": [
+                "^compile:js",
+                "^compile:typedefs",
+                "test:lint",
+                "test:prettier",
+                "test:typecheck"
+            ],
             "inputs": [
                 "$TURBO_DEFAULT$",
                 "astro.config.mjs",

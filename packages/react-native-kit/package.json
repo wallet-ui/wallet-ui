@@ -86,7 +86,7 @@
         "@wallet-standard/react": "1.0.1",
         "@wallet-ui/core": "workspace:*",
         "js-base64": "^3.7.8",
-        "nanostores": "^1.1.0"
+        "nanostores": "^1.2.0"
     },
     "devDependencies": {
         "@types/react": "^19.1.17",

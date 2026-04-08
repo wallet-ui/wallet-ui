@@ -48,13 +48,6 @@ export default defineConfig({
                 {
                     tag: 'meta',
                     attrs: {
-                        name: 'robots',
-                        content: 'noindex, nofollow',
-                    },
-                },
-                {
-                    tag: 'meta',
-                    attrs: {
                         property: 'og:image',
                         content: new URL(defaultSocialImagePath, siteUrl).toString(),
                     },

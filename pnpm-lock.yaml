@@ -722,13 +722,13 @@ importers:
     dependencies:
       '@nanostores/persistent':
         specifier: 1.1.0
-        version: 1.1.0(nanostores@1.0.1)
+        version: 1.1.0(nanostores@1.2.0)
       '@solana/kit':
         specifier: ^6.1.0
         version: 6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.3)(utf-8-validate@5.0.10)
       nanostores:
-        specifier: 1.0.1
-        version: 1.0.1
+        specifier: 1.2.0
+        version: 1.2.0
     devDependencies:
       typescript:
         specifier: ^5.9.2
@@ -788,7 +788,7 @@ importers:
     dependencies:
       '@nanostores/react':
         specifier: ^1.0.0
-        version: 1.0.0(nanostores@1.0.1)(react@19.2.1)
+        version: 1.0.0(nanostores@1.2.0)(react@19.2.1)
       '@solana/kit':
         specifier: ^6.1.0
         version: 6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.3)(utf-8-validate@5.0.10)
@@ -820,8 +820,8 @@ importers:
         specifier: 1.24.2
         version: 1.24.2(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       nanostores:
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.2.0
+        version: 1.2.0
     devDependencies:
       '@types/react':
         specifier: ^19.1.17
@@ -849,7 +849,7 @@ importers:
     dependencies:
       '@nanostores/react':
         specifier: ^1.0.0
-        version: 1.0.0(nanostores@1.1.0)(react@19.1.0)
+        version: 1.0.0(nanostores@1.2.0)(react@19.1.0)
       '@react-native-async-storage/async-storage':
         specifier: ^2.2.0
         version: 2.2.0(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))
@@ -884,8 +884,8 @@ importers:
         specifier: ^3.7.8
         version: 3.7.8
       nanostores:
-        specifier: ^1.1.0
-        version: 1.1.0
+        specifier: ^1.2.0
+        version: 1.2.0
     devDependencies:
       '@types/react':
         specifier: ^19.1.17
@@ -913,7 +913,7 @@ importers:
     dependencies:
       '@nanostores/react':
         specifier: ^1.0.0
-        version: 1.0.0(nanostores@1.1.0)(react@19.1.0)
+        version: 1.0.0(nanostores@1.2.0)(react@19.1.0)
       '@react-native-async-storage/async-storage':
         specifier: ^2.2.0
         version: 2.2.0(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.7)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))
@@ -945,8 +945,8 @@ importers:
         specifier: ^3.7.8
         version: 3.7.8
       nanostores:
-        specifier: ^1.1.0
-        version: 1.1.0
+        specifier: ^1.2.0
+        version: 1.2.0
     devDependencies:
       '@types/react':
         specifier: ^19.1.17
@@ -5851,6 +5851,7 @@ packages:
   '@xmldom/xmldom@0.8.11':
     resolution: {integrity: sha512-cQzWCtO6C8TQiYl1ruKNn2U6Ao4o4WBBcbL61yJl84x+j5sOWWFU9X7DpND8XZG3daDppSsigMdfAIl2upQBRw==}
     engines: {node: '>=10.0.0'}
+    deprecated: this version has critical issues, please update to the latest version
 
   '@zag-js/anatomy@1.24.2':
     resolution: {integrity: sha512-qWmxopxVHMjP9UGoUdxqKtrot8MaU0UvoJWh0O03b9eOPgLwMydkcwuGAc8s3x6GDREu3D3GvcRgrQ5JteITjg==}
@@ -6250,6 +6251,11 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
+  baseline-browser-mapping@2.10.16:
+    resolution: {integrity: sha512-Lyf3aK28zpsD1yQMiiHD4RvVb6UdMoo8xzG2XzFIfR9luPzOpcBlAsT/qfB1XWS1bxWT+UtE4WmQgsp297FYOA==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
   baseline-browser-mapping@2.9.2:
     resolution: {integrity: sha512-PxSsosKQjI38iXkmb3d0Y32efqyA0uW4s41u4IVBsLlWLhCiYNpH/AfNOVWRqCQBlD8TFJTz6OUWNd4DFJCnmw==}
     hasBin: true
@@ -6405,8 +6411,8 @@ packages:
   caniuse-lite@1.0.30001769:
     resolution: {integrity: sha512-BCfFL1sHijQlBGWBMuJyhZUhzo7wer5sVj9hqekB/7xn0Ypy+pER/edCYQm4exbXj4WiySGp40P8UuTh6w1srg==}
 
-  caniuse-lite@1.0.30001784:
-    resolution: {integrity: sha512-WU346nBTklUV9YfUl60fqRbU5ZqyXlqvo1SgigE1OAXK5bFL8LL9q1K7aap3N739l4BvNqnkm3YrGHiY9sfUQw==}
+  caniuse-lite@1.0.30001787:
+    resolution: {integrity: sha512-mNcrMN9KeI68u7muanUpEejSLghOKlVhRqS/Za2IeyGllJ9I9otGpR9g3nsw7n4W378TE/LyIteA0+/FOZm4Kg==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -6963,8 +6969,8 @@ packages:
   electron-to-chromium@1.5.266:
     resolution: {integrity: sha512-kgWEglXvkEfMH7rxP5OSZZwnaDWT7J9EoZCujhnpLbfi0bbNtRkgdX2E3gt0Uer11c61qCYktB3hwkAS325sJg==}
 
-  electron-to-chromium@1.5.330:
-    resolution: {integrity: sha512-jFNydB5kFtYUobh4IkWUnXeyDbjf/r9gcUEXe1xcrcUxIGfTdzPXA+ld6zBRbwvgIGVzDll/LTIiDztEtckSnA==}
+  electron-to-chromium@1.5.334:
+    resolution: {integrity: sha512-mgjZAz7Jyx1SRCwEpy9wefDS7GvNPazLthHg8eQMJ76wBdGQQDW33TCrUTvQ4wzpmOrv2zrFoD3oNufMdyMpog==}
 
   emittery@0.13.1:
     resolution: {integrity: sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==}
@@ -9419,12 +9425,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  nanostores@1.0.1:
-    resolution: {integrity: sha512-kNZ9xnoJYKg/AfxjrVL4SS0fKX++4awQReGqWnwTRHxeHGZ1FJFVgTqr/eMrNQdp0Tz7M7tG/TDaX8QfHDwVCw==}
-    engines: {node: ^20.0.0 || >=22.0.0}
-
-  nanostores@1.1.0:
-    resolution: {integrity: sha512-yJBmDJr18xy47dbNVlHcgdPrulSn1nhSE6Ns9vTG+Nx9VPT6iV1MD6aQFp/t52zpf82FhLLTXAXr30NuCnxvwA==}
+  nanostores@1.2.0:
+    resolution: {integrity: sha512-F0wCzbsH80G7XXo0Jd9/AVQC7ouWY6idUCTnMwW5t/Rv9W8qmO6endavDwg7TNp5GbugwSukFMVZqzPSrSMndg==}
     engines: {node: ^20.0.0 || >=22.0.0}
 
   napi-postinstall@0.3.4:
@@ -9515,8 +9517,8 @@ packages:
   node-releases@2.0.27:
     resolution: {integrity: sha512-nmh3lCkYZ3grZvqcCH+fjmQ7X+H0OeZgP40OierEaAptX4XofMh5kwNbWh7lBduUzCcV/8kZ+NDLCwm2iorIlA==}
 
-  node-releases@2.0.36:
-    resolution: {integrity: sha512-TdC8FSgHz8Mwtw9g5L4gR/Sh9XhSP/0DEkQxfEFXOpiul5IiHgHan2VhYYb6agDSfp4KuvltmGApc8HMgUrIkA==}
+  node-releases@2.0.37:
+    resolution: {integrity: sha512-1h5gKZCF+pO/o3Iqt5Jp7wc9rH3eJJ0+nh/CIoiRwjRxde/hAHyLPXYN4V3CqKAbiZPSeJFSWHmJsbkicta0Eg==}
 
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
@@ -14684,19 +14686,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@nanostores/persistent@1.1.0(nanostores@1.0.1)':
+  '@nanostores/persistent@1.1.0(nanostores@1.2.0)':
     dependencies:
-      nanostores: 1.0.1
+      nanostores: 1.2.0
 
-  '@nanostores/react@1.0.0(nanostores@1.0.1)(react@19.2.1)':
+  '@nanostores/react@1.0.0(nanostores@1.2.0)(react@19.1.0)':
     dependencies:
-      nanostores: 1.0.1
-      react: 19.2.1
-
-  '@nanostores/react@1.0.0(nanostores@1.1.0)(react@19.1.0)':
-    dependencies:
-      nanostores: 1.1.0
+      nanostores: 1.2.0
       react: 19.1.0
+
+  '@nanostores/react@1.0.0(nanostores@1.2.0)(react@19.2.1)':
+    dependencies:
+      nanostores: 1.2.0
+      react: 19.2.1
 
   '@napi-rs/wasm-runtime@0.2.12':
     dependencies:
@@ -18656,6 +18658,8 @@ snapshots:
 
   baseline-browser-mapping@2.10.13: {}
 
+  baseline-browser-mapping@2.10.16: {}
+
   baseline-browser-mapping@2.9.2: {}
 
   bcp-47-match@2.0.3: {}
@@ -18736,10 +18740,10 @@ snapshots:
 
   browserslist@4.28.2:
     dependencies:
-      baseline-browser-mapping: 2.10.13
-      caniuse-lite: 1.0.30001784
-      electron-to-chromium: 1.5.330
-      node-releases: 2.0.36
+      baseline-browser-mapping: 2.10.16
+      caniuse-lite: 1.0.30001787
+      electron-to-chromium: 1.5.334
+      node-releases: 2.0.37
       update-browserslist-db: 1.2.3(browserslist@4.28.2)
 
   bs58@4.0.1:
@@ -18823,7 +18827,7 @@ snapshots:
 
   caniuse-lite@1.0.30001769: {}
 
-  caniuse-lite@1.0.30001784: {}
+  caniuse-lite@1.0.30001787: {}
 
   ccount@2.0.1: {}
 
@@ -19302,7 +19306,7 @@ snapshots:
 
   electron-to-chromium@1.5.266: {}
 
-  electron-to-chromium@1.5.330: {}
+  electron-to-chromium@1.5.334: {}
 
   emittery@0.13.1: {}
 
@@ -23211,9 +23215,7 @@ snapshots:
 
   nanoid@3.3.11: {}
 
-  nanostores@1.0.1: {}
-
-  nanostores@1.1.0: {}
+  nanostores@1.2.0: {}
 
   napi-postinstall@0.3.4: {}
 
@@ -23283,7 +23285,7 @@ snapshots:
 
   node-releases@2.0.27: {}
 
-  node-releases@2.0.36: {}
+  node-releases@2.0.37: {}
 
   normalize-path@3.0.0: {}
 

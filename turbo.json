@@ -100,14 +100,14 @@
             "dependsOn": ["^compile:js", "^compile:typedefs"],
             "inputs": [
                 "$TURBO_DEFAULT$",
-                "tsconfig.*",
-                "next.config.ts",
-                "source.config.ts",
+                "astro.config.mjs",
+                "public/**",
+                "scripts/**",
                 "src/**",
-                "postcss.config.mjs",
-                "wrangler.jsonc"
+                "tsconfig.*",
+                "wrangler.toml"
             ],
-            "outputs": [".vercel/output/static/**"]
+            "outputs": ["dist/**"]
         },
         "@wallet-ui/example-react-app#compile:js": {
             "dependsOn": ["^compile:js", "^compile:typedefs"],

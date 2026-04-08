@@ -1,0 +1,60 @@
+---
+title: Wallet UI
+description: The wallet layer for Solana apps on web and mobile.
+template: splash
+hero:
+  title: |
+    Wallet UI
+  tagline: >-
+    The wallet layer for Solana apps on web and mobile. Built on <a href="https://github.com/wallet-standard/wallet-standard">Wallet Standard</a> and <a href="https://github.com/solana-mobile/mobile-wallet-adapter/">Mobile Wallet Adapter</a>.
+  image:
+    file: ../../assets/wallet-ui.png
+  actions:
+    - text: Start with React
+      link: /react/getting-started/
+      icon: right-arrow
+    - text: Start with React Native
+      link: /react-native/getting-started/
+      icon: right-arrow
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Choose your starting point
+
+<CardGrid stagger>
+	<LinkCard
+		href="/react/getting-started/"
+		title="React"
+		description="Build a wallet-enabled React app with setup guides, components, hooks, providers, and styling docs."
+	/>
+	<LinkCard
+		href="/react-native/getting-started/"
+		title="React Native"
+		description="Choose between the Kit and Web3.js package variants, then follow the shared React Native setup, hook references, and provider docs."
+	/>
+</CardGrid>
+
+## What these docs cover
+
+<CardGrid stagger>
+	<LinkCard
+		href="/react/"
+		title="React SDK"
+		description="Set up providers, ship the dropdown quickly, or build custom flows from hooks and context APIs."
+	/>
+	<LinkCard
+		href="/react-native/"
+		title="React Native SDK"
+		description="Choose the package variant that matches your Solana client stack and follow the shared mobile wallet flow."
+	/>
+	<LinkCard
+		href="/core/"
+		title="Core package"
+		description="Understand cluster helpers, storage primitives, and the lower-level utilities that power the SDKs."
+	/>
+</CardGrid>
+
+## Recommended path
+
+If you're integrating Wallet UI for the first time, start with the package guide for your app framework, then come back to the [Core docs](/core/) when you need custom clusters, storage behavior, or lower-level control.

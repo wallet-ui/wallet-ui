@@ -1,0 +1,10 @@
+name = "wallet-ui-astro"
+compatibility_date = "2026-03-29"
+compatibility_flags = ["nodejs_compat"]
+
+[observability]
+enabled = true
+
+[assets]
+directory = "./dist"
+not_found_handling = "404-page"

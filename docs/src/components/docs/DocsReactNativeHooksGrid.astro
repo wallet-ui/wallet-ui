@@ -1,0 +1,20 @@
+---
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+const items = [
+	{
+		href: './use-authorization',
+		title: 'useAuthorization',
+		description: 'A low-level hook for managing wallet authorization.',
+	},
+	{
+		href: './use-mobile-wallet',
+		title: 'useMobileWallet',
+		description: 'The primary hook for interacting with the mobile wallet.',
+	},
+];
+---
+
+<CardGrid stagger>
+	{items.map((item) => <LinkCard {...item} />)}
+</CardGrid>

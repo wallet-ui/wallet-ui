@@ -1,0 +1,21 @@
+---
+title: Overview
+description: Shared React Native hook references for Wallet UI, with package-specific API differences called out inline.
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+The React Native packages export the same top-level hooks, but their types and some helper methods differ between the Kit and web3.js variants.
+
+<CardGrid stagger>
+	<LinkCard
+		href="./use-authorization"
+		title="useAuthorization"
+		description="Low-level authorization state and session management for both package variants."
+	/>
+	<LinkCard
+		href="./use-mobile-wallet"
+		title="useMobileWallet"
+		description="Primary wallet hook with package-specific API tables and examples."
+	/>
+</CardGrid>

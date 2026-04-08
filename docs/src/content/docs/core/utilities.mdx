@@ -1,0 +1,18 @@
+---
+title: Utilities
+description: Utility functions in Wallet UI Core.
+---
+
+The core package exports a small set of helper functions that support common wallet UI flows. At the moment the public utility surface is intentionally narrow.
+
+### `handleCopyText`
+
+`handleCopyText` copies a string to the clipboard using the `navigator.clipboard` API when it is available. It is useful for wallet addresses, signatures, and explorer links that users often need to copy from your interface.
+
+```ts
+import { handleCopyText } from '@wallet-ui/core';
+
+handleCopyText('copy-me-pls');
+```
+
+This helper is browser-oriented, so call it from UI code rather than server-rendered code paths.

@@ -1,0 +1,24 @@
+---
+import { Code, TabItem, Tabs } from '@astrojs/starlight/components';
+
+interface Props {
+	npm: string;
+	pnpm: string;
+	bun: string;
+	syncKey?: string;
+}
+
+const { npm, pnpm, bun, syncKey = 'package-manager' } = Astro.props;
+---
+
+<Tabs syncKey={syncKey}>
+	<TabItem label="npm">
+		<Code code={npm.trim()} lang="bash" />
+	</TabItem>
+	<TabItem label="pnpm">
+		<Code code={pnpm.trim()} lang="bash" />
+	</TabItem>
+	<TabItem label="bun">
+		<Code code={bun.trim()} lang="bash" />
+	</TabItem>
+</Tabs>

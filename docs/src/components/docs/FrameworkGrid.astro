@@ -1,0 +1,12 @@
+---
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+const items = [
+	{ href: '/react/guides/next/', title: 'Next.js', description: 'Set up Wallet UI with Next.js' },
+	{ href: '/react/guides/vite/', title: 'Vite', description: 'Set up Wallet UI with Vite' },
+];
+---
+
+<CardGrid stagger>
+	{items.map((item) => <LinkCard {...item} />)}
+</CardGrid>

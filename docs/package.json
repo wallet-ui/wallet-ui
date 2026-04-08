@@ -1,44 +1,37 @@
 {
-    "name": "@wallet-ui/docs",
-    "version": "0.0.0",
-    "private": true,
-    "scripts": {
-        "build": "next build",
-        "compile:js": "next build",
-        "dev": "next dev --turbo --port 3080",
-        "postinstall": "fumadocs-mdx",
-        "start": "next start",
-        "style:fix": "next lint --fix && pnpm prettier --log-level warn --ignore-unknown --write ./*",
-        "test:lint": "next lint",
-        "test:prettier": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../node_modules/@wallet-ui/test-config/jest-prettier.config.js --rootDir . --silent",
-        "test:typecheck": "tsc"
-    },
-    "dependencies": {
-        "@sentry/nextjs": "^10.40.0",
-        "@vercel/analytics": "^2.0.1",
-        "@wallet-ui/react": "workspace:*",
-        "@wallet-ui/tailwind": "workspace:*",
-        "fumadocs-core": "15.7.13",
-        "fumadocs-docgen": "^3.0.4",
-        "fumadocs-mdx": "12.0.0",
-        "fumadocs-ui": "15.7.13",
-        "import-in-the-middle": "^1.14.2",
-        "lucide-react": "^0.544.0",
-        "next": "15.5.14",
-        "react": "^19.1.4",
-        "react-dom": "^19.1.4",
-        "require-in-the-middle": "^7.5.2"
-    },
-    "devDependencies": {
-        "@tailwindcss/postcss": "^4.2.2",
-        "@types/mdx": "^2.0.13",
-        "@types/node": "24.5.2",
-        "@types/react": "^19.1.17",
-        "@types/react-dom": "^19.1.11",
-        "eslint": "^9.36.0",
-        "eslint-config-next": "15.5.14",
-        "postcss": "^8.5.6",
-        "tailwindcss": "^4.2.2",
-        "typescript": "^5.9.2"
-    }
+  "name": "@wallet-ui/docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "astro": "astro",
+    "build": "astro build",
+    "check": "astro check",
+    "check:dead-links": "pnpm build && pnpm check:dead-links:dist",
+    "check:dead-links:dist": "node scripts/check-dead-links.mjs",
+    "compile:js": "astro build",
+    "deploy": "wrangler deploy",
+    "dev": "astro dev --port 3080",
+    "preview": "astro preview",
+    "start": "astro dev --port 3080",
+    "style:fix": "pnpm prettier --log-level warn --ignore-unknown --write .",
+    "test:lint": "pnpm prettier --log-level warn --check .",
+    "test:prettier": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../node_modules/@wallet-ui/test-config/jest-prettier.config.js --rootDir . --silent",
+    "test:typecheck": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^13.1.6",
+    "@astrojs/starlight": "^0.38.1",
+    "@astrojs/starlight-tailwind": "^5.0.0",
+    "@catppuccin/starlight": "^2.0.1",
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^6.0.1",
+    "sharp": "^0.34.2",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.7",
+    "typescript": "^5.9.2",
+    "wrangler": "^4.9.1"
+  }
 }

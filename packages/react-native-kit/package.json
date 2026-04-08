@@ -74,7 +74,7 @@
         "maintained node versions"
     ],
     "dependencies": {
-        "@nanostores/react": "^1.0.0",
+        "@nanostores/react": "^1.1.0",
         "@react-native-async-storage/async-storage": "^2.2.0",
         "@solana-mobile/mobile-wallet-adapter-protocol": "^2.2.5",
         "@solana-mobile/mobile-wallet-adapter-protocol-kit": "^0.2.2",

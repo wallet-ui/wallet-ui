@@ -1,5 +1,5 @@
 import { defineRouteMiddleware } from '@astrojs/starlight/route-data';
-import { siteDescription } from './site-meta.mjs';
+import { canIndexHost, siteDescription } from './site-meta.mjs';
 import {
     formatSocialTitle,
     getDocsSocialImagePath,
@@ -14,6 +14,7 @@ export const onRequest = defineRouteMiddleware(async (context, next) => {
 
     const { entry, head } = context.locals.starlightRoute;
     const pageDescription = entry.data.description ?? siteDescription;
+    const robotsContent = canIndexHost(context.url.hostname) ? 'index, follow' : 'noindex, nofollow';
     const socialTitle = formatSocialTitle(entry.data.title);
     const socialImagePath = getDocsSocialImagePath(normalizeDocsSlug(entry.id));
     const socialImageUrl = new URL(socialImagePath, context.site ?? context.url).toString();
@@ -25,6 +26,7 @@ export const onRequest = defineRouteMiddleware(async (context, next) => {
     setMeta(head, 'property', 'og:image:alt', socialImageAlt);
     setMeta(head, 'property', 'og:image:width', String(socialImageWidth));
     setMeta(head, 'property', 'og:image:height', String(socialImageHeight));
+    setMeta(head, 'name', 'robots', robotsContent);
     setMeta(head, 'name', 'twitter:title', socialTitle);
     setMeta(head, 'name', 'twitter:description', pageDescription);
     setMeta(head, 'name', 'twitter:image', socialImageUrl);

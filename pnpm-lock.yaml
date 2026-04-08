@@ -787,8 +787,8 @@ importers:
   packages/react:
     dependencies:
       '@nanostores/react':
-        specifier: ^1.0.0
-        version: 1.0.0(nanostores@1.2.0)(react@19.2.1)
+        specifier: ^1.1.0
+        version: 1.1.0(nanostores@1.2.0)(react@19.2.1)
       '@solana/kit':
         specifier: ^6.1.0
         version: 6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.3)(utf-8-validate@5.0.10)
@@ -848,8 +848,8 @@ importers:
   packages/react-native-kit:
     dependencies:
       '@nanostores/react':
-        specifier: ^1.0.0
-        version: 1.0.0(nanostores@1.2.0)(react@19.1.0)
+        specifier: ^1.1.0
+        version: 1.1.0(nanostores@1.2.0)(react@19.1.0)
       '@react-native-async-storage/async-storage':
         specifier: ^2.2.0
         version: 2.2.0(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))
@@ -912,8 +912,8 @@ importers:
   packages/react-native-web3js:
     dependencies:
       '@nanostores/react':
-        specifier: ^1.0.0
-        version: 1.0.0(nanostores@1.2.0)(react@19.1.0)
+        specifier: ^1.1.0
+        version: 1.1.0(nanostores@1.2.0)(react@19.1.0)
       '@react-native-async-storage/async-storage':
         specifier: ^2.2.0
         version: 2.2.0(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.7)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))
@@ -3083,11 +3083,11 @@ packages:
     peerDependencies:
       nanostores: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^1.0.0
 
-  '@nanostores/react@1.0.0':
-    resolution: {integrity: sha512-eDduyNy+lbQJMg6XxZ/YssQqF6b4OXMFEZMYKPJCCmBevp1lg0g+4ZRi94qGHirMtsNfAWKNwsjOhC+q1gvC+A==}
+  '@nanostores/react@1.1.0':
+    resolution: {integrity: sha512-MbH35fjhcf7LAubYX5vhOChYUfTLzNLqH/mBGLVsHkcvjy0F8crO1WQwdmQ2xKbAmtpalDa2zBt3Hlg5kqr8iw==}
     engines: {node: ^20.0.0 || >=22.0.0}
     peerDependencies:
-      nanostores: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^1.0.0
+      nanostores: ^1.2.0
       react: '>=18.0.0'
 
   '@napi-rs/wasm-runtime@0.2.12':
@@ -14690,12 +14690,12 @@ snapshots:
     dependencies:
       nanostores: 1.2.0
 
-  '@nanostores/react@1.0.0(nanostores@1.2.0)(react@19.1.0)':
+  '@nanostores/react@1.1.0(nanostores@1.2.0)(react@19.1.0)':
     dependencies:
       nanostores: 1.2.0
       react: 19.1.0
 
-  '@nanostores/react@1.0.0(nanostores@1.2.0)(react@19.2.1)':
+  '@nanostores/react@1.1.0(nanostores@1.2.0)(react@19.2.1)':
     dependencies:
       nanostores: 1.2.0
       react: 19.2.1

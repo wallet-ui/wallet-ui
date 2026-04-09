@@ -189,8 +189,8 @@ importers:
         specifier: ^7.1.8
         version: 7.1.19(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
       '@rn-primitives/dropdown-menu':
-        specifier: ^1.2.0
-        version: 1.2.0(@rn-primitives/portal@1.3.0(@types/react@19.2.14)(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0)))(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.0(react@19.2.0))(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
+        specifier: ^1.4.0
+        version: 1.4.0(@rn-primitives/portal@1.3.0(@types/react@19.2.14)(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0)))(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.0(react@19.2.0))(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
       '@solana-program/memo':
         specifier: ^0.10.0
         version: 0.10.0(@solana/kit@6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.2)(utf-8-validate@5.0.10))
@@ -322,8 +322,8 @@ importers:
         specifier: ^7.1.8
         version: 7.1.19(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
       '@rn-primitives/dropdown-menu':
-        specifier: ^1.2.0
-        version: 1.2.0(@rn-primitives/portal@1.3.0(@types/react@19.2.14)(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0)))(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.0(react@19.2.0))(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
+        specifier: ^1.4.0
+        version: 1.4.0(@rn-primitives/portal@1.3.0(@types/react@19.2.14)(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0)))(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.0(react@19.2.0))(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
       '@solana/spl-memo':
         specifier: ^0.2.5
         version: 0.2.5(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@6.0.2)(utf-8-validate@5.0.10))
@@ -3897,8 +3897,8 @@ packages:
   '@react-navigation/routers@7.5.3':
     resolution: {integrity: sha512-1tJHg4KKRJuQ1/EvJxatrMef3NZXEPzwUIUZ3n1yJ2t7Q97siwRtbynRpQG9/69ebbtiZ8W3ScOZF/OmhvM4Rg==}
 
-  '@rn-primitives/dropdown-menu@1.2.0':
-    resolution: {integrity: sha512-TJDDr8VQfw9CRZ7xZ6kBYLVMqL1xFVC5ZZ4sfRmWP6PCT0lNks4XqGuTFLeVVlNLPSmzt9GKC2DZqzDXui8/NQ==}
+  '@rn-primitives/dropdown-menu@1.4.0':
+    resolution: {integrity: sha512-8joLBdZwo8SCv5v7B2cZR0EQW0/a212ibp8DqyEtKs9Pxzf/98BW0S2caQpvMpB2nRi29AkO+4ktok7F8dfjrQ==}
     peerDependencies:
       '@rn-primitives/portal': '*'
       react: '*'
@@ -3910,8 +3910,8 @@ packages:
       react-native-web:
         optional: true
 
-  '@rn-primitives/hooks@1.3.0':
-    resolution: {integrity: sha512-BR97reSu7uVDpyMeQdRJHT0w8KdS6jdYnOL6xQtqS2q3H6N7vXBlX4LFERqJZphD+aziJFIAJ3HJF1vtt6XlpQ==}
+  '@rn-primitives/hooks@1.4.0':
+    resolution: {integrity: sha512-uzu4NrThR5BEy+MHvTwHCs+KUXTmTLZrSzPHL9L8q5uGXv/BIxYJdpvlodn+DnxgTMzdul+H8rpqPLjyYQEyKw==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -3934,8 +3934,8 @@ packages:
       react-native-web:
         optional: true
 
-  '@rn-primitives/slot@1.2.0':
-    resolution: {integrity: sha512-cpbn+JLjSeq3wcA4uqgFsUimMrWYWx2Ks7r5rkwd1ds1utxynsGkLOKpYVQkATwWrYhtcoF1raxIKEqXuMN+/w==}
+  '@rn-primitives/slot@1.4.0':
+    resolution: {integrity: sha512-p8qIYH44HgXDbsxPFIbRS/IrKWOqb2/JDT8ivFAfhL8QSW0gtVZZo8I/wFip1vV9vRl8D3zMHUBB/PrzrN0Qww==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -3946,8 +3946,8 @@ packages:
       react-native-web:
         optional: true
 
-  '@rn-primitives/types@1.2.0':
-    resolution: {integrity: sha512-b+6zKgdKVqAfaFPSfhwlQL0dnPQXPpW890m3eguC0VDI1eOsoEvUfVb6lmgH4bum9MmI0xymq4tOUI/fsKLoCQ==}
+  '@rn-primitives/types@1.4.0':
+    resolution: {integrity: sha512-U7El2BbYXZG8WZrOIV4y1wpxH8aJA/sKH3SL2tZTL153ENj8aOpZ9QwyUoAU2t+sKVPDejrKjo89HeNuIuwPGQ==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -3958,8 +3958,8 @@ packages:
       react-native-web:
         optional: true
 
-  '@rn-primitives/utils@1.2.0':
-    resolution: {integrity: sha512-vLXV5NuxIHDeb4Bw57FzdUh89/g8gz6GERm8TsbJaSUPsDXfnC/ffeYiZJb0LxNteKE3Nr8na4Jy2n26tFil7w==}
+  '@rn-primitives/utils@1.4.0':
+    resolution: {integrity: sha512-nMFZ99AGKakMRDAlfbsYUfqwKO0LItWtp58YTwxmNuGVhXG43/zIfyWWaB3FJeOL+hhcpUn0YR7C1Vsrg0FgvQ==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -15846,14 +15846,14 @@ snapshots:
     dependencies:
       nanoid: 3.3.11
 
-  '@rn-primitives/dropdown-menu@1.2.0(@rn-primitives/portal@1.3.0(@types/react@19.2.14)(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0)))(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.0(react@19.2.0))(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)':
+  '@rn-primitives/dropdown-menu@1.4.0(@rn-primitives/portal@1.3.0(@types/react@19.2.14)(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0)))(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.0(react@19.2.0))(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)':
     dependencies:
       '@radix-ui/react-dropdown-menu': 2.1.16(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      '@rn-primitives/hooks': 1.3.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
+      '@rn-primitives/hooks': 1.4.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
       '@rn-primitives/portal': 1.3.0(@types/react@19.2.14)(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0))
-      '@rn-primitives/slot': 1.2.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
-      '@rn-primitives/types': 1.2.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
-      '@rn-primitives/utils': 1.2.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
+      '@rn-primitives/slot': 1.4.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
+      '@rn-primitives/types': 1.4.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
+      '@rn-primitives/utils': 1.4.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
       react: 19.2.0
     optionalDependencies:
       react-native: 0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10)
@@ -15863,9 +15863,9 @@ snapshots:
       - '@types/react-dom'
       - react-dom
 
-  '@rn-primitives/hooks@1.3.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)':
+  '@rn-primitives/hooks@1.4.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)':
     dependencies:
-      '@rn-primitives/types': 1.2.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
+      '@rn-primitives/types': 1.4.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)
       react: 19.2.0
     optionalDependencies:
       react-native: 0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10)
@@ -15883,21 +15883,21 @@ snapshots:
       - immer
       - use-sync-external-store
 
-  '@rn-primitives/slot@1.2.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)':
+  '@rn-primitives/slot@1.4.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)':
     dependencies:
       react: 19.2.0
     optionalDependencies:
       react-native: 0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10)
       react-native-web: 0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
 
-  '@rn-primitives/types@1.2.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)':
+  '@rn-primitives/types@1.4.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)':
     dependencies:
       react: 19.2.0
     optionalDependencies:
       react-native: 0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10)
       react-native-web: 0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
 
-  '@rn-primitives/utils@1.2.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)':
+  '@rn-primitives/utils@1.4.0(react-native-web@0.21.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)':
     dependencies:
       react: 19.2.0
     optionalDependencies:

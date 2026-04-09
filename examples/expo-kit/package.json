@@ -19,7 +19,7 @@
         "@react-navigation/bottom-tabs": "^7.4.0",
         "@react-navigation/elements": "^2.6.3",
         "@react-navigation/native": "^7.1.8",
-        "@rn-primitives/dropdown-menu": "^1.2.0",
+        "@rn-primitives/dropdown-menu": "^1.4.0",
         "@solana-program/memo": "^0.10.0",
         "@solana/kit": "^6.1.0",
         "@solana/spl-memo": "^0.2.5",

@@ -1,5 +1,20 @@
 # @wallet-ui/react-native-web3js
 
+## 4.0.3
+
+### Patch Changes
+
+- [#467](https://github.com/wallet-ui/wallet-ui/pull/467) [`96d7aa9`](https://github.com/wallet-ui/wallet-ui/commit/96d7aa96357695092b2a36fa5d590bafe374cef0) Thanks [@beeman](https://github.com/beeman)! - Migrate the published packages to a TypeScript 6-compatible configuration.
+
+    Switch the shared package TypeScript settings to `bundler` resolution, move the package library baselines to `ES2024`, and add the declaration and CSS typing updates needed for the workspace to build cleanly on TypeScript 6.
+
+- [#474](https://github.com/wallet-ui/wallet-ui/pull/474) [`afe5a9d`](https://github.com/wallet-ui/wallet-ui/commit/afe5a9de73bddd63b3f13681359d9bfd40527d5c) Thanks [@beeman](https://github.com/beeman)! - Update the React Native packages to the latest `@solana-mobile` mobile wallet adapter protocol dependencies.
+
+    Bump `@wallet-ui/react-native-kit` to `@solana-mobile/mobile-wallet-adapter-protocol@^2.2.7` and `@solana-mobile/mobile-wallet-adapter-protocol-kit@^0.3.0`, and bump `@wallet-ui/react-native-web3js` to `@solana-mobile/mobile-wallet-adapter-protocol@^2.2.7` and `@solana-mobile/mobile-wallet-adapter-protocol-web3js@^2.2.7`.
+
+- Updated dependencies [[`96d7aa9`](https://github.com/wallet-ui/wallet-ui/commit/96d7aa96357695092b2a36fa5d590bafe374cef0)]:
+    - @wallet-ui/core@4.0.3
+
 ## 4.0.2
 
 ### Patch Changes

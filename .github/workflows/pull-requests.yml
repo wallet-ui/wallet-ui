@@ -50,6 +50,16 @@ jobs:
       - name: Build & Test
         run: pnpm build # Don't add --concurrency here; it's already baked in
 
+      - name: Test Expo Examples
+        run: |
+          pnpm --dir examples/expo-kit test
+          pnpm --dir examples/expo-web3js test
+
+      - name: Lint Expo Examples
+        run: |
+          pnpm --dir examples/expo-kit lint
+          pnpm --dir examples/expo-web3js lint
+
       - name: Stop Test Validator
         if: always() && steps.start-test-validator.outcome == 'success'
         run: kill ${{ steps.start-test-validator.outputs.pid }}

@@ -55,6 +55,9 @@ jobs:
           pnpm --dir examples/expo-kit test
           pnpm --dir examples/expo-web3js test
 
+      - name: Smoke Test Expo Native Entries
+        run: pnpm test:examples:native-entry
+
       - name: Lint Expo Examples
         run: |
           pnpm --dir examples/expo-kit lint

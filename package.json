@@ -14,6 +14,7 @@
         "style:fix": "turbo  run --concurrency=${TURBO_CONCURRENCY:-95.84%} style:fix && pnpm prettier --log-level warn --ignore-unknown --write '{.,!packages}/*'",
         "test": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} test:unit:browser test:unit:node && pnpm test:examples",
         "test:examples": "pnpm --dir examples/expo-kit test && pnpm --dir examples/expo-web3js test",
+        "test:examples:native-entry": "pnpm --dir examples/expo-kit test:native-entry && pnpm --dir examples/expo-web3js test:native-entry",
         "test:live-with-test-validator": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} test:live-with-test-validator",
         "test:live-with-test-validator:setup": "./scripts/setup-test-validator.sh"
     },

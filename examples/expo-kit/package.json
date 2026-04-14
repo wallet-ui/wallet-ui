@@ -11,6 +11,7 @@
         "lint": "expo lint",
         "start": "expo start",
         "test": "jest -c ./jest.config.js --runInBand",
+        "test:native-entry": "node ../../scripts/test-expo-native-entry-smoke.mjs @wallet-ui/react-native-kit",
         "web": "expo start --web"
     },
     "dependencies": {

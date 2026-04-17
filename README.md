@@ -50,6 +50,14 @@ pnpm run style:fix
 pnpm run test
 ```
 
+To generate a local HTML coverage dashboard for the published npm packages only, run:
+
+```shell
+pnpm run test:coverage:packages
+```
+
+This writes a clickable dashboard to `tmp/coverage/published-packages/index.html`.
+
 ### AI Agents
 
 We use [Ruler](https://github.com/beeman/ruler) to centralize AI agent instructions, coding guidelines, and project context.

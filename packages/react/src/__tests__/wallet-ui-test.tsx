@@ -9,6 +9,7 @@ import {
     type TestWallet,
 } from '../test-utils/wallet-ui-test-utils';
 import { useWalletUi } from '../use-wallet-ui';
+import { createWalletUiConfig } from '../wallet-ui';
 import { WalletUi } from '../wallet-ui';
 
 const CLUSTERS: SolanaCluster[] = [
@@ -51,6 +52,16 @@ describe('WalletUi', () => {
         }
         jest.runOnlyPendingTimers();
         jest.useRealTimers();
+    });
+
+    it('returns the provided wallet-ui config unchanged', () => {
+        const config = createWalletUiConfig({
+            clusters: CLUSTERS,
+        });
+
+        expect(config).toEqual({
+            clusters: CLUSTERS,
+        });
     });
 
     it('restores stored provider state and clears the selected account on disconnect', () => {

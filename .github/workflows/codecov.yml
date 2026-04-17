@@ -1,0 +1,39 @@
+name: Codecov
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  published-package-coverage:
+    name: Published Package Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        uses: ./.github/workflows/actions/install-dependencies
+
+      - name: Compile Published Packages
+        run: pnpm turbo compile:js --filter=@wallet-ui/core --filter=@wallet-ui/react --filter=@wallet-ui/react-native-kit --filter=@wallet-ui/react-native-web3js
+
+      - name: Generate Coverage
+        run: pnpm run test:coverage:packages
+
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          disable_search: true
+          fail_ci_if_error: true
+          files: ./tmp/coverage/published-packages/lcov.info
+          flags: published-packages
+          name: published-packages
+          use_oidc: true
+          verbose: true

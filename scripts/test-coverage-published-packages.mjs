@@ -26,6 +26,7 @@ const coveragePatterns = [
     '!src/**/test-utils/**',
 ];
 const publishedPackages = getPublishedPackages();
+const repositoryCoverageMap = createCoverageMap({});
 
 if (publishedPackages.length === 0) {
     throw new Error(`No published packages were found in ${packagesRoot}.`);
@@ -48,6 +49,8 @@ for (const pkg of publishedPackages) {
         continue;
     }
 
+    repositoryCoverageMap.merge(result.coverageMap);
+
     console.log(
         [
             `Completed ${pkg.name}.`,
@@ -56,6 +59,15 @@ for (const pkg of publishedPackages) {
             `Functions ${formatMetric(result.summary.functions)}.`,
             `Lines ${formatMetric(result.summary.lines)}.`,
         ].join(' '),
+    );
+}
+
+if (repositoryCoverageMap.files().length > 0) {
+    reports.create('lcovonly').execute(
+        libReport.createContext({
+            coverageMap: repositoryCoverageMap,
+            dir: outputRoot,
+        }),
     );
 }
 
@@ -286,6 +298,7 @@ function runCoverageForPackage(pkg) {
         reports.create('html').execute(reportContext);
 
         return {
+            coverageMap,
             directoryName: pkg.directoryName,
             name: pkg.name,
             status: 'ok',

@@ -866,11 +866,11 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(react@19.1.0)
       '@solana-mobile/mobile-wallet-adapter-protocol':
-        specifier: ^2.2.7
-        version: 2.2.7(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)
+        specifier: ^2.2.8
+        version: 2.2.8(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)
       '@solana-mobile/mobile-wallet-adapter-protocol-kit':
-        specifier: ^0.3.0
-        version: 0.3.0(@solana/kit@6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.2)(utf-8-validate@5.0.10))(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)
+        specifier: ^0.3.1
+        version: 0.3.1(@solana/kit@6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.2)(utf-8-validate@5.0.10))(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)
       '@solana-program/memo':
         specifier: ^0.10.0
         version: 0.10.0(@solana/kit@6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.2)(utf-8-validate@5.0.10))
@@ -930,11 +930,11 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.7)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(react@19.1.0)
       '@solana-mobile/mobile-wallet-adapter-protocol':
-        specifier: ^2.2.7
-        version: 2.2.7(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.7)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)
+        specifier: ^2.2.8
+        version: 2.2.8(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.7)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)
       '@solana-mobile/mobile-wallet-adapter-protocol-web3js':
-        specifier: ^2.2.7
-        version: 2.2.7(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@6.0.2)(utf-8-validate@5.0.10))(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.7)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)
+        specifier: ^2.2.8
+        version: 2.2.8(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@6.0.2)(utf-8-validate@5.0.10))(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.7)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)
       '@solana/react':
         specifier: 3.0.3
         version: 3.0.3(fastestsmallesttextencoderdecoder@1.0.22)(react@19.1.0)(typescript@6.0.2)
@@ -4390,18 +4390,18 @@ packages:
   '@sinonjs/fake-timers@8.1.0':
     resolution: {integrity: sha512-OAPJUAtgeINhh/TAlUID4QTs53Njm7xzddaVlEs/SXwgtiD1tW22zAB/W1wdqfrpmikgaWQ9Fw6Ws+hsiRm5Vg==}
 
-  '@solana-mobile/mobile-wallet-adapter-protocol-kit@0.3.0':
-    resolution: {integrity: sha512-jDTgLPm2+2U5pjyiH2XbudGgE6HskUPoyRwcreQCQxiqGfu7zGy8qmRmwgnA/faDKmVmvyKX+U4ofGTAivOF+w==}
+  '@solana-mobile/mobile-wallet-adapter-protocol-kit@0.3.1':
+    resolution: {integrity: sha512-J+9ff1Uq016z1FlADMjCn8HOnGb791B10Cmwuzq8i9PBsrjPL+ftXRM4cVfvTqdU2uDLFY2FU43AanHluic0xg==}
     peerDependencies:
       '@solana/kit': ^6.0.0
 
-  '@solana-mobile/mobile-wallet-adapter-protocol-web3js@2.2.7':
-    resolution: {integrity: sha512-en0v+0fIB4MWix+pxVeWi2DMjLaQSivdxqr9GQ4mVj1OhhEeYqqR/jETgfan/a3T5DKyDCGTs5AQfz909tEwfA==}
+  '@solana-mobile/mobile-wallet-adapter-protocol-web3js@2.2.8':
+    resolution: {integrity: sha512-W9DbsFvl5lSOe7KT3dJX4tjbxfYIoOtOTJpvLMgkojyRU0UKChQ4vHvbOZQ3GkUJ8wOIS4qdrM0Yytd1Vy+YQQ==}
     peerDependencies:
       '@solana/web3.js': ^1.98.4
 
-  '@solana-mobile/mobile-wallet-adapter-protocol@2.2.7':
-    resolution: {integrity: sha512-Rl9VIfnRUYqOOXjhOQXkHXsU+LnVvkJzkV3+if4BPP8v/Y4028H6SLJwFunIAqugNCDyV2XVhlwAQ9JOwnqdrg==}
+  '@solana-mobile/mobile-wallet-adapter-protocol@2.2.8':
+    resolution: {integrity: sha512-c3FQsrM7nV62DqVaHGKtr2osE2w5gS3/wjy8ILF0zczS/s1mERX+JTmf+UHd8xgESmEj/IM7q+U2Qhrmac1PdA==}
     peerDependencies:
       react-native: '>0.74'
 
@@ -16382,9 +16382,9 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 1.8.6
 
-  '@solana-mobile/mobile-wallet-adapter-protocol-kit@0.3.0(@solana/kit@6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.2)(utf-8-validate@5.0.10))(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)':
+  '@solana-mobile/mobile-wallet-adapter-protocol-kit@0.3.1(@solana/kit@6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.2)(utf-8-validate@5.0.10))(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)':
     dependencies:
-      '@solana-mobile/mobile-wallet-adapter-protocol': 2.2.7(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)
+      '@solana-mobile/mobile-wallet-adapter-protocol': 2.2.8(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)
       '@solana/kit': 6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.2)(utf-8-validate@5.0.10)
       '@solana/transaction-messages': 6.1.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.2)
       '@solana/transactions': 6.1.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.2)
@@ -16395,9 +16395,9 @@ snapshots:
       - react-native
       - typescript
 
-  '@solana-mobile/mobile-wallet-adapter-protocol-web3js@2.2.7(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@6.0.2)(utf-8-validate@5.0.10))(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.7)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)':
+  '@solana-mobile/mobile-wallet-adapter-protocol-web3js@2.2.8(@solana/web3.js@1.98.4(bufferutil@4.0.9)(typescript@6.0.2)(utf-8-validate@5.0.10))(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.7)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)':
     dependencies:
-      '@solana-mobile/mobile-wallet-adapter-protocol': 2.2.7(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.7)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)
+      '@solana-mobile/mobile-wallet-adapter-protocol': 2.2.8(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.7)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)
       '@solana/web3.js': 1.98.4(bufferutil@4.0.9)(typescript@6.0.2)(utf-8-validate@5.0.10)
       bs58: 6.0.0
       js-base64: 3.7.8
@@ -16406,7 +16406,7 @@ snapshots:
       - react-native
       - typescript
 
-  '@solana-mobile/mobile-wallet-adapter-protocol@2.2.7(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)':
+  '@solana-mobile/mobile-wallet-adapter-protocol@2.2.8(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)':
     dependencies:
       '@solana/codecs-strings': 6.1.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.2)
       '@solana/wallet-standard-features': 1.3.0
@@ -16418,7 +16418,7 @@ snapshots:
       - fastestsmallesttextencoderdecoder
       - typescript
 
-  '@solana-mobile/mobile-wallet-adapter-protocol@2.2.7(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.7)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)':
+  '@solana-mobile/mobile-wallet-adapter-protocol@2.2.8(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.83.4(@babel/core@7.29.0)(@types/react@19.2.7)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(typescript@6.0.2)':
     dependencies:
       '@solana/codecs-strings': 6.1.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.2)
       '@solana/wallet-standard-features': 1.3.0

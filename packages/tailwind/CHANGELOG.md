@@ -1,5 +1,7 @@
 # @wallet-ui/tailwind
 
+## 4.0.4
+
 ## 4.0.3
 
 ### Patch Changes

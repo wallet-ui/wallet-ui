@@ -1,5 +1,16 @@
 # @wallet-ui/react
 
+## 4.0.3
+
+### Patch Changes
+
+- [#467](https://github.com/wallet-ui/wallet-ui/pull/467) [`96d7aa9`](https://github.com/wallet-ui/wallet-ui/commit/96d7aa96357695092b2a36fa5d590bafe374cef0) Thanks [@beeman](https://github.com/beeman)! - Migrate the published packages to a TypeScript 6-compatible configuration.
+
+    Switch the shared package TypeScript settings to `bundler` resolution, move the package library baselines to `ES2024`, and add the declaration and CSS typing updates needed for the workspace to build cleanly on TypeScript 6.
+
+- Updated dependencies [[`96d7aa9`](https://github.com/wallet-ui/wallet-ui/commit/96d7aa96357695092b2a36fa5d590bafe374cef0)]:
+    - @wallet-ui/core@4.0.3
+
 ## 4.0.2
 
 ### Patch Changes

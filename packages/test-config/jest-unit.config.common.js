@@ -23,7 +23,7 @@ const config = {
             },
         ],
     },
-    transformIgnorePatterns: ['/node_modules/(?!.*\\@noble/ed25519/)', '\\.pnp\\.[^\\/]+$'],
+    transformIgnorePatterns: ['/node_modules/(?!.*(?:\\@noble/ed25519|\\@nanostores|nanostores|uuid)/)', '\\.pnp\\.[^\\/]+$'],
 };
 
 export default config;

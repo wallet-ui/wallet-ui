@@ -62,9 +62,7 @@
     },
     "engines": {
         "node": ">=20.18.0",
-        "npm": "please-use-pnpm",
-        "pnpm": "^10",
-        "yarn": "please-use-pnpm"
+        "pnpm": "^10"
     },
     "packageManager": "pnpm@10.33.0",
     "pnpm": {

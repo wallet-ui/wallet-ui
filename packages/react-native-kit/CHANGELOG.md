@@ -1,5 +1,16 @@
 # @wallet-ui/react-native-kit
 
+## 4.0.5
+
+### Patch Changes
+
+- [#491](https://github.com/wallet-ui/wallet-ui/pull/491) [`50306a4`](https://github.com/wallet-ui/wallet-ui/commit/50306a463b69635f66b72850f00186d788420e6d) Thanks [@beeman](https://github.com/beeman)! - Revert the AsyncStorage dependency bump from `@react-native-async-storage/async-storage@^3.0.2` to `^2.2.0`.
+
+    AsyncStorage `3.x` currently requires extra Android `local_repo` Maven wiring, which adds avoidable integration friction for Wallet UI consumers, especially Expo CNG and generated native projects. This rollback restores the previous internal dependency line without changing the public API surface.
+
+- Updated dependencies []:
+    - @wallet-ui/core@4.0.5
+
 ## 4.0.4
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
     "name": "@wallet-ui/core",
-    "version": "4.0.4",
+    "version": "4.0.5",
     "description": "Wallet UI core",
     "exports": {
         "edge-light": {

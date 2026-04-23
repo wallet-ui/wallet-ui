@@ -93,7 +93,7 @@
         "react": "^19.1.4",
         "react-error-boundary": "^6.0.0",
         "react-test-renderer": "^19.1.4",
-        "typescript": "^6.0.2"
+        "typescript": "^6.0.3"
     },
     "peerDependencies": {
         "@solana/kit": "^6.1.0",

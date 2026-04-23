@@ -29,8 +29,8 @@
         "@swc/jest": "^0.2.39",
         "@types/jest": "^30.0.0",
         "@types/node": "^24.5.2",
-        "@typescript-eslint/eslint-plugin": "^8.58.1",
-        "@typescript-eslint/parser": "^8.58.1",
+        "@typescript-eslint/eslint-plugin": "^8.59.0",
+        "@typescript-eslint/parser": "^8.59.0",
         "@wallet-ui/build-scripts": "workspace:*",
         "@wallet-ui/test-config": "workspace:*",
         "@wallet-ui/test-matchers": "workspace:*",
@@ -58,7 +58,7 @@
         "ts-node": "^10.9.2",
         "tsup": "^8.5.1",
         "turbo": "^2.5.6",
-        "typescript": "^6.0.2"
+        "typescript": "^6.0.3"
     },
     "engines": {
         "node": ">=20.18.0",

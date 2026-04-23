@@ -7,7 +7,7 @@
     ],
     "dependencies": {
         "@solana/kit": "^6.1.0",
-        "@solana/kit-client-rpc": "^0.6.0",
+        "@solana/kit-client-rpc": "^0.10.0",
         "@solana/kit-plugin-rpc": "^0.6.0",
         "@wallet-ui/react": "workspace:*",
         "react": "^19.1.4",

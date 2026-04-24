@@ -8,16 +8,25 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: daily
-      time: '01:00'
-      timezone: America/Los_Angeles
+      day: 'monday'
+      interval: 'weekly'
     labels:
       - 'automerge'
-    ignore:
-      - dependency-name: '@radix-ui/react-dropdown-menu'
     groups:
       eslint:
         patterns:
           - '@eslint/*'
           - '@typescript-eslint/*'
           - 'typescript'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      day: 'monday'
+      interval: 'weekly'
+    labels:
+      - 'automerge'
+    groups:
+      github-actions:
+        patterns:
+          - '*'

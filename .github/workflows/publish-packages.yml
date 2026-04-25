@@ -41,7 +41,7 @@ jobs:
     if: github.event_name == 'push'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install Dependencies
         uses: ./.github/workflows/actions/install-dependencies
@@ -55,7 +55,7 @@ jobs:
 
       - name: Create Changesets Pull Request or Publish to NPM
         id: changesets
-        uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
+        uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1.7.0
         with:
           commit: "chore: update versions"
           publish: pnpm changeset:publish
@@ -86,7 +86,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install Dependencies
         uses: ./.github/workflows/actions/install-dependencies
@@ -122,7 +122,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install Dependencies
         uses: ./.github/workflows/actions/install-dependencies
@@ -141,7 +141,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install Dependencies
         uses: ./.github/workflows/actions/install-dependencies

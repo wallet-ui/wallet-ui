@@ -41,21 +41,21 @@ jobs:
     if: github.event_name == 'push'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Install Dependencies
-        uses: ./.github/workflows/actions/install-dependencies
+        uses: ./.github/actions/install-dependencies
 
       - name: Setup Solana Test Validator
         id: start-test-validator
-        uses: ./.github/workflows/actions/setup-validator
+        uses: ./.github/actions/setup-validator
 
       - name: Build And Test (bypass cache)
         run: pnpm build --force
 
       - name: Create Changesets Pull Request or Publish to NPM
         id: changesets
-        uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
+        uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1.7.0
         with:
           commit: "chore: update versions"
           publish: pnpm changeset:publish
@@ -86,14 +86,14 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Install Dependencies
-        uses: ./.github/workflows/actions/install-dependencies
+        uses: ./.github/actions/install-dependencies
 
       - name: Setup Solana Test Validator
         id: start-test-validator
-        uses: ./.github/workflows/actions/setup-validator
+        uses: ./.github/actions/setup-validator
 
       - name: Run Build Step
         run: pnpm build
@@ -122,10 +122,10 @@ jobs:
     if: github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Install Dependencies
-        uses: ./.github/workflows/actions/install-dependencies
+        uses: ./.github/actions/install-dependencies
 
       - name: Validate that a package at the given version has already been published
         run: |
@@ -141,10 +141,10 @@ jobs:
     if: github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Install Dependencies
-        uses: ./.github/workflows/actions/install-dependencies
+        uses: ./.github/actions/install-dependencies
 
       - name: Tag Release Manually
         run: ./packages/build-scripts/tag-release-manually.ts --version '${{ github.event.inputs.version }}' --tag '${{ github.event.inputs.tag }}'

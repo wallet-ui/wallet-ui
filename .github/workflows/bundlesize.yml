@@ -28,16 +28,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Install Dependencies
-        uses: ./.github/workflows/actions/install-dependencies
+        uses: ./.github/actions/install-dependencies
 
       - name: Build
         run: pnpm turbo compile:js --concurrency=${TURBO_CONCURRENCY:-1}
 
       - name: BundleMon
-        uses: lironer/bundlemon-action@cadbdd58f86faf1900725ef69d455444124b3748
+        uses: lironer/bundlemon-action@cadbdd58f86faf1900725ef69d455444124b3748 # v1.3.0
         env:
           # Always compare to the main branch; prevents stacked PRs from being
           # compared to the wrong mergebase (ie. the PR beneath the current one)

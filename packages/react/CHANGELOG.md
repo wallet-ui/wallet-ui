@@ -1,5 +1,16 @@
 # @wallet-ui/react
 
+## 4.1.0
+
+### Minor Changes
+
+- [#502](https://github.com/wallet-ui/wallet-ui/pull/502) [`7ea2803`](https://github.com/wallet-ui/wallet-ui/commit/7ea2803f3a7bf2c8e8421d33c5c9a251d9bf3933) Thanks [@beeman](https://github.com/beeman)! - Add `useWalletUiAuth` and `WalletUiAuth` for Sign In With Solana auth, preferring native `solana:signIn` and falling back to account-level `solana:signMessage`.
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @wallet-ui/core@4.1.0
+
 ## 4.0.5
 
 ### Patch Changes

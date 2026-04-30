@@ -1,0 +1,127 @@
+---
+title: WalletUiAuth
+description: A render-prop component for Sign In With Solana auth with message-signing fallback.
+---
+
+The `WalletUiAuth` component wraps the headless [`useWalletUiAuth`](/react/hooks/use-wallet-ui-auth/) hook for one wallet. It prefers native `solana:signIn` and falls back to connected-account `solana:signMessage` when native SIWS is unavailable.
+
+### Props
+
+| Name       | Type                               | Description                         |
+| ---------- | ---------------------------------- | ----------------------------------- |
+| `children` | `(auth: WalletUiAuthState) => JSX` | Render function for auth state.     |
+| `wallet`   | `UiWallet`                         | Wallet to use for the auth attempt. |
+
+### Render State
+
+| Name                      | Type                                                                   | Description                                               |
+| ------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------- |
+| `canSignIn`               | `boolean`                                                              | Whether this wallet can attempt auth.                     |
+| `isSigningIn`             | `boolean`                                                              | Whether a sign-in request is in progress.                 |
+| `messageSigningAvailable` | `boolean`                                                              | Whether the target account supports `solana:signMessage`. |
+| `nativeSignInAvailable`   | `boolean`                                                              | Whether the wallet supports `solana:signIn`.              |
+| `reason`                  | `WalletUiAuthUnavailableReason \| undefined`                           | Why auth is unavailable for this wallet/account.          |
+| `signIn`                  | `(options?: WalletUiAuthSignInOptions) => Promise<WalletUiAuthResult>` | Starts the native or fallback auth flow for the wallet.   |
+
+### Result
+
+`signIn()` resolves to:
+
+| Name            | Type                                      | Description                                                       |
+| --------------- | ----------------------------------------- | ----------------------------------------------------------------- |
+| `account`       | `UiWalletAccount`                         | Account that signed in.                                           |
+| `input`         | `SolanaSignInInput`                       | SIWS input used for native SIWS or fallback message construction. |
+| `method`        | `'solana:signIn' \| 'solana:signMessage'` | Auth method used.                                                 |
+| `signedMessage` | `Uint8Array`                              | Exact bytes signed by the wallet.                                 |
+| `signature`     | `Uint8Array`                              | Ed25519 signature returned by the wallet.                         |
+
+### Example
+
+```tsx
+import { WalletUiAuth, WalletUiAuthError, useWalletUi } from '@wallet-ui/react';
+
+function AuthButton() {
+    const { wallet } = useWalletUi();
+
+    if (!wallet) {
+        return <button disabled>Connect wallet</button>;
+    }
+
+    return (
+        <WalletUiAuth wallet={wallet}>
+            {({ canSignIn, isSigningIn, reason, signIn }) => {
+                async function handleClick() {
+                    try {
+                        const result = await signIn({
+                            input: {
+                                domain: window.location.host,
+                                nonce: await fetch('/api/auth/nonce').then(res => res.text()),
+                                statement: 'Sign in to Example App.',
+                                uri: window.location.origin,
+                                version: '1',
+                            },
+                        });
+
+                        await fetch('/api/auth/verify', {
+                            body: JSON.stringify({
+                                input: result.input,
+                                method: result.method,
+                                signature: Array.from(result.signature),
+                                signedMessage: Array.from(result.signedMessage),
+                                walletAddress: result.account.address,
+                            }),
+                            headers: { 'content-type': 'application/json' },
+                            method: 'POST',
+                        });
+                    } catch (e) {
+                        if (e instanceof WalletUiAuthError) {
+                            console.error(e.reason);
+                            return;
+                        }
+                        throw e;
+                    }
+                }
+
+                return (
+                    <button disabled={!canSignIn || isSigningIn} onClick={handleClick}>
+                        {isSigningIn ? 'Signing in...' : reason ? 'Connect wallet' : 'Sign in'}
+                    </button>
+                );
+            }}
+        </WalletUiAuth>
+    );
+}
+```
+
+### Wallet Picker Flow
+
+If you render your own wallet list, wrap each wallet row with `WalletUiAuth`. The component can connect that wallet first when no account is connected, then use native SIWS or message signing.
+
+```tsx
+import { WalletUiAuth, useWalletUiWallets } from '@wallet-ui/react';
+
+function WalletAuthList() {
+    const wallets = useWalletUiWallets();
+
+    return wallets.map(wallet => (
+        <WalletUiAuth key={wallet.name} wallet={wallet}>
+            {({ isSigningIn, signIn }) => (
+                <button disabled={isSigningIn} onClick={() => signIn()}>
+                    {wallet.name}
+                </button>
+            )}
+        </WalletUiAuth>
+    ));
+}
+```
+
+### Unavailable Reasons
+
+| Reason                        | Meaning                                                                     |
+| ----------------------------- | --------------------------------------------------------------------------- |
+| `auth-unsupported`            | The wallet has neither native SIWS nor message-signing fallback.            |
+| `message-signing-unavailable` | The wallet reported no output from `solana:signMessage`.                    |
+| `missing-domain`              | Fallback SIWS message construction needs `input.domain` or `location.host`. |
+| `wallet-not-connected`        | Fallback auth tried to connect the wallet but received no account.          |
+
+For a complete auth flow, see the [Sign In With Solana guide](/react/guides/sign-in-with-solana/).

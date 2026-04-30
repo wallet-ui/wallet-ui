@@ -1,0 +1,192 @@
+---
+title: Sign In With Solana
+description: Add wallet auth with native SIWS and a signMessage fallback.
+---
+
+import Callout from '../../../../components/docs/Callout.astro';
+
+This guide shows the recommended `@wallet-ui/react` path for wallet-first auth:
+
+- connect with the stock Wallet UI picker
+- prefer native `solana:signIn`
+- fall back to connected-account `solana:signMessage`
+- verify the payload on your backend before creating a session
+
+## Baseline setup
+
+Start with a normal Wallet UI provider and prove wallet detection and connection before adding auth.
+
+```tsx title="src/providers/solana-provider.tsx"
+import { createSolanaDevnet, createWalletUiConfig, WalletUi } from '@wallet-ui/react';
+import type { ReactNode } from 'react';
+
+const config = createWalletUiConfig({
+    clusters: [createSolanaDevnet()],
+});
+
+export function SolanaProvider({ children }: { children: ReactNode }) {
+    return <WalletUi config={config}>{children}</WalletUi>;
+}
+```
+
+```tsx title="src/components/wallet-connect.tsx"
+import { WalletUiDropdown } from '@wallet-ui/react';
+
+export function WalletConnect() {
+    return <WalletUiDropdown />;
+}
+```
+
+## Sign in button
+
+Use `useWalletUiAuth({ wallet })` for headless auth UI. It prefers native `solana:signIn` for the selected wallet and falls back to `solana:signMessage` for the connected account.
+
+```tsx title="src/components/sign-in-button.tsx"
+import { useWalletUi, useWalletUiAuth } from '@wallet-ui/react';
+
+export function SignInButton() {
+    const { wallet } = useWalletUi();
+
+    if (!wallet) {
+        return <button disabled>Connect wallet</button>;
+    }
+
+    return <ConnectedSignInButton key={wallet.name} wallet={wallet} />;
+}
+
+function ConnectedSignInButton({ wallet }) {
+    const { canSignIn, isSigningIn, reason, signIn } = useWalletUiAuth({ wallet });
+
+    async function handleSignIn() {
+        try {
+            const result = await signIn({
+                input: {
+                    domain: window.location.host,
+                    nonce: await fetch('/api/auth/siws/nonce').then(res => res.text()),
+                    statement: 'Sign in to Example App.',
+                    uri: window.location.origin,
+                    version: '1',
+                },
+            });
+
+            const response = await fetch('/api/auth/siws/verify', {
+                body: JSON.stringify({
+                    account: {
+                        address: result.account.address,
+                        publicKey: Array.from(result.account.publicKey),
+                    },
+                    input: result.input,
+                    method: result.method,
+                    signature: Array.from(result.signature),
+                    signedMessage: Array.from(result.signedMessage),
+                }),
+                headers: { 'content-type': 'application/json' },
+                method: 'POST',
+            });
+
+            if (!response.ok) {
+                throw new Error(`SIWS verification failed (${response.status})`);
+            }
+        } catch (error) {
+            console.error('SIWS sign-in failed', error);
+        }
+    }
+
+    return (
+        <button disabled={!canSignIn || isSigningIn} onClick={handleSignIn}>
+            {isSigningIn ? 'Signing in...' : reason ? 'Connect wallet' : 'Sign in'}
+        </button>
+    );
+}
+```
+
+<Callout type="caution" title="Generate challenges server-side">
+    Do not generate SIWS nonces only in the browser. Your backend should issue a nonce, store it as single-use, and
+    reject replayed or expired challenges.
+</Callout>
+
+## Native and fallback paths
+
+Native SIWS uses the Wallet Standard `solana:signIn` feature. The wallet constructs and signs the SIWS message, then returns the account, signed message bytes, and signature.
+
+Fallback SIWS uses the connected account's `solana:signMessage` feature. `useWalletUiAuth` constructs a SIWS-compatible message from the input, fills `address` from the connected account, fills `domain` from `input.domain` or `location.host`, signs the bytes, and returns the same backend payload shape.
+
+For custom flows, `@wallet-ui/react` also re-exports lower-level hooks from `@solana/react`. Use `useSignIn(wallet)` when you need direct native SIWS control, and use account-level message signing such as `useSignMessage(account)` or `useWalletAccountMessageSigner(account)` when you need custom fallback behavior.
+
+## Backend contract
+
+Send enough data for the backend to verify the exact bytes that were signed.
+
+| Field               | Purpose                                              |
+| ------------------- | ---------------------------------------------------- |
+| `account.address`   | Address that requested the session.                  |
+| `account.publicKey` | Public key bytes used for Ed25519 verification.      |
+| `input`             | SIWS challenge fields the server issued or accepted. |
+| `method`            | Either `solana:signIn` or `solana:signMessage`.      |
+| `signature`         | Signature bytes returned by the wallet.              |
+| `signedMessage`     | Exact message bytes returned by the wallet.          |
+
+Server-side verification should:
+
+- verify the Ed25519 signature against `signedMessage` and `account.publicKey`
+- parse `signedMessage` as SIWS and compare expected `domain`, `address`, `nonce`, `uri`, `version`, and time fields
+- reject used, unknown, expired, or wrong-domain nonces
+- reject mismatches between the parsed address and the authenticated account
+- create a session only after verification succeeds
+
+<Callout type="note" title="Wallets may modify bytes">
+    Always verify `signedMessage`, not the original message you asked the wallet to sign. Wallets may prefix or
+    otherwise modify message bytes before signing.
+</Callout>
+
+## Capability layers
+
+| Layer                 | Use it for                                                                         |
+| --------------------- | ---------------------------------------------------------------------------------- |
+| Raw `wallet.features` | Diagnostics and advanced feature gating.                                           |
+| Wallet-level hooks    | Native wallet actions such as `useSignIn(wallet)`.                                 |
+| Account-level hooks   | Connected-account fallback signing such as `useSignMessage(account)`.              |
+| `useWalletUiAuth`     | Headless app auth flows that choose native SIWS first and fallback signing second. |
+| `WalletUiAuth`        | Wallet-list auth buttons that should connect before signing.                       |
+
+For connected-wallet auth fallbacks, prefer the account-level signing path over manual raw feature probing unless you truly need low-level control.
+
+## Compatibility matrix
+
+Runtime Wallet Standard features are the source of truth. The public-docs column was checked on April 30, 2026, and
+should be treated as guidance only; verify the exact wallet version, browser or device, `wallet.features`, and
+`account.features` in your app.
+
+| Wallet   | Public docs checked      | Native `solana:signIn`         | `signMessage` fallback         | Runtime verification target                                                                                           |
+| -------- | ------------------------ | ------------------------------ | ------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| Backpack | Deep-link `signMessage`  | Not confirmed from public docs | Documented                     | Confirm `standard:connect` on the wallet and `solana:signMessage` on the connected account.                           |
+| Jupiter  | Jupiter Mobile user docs | Not confirmed from public docs | Not confirmed from public docs | Test the target Jupiter surface directly; public docs confirm a Solana-native wallet, not browser auth feature flags. |
+| Phantom  | SIWS and message signing | Documented                     | Documented                     | Confirm extension or platform version and that `wallet.features` exposes `solana:signIn`.                             |
+| Solflare | Deep-link `signMessage`  | Not confirmed from public docs | Documented                     | Confirm `standard:connect` on the wallet and `solana:signMessage` on the connected account.                           |
+
+For every wallet you support, record:
+
+- wallet name, wallet version, browser or device, and checked date
+- `wallet.features` and the selected `account.features`
+- whether `WalletUiAuth` chose native `solana:signIn` or message fallback
+- backend verification result for the returned `signedMessage` and `signature`
+
+The Vite React example includes an `/auth` route that prints the verification payload shape for manual wallet checks.
+
+## Diagnostics
+
+| State                  | Likely cause                                                          | Next check                                                  |
+| ---------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------- |
+| `auth-unsupported`     | The wallet has neither native SIWS nor account message signing.       | Inspect `wallet.features` and `account.features`.           |
+| `missing-domain`       | Fallback signing could not build a SIWS message.                      | Pass `input.domain` from the frontend or backend challenge. |
+| `wallet-not-connected` | Fallback signing tried to connect the wallet but received no account. | Connect the target wallet and inspect returned accounts.    |
+
+## Integration order
+
+1. Prove the stock picker and connect flow with `WalletUiDropdown`.
+2. Add `useWalletUiAuth` and verify native `solana:signIn` with a wallet that supports it.
+3. Verify `solana:signMessage` fallback with a connected account.
+4. Add backend nonce issuance, verification, and session creation.
+5. Customize the wallet and auth UI after the default path works.
+
+References: [Phantom SIWS announcement](https://phantom.com/learn/developers/sign-in-with-solana), [Phantom SIW docs](https://docs.phantom.com/developer-powertools/signing-a-message), [Phantom signMessage docs](https://docs.phantom.com/solana/signing-a-message), [Backpack signMessage docs](https://docs.backpack.app/deeplinks/provider-methods/signmessage), [Jupiter Mobile docs](https://docs.jup.ag/user-docs/manage/mobile), and [Solflare signMessage docs](https://docs.solflare.com/solflare/technical/deeplinks/provider-methods/signmessage).

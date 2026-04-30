@@ -5,6 +5,7 @@ import { HeaderLink } from '../components/app-header.tsx';
 import { AppLayout } from '../components/app-layout.tsx';
 
 export const AccountFeature = lazy(() => import('./routes/account-route.tsx'));
+export const AuthFeature = lazy(() => import('./routes/auth-route.tsx'));
 export const ClustersFeature = lazy(() => import('./routes/cluster-route.tsx'));
 export const RpcFeature = lazy(() => import('./routes/client-route.tsx'));
 export const WalletsFeature = lazy(() => import('./routes/wallets-route.tsx'));
@@ -14,6 +15,7 @@ export const UiFeature = lazy(() => import('./routes/ui-route.tsx'));
 const routes: RouteObject[] = [
     { element: <Navigate replace to="/account" />, path: '/' },
     { element: <AccountFeature />, path: '/account' },
+    { element: <AuthFeature />, path: '/auth' },
     { element: <ClustersFeature />, path: '/clusters' },
     { element: <DevFeature />, path: '/dev' },
     { element: <RpcFeature />, path: '/rpc' },
@@ -22,6 +24,7 @@ const routes: RouteObject[] = [
 ];
 const links: HeaderLink[] = [
     { label: 'Account', to: '/account' },
+    { label: 'Auth', to: '/auth' },
     { label: 'Wallets', to: '/wallets' },
     { label: 'RPC', to: '/rpc' },
     { label: 'Clusters', to: '/clusters' },

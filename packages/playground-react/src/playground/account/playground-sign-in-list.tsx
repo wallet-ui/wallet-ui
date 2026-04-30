@@ -1,4 +1,4 @@
-import { SolanaSignIn, type UiWallet, useWallets, useWalletUiAccount } from '@wallet-ui/react';
+import { type UiWallet, useWallets, useWalletUiAccount } from '@wallet-ui/react';
 import React, { useRef, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { PlaygroundError } from '../playground-error';
@@ -29,8 +29,6 @@ export function PlaygroundSignInList() {
         );
     }
 
-    const supportedWallets = wallets.filter(wallet => wallet.features.includes(SolanaSignIn));
-
     return (
         <>
             <div
@@ -40,7 +38,7 @@ export function PlaygroundSignInList() {
                     gap: '16px',
                 }}
             >
-                {supportedWallets.map((wallet, index) => renderItem(wallet, index))}
+                {wallets.map((wallet, index) => renderItem(wallet, index))}
             </div>
             {error !== NO_ERROR ? <PlaygroundErrorPanel error={error} onClose={() => setError(NO_ERROR)} /> : null}
         </>

@@ -1,22 +1,15 @@
 import { devnet, mainnet, testnet } from '@solana/kit';
 
-import {
-    localnet,
-    SolanaCluster,
-    SolanaDevnetUrl,
-    SolanaLocalnetUrl,
-    SolanaMainnetUrl,
-    SolanaTestnetUrl,
-} from './types/solana-cluster';
+import { localnet, SolanaCluster } from './types/solana-cluster';
 
 export type CreateSolanaProps = string | (Partial<Pick<SolanaCluster, 'label' | 'url' | 'urlWs'>> & { url: string });
 
-function createSolanaCluster<T extends SolanaDevnetUrl | SolanaLocalnetUrl | SolanaMainnetUrl | SolanaTestnetUrl>(
+function createSolanaCluster(
     props: CreateSolanaProps,
     { id, label, url: defaultUrl, urlWs: defaultUrlWs }: Pick<SolanaCluster, 'id' | 'label' | 'url' | 'urlWs'>,
 ): SolanaCluster {
     if (typeof props === 'string') {
-        return { id, label, url: props as T };
+        return { id, label, url: props };
     }
 
     return {
@@ -28,7 +21,7 @@ function createSolanaCluster<T extends SolanaDevnetUrl | SolanaLocalnetUrl | Sol
 }
 
 export function createSolanaDevnet(props: CreateSolanaProps = 'https://api.devnet.solana.com'): SolanaCluster {
-    return createSolanaCluster<SolanaDevnetUrl>(props, {
+    return createSolanaCluster(props, {
         id: 'solana:devnet',
         label: 'Devnet',
         url: devnet(typeof props === 'string' ? props : props.url),

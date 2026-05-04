@@ -9,7 +9,7 @@ import {
     type WalletUiAuthState,
     WalletUiDropdown,
 } from '@wallet-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 type AuthPayload = {
     account: {
@@ -44,11 +44,6 @@ export default function AuthRoute() {
 function AuthControls({ auth, wallet }: { auth: WalletUiAuthState; wallet: UiWallet }) {
     const [error, setError] = useState<string | undefined>();
     const [payload, setPayload] = useState<AuthPayload | undefined>();
-
-    useEffect(() => {
-        setError(undefined);
-        setPayload(undefined);
-    }, [wallet]);
 
     return (
         <UiStack>

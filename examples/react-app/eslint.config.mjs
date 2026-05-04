@@ -16,9 +16,6 @@ export default [
                 ...globals.browser,
                 ...globals.es2020,
             },
-            parserOptions: {
-                project: './tsconfig.app.json',
-            },
         },
         plugins: {
             'react-refresh': reactRefreshPlugin,

@@ -18,6 +18,11 @@ updates:
           - '@eslint/*'
           - '@typescript-eslint/*'
           - 'typescript'
+      solana-kit:
+        patterns:
+          - '@solana/kit'
+          - '@solana/kit-*'
+          - '@solana/react'
 
   - package-ecosystem: 'github-actions'
     directory: '/'

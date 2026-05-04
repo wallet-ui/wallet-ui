@@ -16,7 +16,7 @@
         "@wallet-ui/css": "workspace:*",
         "@wallet-ui/playground-react": "workspace:*",
         "@wallet-ui/react": "workspace:*",
-        "react": "^19.1.4",
+        "react": "^19.2.5",
         "react-dom": "^19.1.4",
         "react-error-boundary": "^6.0.0",
         "react-router": "^7.13.2",

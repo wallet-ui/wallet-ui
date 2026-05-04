@@ -10,7 +10,7 @@
         "@solana/kit-client-rpc": "^0.6.0",
         "@solana/kit-plugin-rpc": "^0.6.0",
         "@wallet-ui/react": "workspace:*",
-        "react": "^19.1.4",
+        "react": "^19.2.5",
         "react-dom": "^19.1.4",
         "react-error-boundary": "^6.0.0",
         "@solana-program/system": "^0.10.0",

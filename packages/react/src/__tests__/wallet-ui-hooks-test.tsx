@@ -1,3 +1,4 @@
+import { StandardConnect, StandardDisconnect } from '@wallet-standard/core';
 import type { UiWallet, UiWalletAccount } from '@wallet-standard/react';
 
 import { BaseDropdownItemType } from '../base-dropdown';
@@ -13,7 +14,13 @@ const mockUseDisconnect = jest.fn();
 const mockUseWalletAccountTransactionSendingSigner = jest.fn();
 const mockUseWalletUi = jest.fn();
 const mockUseWalletUiAccount = jest.fn();
+const mockGetWalletFeature = jest.fn((_wallet?: unknown, _featureName?: unknown) => ({}));
 const TEST_ICON = 'data:image/png;base64,ZmFrZQ==';
+
+afterEach(() => {
+    mockGetWalletFeature.mockReset();
+    mockGetWalletFeature.mockImplementation(() => ({}));
+});
 
 jest.mock('react-error-boundary', () => {
     const React = jest.requireActual<typeof import('react')>('react');
@@ -32,6 +39,10 @@ jest.mock('@solana/react', () => ({
 jest.mock('@wallet-standard/react', () => ({
     useConnect: (...args: unknown[]) => mockUseConnect(...args),
     useDisconnect: (...args: unknown[]) => mockUseDisconnect(...args),
+}));
+
+jest.mock('@wallet-standard/ui', () => ({
+    getWalletFeature: (wallet: unknown, featureName: unknown) => mockGetWalletFeature(wallet, featureName),
 }));
 
 jest.mock('../use-base-dropdown', () => ({
@@ -119,6 +130,66 @@ describe('useWalletUiDropdown', () => {
         }
     });
 
+    it('marks unavailable wallets as disabled connect items', async () => {
+        expect.assertions(6);
+
+        const connect = jest.fn();
+        const dropdown = createDropdownControl();
+        const wallet = createUiWallet({ name: 'Phantom' });
+
+        mockGetWalletFeature.mockImplementationOnce(() => {
+            throw new Error('stale wallet handle');
+        });
+        mockUseBaseDropdown.mockReturnValue(dropdown);
+        mockUseWalletUi.mockReturnValue({
+            account: undefined,
+            connect,
+            connected: false,
+            copy: jest.fn(),
+            disconnect: jest.fn(),
+            wallet: undefined,
+            wallets: [wallet],
+        });
+
+        const hook = getHookResult(renderHook(() => useWalletUiDropdown()).result);
+
+        expect(mockGetWalletFeature).toHaveBeenCalledWith(wallet, StandardConnect);
+        expect(hook.items.map(item => item.label)).toEqual(['Phantom']);
+        expect(hook.items[0]?.disabled).toBe(true);
+        expect(hook.items[0]?.rightSection).toBe('Unavailable');
+
+        await hook.items[0]?.handler();
+
+        expect(connect).not.toHaveBeenCalled();
+        expect(hook.items[0]?.type).toBe(BaseDropdownItemType.Item);
+    });
+
+    it('does not select an available wallet when it has no accounts', async () => {
+        expect.assertions(2);
+
+        const connect = jest.fn();
+        const dropdown = createDropdownControl();
+        const wallet = createUiWallet({ name: 'Phantom' });
+
+        mockUseBaseDropdown.mockReturnValue(dropdown);
+        mockUseWalletUi.mockReturnValue({
+            account: undefined,
+            connect,
+            connected: false,
+            copy: jest.fn(),
+            disconnect: jest.fn(),
+            wallet: undefined,
+            wallets: [wallet],
+        });
+
+        const hook = getHookResult(renderHook(() => useWalletUiDropdown()).result);
+
+        await hook.items[0]?.handler();
+
+        expect(hook.items[0]?.type).toBe(BaseDropdownItemType.WalletConnect);
+        expect(connect).not.toHaveBeenCalled();
+    });
+
     it('builds copy and disconnect actions for connected wallets', async () => {
         expect.assertions(5);
 
@@ -148,6 +219,39 @@ describe('useWalletUiDropdown', () => {
         await hook.items[1]?.handler();
 
         expect(copy).toHaveBeenCalled();
+        expect(disconnect).toHaveBeenCalled();
+        expect(dropdown.close).toHaveBeenCalled();
+    });
+
+    it('clears connected state without wallet hooks when the selected wallet is unavailable', async () => {
+        expect.assertions(5);
+
+        const disconnect = jest.fn();
+        const dropdown = createDropdownControl();
+        const wallet = createUiWallet({ icon: TEST_ICON, name: 'Phantom' });
+
+        mockGetWalletFeature.mockImplementation(() => {
+            throw new Error('stale wallet handle');
+        });
+        mockUseBaseDropdown.mockReturnValue(dropdown);
+        mockUseWalletUi.mockReturnValue({
+            account: undefined,
+            connect: jest.fn(),
+            connected: true,
+            copy: jest.fn(),
+            disconnect,
+            wallet,
+            wallets: [wallet],
+        });
+
+        const hook = getHookResult(renderHook(() => useWalletUiDropdown()).result);
+
+        expect(mockGetWalletFeature).toHaveBeenCalledWith(wallet, StandardConnect);
+        expect(mockGetWalletFeature).not.toHaveBeenCalledWith(wallet, StandardDisconnect);
+        expect(hook.items[1]?.type).toBe(BaseDropdownItemType.Item);
+
+        await hook.items[1]?.handler();
+
         expect(disconnect).toHaveBeenCalled();
         expect(dropdown.close).toHaveBeenCalled();
     });

@@ -53,6 +53,16 @@ function YourApp() {
 }
 ```
 
+## Wallet Handles
+
+`UiWallet` values are opaque handles created by Wallet Standard and wallet-ui internals. Do not create, persist, replay, or
+inject your own `UiWallet` objects into wallet-ui context. Wrap your app with `<WalletUi>` and let wallet-ui source the
+wallet list from Wallet Standard.
+
+If you build a custom selector, consume wallets returned by wallet-ui hooks/components as opaque values and pass them back
+to wallet-ui APIs. A wallet handle can become unavailable when a browser extension unregisters or changes state; the
+prebuilt dropdown treats those stale handles as unavailable instead of crashing the render tree.
+
 ## Documentation
 
 For full documentation, including guides, component references, and hook APIs, please

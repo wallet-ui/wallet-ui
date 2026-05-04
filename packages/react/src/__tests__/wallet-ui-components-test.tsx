@@ -1,6 +1,7 @@
 import type { UiWallet, UiWalletAccount } from '@wallet-standard/react';
 import React from 'react';
 import { act, create } from 'react-test-renderer';
+import { BaseDropdownItemType } from '../base-dropdown';
 import type { BaseModalProps } from '../base-modal';
 import type { BaseModalControl } from '../use-base-modal';
 
@@ -21,12 +22,14 @@ import { createAccount, createWallet } from '../test-utils/wallet-ui-test-utils'
 
 const mockBaseModal = jest.fn();
 const mockUseBaseDropdown = jest.fn();
+const mockUseWalletUiWallet = jest.fn();
 const mockUseWalletUiDropdown = jest.fn();
 const TEST_ICON = 'data:image/png;base64,ZmFrZQ==';
 
 afterEach(() => {
     mockBaseModal.mockReset();
     mockUseBaseDropdown.mockReset();
+    mockUseWalletUiWallet.mockReset();
     mockUseWalletUiDropdown.mockReset();
 });
 
@@ -47,6 +50,10 @@ jest.mock('../use-base-dropdown', () => ({
 
 jest.mock('../use-wallet-ui-dropdown', () => ({
     useWalletUiDropdown: () => mockUseWalletUiDropdown(),
+}));
+
+jest.mock('../use-wallet-ui-wallet', () => ({
+    useWalletUiWallet: (options: unknown) => mockUseWalletUiWallet(options),
 }));
 
 describe('WalletUiAccountGuard', () => {
@@ -176,6 +183,102 @@ describe('WalletUiDropdown', () => {
         const button = renderer.root.findByProps({ 'data-wu': 'base-button' });
 
         expect(button.children).toContain('Select Wallet');
+    });
+
+    it('renders disabled wallet items without mounting wallet hooks', () => {
+        const dropdown = createDropdownControl();
+        const wallet = createUiWallet({ name: 'Phantom' });
+
+        mockUseWalletUiWallet.mockImplementation(() => {
+            throw new Error('Disabled wallet items must not mount wallet hooks');
+        });
+        mockUseWalletUiDropdown.mockReturnValue({
+            buttonProps: {
+                label: 'Select Wallet',
+            },
+            connected: false,
+            dropdown,
+            items: [
+                {
+                    disabled: true,
+                    handler: jest.fn(),
+                    label: 'Phantom',
+                    type: BaseDropdownItemType.WalletConnect,
+                    value: 'phantom',
+                    wallet,
+                },
+            ],
+        });
+
+        const renderer = render(cleanups, <WalletUiDropdown />);
+        const item = renderer.root.findByProps({ 'data-wu': 'base-dropdown-item' });
+
+        expect(item.props.disabled).toBe(true);
+        expect(item.props['aria-disabled']).toBe(true);
+        expect(item.children).toContain('Phantom');
+        expect(mockUseWalletUiWallet).not.toHaveBeenCalled();
+    });
+
+    it('mounts wallet hooks for enabled wallet items', async () => {
+        expect.assertions(7);
+
+        const connect = jest.fn().mockResolvedValue(undefined);
+        const disconnect = jest.fn().mockResolvedValue(undefined);
+        const dropdown = createDropdownControl();
+        const onConnect = jest.fn().mockResolvedValue(undefined);
+        const onDisconnect = jest.fn().mockResolvedValue(undefined);
+        const wallet = createUiWallet({ name: 'Phantom' });
+
+        mockUseWalletUiWallet.mockReturnValue({
+            connect,
+            disconnect,
+        });
+        mockUseWalletUiDropdown.mockReturnValue({
+            buttonProps: {
+                label: 'Select Wallet',
+            },
+            connected: false,
+            dropdown,
+            items: [
+                {
+                    handler: onConnect,
+                    label: 'Connect Phantom',
+                    type: BaseDropdownItemType.WalletConnect,
+                    value: 'connect',
+                    wallet,
+                },
+                {
+                    handler: onDisconnect,
+                    label: 'Disconnect Phantom',
+                    type: BaseDropdownItemType.WalletDisconnect,
+                    value: 'disconnect',
+                    wallet,
+                },
+            ],
+        });
+
+        const renderer = render(cleanups, <WalletUiDropdown />);
+        const items = renderer.root.findAllByProps({ 'data-wu': 'base-dropdown-item' });
+
+        expect(mockUseWalletUiWallet).toHaveBeenCalledTimes(2);
+
+        await act(async () => {
+            items[0]?.props.onClick({ defaultPrevented: false });
+            await Promise.resolve();
+            await Promise.resolve();
+        });
+        await act(async () => {
+            items[1]?.props.onClick({ defaultPrevented: false });
+            await Promise.resolve();
+            await Promise.resolve();
+        });
+
+        expect(connect).toHaveBeenCalled();
+        expect(onConnect).toHaveBeenCalled();
+        expect(disconnect).toHaveBeenCalled();
+        expect(onDisconnect).toHaveBeenCalled();
+        expect(dropdown.close).toHaveBeenCalledTimes(2);
+        expect(dropdown.api.getItemProps).toHaveBeenCalledWith({ disabled: undefined, value: 'connect' });
     });
 });
 
@@ -504,9 +607,10 @@ function createDropdownControl() {
         api: {
             getContentProps: () => ({}),
             getIndicatorProps: () => ({}),
-            getItemProps: ({ value }: { value: string }) => ({
+            getItemProps: jest.fn(({ disabled, value }: { disabled?: boolean; value: string }) => ({
+                'aria-disabled': disabled,
                 'data-value': value,
-            }),
+            })),
             getPositionerProps: () => ({}),
             getTriggerProps: () => ({}),
         },

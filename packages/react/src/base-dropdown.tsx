@@ -55,19 +55,18 @@ export function BaseDropdown({ buttonProps, dropdown, items, showIndicator }: Ba
             <div {...api.getPositionerProps()} data-wu="base-dropdown-wrapper">
                 <div {...api.getContentProps()} data-wu="base-dropdown-list" data-part="content">
                     {items.map(item => {
+                        const itemProps = api.getItemProps({ disabled: item.disabled, value: item.value });
+
                         return (
                             <BaseDropdownItem
-                                {...api.getItemProps({ value: item.value })}
                                 key={item.value}
-                                item={item}
                                 afterClick={() => {
-                                    if (item.disabled) {
-                                        return;
-                                    }
                                     if (item.closeMenu !== false) {
                                         dropdown.close();
                                     }
                                 }}
+                                item={item}
+                                itemProps={itemProps}
                             />
                         );
                     })}
@@ -77,25 +76,40 @@ export function BaseDropdown({ buttonProps, dropdown, items, showIndicator }: Ba
     );
 }
 
-function BaseDropdownItem({ afterClick, item }: BaseDropdownItemRenderProps) {
-    if (!item.wallet) {
-        return <BaseDropdownItemRender afterClick={afterClick} item={item} />;
+function BaseDropdownItem({ afterClick, item, itemProps }: BaseDropdownItemRenderProps) {
+    if (!item.wallet || item.disabled) {
+        return <BaseDropdownItemRender afterClick={afterClick} item={item} itemProps={itemProps} />;
     }
     switch (item.type) {
         case BaseDropdownItemType.Item:
-            return <BaseDropdownItemRender afterClick={afterClick} item={item} />;
+            return <BaseDropdownItemRender afterClick={afterClick} item={item} itemProps={itemProps} />;
         case BaseDropdownItemType.WalletConnect:
-            return <BaseDropdownItemWalletConnect afterClick={afterClick} item={item} wallet={item.wallet} />;
+            return (
+                <BaseDropdownItemWalletConnect
+                    afterClick={afterClick}
+                    item={item}
+                    itemProps={itemProps}
+                    wallet={item.wallet}
+                />
+            );
         case BaseDropdownItemType.WalletCopy:
-            return <BaseDropdownItemRender afterClick={afterClick} item={item} />;
+            return <BaseDropdownItemRender afterClick={afterClick} item={item} itemProps={itemProps} />;
         case BaseDropdownItemType.WalletDisconnect:
-            return <BaseDropdownItemWalletDisconnect afterClick={afterClick} item={item} wallet={item.wallet} />;
+            return (
+                <BaseDropdownItemWalletDisconnect
+                    afterClick={afterClick}
+                    item={item}
+                    itemProps={itemProps}
+                    wallet={item.wallet}
+                />
+            );
     }
 }
 
 function BaseDropdownItemWalletConnect({
     afterClick,
     item,
+    itemProps,
     wallet,
 }: BaseDropdownItemRenderProps & {
     wallet: UiWallet;
@@ -113,6 +127,7 @@ function BaseDropdownItemWalletConnect({
                 },
                 leftSection: wallet ? <WalletUiIcon wallet={wallet} /> : undefined,
             }}
+            itemProps={itemProps}
         />
     );
 }
@@ -120,6 +135,7 @@ function BaseDropdownItemWalletConnect({
 function BaseDropdownItemWalletDisconnect({
     afterClick,
     item,
+    itemProps,
     wallet,
 }: BaseDropdownItemRenderProps & {
     wallet: UiWallet;
@@ -136,6 +152,7 @@ function BaseDropdownItemWalletDisconnect({
                     return await item.handler();
                 },
             }}
+            itemProps={itemProps}
         />
     );
 }
@@ -143,10 +160,21 @@ function BaseDropdownItemWalletDisconnect({
 interface BaseDropdownItemRenderProps {
     afterClick: () => void;
     item: BaseDropdownItem;
+    itemProps: BaseDropdownItemProps;
 }
 
-function BaseDropdownItemRender({ afterClick, item }: BaseDropdownItemRenderProps) {
-    function onClick() {
+type BaseDropdownItemProps = ReturnType<BaseDropdownControl['api']['getItemProps']>;
+
+function BaseDropdownItemRender({ afterClick, item, itemProps }: BaseDropdownItemRenderProps) {
+    const { onClick: onItemClick, ...buttonProps } = itemProps;
+
+    function onClick(event?: React.MouseEvent<HTMLButtonElement>) {
+        if (event) {
+            onItemClick?.(event);
+            if (event.defaultPrevented) {
+                return;
+            }
+        }
         if (item.disabled) {
             return;
         }
@@ -156,7 +184,14 @@ function BaseDropdownItemRender({ afterClick, item }: BaseDropdownItemRenderProp
     }
 
     return (
-        <button type="button" data-wu="base-dropdown-item" data-part="item" onClick={onClick}>
+        <button
+            {...buttonProps}
+            disabled={item.disabled}
+            type="button"
+            data-wu="base-dropdown-item"
+            data-part="item"
+            onClick={onClick}
+        >
             {item.leftSection ? <span data-wu="base-dropdown-item-left-section">{item.leftSection}</span> : null}
             {item.label}
             {item.rightSection ? <span data-wu="base-dropdown-item-right-section">{item.rightSection}</span> : null}

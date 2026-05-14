@@ -5,9 +5,11 @@ description: The primary hook for interacting with the mobile wallet across the 
 
 import { TabItem, Tabs } from '@astrojs/starlight/components';
 
-The `useMobileWallet` hook is the primary hook for interacting with the mobile wallet. Both variants support connect, disconnect, signing messages, and signing transactions, but the exposed client types and helper methods differ.
+The `useMobileWallet` hook is the primary hook for interacting with the mobile wallet. Both variants support connect, disconnect, signing messages, and signing transactions on Android, but the exposed client types and helper methods differ.
 
 The wallet lifecycle methods are largely shared. The main differences are the client object returned by the hook, the transaction helper surface, and the account types.
+
+On iOS, wallet operations are not implemented yet. The hook still returns a stable object, but wallet operation methods reject with `WalletUiUnsupportedPlatformError` and `isSupported` is `false`.
 
 <Tabs syncKey="rn-sdk">
 	<TabItem label="Kit">
@@ -20,11 +22,14 @@ The wallet lifecycle methods are largely shared. The main differences are the cl
     	| `accounts`               | `Account[] \| null`                                                                                | An array of all authorized accounts.                     |
     	| `account`                | `Account \| null`                                                                                  | The currently selected wallet account.                   |
     	| `chain`                  | `SolanaClusterId`                                                                                  | The current cluster identifier.                          |
+    	| `capabilities`           | `MobileWalletCapability[]`                                                                         | Wallet operations available on the current platform.     |
     	| `connect`                | `() => Promise<Account>`                                                                           | Connect to a wallet.                                     |
     	| `connectAnd`             | `(cb: (wallet: AuthorizeAPI) => Promise<Account \| void>) => Promise<Account \| void>`            | Connect and execute a callback.                          |
     	| `disconnect`             | `() => Promise<void>`                                                                              | Disconnect the current wallet.                           |
     	| `deauthorizeSession`     | `(wallet: DeauthorizeAPI) => Promise<void>`                                                        | Deauthorize the current session.                         |
     	| `getTransactionSigner`   | `(address: Address, minContextSlot: bigint) => TransactionSendingSigner`                           | Return a signer for Kit transaction pipelines.           |
+    	| `isSupported`            | `boolean`                                                                                          | `true` when wallet operations are available.             |
+    	| `platform`               | `android \| ios \| unsupported`                                                                    | The detected mobile wallet platform.                     |
     	| `sendTransaction`        | `(instructions: Instruction[]) => Promise<string>`                                                 | Create, sign, and send a transaction from instructions.  |
     	| `signAndSendTransaction` | `(transaction: Transaction \| Transaction[], minContextSlot: bigint) => Promise<SignatureBytes[]>` | Sign and send one or more Kit transactions.              |
     	| `signTransaction`        | `(transaction: Transaction \| Transaction[]) => Promise<Transaction \| Transaction[]>`             | Sign one or more Kit transactions without sending them.  |
@@ -55,7 +60,7 @@ The wallet lifecycle methods are largely shared. The main differences are the cl
     	import { Button, Text, View } from 'react-native';
 
     	function WalletConnector() {
-    	    const { account, connect, disconnect } = useMobileWallet();
+    	    const { account, connect, disconnect, isSupported } = useMobileWallet();
 
     	    const handleConnect = useCallback(async () => {
     	        await connect();
@@ -73,7 +78,7 @@ The wallet lifecycle methods are largely shared. The main differences are the cl
     	                    <Button title="Disconnect" onPress={handleDisconnect} />
     	                </>
     	            ) : (
-    	                <Button title="Connect Wallet" onPress={handleConnect} />
+    	                <Button disabled={!isSupported} title="Connect Wallet" onPress={handleConnect} />
     	            )}
     	        </View>
     	    );
@@ -89,11 +94,14 @@ The wallet lifecycle methods are largely shared. The main differences are the cl
     	| `connection`                 | `Connection`                                                                                                                                                                         | The Solana connection configured in `MobileWalletProvider`. |
     	| `identity`                   | `AppIdentity`                                                                                                                                                                        | The app identity configured in `MobileWalletProvider`.      |
     	| `accounts`                   | `Account[] \| null`                                                                                                                                                                  | An array of all authorized accounts.                        |
+    	| `capabilities`               | `MobileWalletCapability[]`                                                                                                                                                           | Wallet operations available on the current platform.        |
     	| `authorizeSession`           | `(wallet: AuthorizeAPI) => Promise<Account>`                                                                                                                                         | Authorize a new session.                                    |
     	| `authorizeSessionWithSignIn` | `(wallet: AuthorizeAPI, signInPayload: SignInPayload) => Promise<Account>`                                                                                                           | Authorize a new session with sign-in.                       |
     	| `deauthorizeSession`         | `(wallet: DeauthorizeAPI) => Promise<void>`                                                                                                                                          | Deauthorize the current session.                            |
     	| `deauthorizeSessions`        | `() => Promise<void>`                                                                                                                                                                | Deauthorize all sessions.                                   |
     	| `isLoading`                  | `boolean`                                                                                                                                                                            | Whether the authorization state is still loading.           |
+    	| `isSupported`                | `boolean`                                                                                                                                                                            | `true` when wallet operations are available.                |
+    	| `platform`                   | `android \| ios \| unsupported`                                                                                                                                                      | The detected mobile wallet platform.                        |
     	| `account`                    | `Account \| null`                                                                                                                                                                    | The currently selected wallet account.                      |
     	| `connect`                    | `() => Promise<Account>`                                                                                                                                                             | Connect to a wallet.                                        |
     	| `connectAnd`                 | `(cb: (wallet: AuthorizeAPI) => Promise<Account \| void>) => Promise<Account \| void>`                                                                                              | Connect and execute a callback.                             |
@@ -120,7 +128,7 @@ The wallet lifecycle methods are largely shared. The main differences are the cl
     	import { Button, Text, View } from 'react-native';
 
     	function WalletConnector() {
-    	    const { account, connect, disconnect, signAndSendTransaction } = useMobileWallet();
+    	    const { account, connect, disconnect, isSupported, signAndSendTransaction } = useMobileWallet();
 
     	    const handleConnect = useCallback(async () => {
     	        await connect();
@@ -153,7 +161,7 @@ The wallet lifecycle methods are largely shared. The main differences are the cl
     	                    <Button title="Send Dummy Transaction" onPress={handleSendTransaction} />
     	                </>
     	            ) : (
-    	                <Button title="Connect Wallet" onPress={handleConnect} />
+    	                <Button disabled={!isSupported} title="Connect Wallet" onPress={handleConnect} />
     	            )}
     	        </View>
     	    );

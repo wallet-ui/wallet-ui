@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 import { env } from 'node:process';
 
 import browsersListToEsBuild from 'browserslist-to-esbuild';
@@ -10,6 +11,10 @@ type Platform =
     // React Native
     | 'native'
     | 'node';
+
+function getPackageEntries() {
+    return ['./src/index.ts', existsSync('./src/android.ts') ? './src/android.ts' : null].filter(Boolean) as string[];
+}
 
 const BROWSERSLIST_TARGETS = browsersListToEsBuild();
 
@@ -26,7 +31,7 @@ export function getBaseConfig(platform: Platform, formats: Format[], _options: O
                               __REACTNATIVE__: `${platform === 'native'}`,
                               __VERSION__: `"${env.npm_package_version}"`,
                           },
-                          entry: [`./src/index.ts`],
+                          entry: getPackageEntries(),
                           esbuildOptions(options, context) {
                               const { format } = context;
                               options.minify = format === 'iife' && !isDebugBuild;

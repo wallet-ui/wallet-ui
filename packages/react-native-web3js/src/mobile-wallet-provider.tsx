@@ -1,6 +1,6 @@
 import { Commitment, Connection, ConnectionConfig } from '@solana/web3.js';
 import { AppIdentity, Chain } from '@solana-mobile/mobile-wallet-adapter-protocol';
-import React, { createContext, type ReactNode, useEffect, useMemo, useRef } from 'react';
+import React, { createContext, type ReactNode, useEffect, useMemo, useState } from 'react';
 
 import { createAsyncStorageCache } from './async-storage-cache';
 import { AuthorizationStore, createAuthorizationStore } from './authorization-store';
@@ -31,11 +31,7 @@ export function MobileWalletProvider({
     const connection = useMemo(() => new Connection(endpoint, commitmentOrConfig), [commitmentOrConfig, endpoint]);
     const cache = useMemo(() => userCache ?? createAsyncStorageCache<WalletAuthorization>(), [userCache]);
 
-    const storeRef = useRef<AuthorizationStore | null>(null);
-    if (!storeRef.current) {
-        storeRef.current = createAuthorizationStore({ cache });
-    }
-    const store = storeRef.current;
+    const [store] = useState(() => createAuthorizationStore({ cache }));
 
     useEffect(() => {
         store.fetch().catch(console.error);

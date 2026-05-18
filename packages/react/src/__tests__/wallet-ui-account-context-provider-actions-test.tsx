@@ -1,11 +1,6 @@
 import type { SolanaCluster } from '@wallet-ui/core';
 
-import {
-    createAccount,
-    createWallet,
-    type TestAccount,
-    type TestWallet,
-} from '../test-utils/wallet-ui-test-utils';
+import { createAccount, createWallet, type TestAccount, type TestWallet } from '../test-utils/wallet-ui-test-utils';
 
 const CLUSTER: SolanaCluster = {
     id: 'solana:testnet',
@@ -127,14 +122,12 @@ function renderProvider(cleanups: Array<() => void>, initialWallets: TestWallet[
         } = jest.requireActual('@nanostores/persistent');
         const { getTestStorage, useTestStorageEngine } = persistent;
         const { createStorageAccount } = jest.requireActual<typeof import('@wallet-ui/core')>('@wallet-ui/core');
-        const { act, create } =
-            jest.requireActual<typeof import('react-test-renderer')>('react-test-renderer');
+        const { act, create } = jest.requireActual<typeof import('react-test-renderer')>('react-test-renderer');
         const { WalletUiAccountContext } =
             jest.requireActual<typeof import('../wallet-ui-account-context')>('../wallet-ui-account-context');
-        const { WalletUiAccountContextProvider } =
-            jest.requireActual<typeof import('../wallet-ui-account-context-provider')>(
-                '../wallet-ui-account-context-provider',
-            );
+        const { WalletUiAccountContextProvider } = jest.requireActual<
+            typeof import('../wallet-ui-account-context-provider')
+        >('../wallet-ui-account-context-provider');
 
         let contextValue:
             | {

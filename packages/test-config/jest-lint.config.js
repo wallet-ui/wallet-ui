@@ -4,7 +4,7 @@ const config = {
         name: 'ESLint',
     },
     runner: 'eslint',
-    testMatch: ['<rootDir>src/**/*.ts'],
+    testMatch: ['<rootDir>src/**/*.{ts,tsx}'],
     testPathIgnorePatterns: ['README.md'],
 };
 

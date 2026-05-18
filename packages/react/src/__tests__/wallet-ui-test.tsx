@@ -2,12 +2,7 @@ import { createStorageAccount, createStorageCluster, type SolanaCluster } from '
 import React from 'react';
 import { act, create } from 'react-test-renderer';
 
-import {
-    createAccount,
-    createWallet,
-    type TestAccount,
-    type TestWallet,
-} from '../test-utils/wallet-ui-test-utils';
+import { createAccount, createWallet, type TestAccount, type TestWallet } from '../test-utils/wallet-ui-test-utils';
 import { useWalletUi } from '../use-wallet-ui';
 import { createWalletUiConfig } from '../wallet-ui';
 import { WalletUi } from '../wallet-ui';

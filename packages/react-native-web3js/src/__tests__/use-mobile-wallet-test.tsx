@@ -5,13 +5,12 @@ import { resetAsyncStorageMock } from '../../../test-config/react-native-unit-te
 import { createExpectedAccount, FIRST_ADDRESS_BASE64 } from '../test-utils/fixtures';
 import { useMobileWallet } from '../use-mobile-wallet';
 
-let currentContext: unknown;
-
 const mockAuthorizeSession = jest.fn();
 const mockAuthorizeSessionWithSignIn = jest.fn();
 const mockDeauthorizeSession = jest.fn();
 const mockDeauthorizeSessions = jest.fn();
 const mockTransact = jest.fn();
+const mockUseContext = jest.fn();
 const mockUseAuthorization = jest.fn();
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
@@ -29,7 +28,7 @@ jest.mock('react', () => {
     return {
         ...actual,
         useCallback: (callback: unknown) => callback,
-        useContext: () => currentContext,
+        useContext: (...args: unknown[]) => mockUseContext(...args),
         useMemo: (factory: () => unknown) => factory(),
     };
 });
@@ -189,7 +188,7 @@ function useMobileWalletTestHarness({
     contextOverrides?: Record<string, unknown>;
     transportWallet?: ReturnType<typeof createTransportWallet>;
 } = {}) {
-    currentContext = createContextValue(contextOverrides);
+    mockUseContext.mockReturnValue(createContextValue(contextOverrides));
     resetAsyncStorageMock(AsyncStorage as unknown as Parameters<typeof resetAsyncStorageMock>[0]);
     mockAuthorizeSession.mockResolvedValue(createExpectedAccount({ label: 'Primary' }));
     mockAuthorizeSessionWithSignIn.mockResolvedValue({

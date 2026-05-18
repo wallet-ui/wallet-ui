@@ -1,24 +1,24 @@
 import type { UiWallet, UiWalletAccount } from '@wallet-standard/react';
 import React from 'react';
 import { act, create } from 'react-test-renderer';
+
 import { BaseDropdownItemType } from '../base-dropdown';
 import type { BaseModalProps } from '../base-modal';
+import { createAccount, createWallet } from '../test-utils/wallet-ui-test-utils';
 import type { BaseModalControl } from '../use-base-modal';
-
-import { type WalletUiAccountState, WalletUiAccountContext } from '../wallet-ui-account-context';
+import { WalletUiAccountContext, type WalletUiAccountState } from '../wallet-ui-account-context';
 import { WalletUiAccountGuard } from '../wallet-ui-account-guard';
-import { type WalletUiClusterContextValue, WalletUiClusterContext } from '../wallet-ui-cluster-context';
+import { WalletUiClusterContext, type WalletUiClusterContextValue } from '../wallet-ui-cluster-context';
 import { WalletUiClusterDropdown } from '../wallet-ui-cluster-dropdown';
 import { WalletUiDropdown } from '../wallet-ui-dropdown';
+import { WalletUiIcon } from '../wallet-ui-icon';
 import { WalletUiIconClose } from '../wallet-ui-icon-close';
 import { WalletUiIconNoWallet } from '../wallet-ui-icon-no-wallet';
-import { WalletUiIcon } from '../wallet-ui-icon';
 import { WalletUiLabel } from '../wallet-ui-label';
-import { WalletUiListButton } from '../wallet-ui-list-button';
 import { WalletUiList } from '../wallet-ui-list';
-import { WalletUiModalTrigger } from '../wallet-ui-modal-trigger';
+import { WalletUiListButton } from '../wallet-ui-list-button';
 import { WalletUiModal } from '../wallet-ui-modal';
-import { createAccount, createWallet } from '../test-utils/wallet-ui-test-utils';
+import { WalletUiModalTrigger } from '../wallet-ui-modal-trigger';
 
 const mockBaseModal = jest.fn();
 const mockUseBaseDropdown = jest.fn();
@@ -455,10 +455,7 @@ describe('WalletUiListButton', () => {
         const select = jest.fn(() => deferred.promise.catch(() => undefined));
         const renderer = render(
             cleanups,
-            <WalletUiListButton
-                select={select}
-                wallet={createUiWallet({ accounts: [account], name: 'Phantom' })}
-            />,
+            <WalletUiListButton select={select} wallet={createUiWallet({ accounts: [account], name: 'Phantom' })} />,
         );
 
         act(() => {
@@ -559,11 +556,7 @@ function createAccountContextValue({
     };
 }
 
-function createClusterContextValue({
-    setCluster,
-}: {
-    setCluster: jest.Mock;
-}): WalletUiClusterContextValue {
+function createClusterContextValue({ setCluster }: { setCluster: jest.Mock }): WalletUiClusterContextValue {
     return {
         cluster: {
             id: 'solana:devnet',
@@ -588,7 +581,7 @@ function createClusterContextValue({
 
 function createDeferred<T>() {
     let reject!: (reason?: unknown) => void;
-    let resolve!: (value: T | PromiseLike<T>) => void;
+    let resolve!: (value: PromiseLike<T> | T) => void;
 
     const promise = new Promise<T>((res, rej) => {
         reject = rej;
@@ -627,26 +620,14 @@ function createModalControl() {
     };
 }
 
-function createUiWallet({
-    accounts = [],
-    name,
-}: {
-    accounts?: UiWalletAccount[];
-    name: string;
-}): UiWallet {
+function createUiWallet({ accounts = [], name }: { accounts?: UiWalletAccount[]; name: string }): UiWallet {
     return createWallet({
         accounts: accounts as unknown as ReturnType<typeof createAccount>[],
         name,
     }) as unknown as UiWallet;
 }
 
-function createUiWalletAccount({
-    address,
-    walletName,
-}: {
-    address: string;
-    walletName: string;
-}): UiWalletAccount {
+function createUiWalletAccount({ address, walletName }: { address: string; walletName: string }): UiWalletAccount {
     return createAccount({ address, walletName }) as unknown as UiWalletAccount;
 }
 

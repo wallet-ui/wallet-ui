@@ -2,12 +2,7 @@ import type { SolanaCluster } from '@wallet-ui/core';
 import React, { useContext } from 'react';
 import { act, create } from 'react-test-renderer';
 
-import {
-    createAccount,
-    createWallet,
-    type TestAccount,
-    type TestWallet,
-} from '../test-utils/wallet-ui-test-utils';
+import { createAccount, createWallet, type TestAccount, type TestWallet } from '../test-utils/wallet-ui-test-utils';
 import { WalletUiAccountContext } from '../wallet-ui-account-context';
 import { WalletUiContext } from '../wallet-ui-context';
 import { WalletUiContextProvider } from '../wallet-ui-context-provider';

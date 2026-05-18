@@ -8,7 +8,7 @@ import {
     useWallets,
 } from '@wallet-standard/react';
 import { createStorageAccount, SolanaCluster, StorageAccount } from '@wallet-ui/core';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { WalletUiAccountContext } from './wallet-ui-account-context';
 
@@ -48,8 +48,12 @@ export interface WalletUiAccountContextProviderProps {
  * sessions it will try to return that same wallet account, or at least one from the same brand of
  * wallet if the wallet from which it came is still in the Wallet Standard registry.
  */
-export function WalletUiAccountContextProvider({ children, cluster, storage }: WalletUiAccountContextProviderProps) {
-    storage = storage ?? createStorageAccount();
+export function WalletUiAccountContextProvider({
+    children,
+    cluster,
+    storage: providedStorage,
+}: WalletUiAccountContextProviderProps) {
+    const storage = useMemo(() => providedStorage ?? createStorageAccount(), [providedStorage]);
     const wallets = useWallets();
     const accountId = useStore(storage.value);
     const [account, setAccountInternal] = useState<UiWalletAccount | undefined>(() =>
@@ -70,35 +74,29 @@ export function WalletUiAccountContextProvider({ children, cluster, storage }: W
         [storage],
     );
 
-    useEffect(() => {
-        const savedWalletAccount = getSavedWalletAccount(wallets, accountId);
-        if (savedWalletAccount) {
-            setAccountInternal(savedWalletAccount);
-        }
-    }, [accountId, wallets]);
+    const savedWalletAccount = useMemo(() => getSavedWalletAccount(wallets, accountId), [accountId, wallets]);
+    const selectedAccount = account ?? savedWalletAccount;
     const walletAccount = useMemo(() => {
-        if (account) {
+        if (selectedAccount) {
             for (const uiWallet of wallets) {
                 for (const uiWalletAccount of uiWallet.accounts) {
-                    if (uiWalletAccountsAreSame(account, uiWalletAccount)) {
+                    if (uiWalletAccountsAreSame(selectedAccount, uiWalletAccount)) {
                         return uiWalletAccount;
                     }
                 }
-                if (uiWalletAccountBelongsToUiWallet(account, uiWallet) && uiWallet.accounts[0]) {
+                if (uiWalletAccountBelongsToUiWallet(selectedAccount, uiWallet) && uiWallet.accounts[0]) {
                     // If the selected account belongs to this connected wallet, at least, then
                     // select one of its accounts.
                     return uiWallet.accounts[0];
                 }
             }
         }
-    }, [account, wallets]);
-    useEffect(() => {
+    }, [selectedAccount, wallets]);
+    if (account && !walletAccount) {
         // If there is a selected wallet account but the wallet to which it belongs has since
         // disconnected, clear the selected wallet.
-        if (account && !walletAccount) {
-            setAccountInternal(undefined);
-        }
-    }, [account, walletAccount]);
+        setAccountInternal(undefined);
+    }
 
     const wallet = useMemo(() => {
         if (!walletAccount) {

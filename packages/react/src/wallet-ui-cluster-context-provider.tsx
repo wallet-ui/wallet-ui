@@ -8,8 +8,12 @@ import {
     WalletUiClusterContextValue,
 } from './wallet-ui-cluster-context';
 
-export function WalletUiClusterContextProvider({ clusters, render, storage }: WalletUiClusterContextProviderProps) {
-    storage = storage ?? createStorageCluster();
+export function WalletUiClusterContextProvider({
+    clusters,
+    render,
+    storage: providedStorage,
+}: WalletUiClusterContextProviderProps) {
+    const storage = useMemo(() => providedStorage ?? createStorageCluster(), [providedStorage]);
     const clusterId = useStore(storage.value);
 
     if (!clusters.length) {

@@ -4,7 +4,7 @@ import type { UiWallet, UiWalletAccount } from '@wallet-standard/react';
 import { BaseDropdownItemType } from '../base-dropdown';
 import { renderHook } from '../test-renderer';
 import { createAccount, createWallet } from '../test-utils/wallet-ui-test-utils';
-import { useWalletUiDropdown, ellipsify } from '../use-wallet-ui-dropdown';
+import { ellipsify, useWalletUiDropdown } from '../use-wallet-ui-dropdown';
 import { useWalletUiSigner } from '../use-wallet-ui-signer';
 import { useWalletUiWallet } from '../use-wallet-ui-wallet';
 
@@ -383,10 +383,10 @@ function createDropdownControl() {
 
 function stubWindowOpen(open: jest.Mock) {
     if (typeof window !== 'undefined') {
-        const spy = jest.spyOn(window, 'open').mockImplementation(((...args) => {
+        const spy = jest.spyOn(window, 'open').mockImplementation((...args) => {
             open(...args);
             return null;
-        }) as typeof window.open);
+        });
 
         return () => {
             spy.mockRestore();
@@ -429,13 +429,7 @@ function createUiWallet({
     };
 }
 
-function createUiWalletAccount({
-    address,
-    walletName,
-}: {
-    address: string;
-    walletName: string;
-}): UiWalletAccount {
+function createUiWalletAccount({ address, walletName }: { address: string; walletName: string }): UiWalletAccount {
     return createAccount({ address, walletName }) as unknown as UiWalletAccount;
 }
 

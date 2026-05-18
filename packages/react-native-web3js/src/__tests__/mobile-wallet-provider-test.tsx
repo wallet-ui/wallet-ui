@@ -2,11 +2,11 @@ import { Connection } from '@solana/web3.js';
 import { AppIdentity, Chain } from '@solana-mobile/mobile-wallet-adapter-protocol';
 import React, { type ReactNode, useContext } from 'react';
 
-import { act, renderHook } from '../test-utils/react-test-renderer';
 import { createAsyncStorageCache } from '../async-storage-cache';
 import type { Cache } from '../cache';
 import { MobileWalletProvider, MobileWalletProviderContext } from '../mobile-wallet-provider';
 import { createCache } from '../test-utils/fixtures';
+import { act, renderHook } from '../test-utils/react-test-renderer';
 import type { WalletAuthorization } from '../use-authorization';
 
 jest.mock('../async-storage-cache', () => ({
@@ -46,7 +46,9 @@ describe('MobileWalletProvider', () => {
         expect(hook.result.connection).toBeInstanceOf(Connection);
         expect(hook.result.connection.rpcEndpoint).toBe(ENDPOINT);
         expect(hook.result.identity).toBe(IDENTITY);
-        expect(hook.result.store).toEqual(expect.objectContaining({ fetch: expect.any(Function), persist: expect.any(Function) }));
+        expect(hook.result.store).toEqual(
+            expect.objectContaining({ fetch: expect.any(Function), persist: expect.any(Function) }),
+        );
     });
 
     it('creates a default cache when one is not provided', async () => {
@@ -73,11 +75,7 @@ describe('MobileWalletProvider', () => {
     });
 });
 
-function createProviderWrapper({
-    cache,
-}: {
-    cache?: Cache<WalletAuthorization | undefined>;
-}) {
+function createProviderWrapper({ cache }: { cache?: Cache<WalletAuthorization | undefined> }) {
     return function ProviderWrapper({ children }: { children: unknown }) {
         return (
             <MobileWalletProvider cache={cache} chain={CHAIN} endpoint={ENDPOINT} identity={IDENTITY}>

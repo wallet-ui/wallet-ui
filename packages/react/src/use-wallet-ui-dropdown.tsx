@@ -76,37 +76,34 @@ export function useWalletUiDropdown(): {
 
     const itemsWallets = useMemo(() => getDropdownItemsWallets({ connect, wallets }), [wallets, connect]);
 
-    const itemsConnected: BaseDropdownItem[] = useMemo(
-        () => {
-            const walletCanDisconnect =
-                isWalletFeatureAvailable(wallet, StandardConnect) && isWalletFeatureAvailable(wallet, StandardDisconnect);
+    const itemsConnected: BaseDropdownItem[] = useMemo(() => {
+        const walletCanDisconnect =
+            isWalletFeatureAvailable(wallet, StandardConnect) && isWalletFeatureAvailable(wallet, StandardDisconnect);
 
-            return [
-                {
-                    handler: async () => {
-                        copy();
-                        void (await Promise.resolve());
-                    },
-                    label: 'Copy Address',
-                    type: BaseDropdownItemType.WalletCopy,
-                    value: 'copy',
+        return [
+            {
+                handler: async () => {
+                    copy();
+                    void (await Promise.resolve());
                 },
-                {
-                    handler: async () => {
-                        disconnect();
-                        dropdown.close();
-                        await Promise.resolve();
-                    },
-                    label: 'Disconnect',
-                    type: walletCanDisconnect ? BaseDropdownItemType.WalletDisconnect : BaseDropdownItemType.Item,
-                    value: 'disconnect',
-                    wallet: walletCanDisconnect ? wallet : undefined,
+                label: 'Copy Address',
+                type: BaseDropdownItemType.WalletCopy,
+                value: 'copy',
+            },
+            {
+                handler: async () => {
+                    disconnect();
+                    dropdown.close();
+                    await Promise.resolve();
                 },
-                ...itemsWallets,
-            ];
-        },
-        [copy, disconnect, dropdown, wallet, itemsWallets],
-    );
+                label: 'Disconnect',
+                type: walletCanDisconnect ? BaseDropdownItemType.WalletDisconnect : BaseDropdownItemType.Item,
+                value: 'disconnect',
+                wallet: walletCanDisconnect ? wallet : undefined,
+            },
+            ...itemsWallets,
+        ];
+    }, [copy, disconnect, dropdown, wallet, itemsWallets]);
     const items = useMemo(() => {
         return connected ? itemsConnected : itemsWallets;
     }, [connected, itemsConnected, itemsWallets]);

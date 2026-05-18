@@ -46,9 +46,7 @@ describe('WalletUiClusterContextProvider', () => {
 
         expect(() =>
             act(() => {
-                create(
-                    <WalletUiClusterContextProvider clusters={[]} render={() => null} storage={storage} />,
-                );
+                create(<WalletUiClusterContextProvider clusters={[]} render={() => null} storage={storage} />);
             }),
         ).toThrow('No clusters provided');
     });
@@ -130,7 +128,7 @@ function renderProvider({
     let renderValue: typeof contextValue;
 
     function Probe() {
-        contextValue = useContext(WalletUiClusterContext) as typeof contextValue;
+        contextValue = useContext(WalletUiClusterContext);
         return null;
     }
 
@@ -141,7 +139,7 @@ function renderProvider({
             <WalletUiClusterContextProvider
                 clusters={clusters}
                 render={value => {
-                    renderValue = value as typeof renderValue;
+                    renderValue = value;
                     return <Probe />;
                 }}
                 storage={storage}

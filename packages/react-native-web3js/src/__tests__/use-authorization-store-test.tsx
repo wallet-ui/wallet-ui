@@ -1,6 +1,6 @@
-import { act, renderHook } from '../test-utils/react-test-renderer';
 import { createAuthorizationStore } from '../authorization-store';
 import { createCache, createExpectedAuthorization } from '../test-utils/fixtures';
+import { act, renderHook } from '../test-utils/react-test-renderer';
 import { useAuthorizationStore } from '../use-authorization-store';
 
 describe('useAuthorizationStore', () => {

@@ -1,8 +1,6 @@
 import {
     AppIdentity,
-    AuthorizeAPI,
     Chain,
-    DeauthorizeAPI,
     SignInPayload,
     SolanaMobileWalletAdapterProtocolError,
     SolanaMobileWalletAdapterProtocolErrorCode,
@@ -10,8 +8,8 @@ import {
 import { Buffer } from 'buffer';
 
 import {
-    createAuthorizedAccount,
     createAuthorizationResult,
+    createAuthorizedAccount,
     createExpectedAccount,
     createExpectedAuthorization,
     createExpectedSignInOutput,
@@ -67,7 +65,7 @@ describe('useAuthorization', () => {
             ),
         });
 
-        const selectedAccount = await authorization.authorizeSession(wallet as AuthorizeAPI);
+        const selectedAccount = await authorization.authorizeSession(wallet);
 
         expect(wallet.authorize).toHaveBeenCalledWith({
             auth_token: 'cached-auth-token',
@@ -120,7 +118,7 @@ describe('useAuthorization', () => {
                 ),
         });
 
-        await authorization.authorizeSession(wallet as AuthorizeAPI);
+        await authorization.authorizeSession(wallet);
 
         expect(wallet.authorize.mock.calls).toEqual([
             [
@@ -168,7 +166,7 @@ describe('useAuthorization', () => {
             ),
         });
 
-        const output = await authorization.authorizeSessionWithSignIn(wallet as AuthorizeAPI, signInPayload);
+        const output = await authorization.authorizeSessionWithSignIn(wallet, signInPayload);
 
         expect(wallet.authorize).toHaveBeenCalledWith({
             auth_token: 'cached-auth-token',
@@ -196,7 +194,7 @@ describe('useAuthorization', () => {
             deauthorize: jest.fn().mockResolvedValue(undefined),
         });
 
-        await authorization.deauthorizeSession(wallet as DeauthorizeAPI);
+        await authorization.deauthorizeSession(wallet);
 
         expect(wallet.deauthorize).toHaveBeenCalledWith({
             auth_token: 'cached-auth-token',

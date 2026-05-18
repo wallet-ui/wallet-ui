@@ -55,7 +55,7 @@ Install the native dependencies required by Mobile Wallet Adapter:
 
 ## Build the app
 
-Create and run a development build:
+Create and run a development build. Android supports wallet connectivity through Mobile Wallet Adapter today. iOS can build and render the provider, but wallet connection and signing methods report an unsupported state until a real iOS transport is added.
 
 <PackageManagerTabs
     npm={`npx expo run:ios
@@ -65,6 +65,8 @@ pnpm dlx expo run:android`}
     bun={`bunx expo run:ios
 bunx expo run:android`}
 />
+
+On iOS, use `isSupported` from `useMobileWallet()` to disable wallet actions.
 
 ## Create app providers
 
@@ -136,7 +138,7 @@ Add a simple connection component to confirm the provider is working.
 		import { Button, Text, View } from 'react-native';
 
     	export default function IndexScreen() {
-    	    const { account, connect, disconnect } = useMobileWallet();
+    	    const { account, connect, disconnect, isSupported } = useMobileWallet();
 
     	    const handleConnect = useCallback(async () => {
     	        await connect();
@@ -154,7 +156,7 @@ Add a simple connection component to confirm the provider is working.
     	                    <Button title="Disconnect" onPress={handleDisconnect} />
     	                </>
     	            ) : (
-    	                <Button title="Connect Wallet" onPress={handleConnect} />
+    	                <Button disabled={!isSupported} title="Connect Wallet" onPress={handleConnect} />
     	            )}
     	        </View>
     	    );
@@ -168,7 +170,7 @@ Add a simple connection component to confirm the provider is working.
     	import { Button, Text, View } from 'react-native';
 
     	export default function IndexScreen() {
-    	    const { account, connect, disconnect } = useMobileWallet();
+    	    const { account, connect, disconnect, isSupported } = useMobileWallet();
 
     	    const handleConnect = useCallback(async () => {
     	        await connect();
@@ -186,7 +188,7 @@ Add a simple connection component to confirm the provider is working.
     	                    <Button title="Disconnect" onPress={handleDisconnect} />
     	                </>
     	            ) : (
-    	                <Button title="Connect Wallet" onPress={handleConnect} />
+    	                <Button disabled={!isSupported} title="Connect Wallet" onPress={handleConnect} />
     	            )}
     	        </View>
     	    );

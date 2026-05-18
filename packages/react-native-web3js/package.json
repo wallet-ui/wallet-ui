@@ -22,6 +22,26 @@
             },
             "react-native": "./dist/index.native.mjs",
             "types": "./dist/types/index.d.ts"
+        },
+        "./android": {
+            "edge-light": {
+                "import": "./dist/android.node.mjs",
+                "require": "./dist/android.node.cjs"
+            },
+            "workerd": {
+                "import": "./dist/android.node.mjs",
+                "require": "./dist/android.node.cjs"
+            },
+            "browser": {
+                "import": "./dist/android.browser.mjs",
+                "require": "./dist/android.browser.cjs"
+            },
+            "node": {
+                "import": "./dist/android.node.mjs",
+                "require": "./dist/android.node.cjs"
+            },
+            "react-native": "./dist/android.native.mjs",
+            "types": "./dist/types/android.d.ts"
         }
     },
     "browser": {

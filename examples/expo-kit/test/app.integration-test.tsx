@@ -3,6 +3,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MobileWalletProvider } from '@wallet-ui/react-native-kit';
 import React from 'react';
+import { Platform } from 'react-native';
 import { act, create } from 'react-test-renderer';
 import HomeScreen from '@/app/index';
 import { AppConfig } from '@/constants/app-config';
@@ -27,6 +28,7 @@ describe('expo-kit app integration', () => {
         jest.spyOn(console, 'error').mockImplementation(() => {});
         jest.spyOn(console, 'log').mockImplementation(() => {});
         mockTransact.mockReset();
+        Platform.OS = 'android';
     });
 
     afterEach(() => {
@@ -108,6 +110,22 @@ describe('expo-kit app integration', () => {
         expect(findButton(renderer, 'Connect')).toBeTruthy();
         expect(hasText(renderer, 'Connected to Primary')).toBe(false);
         expect(cache.clear).toHaveBeenCalledTimes(1);
+    });
+
+    it('renders a disabled wallet connection state on iOS', async () => {
+        expect.assertions(3);
+
+        Platform.OS = 'ios';
+        const cache = createMemoryCache();
+        const client = createMockClient();
+        const wallet = createMockWallet();
+        const renderer = await renderHomeScreen({ cache, client, wallet });
+
+        await waitForCondition(() => hasText(renderer, 'Version: 2.0.0 (123)'));
+
+        expect(findButton(renderer, 'Connect')).toBeTruthy();
+        expect(findButton(renderer, 'Connect').props.disabled).toBe(true);
+        expect(mockTransact).not.toHaveBeenCalled();
     });
 
     it('rehydrates a cached connection after remount without reauthorizing', async () => {

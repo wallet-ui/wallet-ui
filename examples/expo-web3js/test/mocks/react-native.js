@@ -1,7 +1,12 @@
 const React = require('react');
 
+const Platform = {
+    OS: 'android',
+};
+
 module.exports = {
     Button: ({ disabled, onPress, title }) => React.createElement('Button', { disabled, onPress, title }, title),
+    Platform,
     StyleSheet: {
         create: styles => styles,
     },

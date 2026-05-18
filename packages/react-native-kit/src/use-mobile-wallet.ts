@@ -12,17 +12,18 @@ import {
     TransactionSendingSigner,
 } from '@solana/kit';
 import { AuthorizeAPI, SignInPayload } from '@solana-mobile/mobile-wallet-adapter-protocol';
-import { transact } from '@solana-mobile/mobile-wallet-adapter-protocol-kit';
 import { useCallback, useContext, useMemo } from 'react';
 
 import { SignInOutput } from './convert-sign-in-result';
 import { MobileWalletProviderContext } from './mobile-wallet-provider';
+import { createMobileWalletTransport } from './mobile-wallet-transport';
 import { TransactionSignatures } from './types';
 import { Account, useAuthorization } from './use-authorization';
 
 const decoder = getBase58Decoder();
 export function useMobileWallet() {
     const ctx = useContext(MobileWalletProviderContext);
+    const transport = useMemo(() => createMobileWalletTransport(), []);
     const {
         authorizeSessionWithSignIn,
         authorizeSession,
@@ -33,21 +34,21 @@ export function useMobileWallet() {
     } = useAuthorization(ctx);
 
     const connect = useCallback(
-        async (): Promise<Account> => await transact(async wallet => await authorizeSession(wallet)),
-        [authorizeSession],
+        async (): Promise<Account> => await transport.transact(async wallet => await authorizeSession(wallet)),
+        [authorizeSession, transport],
     );
 
     const connectAnd = useCallback(
         async (cb: (wallet: AuthorizeAPI) => Promise<Account | void>): Promise<Account | void> => {
-            return await transact(async wallet => await cb(wallet));
+            return await transport.transact(async wallet => await cb(wallet));
         },
-        [],
+        [transport],
     );
 
     const signIn = useCallback(
         async (signInPayload: SignInPayload): Promise<SignInOutput> =>
-            await transact(async wallet => await authorizeSessionWithSignIn(wallet, signInPayload)),
-        [authorizeSessionWithSignIn],
+            await transport.transact(async wallet => await authorizeSessionWithSignIn(wallet, signInPayload)),
+        [authorizeSessionWithSignIn, transport],
     );
 
     const disconnect = useCallback(async (): Promise<void> => await deauthorizeSessions(), [deauthorizeSessions]);
@@ -57,7 +58,7 @@ export function useMobileWallet() {
             transaction: T,
             minContextSlot: bigint,
         ): Promise<TransactionSignatures<T>> =>
-            await transact(async wallet => {
+            await transport.transact(async wallet => {
                 await authorizeSession(wallet);
                 const isTransactionsArray = Array.isArray(transaction);
                 const signatures = await wallet.signAndSendTransactions({
@@ -69,12 +70,12 @@ export function useMobileWallet() {
                     ? (signatures as TransactionSignatures<T>)
                     : (signatures[0] as TransactionSignatures<T>);
             }),
-        [authorizeSession],
+        [authorizeSession, transport],
     );
 
     const signMessages = useCallback(
         async <K extends Uint8Array | Uint8Array[]>(message: K): Promise<K> =>
-            await transact(async wallet => {
+            await transport.transact(async wallet => {
                 const authResult = await authorizeSession(wallet);
                 const payloads: Uint8Array[] = Array.isArray(message) ? message : [message];
                 const signed = await wallet.signMessages({
@@ -83,12 +84,12 @@ export function useMobileWallet() {
                 });
                 return (Array.isArray(message) ? signed : signed[0]) as K;
             }),
-        [authorizeSession],
+        [authorizeSession, transport],
     );
 
     const signTransactions = useCallback(
         async <T extends Transaction | Transaction[]>(transaction: T): Promise<T> =>
-            await transact(async wallet => {
+            await transport.transact(async wallet => {
                 await authorizeSession(wallet);
                 const signedTxs = await wallet.signTransactions({
                     transactions: Array.isArray(transaction) ? transaction : [transaction],
@@ -96,7 +97,7 @@ export function useMobileWallet() {
                 return Array.isArray(transaction) ? signedTxs : signedTxs[0];
             }),
 
-        [authorizeSession],
+        [authorizeSession, transport],
     );
 
     const getTransactionSigner = useCallback(
@@ -178,13 +179,16 @@ export function useMobileWallet() {
     return useMemo(
         () => ({
             ...ctx,
-            account: selectedAccount,
-            accounts,
+            account: transport.isSupported ? selectedAccount : undefined,
+            accounts: transport.isSupported ? accounts : [],
+            capabilities: transport.capabilities,
             connect,
             connectAnd,
             deauthorizeSession,
             disconnect,
             getTransactionSigner,
+            isSupported: transport.isSupported,
+            platform: transport.platform,
             sendTransaction,
             sendTransactions,
             signAndSendTransaction,
@@ -213,6 +217,7 @@ export function useMobileWallet() {
             signMessages,
             signTransaction,
             signTransactions,
+            transport,
         ],
     );
 }

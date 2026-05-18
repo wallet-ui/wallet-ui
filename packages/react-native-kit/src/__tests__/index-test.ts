@@ -16,12 +16,13 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 
 describe('index', () => {
     it('re-exports the local runtime surface from the barrel', () => {
-        expect.assertions(6);
+        expect.assertions(7);
 
         expect(reactNativeKit.MobileWalletProvider).toBe(MobileWalletProvider);
         expect(reactNativeKit.MobileWalletProviderContext).toBe(MobileWalletProviderContext);
         expect(reactNativeKit.convertSignInResult).toBe(convertSignInResult);
         expect(reactNativeKit.createAuthorizationStore).toBe(createAuthorizationStore);
+        expect('transact' in reactNativeKit).toBe(false);
         expect(reactNativeKit.useAuthorization).toBe(useAuthorization);
         expect(reactNativeKit.useMobileWallet).toBe(useMobileWallet);
     });

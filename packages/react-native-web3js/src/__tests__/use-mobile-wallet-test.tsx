@@ -14,6 +14,10 @@ const mockDeauthorizeSessions = jest.fn();
 const mockTransact = jest.fn();
 const mockUseAuthorization = jest.fn();
 
+const mockPlatform = {
+    OS: 'android',
+};
+
 jest.mock('@react-native-async-storage/async-storage', () => ({
     __esModule: true,
     default: {
@@ -34,6 +38,14 @@ jest.mock('react', () => {
     };
 });
 
+jest.mock(
+    'react-native',
+    () => ({
+        Platform: mockPlatform,
+    }),
+    { virtual: true },
+);
+
 jest.mock('@solana-mobile/mobile-wallet-adapter-protocol-web3js', () => ({
     transact: (...args: unknown[]) => mockTransact(...args),
 }));
@@ -48,13 +60,41 @@ describe('useMobileWallet', () => {
     });
 
     it('connects through the transport and returns the selected account', async () => {
-        expect.assertions(3);
+        expect.assertions(6);
         const { mobileWallet } = useMobileWalletTestHarness();
         const account = await mobileWallet.connect();
 
         expect(mockTransact).toHaveBeenCalledTimes(1);
         expect(mockAuthorizeSession).toHaveBeenCalledWith(expect.objectContaining({ authorize: expect.any(Function) }));
         expect(account).toEqual(createExpectedAccount({ label: 'Primary' }));
+        expect(mobileWallet.capabilities).toEqual([
+            'connect',
+            'disconnect',
+            'signAndSendTransactions',
+            'signIn',
+            'signMessages',
+            'signTransactions',
+        ]);
+        expect(mobileWallet.isSupported).toBe(true);
+        expect(mobileWallet.platform).toBe('android');
+    });
+
+    it('returns unsupported metadata and rejects wallet operations on iOS', async () => {
+        expect.assertions(8);
+        const { mobileWallet } = useMobileWalletTestHarness({
+            platform: 'ios',
+        });
+
+        expect(mobileWallet.account).toBeUndefined();
+        expect(mobileWallet.accounts).toEqual([]);
+        expect(mobileWallet.capabilities).toEqual([]);
+        expect(mobileWallet.isSupported).toBe(false);
+        expect(mobileWallet.platform).toBe('ios');
+        await expect(mobileWallet.connect()).rejects.toThrow('Mobile wallet operations are not supported on iOS.');
+        await expect(mobileWallet.signMessages(Uint8Array.from([1, 2, 3]))).rejects.toThrow(
+            'Mobile wallet operations are not supported on iOS.',
+        );
+        expect(mockTransact).not.toHaveBeenCalled();
     });
 
     it('passes the transport wallet into connectAnd callbacks', async () => {
@@ -184,11 +224,14 @@ function createTransportWallet({
 
 function useMobileWalletTestHarness({
     contextOverrides,
+    platform = 'android',
     transportWallet = createTransportWallet(),
 }: {
     contextOverrides?: Record<string, unknown>;
+    platform?: string;
     transportWallet?: ReturnType<typeof createTransportWallet>;
 } = {}) {
+    mockPlatform.OS = platform;
     currentContext = createContextValue(contextOverrides);
     resetAsyncStorageMock(AsyncStorage as unknown as Parameters<typeof resetAsyncStorageMock>[0]);
     mockAuthorizeSession.mockResolvedValue(createExpectedAccount({ label: 'Primary' }));

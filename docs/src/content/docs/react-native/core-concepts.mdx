@@ -5,7 +5,7 @@ description: Shared architecture concepts for Wallet UI React Native, with kit a
 
 import { TabItem, Tabs } from '@astrojs/starlight/components';
 
-Wallet UI is a modular React Native SDK for mobile wallet interactions. Both package variants use the same Mobile Wallet Adapter flow, while the Solana client and transaction types differ.
+Wallet UI is a modular React Native SDK for mobile wallet interactions. Both package variants use Mobile Wallet Adapter on Android, while iOS currently exposes an unsupported wallet state so apps can build and render without crashing.
 
 ## Architecture overview
 
@@ -14,7 +14,8 @@ Both React Native packages provide:
 - `MobileWalletProvider` to configure wallet access at the app boundary
 - `useMobileWallet` as the main hook for connect, disconnect, signing, and account access
 - `useAuthorization` for lower-level authorization control
-- Mobile Wallet Adapter support so the app can connect to any compatible installed wallet
+- Android Mobile Wallet Adapter support so the app can connect to compatible installed wallets
+- iOS unsupported-state metadata so apps can render disabled wallet actions until iOS wallet connectivity is implemented
 
 ## Package-specific differences
 
@@ -41,11 +42,11 @@ Both React Native packages provide:
 
 ## Mobile Wallet Adapter
 
-Mobile Wallet Adapter is the shared protocol both packages implement. It defines the secure connection between your app and a wallet for:
+Mobile Wallet Adapter is the Android wallet transport both packages use today. It defines the secure connection between your app and a wallet for:
 
 - authorizing accounts
+- signing and sending transactions
 - signing messages
 - signing transactions
-- signing and sending transactions
 
-Because both packages target the same protocol, the end-user wallet flow is the same even when the app-facing client types differ.
+On iOS, Wallet UI does not currently provide a real wallet transport. The React Native packages expose `isSupported`, `platform`, and `capabilities` from `useMobileWallet()` so apps can render gracefully instead of failing during import or provider setup.

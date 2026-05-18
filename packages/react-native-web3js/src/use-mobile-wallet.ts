@@ -3,6 +3,7 @@ import { AuthorizeAPI, SignInPayload } from '@solana-mobile/mobile-wallet-adapte
 import { transact } from '@solana-mobile/mobile-wallet-adapter-protocol-web3js';
 import { useCallback, useContext, useMemo } from 'react';
 
+import { assertValidIdentityUri } from './assert-valid-identity-uri';
 import { SignInOutput } from './convert-sign-in-result';
 import { MobileWalletProviderContext } from './mobile-wallet-provider';
 import { TransactionSignatures } from './types';
@@ -19,22 +20,25 @@ export function useMobileWallet() {
         deauthorizeSession,
     } = useAuthorization(ctx);
 
-    const connect = useCallback(
-        async (): Promise<Account> => await transact(async wallet => await authorizeSession(wallet)),
-        [authorizeSession],
-    );
+    const connect = useCallback(async (): Promise<Account> => {
+        assertValidIdentityUri(ctx.identity);
+        return await transact(async wallet => await authorizeSession(wallet));
+    }, [authorizeSession, ctx.identity]);
 
     const connectAnd = useCallback(
         async (cb: (wallet: AuthorizeAPI) => Promise<Account | void>): Promise<Account | void> => {
+            assertValidIdentityUri(ctx.identity);
             return await transact(async wallet => await cb(wallet));
         },
-        [],
+        [ctx.identity],
     );
 
     const signIn = useCallback(
-        async (signInPayload: SignInPayload): Promise<SignInOutput> =>
-            await transact(async wallet => await authorizeSessionWithSignIn(wallet, signInPayload)),
-        [authorizeSessionWithSignIn],
+        async (signInPayload: SignInPayload): Promise<SignInOutput> => {
+            assertValidIdentityUri(ctx.identity);
+            return await transact(async wallet => await authorizeSessionWithSignIn(wallet, signInPayload));
+        },
+        [authorizeSessionWithSignIn, ctx.identity],
     );
 
     const disconnect = useCallback(async (): Promise<void> => await deauthorizeSessions(), [deauthorizeSessions]);
@@ -43,8 +47,9 @@ export function useMobileWallet() {
         async <T extends Transaction | VersionedTransaction, K extends T | T[]>(
             transaction: K,
             minContextSlot: number,
-        ): Promise<TransactionSignatures<K>> =>
-            await transact(async wallet => {
+        ): Promise<TransactionSignatures<K>> => {
+            assertValidIdentityUri(ctx.identity);
+            return await transact(async wallet => {
                 await authorizeSession(wallet);
 
                 const isTransactionsArray = Array.isArray(transaction);
@@ -57,13 +62,15 @@ export function useMobileWallet() {
                 return isTransactionsArray
                     ? (signatures as TransactionSignatures<K>)
                     : (signatures[0] as TransactionSignatures<K>);
-            }),
-        [authorizeSession],
+            });
+        },
+        [authorizeSession, ctx.identity],
     );
 
     const signMessages = useCallback(
-        async <K extends Uint8Array | Uint8Array[]>(message: K): Promise<K> =>
-            await transact(async wallet => {
+        async <K extends Uint8Array | Uint8Array[]>(message: K): Promise<K> => {
+            assertValidIdentityUri(ctx.identity);
+            return await transact(async wallet => {
                 const authResult = await authorizeSession(wallet);
                 const payloads: Uint8Array[] = Array.isArray(message) ? message : [message];
                 const signed = await wallet.signMessages({
@@ -71,21 +78,24 @@ export function useMobileWallet() {
                     payloads,
                 });
                 return (Array.isArray(message) ? signed : signed[0]) as K;
-            }),
-        [authorizeSession],
+            });
+        },
+        [authorizeSession, ctx.identity],
     );
 
     const signTransactions = useCallback(
-        async <T extends Transaction | VersionedTransaction, K extends T | T[]>(transaction: K): Promise<K> =>
-            await transact(async wallet => {
+        async <T extends Transaction | VersionedTransaction, K extends T | T[]>(transaction: K): Promise<K> => {
+            assertValidIdentityUri(ctx.identity);
+            return await transact(async wallet => {
                 await authorizeSession(wallet);
                 const signedTxs = await wallet.signTransactions({
                     transactions: Array.isArray(transaction) ? transaction : [transaction],
                 });
                 return Array.isArray(transaction) ? signedTxs : signedTxs[0];
-            }),
+            });
+        },
 
-        [authorizeSession],
+        [authorizeSession, ctx.identity],
     );
 
     /** @deprecated Use signAndSendTransactions instead. */

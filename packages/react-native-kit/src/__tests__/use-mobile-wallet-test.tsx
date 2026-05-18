@@ -85,6 +85,42 @@ describe('useMobileWallet', () => {
         expect(result).toBe('connected-via-callback');
     });
 
+    it('rejects invalid identity URI schemes before launching the wallet transport', async () => {
+        expect.assertions(2);
+        const { mobileWallet } = useMobileWalletTestHarness({
+            contextOverrides: {
+                identity: {
+                    name: 'My App',
+                    uri: 'my_app://my-app',
+                },
+            },
+        });
+
+        await expect(mobileWallet.connect()).rejects.toThrow('Invalid Mobile Wallet Adapter identity.uri');
+
+        expect(mockTransact).not.toHaveBeenCalled();
+    });
+
+    it('signs in through the transport wallet', async () => {
+        expect.assertions(3);
+        const signInPayload = {
+            domain: 'wallet-ui.dev',
+            statement: 'Sign in to Wallet UI',
+        };
+        const transportWallet = createTransportWallet();
+        const { mobileWallet } = useMobileWalletTestHarness({ transportWallet });
+
+        const result = await mobileWallet.signIn(signInPayload);
+
+        expect(mockTransact).toHaveBeenCalledTimes(1);
+        expect(mockAuthorizeSessionWithSignIn).toHaveBeenCalledWith(transportWallet, signInPayload);
+        expect(result).toEqual({
+            account: createExpectedAccount({ label: 'Primary' }),
+            signature: Uint8Array.from([1, 2, 3]),
+            signedMessage: Uint8Array.from([4, 5, 6]),
+        });
+    });
+
     it('signs messages with the authorized address', async () => {
         expect.assertions(3);
         const signedMessage = Uint8Array.from([9, 9, 9]);

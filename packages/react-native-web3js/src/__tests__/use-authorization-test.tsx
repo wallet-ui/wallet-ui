@@ -1,5 +1,6 @@
 import {
     AppIdentity,
+    AuthorizeAPI,
     Chain,
     SignInPayload,
     SolanaMobileWalletAdapterProtocolError,
@@ -210,6 +211,23 @@ describe('useAuthorization', () => {
 
         expect(persist).toHaveBeenCalledWith(null);
     });
+
+    it('rejects invalid identity URI schemes before authorizing', async () => {
+        expect.assertions(2);
+        const wallet = createWallet();
+        const { authorization } = useAuthorizationTestHarness({
+            identity: {
+                name: 'My App',
+                uri: 'my_app://my-app',
+            },
+        });
+
+        await expect(authorization.authorizeSession(wallet as AuthorizeAPI)).rejects.toThrow(
+            'Invalid Mobile Wallet Adapter identity.uri',
+        );
+
+        expect(wallet.authorize).not.toHaveBeenCalled();
+    });
 });
 
 function createWallet({
@@ -229,7 +247,7 @@ function lastPersistedAuthorization(persist: jest.Mock): WalletAuthorization {
     return persist.mock.calls.at(-1)?.[0] as WalletAuthorization;
 }
 
-function useAuthorizationTestHarness() {
+function useAuthorizationTestHarness({ identity = IDENTITY }: { identity?: AppIdentity } = {}) {
     const persist = jest.fn().mockResolvedValue(undefined);
 
     mockUseAuthorizationStore.mockReturnValue({
@@ -240,7 +258,7 @@ function useAuthorizationTestHarness() {
     });
 
     return {
-        authorization: useAuthorization({ chain: CHAIN, identity: IDENTITY, store: {} as never }),
+        authorization: useAuthorization({ chain: CHAIN, identity, store: {} as never }),
         persist,
     };
 }

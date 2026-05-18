@@ -14,6 +14,7 @@ import {
 import { WalletIcon } from '@wallet-standard/core';
 import { useCallback, useMemo } from 'react';
 
+import { assertValidIdentityUri } from './assert-valid-identity-uri';
 import { AuthorizationStore } from './authorization-store';
 import { Cache } from './cache';
 import { convertSignInResult, SignInOutput } from './convert-sign-in-result';
@@ -55,6 +56,7 @@ export function useAuthorization({ chain, identity, store }: WalletAuthorization
 
     const authorizeSession = useCallback(
         async (wallet: AuthorizeAPI) => {
+            assertValidIdentityUri(identity);
             try {
                 const authorizationResult = await wallet.authorize({
                     auth_token: authToken,
@@ -81,6 +83,7 @@ export function useAuthorization({ chain, identity, store }: WalletAuthorization
 
     const authorizeSessionWithSignIn = useCallback(
         async (wallet: AuthorizeAPI, signInPayload: SignInPayload): Promise<SignInOutput> => {
+            assertValidIdentityUri(identity);
             try {
                 const result = await wallet.authorize({
                     auth_token: authToken,

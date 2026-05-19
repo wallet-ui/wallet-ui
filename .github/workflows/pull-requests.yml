@@ -53,7 +53,9 @@ jobs:
       - name: Test Expo Examples
         run: |
           pnpm --dir examples/expo-kit test
+          pnpm --dir examples/expo-kit test:live-with-test-validator
           pnpm --dir examples/expo-web3js test
+          pnpm --dir examples/expo-web3js test:live-with-test-validator
 
       - name: Smoke Test Expo Native Entries
         run: pnpm test:examples:native-entry

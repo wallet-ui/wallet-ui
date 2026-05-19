@@ -15,6 +15,7 @@
         "test": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} test:unit:browser test:unit:node && pnpm test:examples",
         "test:coverage:packages": "node ./scripts/test-coverage-published-packages.mjs",
         "test:examples": "pnpm --dir examples/expo-kit test && pnpm --dir examples/expo-web3js test",
+        "test:examples:live-with-test-validator": "pnpm --dir examples/expo-kit test:live-with-test-validator && pnpm --dir examples/expo-web3js test:live-with-test-validator",
         "test:examples:native-entry": "pnpm --dir examples/expo-kit test:native-entry && pnpm --dir examples/expo-web3js test:native-entry",
         "test:live-with-test-validator": "turbo run --concurrency=${TURBO_CONCURRENCY:-95.84%} test:live-with-test-validator",
         "test:live-with-test-validator:setup": "./scripts/setup-test-validator.sh"

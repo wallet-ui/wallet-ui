@@ -243,7 +243,7 @@ importers:
         version: 56.0.11(expo@56.0.4)(react-native@0.85.3(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.3)(utf-8-validate@5.0.10))(react@19.2.3)
       expo-router:
         specifier: ~56.2.6
-        version: 56.2.6(2b4fa4b572a69e9fe7d4b294afebc8c6)
+        version: 56.2.6(46882609c370208ea0f5a85c7b13c846)
       expo-splash-screen:
         specifier: ~56.0.10
         version: 56.0.10(expo@56.0.4)(typescript@6.0.3)
@@ -307,7 +307,7 @@ importers:
         version: 56.0.4(eslint@9.39.4(jiti@2.6.1))(typescript@6.0.3)
       jest:
         specifier: ^29.7.0
-        version: 29.7.0(@types/node@24.10.1)(ts-node@10.9.2(@swc/core@1.13.5(@swc/helpers@0.5.18))(@types/node@24.10.1)(typescript@6.0.3))
+        version: 29.7.0(@types/node@25.3.1)(ts-node@10.9.2(@swc/core@1.13.5(@swc/helpers@0.5.18))(@types/node@25.3.1)(typescript@6.0.3))
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
@@ -376,7 +376,7 @@ importers:
         version: 56.0.11(expo@56.0.4)(react-native@0.85.3(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.3)(utf-8-validate@5.0.10))(react@19.2.3)
       expo-router:
         specifier: ~56.2.6
-        version: 56.2.6(8df1e21844e7e1a16364db06355f3e55)
+        version: 56.2.6(431dad7cc1453cc5c7f2fb16a65a7883)
       expo-splash-screen:
         specifier: ~56.0.10
         version: 56.0.10(expo@56.0.4)(typescript@6.0.3)
@@ -437,7 +437,7 @@ importers:
         version: 56.0.4(eslint@9.39.4(jiti@2.6.1))(typescript@6.0.3)
       jest:
         specifier: ^29.7.0
-        version: 29.7.0(@types/node@25.3.1)(ts-node@10.9.2(@swc/core@1.13.5(@swc/helpers@0.5.18))(@types/node@25.3.1)(typescript@6.0.3))
+        version: 29.7.0(@types/node@24.10.1)(ts-node@10.9.2(@swc/core@1.13.5(@swc/helpers@0.5.18))(@types/node@24.10.1)(typescript@6.0.3))
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
@@ -892,7 +892,7 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.3)(utf-8-validate@5.0.10)
       '@solana/react':
-        specifier: 6.1.0
+        specifier: ^6.1.0
         version: 6.1.0(fastestsmallesttextencoderdecoder@1.0.22)(react-dom@19.2.3(react@19.1.0))(react@19.1.0)(typescript@6.0.3)
       '@solana/wallet-standard-features':
         specifier: 1.3.0
@@ -10337,15 +10337,15 @@ packages:
       '@types/react':
         optional: true
 
-  react-test-renderer@19.2.3:
-    resolution: {integrity: sha512-TMR1LnSFiWZMJkCgNf5ATSvAheTT2NvKIwiVwdBPHxjBI7n/JbWd4gaZ16DVd9foAXdvDz+sB5yxZTwMjPRxpw==}
-    peerDependencies:
-      react: ^19.2.3
-
   react-test-renderer@19.2.1:
     resolution: {integrity: sha512-xsyf515ij+d8Rs/tsDZSJYXn+GdYO/IOw9BVFtjJbrrFR+dL1yZQQN1ChxY6otYAsCeAHhU0XsKyJUzP6omyvQ==}
     peerDependencies:
       react: ^19.2.1
+
+  react-test-renderer@19.2.3:
+    resolution: {integrity: sha512-TMR1LnSFiWZMJkCgNf5ATSvAheTT2NvKIwiVwdBPHxjBI7n/JbWd4gaZ16DVd9foAXdvDz+sB5yxZTwMjPRxpw==}
+    peerDependencies:
+      react: ^19.2.3
 
   react@19.1.0:
     resolution: {integrity: sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==}
@@ -13901,7 +13901,7 @@ snapshots:
       ws: 8.19.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       zod: 3.25.76
     optionalDependencies:
-      expo-router: 56.2.6(2b4fa4b572a69e9fe7d4b294afebc8c6)
+      expo-router: 56.2.6(431dad7cc1453cc5c7f2fb16a65a7883)
       react-native: 0.85.3(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.3)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - '@expo/dom-webview'
@@ -14179,7 +14179,7 @@ snapshots:
       react: 19.2.3
     optionalDependencies:
       '@expo/metro-runtime': 56.0.12(@expo/log-box@56.0.12)(expo@56.0.4)(react-dom@19.2.3(react@19.2.3))(react-native@0.85.3(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.3)(utf-8-validate@5.0.10))(react@19.2.3)
-      expo-router: 56.2.6(2b4fa4b572a69e9fe7d4b294afebc8c6)
+      expo-router: 56.2.6(431dad7cc1453cc5c7f2fb16a65a7883)
       react-dom: 19.2.3(react@19.2.3)
     transitivePeerDependencies:
       - supports-color
@@ -20493,7 +20493,7 @@ snapshots:
     dependencies:
       react-native: 0.85.3(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.3)(utf-8-validate@5.0.10)
 
-  expo-router@56.2.6(2b4fa4b572a69e9fe7d4b294afebc8c6):
+  expo-router@56.2.6(431dad7cc1453cc5c7f2fb16a65a7883):
     dependencies:
       '@expo/log-box': 56.0.12(@expo/dom-webview@56.0.5)(expo@56.0.4)(react-native@0.85.3(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.3)(utf-8-validate@5.0.10))(react@19.2.3)
       '@expo/metro-runtime': 56.0.12(@expo/log-box@56.0.12)(expo@56.0.4)(react-dom@19.2.3(react@19.2.3))(react-native@0.85.3(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.3)(utf-8-validate@5.0.10))(react@19.2.3)
@@ -20544,7 +20544,7 @@ snapshots:
       - react-native-worklets
       - supports-color
 
-  expo-router@56.2.6(8df1e21844e7e1a16364db06355f3e55):
+  expo-router@56.2.6(46882609c370208ea0f5a85c7b13c846):
     dependencies:
       '@expo/log-box': 56.0.12(@expo/dom-webview@56.0.5)(expo@56.0.4)(react-native@0.85.3(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.3)(utf-8-validate@5.0.10))(react@19.2.3)
       '@expo/metro-runtime': 56.0.12(@expo/log-box@56.0.12)(expo@56.0.4)(react-dom@19.2.3(react@19.2.3))(react-native@0.85.3(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.3)(utf-8-validate@5.0.10))(react@19.2.3)
@@ -24852,12 +24852,6 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.2.7
 
-  react-test-renderer@19.2.3(react@19.2.3):
-    dependencies:
-      react: 19.2.3
-      react-is: 19.2.6
-      scheduler: 0.27.0
-
   react-test-renderer@19.2.1(react@19.1.0):
     dependencies:
       react: 19.1.0
@@ -24868,6 +24862,12 @@ snapshots:
     dependencies:
       react: 19.2.1
       react-is: 19.2.1
+      scheduler: 0.27.0
+
+  react-test-renderer@19.2.3(react@19.2.3):
+    dependencies:
+      react: 19.2.3
+      react-is: 19.2.6
       scheduler: 0.27.0
 
   react@19.1.0: {}

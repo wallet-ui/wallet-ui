@@ -1,4 +1,4 @@
 {
-    "include": ["eslint.config.mjs"],
+    "files": [],
     "references": [{ "path": "packages/**" }]
 }

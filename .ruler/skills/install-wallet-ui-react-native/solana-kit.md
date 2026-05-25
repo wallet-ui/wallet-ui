@@ -1,4 +1,4 @@
---- 
+---
 name: install-wallet-ui-react-native-kit
 description: Use when setting up @wallet-ui/react-native-kit (modern @solana/kit) in a new or existing Expo application.
 ---
@@ -19,6 +19,7 @@ This skill guides the installation and configuration of `@wallet-ui/react-native
 ### 1. Detect Package Manager & Install Dependencies
 
 Check which lockfile exists in your project root to determine the package manager:
+
 - `bun.lockb` or `bun.lock`: Use **Bun**
 - `package-lock.json`: Use **npm**
 - `yarn.lock`: Use **Yarn**
@@ -27,6 +28,7 @@ Check which lockfile exists in your project root to determine the package manage
 Install the core SDK and required polyfills using the detected package manager.
 
 **For Bun:**
+
 ```bash
 bun add @wallet-ui/react-native-kit \
   react-native-quick-crypto \
@@ -35,6 +37,7 @@ bun add @wallet-ui/react-native-kit \
 ```
 
 **For npm:**
+
 ```bash
 npm install @wallet-ui/react-native-kit \
   react-native-quick-crypto \
@@ -43,6 +46,7 @@ npm install @wallet-ui/react-native-kit \
 ```
 
 **For Yarn:**
+
 ```bash
 yarn add @wallet-ui/react-native-kit \
   react-native-quick-crypto \
@@ -51,6 +55,7 @@ yarn add @wallet-ui/react-native-kit \
 ```
 
 **For pnpm:**
+
 ```bash
 pnpm add @wallet-ui/react-native-kit \
   react-native-quick-crypto \
@@ -90,11 +95,11 @@ Point the `main` entry to your new `index.js` instead of the default Expo entry.
 
 ```json
 {
-  "main": "./index.js",
-  "scripts": {
-    "android": "expo run:android",
-    "ios": "expo run:ios"
-  }
+    "main": "./index.js",
+    "scripts": {
+        "android": "expo run:android",
+        "ios": "expo run:ios"
+    }
 }
 ```
 
@@ -162,11 +167,11 @@ export function SignMessageButton() {
 
     const handleSign = async () => {
         try {
-            const message = "Verify this message";
+            const message = 'Verify this message';
             const messageBytes = new TextEncoder().encode(message);
             const signature = await signMessage(messageBytes);
             // Signature is a Uint8Array
-            console.log('Signed:', signature); 
+            console.log('Signed:', signature);
             setStatus('Message signed successfully!');
         } catch (error) {
             console.error('Signing failed:', error);
@@ -238,15 +243,12 @@ export function SendTransactionButton() {
     const handleSend = async () => {
         try {
             // 1. Create instructions (example using memo program)
-            const instructions: Instruction[] = [
-                getAddMemoInstruction({ memo: 'Hello from Mobile Wallet Adapter' }),
-            ];
+            const instructions: Instruction[] = [getAddMemoInstruction({ memo: 'Hello from Mobile Wallet Adapter' })];
 
             // 2. Send transaction (handles blockhash, signing, and sending)
             const signature = await sendTransaction(instructions);
-            
-            console.log('Transaction sent. Signature:', signature);
 
+            console.log('Transaction sent. Signature:', signature);
         } catch (error) {
             console.error('Transaction failed:', error);
         }
@@ -258,17 +260,17 @@ export function SendTransactionButton() {
 
 ## Common Issues & Fixes
 
-1.  **"Crypto not found"**: 
-    -   Ensure `polyfill.js` is imported at the VERY TOP of `index.js`.
-    -   Ensure `package.json` points to `index.js`.
+1.  **"Crypto not found"**:
+    - Ensure `polyfill.js` is imported at the VERY TOP of `index.js`.
+    - Ensure `package.json` points to `index.js`.
 
 2.  **Build Failures**:
-    -   Ensure `expo-dev-client` is installed.
-    -   Re-run `npx expo run:android` or `npx expo run:ios` to rebuild the native app after adding native dependencies like `react-native-quick-crypto`.
+    - Ensure `expo-dev-client` is installed.
+    - Re-run `npx expo run:android` or `npx expo run:ios` to rebuild the native app after adding native dependencies like `react-native-quick-crypto`.
 
 3.  **Wallet not connecting**:
-    -   Ensure a compatible wallet (e.g., Phantom, Solflare) is installed on the simulator/device.
+    - Ensure a compatible wallet (e.g., Phantom, Solflare) is installed on the simulator/device.
 
 4.  **"SolanaMobileWalletAdapterProtocolError: -32602"**:
-    -   This occurs if `identity.icon` is set to an absolute URL (e.g., `https://...`).
-    -   **Fix**: Ensure `identity.icon` is a relative path (e.g., `/icon.png`) relative to your `identity.uri`.
+    - This occurs if `identity.icon` is set to an absolute URL (e.g., `https://...`).
+    - **Fix**: Ensure `identity.icon` is a relative path (e.g., `/icon.png`) relative to your `identity.uri`.

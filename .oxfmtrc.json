@@ -1,0 +1,48 @@
+{
+    "$schema": "./node_modules/oxfmt/configuration_schema.json",
+    "arrowParens": "avoid",
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "ignorePatterns": [
+        ".changeset/",
+        ".github/workflows/PULL_REQUEST_TEMPLATE.md",
+        ".ruler/",
+        "declarations/",
+        "dist/",
+        "doc/",
+        "lib/",
+        "pnpm-lock.yaml",
+        "pnpm-workspace.yaml"
+    ],
+    "jsxSingleQuote": false,
+    "overrides": [
+        {
+            "files": ["**/*.yaml", "**/*.yml"],
+            "options": {
+                "tabWidth": 2
+            }
+        },
+        {
+            "files": [
+                "examples/expo-kit/app.json",
+                "examples/expo-kit/tsconfig.json",
+                "examples/expo-web3js/app.json",
+                "examples/expo-web3js/package.json",
+                "examples/expo-web3js/tsconfig.json",
+                "packages/test-config/package.json",
+                "packages/test-matchers/package.json",
+                "packages/tsconfig/package.json"
+            ],
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ],
+    "printWidth": 120,
+    "quoteProps": "as-needed",
+    "semi": true,
+    "singleQuote": true,
+    "sortPackageJson": false,
+    "tabWidth": 4,
+    "useTabs": false
+}

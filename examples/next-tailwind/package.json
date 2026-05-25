@@ -6,9 +6,7 @@
         "build": "next build",
         "compile:js": "next build",
         "dev": "next dev",
-        "lint": "eslint src",
-        "start": "next start",
-        "style:fix": "pnpm eslint --fix src && pnpm prettier --log-level warn --ignore-unknown --write ./*"
+        "start": "next start"
     },
     "dependencies": {
         "@tanstack/react-query": "^5.100.1",
@@ -18,7 +16,6 @@
         "react-dom": "^19.1.4"
     },
     "devDependencies": {
-        "@eslint/eslintrc": "^3.3.5",
         "@tailwindcss/postcss": "^4.2.2",
         "@types/node": "^24.10.1",
         "@types/react": "^19.1.17",
@@ -26,8 +23,6 @@
         "@wallet-ui/playground-react": "workspace:*",
         "@wallet-ui/react": "workspace:*",
         "@wallet-ui/tailwind": "workspace:*",
-        "eslint": "^9.39.4",
-        "eslint-config-next": "16.2.2",
         "tailwindcss": "^4.2.2",
         "typescript": "^6.0.3"
     }

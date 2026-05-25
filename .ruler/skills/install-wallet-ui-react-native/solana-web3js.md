@@ -21,6 +21,7 @@ This skill guides the installation and configuration of `@wallet-ui/react-native
 ### 1. Detect Package Manager & Install Dependencies
 
 Check which lockfile exists in your project root to determine the package manager:
+
 - `bun.lockb` or `bun.lock`: Use **Bun**
 - `package-lock.json`: Use **npm**
 - `yarn.lock`: Use **Yarn**
@@ -29,6 +30,7 @@ Check which lockfile exists in your project root to determine the package manage
 Install the core SDK and required polyfills using the detected package manager.
 
 **For Bun:**
+
 ```bash
 bun add @wallet-ui/react-native-web3js \
   react-native-quick-crypto \
@@ -37,6 +39,7 @@ bun add @wallet-ui/react-native-web3js \
 ```
 
 **For npm:**
+
 ```bash
 npm install @wallet-ui/react-native-web3js \
   react-native-quick-crypto \
@@ -45,6 +48,7 @@ npm install @wallet-ui/react-native-web3js \
 ```
 
 **For Yarn:**
+
 ```bash
 yarn add @wallet-ui/react-native-web3js \
   react-native-quick-crypto \
@@ -53,6 +57,7 @@ yarn add @wallet-ui/react-native-web3js \
 ```
 
 **For pnpm:**
+
 ```bash
 pnpm add @wallet-ui/react-native-web3js \
   react-native-quick-crypto \
@@ -92,11 +97,11 @@ Point the `main` entry to your new `index.js` instead of the default Expo entry.
 
 ```json
 {
-  "main": "./index.js",
-  "scripts": {
-    "android": "expo run:android",
-    "ios": "expo run:ios"
-  }
+    "main": "./index.js",
+    "scripts": {
+        "android": "expo run:android",
+        "ios": "expo run:ios"
+    }
 }
 ```
 
@@ -164,7 +169,7 @@ export function SignMessageButton() {
 
     const handleSign = async () => {
         try {
-            const message = "Verify this message";
+            const message = 'Verify this message';
             const messageBytes = new TextEncoder().encode(message);
             const signature = await signMessage(messageBytes);
             console.log('Signed:', Buffer.from(signature).toString('base64'));
@@ -178,6 +183,7 @@ export function SignMessageButton() {
 ```
 
 **Encoding Reference:**
+
 - `new TextEncoder().encode(str)` - converts plain string → Uint8Array (UTF-8 bytes)
 - `toUint8Array(base64Str)` - decodes base64 string → Uint8Array
 
@@ -217,6 +223,7 @@ export function SignInButton() {
 ```
 
 **SignInPayload Options:**
+
 - `domain` - Your app\'s domain (required for verification)
 - `statement` - Human-readable message shown to user
 - `uri` - URI of your app
@@ -241,28 +248,29 @@ export function SendTransactionButton() {
         if (!account) return;
 
         try {
-            const { context: { slot: minContextSlot }, value: { blockhash, lastValidBlockHeight } } = 
-                await connection.getLatestBlockhashAndContext();
+            const {
+                context: { slot: minContextSlot },
+                value: { blockhash, lastValidBlockHeight },
+            } = await connection.getLatestBlockhashAndContext();
 
             const transaction = new Transaction({
                 feePayer: account.publicKey,
                 blockhash,
-                lastValidBlockHeight
+                lastValidBlockHeight,
             }).add(
                 SystemProgram.transfer({
                     fromPubkey: account.publicKey,
-                    toPubkey: new PublicKey("AhgC8gYtC9A6pWfH7gYtC9A6pWfH7gYtC9A6pWfH7gY"), // Example dest
+                    toPubkey: new PublicKey('AhgC8gYtC9A6pWfH7gYtC9A6pWfH7gYtC9A6pWfH7gY'), // Example dest
                     lamports: 1000,
-                })
+                }),
             );
 
             const signature = await signAndSendTransaction(transaction, minContextSlot);
             console.log('Transaction sent:', signature);
-            
+
             // Optional: Wait for confirmation
             await connection.confirmTransaction({ signature, blockhash, lastValidBlockHeight });
             console.log('Transaction confirmed');
-
         } catch (error) {
             console.error('Transaction failed:', error);
         }
@@ -274,26 +282,26 @@ export function SendTransactionButton() {
 
 ## Common Issues & Fixes
 
-1.  **"Crypto not found" / "Buffer is not defined"**: 
-    -   Ensure `polyfill.js` is imported at the VERY TOP of `index.js`.
-    -   Ensure `package.json` points to `index.js`.
+1.  **"Crypto not found" / "Buffer is not defined"**:
+    - Ensure `polyfill.js` is imported at the VERY TOP of `index.js`.
+    - Ensure `package.json` points to `index.js`.
 
 2.  **"input is not valid base64 encoded data"** (when signing messages):
-    -   You\'re using `toUint8Array()` with a plain string. That helper expects base64 input.
-    -   **Fix**: Use `new TextEncoder().encode(message)` for plain text messages.
+    - You\'re using `toUint8Array()` with a plain string. That helper expects base64 input.
+    - **Fix**: Use `new TextEncoder().encode(message)` for plain text messages.
 
 3.  **Build Failures**:
-    -   Ensure `expo-dev-client` is installed.
-    -   Re-run `npx expo run:android` or `npx expo run:ios` to rebuild the native app after adding native dependencies like `react-native-quick-crypto`.
+    - Ensure `expo-dev-client` is installed.
+    - Re-run `npx expo run:android` or `npx expo run:ios` to rebuild the native app after adding native dependencies like `react-native-quick-crypto`.
 
 4.  **Wallet not connecting**:
-    -   Ensure a compatible wallet (e.g., Phantom, Solflare) is installed on the simulator/device.
-    -   Ensure the scheme in `app.json` allows deep linking (though MWA usually handles this via intent/universal links).
+    - Ensure a compatible wallet (e.g., Phantom, Solflare) is installed on the simulator/device.
+    - Ensure the scheme in `app.json` allows deep linking (though MWA usually handles this via intent/universal links).
 
 5.  **"Objects are not valid as a React child"**:
-    -   This usually happens when trying to render a `PublicKey` object (like `account.address`) directly in a `Text` component.
-    -   **Fix**: Call `.toString()` or `.toBase58()` on the object (e.g., `{account.address.toString()}`).
+    - This usually happens when trying to render a `PublicKey` object (like `account.address`) directly in a `Text` component.
+    - **Fix**: Call `.toString()` or `.toBase58()` on the object (e.g., `{account.address.toString()}`).
 
 6.  **"SolanaMobileWalletAdapterProtocolError: -32602"**:
-    -   This occurs if `identity.icon` is set to an absolute URL (e.g., `https://...`).
-    -   **Fix**: Ensure `identity.icon` is a relative path (e.g., `/icon.png`) relative to your `identity.uri`, or remove the icon property entirely during development.
+    - This occurs if `identity.icon` is set to an absolute URL (e.g., `https://...`).
+    - **Fix**: Ensure `identity.icon` is a relative path (e.g., `/icon.png`) relative to your `identity.uri`, or remove the icon property entirely during development.

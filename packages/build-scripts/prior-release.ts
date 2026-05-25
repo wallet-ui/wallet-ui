@@ -1,5 +1,4 @@
 import { RestEndpointMethodTypes } from '@octokit/rest';
-import minimist from 'minimist';
 
 import { ORG_NAME, REPO_NAME, SEMVER_REGEX } from './constants.js';
 import { getGitHubApi } from './github-api.js';
@@ -14,10 +13,6 @@ function cmpVersions(a: string, b: string): number {
     }
     return semverPartsA.length - semverPartsB.length;
 }
-
-const config = minimist(process.argv.slice(2), {
-    boolean: 'dry-run',
-});
 
 const api = getGitHubApi();
 
@@ -55,7 +50,7 @@ export async function getPriorRelease(version: string): Promise<{
             priorRelease = release;
         }
     });
-    const makeLatest = releases.every(release => {
+    const makeLatest = releases.every(() => {
         return cmpVersions('v2.0.0'.replace(/^v/, ''), version.replace(/^v/, '')) <= 0;
     });
     return {

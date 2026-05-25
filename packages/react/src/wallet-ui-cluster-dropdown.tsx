@@ -4,8 +4,10 @@ import { BaseDropdown, BaseDropdownItemType, BaseDropdownProps } from './base-dr
 import { useBaseDropdown } from './use-base-dropdown';
 import { useWalletUiCluster } from './use-wallet-ui-cluster';
 
-export interface WalletUiClusterDropdownProps
-    extends Omit<BaseDropdownProps, 'buttonProps' | 'dropdown' | 'items' | 'label'> {
+export interface WalletUiClusterDropdownProps extends Omit<
+    BaseDropdownProps,
+    'buttonProps' | 'dropdown' | 'items' | 'label'
+> {
     buttonProps?: Partial<BaseDropdownProps['buttonProps']>;
 }
 

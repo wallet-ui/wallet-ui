@@ -60,11 +60,6 @@ jobs:
       - name: Smoke Test Expo Native Entries
         run: pnpm test:examples:native-entry
 
-      - name: Lint Expo Examples
-        run: |
-          pnpm --dir examples/expo-kit lint
-          pnpm --dir examples/expo-web3js lint
-
       - name: Stop Test Validator
         if: always() && steps.start-test-validator.outcome == 'success'
         run: kill ${{ steps.start-test-validator.outputs.pid }}

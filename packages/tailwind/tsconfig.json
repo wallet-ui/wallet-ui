@@ -6,5 +6,5 @@
     },
     "display": "@wallet-ui/tailwind",
     "extends": "../tsconfig/base.json",
-    "include": ["./eslint.config.mjs", "src"]
+    "include": ["src"]
 }

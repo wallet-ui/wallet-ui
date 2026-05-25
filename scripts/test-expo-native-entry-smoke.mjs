@@ -28,7 +28,7 @@ if (!existsSync(nativeEntryPath) || !existsSync(nodeEntryPath)) {
             `Expected ${nativeEntryPath} and ${nodeEntryPath}.`,
             'Run `pnpm build` from the repository root first.',
             'This is a workspace build prerequisite failure, not a native-entry regression.',
-        ].join('\n')
+        ].join('\n'),
     );
 }
 
@@ -39,7 +39,7 @@ const exportResult = spawnSync(
     {
         cwd: exampleDir,
         stdio: 'inherit',
-    }
+    },
 );
 
 if (exportResult.status !== 0) {
@@ -66,7 +66,7 @@ if (distSources.some(sourcePath => sourcePath.includes(nodeEntrySuffix))) {
         [
             `Expected ${packageName} to resolve its native entrypoint while bundling ${exampleName}.`,
             `Found the Node bundle in the Expo iOS source map: ${nodeEntrySuffix}`,
-        ].join('\n')
+        ].join('\n'),
     );
 }
 
@@ -76,7 +76,7 @@ if (!distSources.some(sourcePath => sourcePath.includes(nativeEntrySuffix))) {
             `Expected ${packageName} to resolve ${nativeEntrySuffix} while bundling ${exampleName}.`,
             'Resolved dist sources:',
             distSources.length > 0 ? distSources.join('\n') : '(none)',
-        ].join('\n')
+        ].join('\n'),
     );
 }
 

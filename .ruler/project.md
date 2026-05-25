@@ -11,6 +11,7 @@ This repository is a monorepo containing the source code for the `wallet-ui` lib
 ## Directory Structure
 
 ### `@packages/**`
+
 These directories contain the core libraries that are published to npm. They are the source code of the `wallet-ui` ecosystem.
 
 - **`@wallet-ui/core`**: Framework-agnostic core logic, state management (using `nanostores`), and utilities.
@@ -21,6 +22,7 @@ These directories contain the core libraries that are published to npm. They are
 - **`@wallet-ui/playground-react`**: A collection of playground components used for testing and demonstrating functionality within the examples.
 
 ### `@examples/**`
+
 These directories contain example applications demonstrating how to consume the `@packages` in different environments. They are **not** published to npm.
 
 - **`expo-web3js`**: A React Native Expo application using `@wallet-ui/react-native-web3js`.
@@ -71,7 +73,8 @@ Run these commands from the root directory:
 ### Running Examples
 
 To run a specific example:
+
 1. Navigate to the example directory (e.g., `cd examples/react-app`).
 2. Run `pnpm start` (or `pnpm dev` depending on the example's package.json).
 
-*Note: Most examples expect a local Solana validator running if configured for localnet.*
+_Note: Most examples expect a local Solana validator running if configured for localnet._

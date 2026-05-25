@@ -8,8 +8,6 @@
             "dependsOn": [
                 "compile:js",
                 "compile:typedefs",
-                "test:lint",
-                "test:prettier",
                 "test:treeshakability:browser",
                 "test:treeshakability:native",
                 "test:treeshakability:node",
@@ -34,8 +32,6 @@
             "dependsOn": [
                 "compile:js",
                 "compile:typedefs",
-                "test:lint",
-                "test:prettier",
                 "test:typecheck",
                 "test:unit:browser",
                 "test:unit:node",
@@ -54,22 +50,9 @@
                 "PUBLISH_TAG"
             ]
         },
-        "style:fix": {
-            "inputs": ["$TURBO_DEFAULT$", "*"],
-            "outputs": ["*"]
-        },
-        "test:lint": {
-            "dependsOn": ["^compile:typedefs"],
-            "inputs": ["$TURBO_DEFAULT$", "src/**", "test/**"],
-            "outputs": []
-        },
         "test:live-with-test-validator": {
             "dependsOn": ["^compile:js"],
             "inputs": ["$TURBO_DEFAULT$", "src/**"],
-            "outputs": []
-        },
-        "test:prettier": {
-            "inputs": ["$TURBO_DEFAULT$", "*"],
             "outputs": []
         },
         "test:typecheck": {
@@ -97,7 +80,7 @@
             "dependsOn": ["compile:js"]
         },
         "@wallet-ui/docs#build": {
-            "dependsOn": ["^compile:js", "^compile:typedefs", "test:lint", "test:prettier", "test:typecheck"],
+            "dependsOn": ["^compile:js", "^compile:typedefs", "test:typecheck"],
             "inputs": [
                 "$TURBO_DEFAULT$",
                 "astro.config.mjs",

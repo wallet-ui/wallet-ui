@@ -1,3 +1,3 @@
-import { install } from 'react-native-quick-crypto'
+import { install } from 'react-native-quick-crypto';
 
-install()
+install();

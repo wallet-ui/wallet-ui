@@ -1,8 +1,10 @@
 import { UiWallet } from '@wallet-standard/react';
 import React from 'react';
 
-export interface WalletUiLabelProps
-    extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> {
+export interface WalletUiLabelProps extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLSpanElement>,
+    HTMLSpanElement
+> {
     wallet?: Pick<UiWallet, 'name'>;
 }
 

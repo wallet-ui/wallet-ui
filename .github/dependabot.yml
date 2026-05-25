@@ -13,10 +13,8 @@ updates:
     labels:
       - 'automerge'
     groups:
-      eslint:
+      typescript:
         patterns:
-          - '@eslint/*'
-          - '@typescript-eslint/*'
           - 'typescript'
       solana-kit:
         patterns:

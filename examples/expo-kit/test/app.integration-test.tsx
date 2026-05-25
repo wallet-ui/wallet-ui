@@ -10,9 +10,13 @@ import { NetworkProvider } from '@/features/network/network-provider';
 
 const mockTransact = jest.fn();
 
-jest.mock('@solana-mobile/mobile-wallet-adapter-protocol-kit', () => ({
-    transact: (...args: unknown[]) => mockTransact(...args),
-}), { virtual: true });
+jest.mock(
+    '@solana-mobile/mobile-wallet-adapter-protocol-kit',
+    () => ({
+        transact: (...args: unknown[]) => mockTransact(...args),
+    }),
+    { virtual: true },
+);
 
 const FIRST_ADDRESS = '11111111111111111111111111111111';
 const FIRST_ADDRESS_BASE64 = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=';
@@ -217,9 +221,7 @@ function createMockClient() {
 
 function createMockWallet({
     authorize = jest.fn().mockResolvedValue(createAuthorizationResult()),
-    signAndSendTransactions = jest
-        .fn()
-        .mockResolvedValue([Uint8Array.from([1, 2, 3]), Uint8Array.from([4, 5, 6])]),
+    signAndSendTransactions = jest.fn().mockResolvedValue([Uint8Array.from([1, 2, 3]), Uint8Array.from([4, 5, 6])]),
     signMessages = jest.fn().mockResolvedValue([Uint8Array.from([7, 8, 9])]),
     signTransactions = jest.fn().mockResolvedValue([{}]),
 }: {
@@ -314,9 +316,11 @@ function findButton(renderer: any, title: string) {
 }
 
 function hasButton(renderer: any, title: string) {
-    return renderer.root.findAll(
-        node => typeof node.type === 'string' && node.type === 'Button' && node.props.title === title,
-    ).length > 0;
+    return (
+        renderer.root.findAll(
+            node => typeof node.type === 'string' && node.type === 'Button' && node.props.title === title,
+        ).length > 0
+    );
 }
 
 function getNodeText(node: any): string {

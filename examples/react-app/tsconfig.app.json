@@ -23,5 +23,5 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
-    "include": ["./eslint.config.mjs", "src"]
+    "include": ["src"]
 }

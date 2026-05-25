@@ -5,10 +5,7 @@
     "scripts": {
         "android": "expo run:android",
         "dev": "expo start --clear --dev-client --reset-cache",
-        "format": "prettier --write .",
-        "format:check": "prettier --check .",
         "ios": "expo run:ios",
-        "lint": "expo lint",
         "start": "expo start",
         "test": "jest -c ./jest.config.js --runInBand",
         "test:live-with-test-validator": "jest -c ./jest.live.config.js --runInBand",
@@ -56,10 +53,7 @@
     },
     "devDependencies": {
         "@types/react": "^19.2.14",
-        "eslint": "^9.39.4",
-        "eslint-config-expo": "~56.0.4",
         "jest": "^29.7.0",
-        "prettier": "^3.6.2",
         "react-test-renderer": "19.2.3",
         "typescript": "~6.0.3"
     },

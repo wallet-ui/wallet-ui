@@ -102,9 +102,9 @@ const releaseNotesByPackage = Object.fromEntries(
                         if (!match) {
                             throw new Error(
                                 'Expected third-level headings to be of the form ' +
-                                '"{Patch|Minor|Major} Changes". ' +
-                                '`create-github-releases.ts` needs to be updated to ' +
-                                'handle whatever the new format is.',
+                                    '"{Patch|Minor|Major} Changes". ' +
+                                    '`create-github-releases.ts` needs to be updated to ' +
+                                    'handle whatever the new format is.',
                             );
                         }
                         const [_, level] = match;

@@ -6,5 +6,5 @@
     },
     "display": "@wallet-ui/react-native-web3js",
     "extends": "../tsconfig/base.json",
-    "include": ["./eslint.config.mjs", "src"]
+    "include": ["src"]
 }

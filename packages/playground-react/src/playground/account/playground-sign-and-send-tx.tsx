@@ -6,14 +6,14 @@ import {
     pipe,
     setTransactionMessageFeePayerSigner,
     setTransactionMessageLifetimeUsingBlockhash,
-    signAndSendTransactionMessageWithSigners
+    signAndSendTransactionMessageWithSigners,
 } from '@solana/kit';
 import {
     getUiWalletAccountStorageKey,
     type UiWalletAccount,
     useWallets,
     useWalletUiCluster,
-    useWalletUiSigner
+    useWalletUiSigner,
 } from '@wallet-ui/react';
 import type { SyntheticEvent } from 'react';
 import React, { useMemo, useState } from 'react';

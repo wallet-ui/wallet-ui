@@ -11,9 +11,13 @@ import { NetworkProvider } from '@/features/network/network-provider';
 const mockConnectionConstructor = jest.fn();
 const mockTransact = jest.fn();
 
-jest.mock('@solana-mobile/mobile-wallet-adapter-protocol-web3js', () => ({
-    transact: (...args: unknown[]) => mockTransact(...args),
-}), { virtual: true });
+jest.mock(
+    '@solana-mobile/mobile-wallet-adapter-protocol-web3js',
+    () => ({
+        transact: (...args: unknown[]) => mockTransact(...args),
+    }),
+    { virtual: true },
+);
 
 jest.mock('@solana/web3.js', () => {
     const actual = jest.requireActual('@solana/web3.js');
@@ -281,7 +285,12 @@ async function renderHomeScreen({
                 <NetworkProvider
                     networks={AppConfig.networks}
                     render={({ chain, endpoint }) => (
-                        <MobileWalletProvider cache={cache} chain={chain} endpoint={endpoint} identity={AppConfig.identity}>
+                        <MobileWalletProvider
+                            cache={cache}
+                            chain={chain}
+                            endpoint={endpoint}
+                            identity={AppConfig.identity}
+                        >
                             <HomeScreen />
                         </MobileWalletProvider>
                     )}
@@ -307,9 +316,11 @@ function findButton(renderer: any, title: string) {
 }
 
 function hasButton(renderer: any, title: string) {
-    return renderer.root.findAll(
-        node => typeof node.type === 'string' && node.type === 'Button' && node.props.title === title,
-    ).length > 0;
+    return (
+        renderer.root.findAll(
+            node => typeof node.type === 'string' && node.type === 'Button' && node.props.title === title,
+        ).length > 0
+    );
 }
 
 function getNodeText(node: any): string {

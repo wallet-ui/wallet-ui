@@ -14,6 +14,7 @@ This skill helps you set up Wallet UI in your Expo React Native application. You
 ### 1. Modern: `@solana/kit` (Recommended)
 
 **Use this if:**
+
 - You are starting a new project.
 - You prefer the modern, lightweight, functional API of `@solana/kit`.
 - You want better tree-shaking and smaller bundle sizes.
@@ -24,6 +25,7 @@ This skill helps you set up Wallet UI in your Expo React Native application. You
 ### 2. Legacy: `@solana/web3.js` (Maintenance Mode)
 
 **Use this if:**
+
 - You are maintaining an existing project heavily reliant on `@solana/web3.js` v1.
 - You need specific legacy dependencies that haven't migrated to `@solana/kit`.
 - You understand that `@solana/web3.js` is heavier and no longer the primary recommendation for new apps.
@@ -33,9 +35,9 @@ This skill helps you set up Wallet UI in your Expo React Native application. You
 
 ## Quick Comparison
 
-| Feature | `@wallet-ui/react-native-kit` | `@wallet-ui/react-native-web3js` |
-| :--- | :--- | :--- |
-| **Solana Lib** | `@solana/kit` | `@solana/web3.js` (v1) |
-| **API Style** | Functional, Tree-shakeable | Object-Oriented, Monolithic |
-| **Bundle Size** | Smaller | Larger |
-| **Status** | **Recommended** | Maintenance / Legacy Support |
+| Feature         | `@wallet-ui/react-native-kit` | `@wallet-ui/react-native-web3js` |
+| :-------------- | :---------------------------- | :------------------------------- |
+| **Solana Lib**  | `@solana/kit`                 | `@solana/web3.js` (v1)           |
+| **API Style**   | Functional, Tree-shakeable    | Object-Oriented, Monolithic      |
+| **Bundle Size** | Smaller                       | Larger                           |
+| **Status**      | **Recommended**               | Maintenance / Legacy Support     |

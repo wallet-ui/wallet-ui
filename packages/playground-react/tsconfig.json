@@ -6,5 +6,5 @@
     },
     "display": "@wallet-ui/playground-react",
     "extends": "../tsconfig/base.json",
-    "include": ["./eslint.config.mjs", "src", "*.ts", "*.tsx"]
+    "include": ["*.ts", "*.tsx", "src"]
 }

@@ -14,9 +14,6 @@
         "dev": "astro dev --port 3080",
         "preview": "astro preview",
         "start": "astro dev --port 3080",
-        "style:fix": "pnpm prettier --log-level warn --ignore-unknown --write .",
-        "test:lint": "pnpm prettier --log-level warn --check .",
-        "test:prettier": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../node_modules/@wallet-ui/test-config/jest-prettier.config.js --rootDir . --silent",
         "test:typecheck": "astro check"
     },
     "dependencies": {

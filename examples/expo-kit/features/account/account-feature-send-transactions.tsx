@@ -33,7 +33,11 @@ export function AccountFeatureSendTransactions({ address }: { address: Address }
                         createTransactionMessage({ version: 0 }),
                         tx =>
                             appendTransactionMessageInstructions(
-                                [getAddMemoInstruction({ memo: `Hello #${i} from Mobile Wallet Adapter - ${address}` })],
+                                [
+                                    getAddMemoInstruction({
+                                        memo: `Hello #${i} from Mobile Wallet Adapter - ${address}`,
+                                    }),
+                                ],
                                 tx,
                             ),
                         tx => setTransactionMessageFeePayerSigner(signer, tx),

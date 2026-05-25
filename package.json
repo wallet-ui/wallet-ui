@@ -45,7 +45,7 @@
         "jest-watch-typeahead": "^3.0.1",
         "oxfmt": "^0.51.0",
         "oxlint": "^1.66.0",
-        "pkg-pr-new": "^0.0.66",
+        "pkg-pr-new": "^0.0.75",
         "ts-node": "^10.9.2",
         "tsup": "^8.5.1",
         "turbo": "^2.5.6",

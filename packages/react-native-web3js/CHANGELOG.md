@@ -1,5 +1,18 @@
 # @wallet-ui/react-native-web3js
 
+## 4.1.1
+
+### Patch Changes
+
+- [#504](https://github.com/wallet-ui/wallet-ui/pull/504) [`70d731f`](https://github.com/wallet-ui/wallet-ui/commit/70d731f6d0bb61958e90b69e67819f3e1c03484b) Thanks [@beeman](https://github.com/beeman)! - Align `@solana/react` with the Solana Kit 6.1 dependency set.
+
+- [#519](https://github.com/wallet-ui/wallet-ui/pull/519) [`b1cb8fb`](https://github.com/wallet-ui/wallet-ui/commit/b1cb8fbae1450e8f29917cbe4a55c4505702f198) Thanks [@beeman](https://github.com/beeman)! - Stabilize provider initialization without render-time ref writes.
+
+- [#518](https://github.com/wallet-ui/wallet-ui/pull/518) [`b203e7d`](https://github.com/wallet-ui/wallet-ui/commit/b203e7d9d4e0bf75bccbcc7bcfcc1b4bc2792b55) Thanks [@beeman](https://github.com/beeman)! - Validate Mobile Wallet Adapter identity URI schemes before launching React Native wallet authorization.
+
+- Updated dependencies []:
+    - @wallet-ui/core@4.1.1
+
 ## 4.1.0
 
 ### Patch Changes

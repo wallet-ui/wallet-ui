@@ -1,5 +1,18 @@
 # @wallet-ui/react
 
+## 4.1.1
+
+### Patch Changes
+
+- [#504](https://github.com/wallet-ui/wallet-ui/pull/504) [`70d731f`](https://github.com/wallet-ui/wallet-ui/commit/70d731f6d0bb61958e90b69e67819f3e1c03484b) Thanks [@beeman](https://github.com/beeman)! - Align `@solana/react` with the Solana Kit 6.1 dependency set.
+
+- [#509](https://github.com/wallet-ui/wallet-ui/pull/509) [`fdbef72`](https://github.com/wallet-ui/wallet-ui/commit/fdbef728d8ee1ffe694af0ca1d2df982bc30304b) Thanks [@beeman](https://github.com/beeman)! - Guard `WalletUiDropdown` against stale wallet handles and document correct `UiWallet` usage.
+
+- [#519](https://github.com/wallet-ui/wallet-ui/pull/519) [`b1cb8fb`](https://github.com/wallet-ui/wallet-ui/commit/b1cb8fbae1450e8f29917cbe4a55c4505702f198) Thanks [@beeman](https://github.com/beeman)! - Stabilize provider initialization without render-time ref writes.
+
+- Updated dependencies []:
+    - @wallet-ui/core@4.1.1
+
 ## 4.1.0
 
 ### Minor Changes

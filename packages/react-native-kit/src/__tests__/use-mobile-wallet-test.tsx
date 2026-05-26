@@ -1,49 +1,56 @@
+import type { Mock } from 'vitest';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { resetAsyncStorageMock } from '../../../test-config/react-native-unit-test-utils';
 import { createExpectedAccount, FIRST_ADDRESS, FIRST_ADDRESS_BASE64 } from '../test-utils/fixtures';
 import { useMobileWallet } from '../use-mobile-wallet';
 
-const mockAppendTransactionMessageInstructions = jest.fn();
-const mockAuthorizeSession = jest.fn();
-const mockAuthorizeSessionWithSignIn = jest.fn();
-const mockCreateTransactionMessage = jest.fn();
-const mockDecodeBase58 = jest.fn();
-const mockDeauthorizeSession = jest.fn();
-const mockDeauthorizeSessions = jest.fn();
-const mockPipe = jest.fn();
-const mockSetTransactionMessageFeePayerSigner = jest.fn();
-const mockSetTransactionMessageLifetimeUsingBlockhash = jest.fn();
-const mockSignAndSendTransactionMessageWithSigners = jest.fn();
-const mockTransact = jest.fn();
-const mockUseContext = jest.fn();
-const mockUseAuthorization = jest.fn();
+const mockAppendTransactionMessageInstructions = vi.fn();
+const mockAuthorizeSession = vi.fn();
+const mockAuthorizeSessionWithSignIn = vi.fn();
+const mockCreateTransactionMessage = vi.fn();
+const mockDecodeBase58 = vi.fn();
+const mockDeauthorizeSession = vi.fn();
+const mockDeauthorizeSessions = vi.fn();
+const mockPipe = vi.fn();
+const mockSetTransactionMessageFeePayerSigner = vi.fn();
+const mockSetTransactionMessageLifetimeUsingBlockhash = vi.fn();
+const mockSignAndSendTransactionMessageWithSigners = vi.fn();
+const mockTransact = vi.fn();
+const mockUseContext = vi.fn();
+const mockUseAuthorization = vi.fn();
 
-jest.mock('@react-native-async-storage/async-storage', () => ({
+vi.mock('@react-native-async-storage/async-storage', () => ({
     __esModule: true,
     default: {
-        getItem: jest.fn(),
-        removeItem: jest.fn(),
-        setItem: jest.fn(),
+        getItem: vi.fn(),
+        removeItem: vi.fn(),
+        setItem: vi.fn(),
     },
 }));
 
-jest.mock('react', () => {
-    const actual = jest.requireActual('react');
-
-    return {
-        ...actual,
+vi.mock('react', () => {
+    const react = {
+        createContext: () => ({}),
         useCallback: (callback: unknown) => callback,
         useContext: (...args: unknown[]) => mockUseContext(...args),
+        useEffect: () => undefined,
         useMemo: (factory: () => unknown) => factory(),
+        useState: (factory: () => unknown) => [factory(), vi.fn()],
+    };
+
+    return {
+        ...react,
+        default: react,
     };
 });
 
-jest.mock('@solana-mobile/mobile-wallet-adapter-protocol-kit', () => ({
+vi.mock('@solana-mobile/mobile-wallet-adapter-protocol-kit', () => ({
     transact: (...args: unknown[]) => mockTransact(...args),
 }));
 
-jest.mock('@solana/kit', () => ({
+vi.mock('@solana/kit', () => ({
     appendTransactionMessageInstructions: (...args: unknown[]) => mockAppendTransactionMessageInstructions(...args),
     createTransactionMessage: (...args: unknown[]) => mockCreateTransactionMessage(...args),
     getBase58Decoder: () => ({
@@ -57,7 +64,7 @@ jest.mock('@solana/kit', () => ({
         mockSignAndSendTransactionMessageWithSigners(...args),
 }));
 
-jest.mock('../use-authorization', () => ({
+vi.mock('../use-authorization', () => ({
     useAuthorization: (...args: unknown[]) => mockUseAuthorization(...args),
 }));
 
@@ -74,7 +81,7 @@ describe('useMobileWallet', () => {
 
     it('passes the transport wallet into connectAnd callbacks', async () => {
         expect.assertions(3);
-        const callback = jest.fn().mockResolvedValue('connected-via-callback');
+        const callback = vi.fn().mockResolvedValue('connected-via-callback');
         const transportWallet = createTransportWallet();
         const { mobileWallet } = useMobileWalletTestHarness({ transportWallet });
 
@@ -125,7 +132,7 @@ describe('useMobileWallet', () => {
         expect.assertions(3);
         const signedMessage = Uint8Array.from([9, 9, 9]);
         const transportWallet = createTransportWallet({
-            signMessages: jest.fn().mockResolvedValue([signedMessage]),
+            signMessages: vi.fn().mockResolvedValue([signedMessage]),
         });
         const { mobileWallet } = useMobileWalletTestHarness({ transportWallet });
 
@@ -148,8 +155,8 @@ describe('useMobileWallet', () => {
             id: 'transaction',
         };
         const transportWallet = createTransportWallet({
-            signAndSendTransactions: jest.fn().mockResolvedValue(['signature']),
-            signTransactions: jest.fn().mockResolvedValue([signedTransaction]),
+            signAndSendTransactions: vi.fn().mockResolvedValue(['signature']),
+            signTransactions: vi.fn().mockResolvedValue([signedTransaction]),
         });
         const { mobileWallet } = useMobileWalletTestHarness({ transportWallet });
 
@@ -175,11 +182,11 @@ describe('useMobileWallet', () => {
             id: 'signed-transaction',
         };
         const transportWallet = createTransportWallet({
-            signAndSendTransactions: jest.fn().mockResolvedValue(['signature']),
-            signMessages: jest.fn().mockResolvedValue([signedMessage]),
-            signTransactions: jest.fn().mockResolvedValue([signedTransaction]),
+            signAndSendTransactions: vi.fn().mockResolvedValue(['signature']),
+            signMessages: vi.fn().mockResolvedValue([signedMessage]),
+            signTransactions: vi.fn().mockResolvedValue([signedTransaction]),
         });
-        const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+        const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
         const { mobileWallet } = useMobileWalletTestHarness({ transportWallet });
 
         expect(await mobileWallet.signMessage(Uint8Array.from([1, 1, 1]))).toEqual(signedMessage);
@@ -191,7 +198,7 @@ describe('useMobileWallet', () => {
     it('routes the deprecated sendTransaction alias to sendTransactions', async () => {
         expect.assertions(2);
         const { mobileWallet } = useMobileWalletTestHarness();
-        const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+        const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
         expect(await mobileWallet.sendTransaction([{ id: 'ix' } as never])).toBe('decoded-signature');
         expect(warnSpy).toHaveBeenCalledWith(
@@ -210,8 +217,8 @@ describe('useMobileWallet', () => {
             contextOverrides: {
                 client: {
                     rpc: {
-                        getLatestBlockhash: jest.fn(() => ({
-                            send: jest.fn().mockResolvedValue({
+                        getLatestBlockhash: vi.fn(() => ({
+                            send: vi.fn().mockResolvedValue({
                                 context: {
                                     slot: 42n,
                                 },
@@ -293,8 +300,8 @@ function createContextValue(overrides: Record<string, unknown> = {}) {
         chain: 'solana:devnet',
         client: {
             rpc: {
-                getLatestBlockhash: jest.fn(() => ({
-                    send: jest.fn().mockResolvedValue({
+                getLatestBlockhash: vi.fn(() => ({
+                    send: vi.fn().mockResolvedValue({
                         context: {
                             slot: 42n,
                         },
@@ -317,15 +324,15 @@ function createContextValue(overrides: Record<string, unknown> = {}) {
 }
 
 function createTransportWallet({
-    authorize = jest.fn(),
-    signAndSendTransactions = jest.fn(),
-    signMessages = jest.fn(),
-    signTransactions = jest.fn(),
+    authorize = vi.fn(),
+    signAndSendTransactions = vi.fn(),
+    signMessages = vi.fn(),
+    signTransactions = vi.fn(),
 }: {
-    authorize?: jest.Mock;
-    signAndSendTransactions?: jest.Mock;
-    signMessages?: jest.Mock;
-    signTransactions?: jest.Mock;
+    authorize?: Mock;
+    signAndSendTransactions?: Mock;
+    signMessages?: Mock;
+    signTransactions?: Mock;
 } = {}) {
     return {
         authorize,

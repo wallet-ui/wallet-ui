@@ -1,4 +1,6 @@
-/* global afterEach, beforeEach, describe, expect, it, jest */
+/* global afterEach, beforeEach, describe, expect, it, vi */
+
+import type { Mock } from 'vitest';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MobileWalletProvider } from '@wallet-ui/react-native-web3js';
@@ -8,25 +10,13 @@ import HomeScreen from '@/app/index';
 import { AppConfig } from '@/constants/app-config';
 import { NetworkProvider } from '@/features/network/network-provider';
 
-const mockConnectionConstructor = jest.fn();
-const mockTransact = jest.fn();
-
-jest.mock(
-    '@solana-mobile/mobile-wallet-adapter-protocol-web3js',
-    () => ({
-        transact: (...args: unknown[]) => mockTransact(...args),
-    }),
-    { virtual: true },
-);
-
-jest.mock('@solana/web3.js', () => {
-    const actual = jest.requireActual('@solana/web3.js');
-
-    return {
-        ...actual,
-        Connection: jest.fn((...args: unknown[]) => mockConnectionConstructor(...args)),
-    };
-});
+const mockConnectionConstructor = vi.hoisted(() => vi.fn());
+const mockTransact = vi.hoisted(() => vi.fn());
+(
+    globalThis as typeof globalThis & { __walletUiMockConnectionConstructor: typeof mockConnectionConstructor }
+).__walletUiMockConnectionConstructor = mockConnectionConstructor;
+(globalThis as typeof globalThis & { __walletUiMockTransact: typeof mockTransact }).__walletUiMockTransact =
+    mockTransact;
 
 const FIRST_ADDRESS = '11111111111111111111111111111111';
 const FIRST_ADDRESS_BASE64 = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=';
@@ -38,14 +28,14 @@ const VALID_BLOCKHASH = '11111111111111111111111111111111';
 
 describe('expo-web3js app integration', () => {
     beforeEach(() => {
-        jest.spyOn(console, 'error').mockImplementation(() => {});
-        jest.spyOn(console, 'log').mockImplementation(() => {});
+        vi.spyOn(console, 'error').mockImplementation(() => {});
+        vi.spyOn(console, 'log').mockImplementation(() => {});
         mockConnectionConstructor.mockReset();
         mockTransact.mockReset();
     });
 
     afterEach(() => {
-        jest.restoreAllMocks();
+        vi.restoreAllMocks();
     });
 
     it('renders, connects, signs in, signs messages, sends transactions, and disconnects', async () => {
@@ -54,7 +44,7 @@ describe('expo-web3js app integration', () => {
         const cache = createMemoryCache();
         const connection = createMockConnection();
         const wallet = createMockWallet({
-            authorize: jest
+            authorize: vi
                 .fn()
                 .mockResolvedValue(createAuthorizationResult())
                 .mockResolvedValueOnce(createAuthorizationResult())
@@ -155,7 +145,7 @@ describe('expo-web3js app integration', () => {
         const cache = createMemoryCache();
         const connection = createMockConnection();
         const wallet = createMockWallet({
-            signMessages: jest.fn().mockRejectedValue(new Error('boom')),
+            signMessages: vi.fn().mockRejectedValue(new Error('boom')),
         });
         const renderer = await renderHomeScreen({ cache, connection, wallet });
 
@@ -173,11 +163,11 @@ function createMemoryCache(initialValue?: unknown) {
     let value = initialValue;
 
     return {
-        clear: jest.fn(async () => {
+        clear: vi.fn(async () => {
             value = undefined;
         }),
-        get: jest.fn(async () => value),
-        set: jest.fn(async nextValue => {
+        get: vi.fn(async () => value),
+        set: vi.fn(async nextValue => {
             value = nextValue;
         }),
     };
@@ -199,10 +189,10 @@ function createAuthorizationResult(overrides = {}) {
 
 function createMockConnection() {
     return {
-        confirmTransaction: jest.fn().mockResolvedValue(undefined),
-        getBalance: jest.fn().mockResolvedValue(2_000_000_000),
-        getGenesisHash: jest.fn().mockResolvedValue('GenesisHash11111111'),
-        getLatestBlockhashAndContext: jest.fn().mockResolvedValue({
+        confirmTransaction: vi.fn().mockResolvedValue(undefined),
+        getBalance: vi.fn().mockResolvedValue(2_000_000_000),
+        getGenesisHash: vi.fn().mockResolvedValue('GenesisHash11111111'),
+        getLatestBlockhashAndContext: vi.fn().mockResolvedValue({
             context: {
                 slot: 42,
             },
@@ -211,7 +201,7 @@ function createMockConnection() {
                 lastValidBlockHeight: 123,
             },
         }),
-        getVersion: jest.fn().mockResolvedValue({
+        getVersion: vi.fn().mockResolvedValue({
             'feature-set': 123,
             'solana-core': '2.0.0',
         }),
@@ -219,15 +209,15 @@ function createMockConnection() {
 }
 
 function createMockWallet({
-    authorize = jest.fn().mockResolvedValue(createAuthorizationResult()),
-    signAndSendTransactions = jest.fn().mockResolvedValue(['signature-1', 'signature-2']),
-    signMessages = jest.fn().mockResolvedValue([Uint8Array.from([1, 2, 3])]),
-    signTransactions = jest.fn().mockResolvedValue([{}]),
+    authorize = vi.fn().mockResolvedValue(createAuthorizationResult()),
+    signAndSendTransactions = vi.fn().mockResolvedValue(['signature-1', 'signature-2']),
+    signMessages = vi.fn().mockResolvedValue([Uint8Array.from([1, 2, 3])]),
+    signTransactions = vi.fn().mockResolvedValue([{}]),
 }: {
-    authorize?: jest.Mock;
-    signAndSendTransactions?: jest.Mock;
-    signMessages?: jest.Mock;
-    signTransactions?: jest.Mock;
+    authorize?: Mock;
+    signAndSendTransactions?: Mock;
+    signMessages?: Mock;
+    signTransactions?: Mock;
 } = {}) {
     return {
         authorize,

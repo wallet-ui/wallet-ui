@@ -5,12 +5,12 @@ import { MobileWalletProvider, MobileWalletProviderContext } from '../mobile-wal
 import { useAuthorization } from '../use-authorization';
 import { useMobileWallet } from '../use-mobile-wallet';
 
-jest.mock('@react-native-async-storage/async-storage', () => ({
+vi.mock('@react-native-async-storage/async-storage', () => ({
     __esModule: true,
     default: {
-        getItem: jest.fn(),
-        removeItem: jest.fn(),
-        setItem: jest.fn(),
+        getItem: vi.fn(),
+        removeItem: vi.fn(),
+        setItem: vi.fn(),
     },
 }));
 

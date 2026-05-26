@@ -1,4 +1,4 @@
-/* global afterEach, beforeEach, describe, expect, it, jest */
+/* global afterEach, beforeEach, describe, expect, it, vi */
 
 import { Connection, Keypair, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -9,15 +9,9 @@ import HomeScreen from '@/app/index';
 import { AppConfig } from '@/constants/app-config';
 import { NetworkProvider } from '@/features/network/network-provider';
 
-const mockTransact = jest.fn();
-
-jest.mock(
-    '@solana-mobile/mobile-wallet-adapter-protocol-web3js',
-    () => ({
-        transact: (...args: unknown[]) => mockTransact(...args),
-    }),
-    { virtual: true },
-);
+const mockTransact = vi.hoisted(() => vi.fn());
+(globalThis as typeof globalThis & { __walletUiMockTransact: typeof mockTransact }).__walletUiMockTransact =
+    mockTransact;
 
 const AIRDROP_LAMPORTS = 2 * LAMPORTS_PER_SOL;
 const LOCALNET = createSolanaLocalnet({ url: 'http://127.0.0.1:8899' });
@@ -30,13 +24,13 @@ const TEST_WALLET_LABEL = 'Local Validator Wallet';
 
 describe('expo-web3js local validator integration', () => {
     beforeEach(() => {
-        jest.spyOn(console, 'error').mockImplementation(() => {});
-        jest.spyOn(console, 'log').mockImplementation(() => {});
+        vi.spyOn(console, 'error').mockImplementation(() => {});
+        vi.spyOn(console, 'log').mockImplementation(() => {});
         mockTransact.mockReset();
     });
 
     afterEach(() => {
-        jest.restoreAllMocks();
+        vi.restoreAllMocks();
     });
 
     it('runs the app account operations through a funded local validator wallet', async () => {
@@ -164,11 +158,11 @@ function createLocalValidatorWallet({ connection, keypair }: { connection: Conne
     };
 
     return {
-        authorize: jest.fn(async ({ sign_in_payload }) => ({
+        authorize: vi.fn(async ({ sign_in_payload }) => ({
             ...authorizationResult,
             ...(sign_in_payload ? { sign_in_result: SIGN_IN_RESULT } : {}),
         })),
-        signAndSendTransactions: jest.fn(async ({ minContextSlot, transactions }) => {
+        signAndSendTransactions: vi.fn(async ({ minContextSlot, transactions }) => {
             return await Promise.all(
                 transactions.map(async transaction => {
                     transaction.sign([keypair]);
@@ -176,8 +170,8 @@ function createLocalValidatorWallet({ connection, keypair }: { connection: Conne
                 }),
             );
         }),
-        signMessages: jest.fn(async ({ payloads }) => payloads),
-        signTransactions: jest.fn(async ({ transactions }) => {
+        signMessages: vi.fn(async ({ payloads }) => payloads),
+        signTransactions: vi.fn(async ({ transactions }) => {
             for (const transaction of transactions) {
                 transaction.sign([keypair]);
             }
@@ -241,11 +235,11 @@ function createMemoryCache(initialValue?: unknown) {
     let value = initialValue;
 
     return {
-        clear: jest.fn(async () => {
+        clear: vi.fn(async () => {
             value = undefined;
         }),
-        get: jest.fn(async () => value),
-        set: jest.fn(async nextValue => {
+        get: vi.fn(async () => value),
+        set: vi.fn(async nextValue => {
             value = nextValue;
         }),
     };

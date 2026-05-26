@@ -1,3 +1,5 @@
+import type { Mock } from 'vitest';
+
 import type { UiWallet, UiWalletAccount } from '@wallet-standard/react';
 import React from 'react';
 import { act, create } from 'react-test-renderer';
@@ -20,10 +22,10 @@ import { WalletUiListButton } from '../wallet-ui-list-button';
 import { WalletUiModal } from '../wallet-ui-modal';
 import { WalletUiModalTrigger } from '../wallet-ui-modal-trigger';
 
-const mockBaseModal = jest.fn();
-const mockUseBaseDropdown = jest.fn();
-const mockUseWalletUiWallet = jest.fn();
-const mockUseWalletUiDropdown = jest.fn();
+const mockBaseModal = vi.fn();
+const mockUseBaseDropdown = vi.fn();
+const mockUseWalletUiWallet = vi.fn();
+const mockUseWalletUiDropdown = vi.fn();
 const TEST_ICON = 'data:image/png;base64,ZmFrZQ==';
 
 afterEach(() => {
@@ -33,8 +35,8 @@ afterEach(() => {
     mockUseWalletUiDropdown.mockReset();
 });
 
-jest.mock('../base-modal', () => {
-    const React = jest.requireActual<typeof import('react')>('react');
+vi.mock('../base-modal', async () => {
+    const React = await vi.importActual<typeof import('react')>('react');
 
     return {
         BaseModal: (props: BaseModalProps) => {
@@ -44,15 +46,15 @@ jest.mock('../base-modal', () => {
     };
 });
 
-jest.mock('../use-base-dropdown', () => ({
+vi.mock('../use-base-dropdown', () => ({
     useBaseDropdown: () => mockUseBaseDropdown(),
 }));
 
-jest.mock('../use-wallet-ui-dropdown', () => ({
+vi.mock('../use-wallet-ui-dropdown', () => ({
     useWalletUiDropdown: () => mockUseWalletUiDropdown(),
 }));
 
-jest.mock('../use-wallet-ui-wallet', () => ({
+vi.mock('../use-wallet-ui-wallet', () => ({
     useWalletUiWallet: (options: unknown) => mockUseWalletUiWallet(options),
 }));
 
@@ -94,7 +96,7 @@ describe('WalletUiAccountGuard', () => {
         const account = createUiWalletAccount({ address: 'phantom-1', walletName: 'Phantom' });
         const wallet = createUiWallet({ accounts: [account], name: 'Phantom' });
         const accountContext = createAccountContextValue({ account, wallet });
-        const renderAccount = jest.fn(() => <span>Connected account</span>);
+        const renderAccount = vi.fn(() => <span>Connected account</span>);
 
         const renderer = render(
             cleanups,
@@ -126,7 +128,7 @@ describe('WalletUiClusterDropdown', () => {
         expect.assertions(4);
 
         const dropdown = createDropdownControl();
-        const setCluster = jest.fn();
+        const setCluster = vi.fn();
 
         mockUseBaseDropdown.mockReturnValue(dropdown);
 
@@ -201,7 +203,7 @@ describe('WalletUiDropdown', () => {
             items: [
                 {
                     disabled: true,
-                    handler: jest.fn(),
+                    handler: vi.fn(),
                     label: 'Phantom',
                     type: BaseDropdownItemType.WalletConnect,
                     value: 'phantom',
@@ -222,11 +224,11 @@ describe('WalletUiDropdown', () => {
     it('mounts wallet hooks for enabled wallet items', async () => {
         expect.assertions(7);
 
-        const connect = jest.fn().mockResolvedValue(undefined);
-        const disconnect = jest.fn().mockResolvedValue(undefined);
+        const connect = vi.fn().mockResolvedValue(undefined);
+        const disconnect = vi.fn().mockResolvedValue(undefined);
         const dropdown = createDropdownControl();
-        const onConnect = jest.fn().mockResolvedValue(undefined);
-        const onDisconnect = jest.fn().mockResolvedValue(undefined);
+        const onConnect = vi.fn().mockResolvedValue(undefined);
+        const onDisconnect = vi.fn().mockResolvedValue(undefined);
         const wallet = createUiWallet({ name: 'Phantom' });
 
         mockUseWalletUiWallet.mockReturnValue({
@@ -424,7 +426,7 @@ describe('WalletUiListButton', () => {
         const renderer = render(
             cleanups,
             <WalletUiListButton
-                select={jest.fn(() => deferred.promise)}
+                select={vi.fn(() => deferred.promise)}
                 wallet={createUiWallet({ accounts: [account], name: 'Phantom' })}
             />,
         );
@@ -452,7 +454,7 @@ describe('WalletUiListButton', () => {
 
         const account = createUiWalletAccount({ address: 'phantom-1', walletName: 'Phantom' });
         const deferred = createDeferred<void>();
-        const select = jest.fn(() => deferred.promise.catch(() => undefined));
+        const select = vi.fn(() => deferred.promise.catch(() => undefined));
         const renderer = render(
             cleanups,
             <WalletUiListButton select={select} wallet={createUiWallet({ accounts: [account], name: 'Phantom' })} />,
@@ -490,7 +492,7 @@ describe('WalletUiModal', () => {
     it('passes the Solana wallet description to the base modal and renders the wallet list', () => {
         const account = createUiWalletAccount({ address: 'phantom-1', walletName: 'Phantom' });
         const modal = createModalControl();
-        const select = jest.fn();
+        const select = vi.fn();
         const renderer = render(
             cleanups,
             <WalletUiModal
@@ -551,12 +553,12 @@ function createAccountContextValue({
             label: 'Testnet',
             url: 'https://api.testnet.solana.com',
         },
-        setAccount: jest.fn(),
+        setAccount: vi.fn(),
         wallet,
     };
 }
 
-function createClusterContextValue({ setCluster }: { setCluster: jest.Mock }): WalletUiClusterContextValue {
+function createClusterContextValue({ setCluster }: { setCluster: Mock }): WalletUiClusterContextValue {
     return {
         cluster: {
             id: 'solana:devnet',
@@ -600,23 +602,23 @@ function createDropdownControl() {
         api: {
             getContentProps: () => ({}),
             getIndicatorProps: () => ({}),
-            getItemProps: jest.fn(({ disabled, value }: { disabled?: boolean; value: string }) => ({
+            getItemProps: vi.fn(({ disabled, value }: { disabled?: boolean; value: string }) => ({
                 'aria-disabled': disabled,
                 'data-value': value,
             })),
             getPositionerProps: () => ({}),
             getTriggerProps: () => ({}),
         },
-        close: jest.fn(),
-        open: jest.fn(),
+        close: vi.fn(),
+        open: vi.fn(),
     };
 }
 
 function createModalControl() {
     return {
         api: {} as BaseModalControl['api'],
-        close: jest.fn(),
-        open: jest.fn(),
+        close: vi.fn(),
+        open: vi.fn(),
     };
 }
 

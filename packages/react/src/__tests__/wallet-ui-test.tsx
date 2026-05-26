@@ -20,11 +20,15 @@ const CLUSTERS: SolanaCluster[] = [
     },
 ];
 
-const mockUseWallets = jest.fn();
+const mockUseWallets = vi.fn();
 let mockWallets: TestWallet[] = [];
+type PersistentTesting = {
+    getTestStorage(): Record<string, string | undefined>;
+    useTestStorageEngine(): void;
+};
 
-jest.mock('@wallet-standard/react', () => {
-    const { mockWalletStandardReact } = jest.requireActual<typeof import('../test-utils/wallet-ui-test-utils')>(
+vi.mock('@wallet-standard/react', async () => {
+    const { mockWalletStandardReact } = await vi.importActual<typeof import('../test-utils/wallet-ui-test-utils')>(
         '../test-utils/wallet-ui-test-utils',
     );
     return mockWalletStandardReact(() => mockUseWallets());
@@ -33,9 +37,9 @@ jest.mock('@wallet-standard/react', () => {
 describe('WalletUi', () => {
     const cleanups: Array<() => void> = [];
 
-    beforeEach(() => {
-        jest.useFakeTimers();
-        resetPersistentTestStorage();
+    beforeEach(async () => {
+        vi.useFakeTimers();
+        await resetPersistentTestStorage();
         mockUseWallets.mockReset();
         mockUseWallets.mockImplementation(() => mockWallets);
         mockWallets = [];
@@ -45,8 +49,8 @@ describe('WalletUi', () => {
         for (const cleanup of cleanups.splice(0).reverse()) {
             cleanup();
         }
-        jest.runOnlyPendingTimers();
-        jest.useRealTimers();
+        vi.runOnlyPendingTimers();
+        vi.useRealTimers();
     });
 
     it('returns the provided wallet-ui config unchanged', () => {
@@ -155,15 +159,10 @@ function renderWalletUi({
     };
 }
 
-function resetPersistentTestStorage() {
-    const persistent: {
-        getTestStorage(): Record<string, string | undefined>;
-        useTestStorageEngine(): void;
-    } = jest.requireActual('@nanostores/persistent');
-    const installTestStorageEngine = persistent.useTestStorageEngine;
-
-    installTestStorageEngine();
-    const storage = persistent.getTestStorage();
+async function resetPersistentTestStorage() {
+    const { getTestStorage, useTestStorageEngine } = await vi.importActual<PersistentTesting>('@nanostores/persistent');
+    useTestStorageEngine();
+    const storage = getTestStorage();
     for (const key of Object.keys(storage)) {
         delete storage[key];
     }

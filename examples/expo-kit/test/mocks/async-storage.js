@@ -1,10 +1,10 @@
-/* global jest */
+/* global vi */
 
 module.exports = {
     __esModule: true,
     default: {
-        getItem: jest.fn(),
-        removeItem: jest.fn(),
-        setItem: jest.fn(),
+        getItem: vi.fn(),
+        removeItem: vi.fn(),
+        setItem: vi.fn(),
     },
 };

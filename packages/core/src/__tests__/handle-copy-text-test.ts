@@ -1,6 +1,8 @@
+import type { Mock } from 'vitest';
+
 import { handleCopyText } from '../handle-copy-text';
 
-function polyfillNavigator(hasClipboard: boolean, writeTextSpy: jest.Mock) {
+function polyfillNavigator(hasClipboard: boolean, writeTextSpy: Mock) {
     const clipboard = hasClipboard ? { writeText: writeTextSpy } : undefined;
     Object.defineProperty(globalThis, 'navigator', {
         value: {
@@ -11,14 +13,14 @@ function polyfillNavigator(hasClipboard: boolean, writeTextSpy: jest.Mock) {
 }
 
 describe('handleCopyText', () => {
-    let writeTextSpy: jest.Mock;
+    let writeTextSpy: Mock;
 
     beforeEach(() => {
-        writeTextSpy = jest.fn();
+        writeTextSpy = vi.fn();
     });
 
     afterEach(() => {
-        jest.resetAllMocks();
+        vi.resetAllMocks();
     });
 
     it('should call writeText with provided text when clipboard API is available', () => {

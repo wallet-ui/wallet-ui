@@ -25,9 +25,8 @@
     "devDependencies": {
         "@changesets/changelog-github": "^0.5.1",
         "@changesets/cli": "^2.29.8",
-        "@swc/jest": "^0.2.39",
-        "@types/jest": "^30.0.0",
         "@types/node": "^24.5.2",
+        "@vitest/coverage-v8": "^4.1.7",
         "@wallet-ui/build-scripts": "workspace:*",
         "@wallet-ui/test-config": "workspace:*",
         "@wallet-ui/test-matchers": "workspace:*",
@@ -37,19 +36,15 @@
         "istanbul-lib-coverage": "^3.2.2",
         "istanbul-lib-report": "^3.0.1",
         "istanbul-reports": "^3.2.0",
-        "jest": "30.2.0",
-        "jest-environment-jsdom": "30.2.0",
-        "jest-environment-node": "30.2.0",
-        "jest-watch-master": "^1.0.0",
-        "jest-watch-select-projects": "^2.0.0",
-        "jest-watch-typeahead": "^3.0.1",
+        "jsdom": "^22.1.0",
         "oxfmt": "^0.51.0",
         "oxlint": "^1.66.0",
         "pkg-pr-new": "^0.0.75",
         "ts-node": "^10.9.2",
         "tsup": "^8.5.1",
         "turbo": "^2.5.6",
-        "typescript": "^6.0.3"
+        "typescript": "^6.0.3",
+        "vitest": "^4.1.7"
     },
     "engines": {
         "node": ">=20.18.0",

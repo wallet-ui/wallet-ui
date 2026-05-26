@@ -15,31 +15,31 @@ import { useWalletUiAuthMessage } from '../use-wallet-ui-auth-message';
 import { useWalletUiAuthNative } from '../use-wallet-ui-auth-native';
 import { WalletUiAuth } from '../wallet-ui-auth';
 
-const mockUiWalletAccountBelongsToUiWallet = jest.fn();
-const mockGetOrCreateUiWalletAccountForStandardWalletAccount = jest.fn();
-const mockGetWalletAccountForUiWalletAccount = jest.fn();
-const mockGetWalletAccountFeature = jest.fn();
-const mockGetWalletFeature = jest.fn();
-const mockGetWalletForHandle = jest.fn();
-const mockUseConnect = jest.fn();
-const mockUseSignMessage = jest.fn();
-const mockUseWalletUi = jest.fn();
+const mockUiWalletAccountBelongsToUiWallet = vi.fn();
+const mockGetOrCreateUiWalletAccountForStandardWalletAccount = vi.fn();
+const mockGetWalletAccountForUiWalletAccount = vi.fn();
+const mockGetWalletAccountFeature = vi.fn();
+const mockGetWalletFeature = vi.fn();
+const mockGetWalletForHandle = vi.fn();
+const mockUseConnect = vi.fn();
+const mockUseSignMessage = vi.fn();
+const mockUseWalletUi = vi.fn();
 
-jest.mock('@solana/react', () => ({
+vi.mock('@solana/react', () => ({
     useSignMessage: (...args: unknown[]) => mockUseSignMessage(...args),
 }));
 
-jest.mock('@wallet-standard/react', () => ({
+vi.mock('@wallet-standard/react', () => ({
     useConnect: (...args: unknown[]) => mockUseConnect(...args),
 }));
 
-jest.mock('@wallet-standard/ui', () => ({
+vi.mock('@wallet-standard/ui', () => ({
     getWalletAccountFeature: (...args: unknown[]) => mockGetWalletAccountFeature(...args),
     getWalletFeature: (...args: unknown[]) => mockGetWalletFeature(...args),
     uiWalletAccountBelongsToUiWallet: (...args: unknown[]) => mockUiWalletAccountBelongsToUiWallet(...args),
 }));
 
-jest.mock('@wallet-standard/ui-registry', () => ({
+vi.mock('@wallet-standard/ui-registry', () => ({
     getOrCreateUiWalletAccountForStandardWalletAccount_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: (...args: unknown[]) =>
         mockGetOrCreateUiWalletAccountForStandardWalletAccount(...args),
     getWalletAccountForUiWalletAccount_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: (...args: unknown[]) =>
@@ -47,7 +47,7 @@ jest.mock('@wallet-standard/ui-registry', () => ({
     getWalletForHandle_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: (...args: unknown[]) => mockGetWalletForHandle(...args),
 }));
 
-jest.mock('../use-wallet-ui', () => ({
+vi.mock('../use-wallet-ui', () => ({
     useWalletUi: () => mockUseWalletUi(),
 }));
 
@@ -67,7 +67,7 @@ describe('WalletUiAuth', () => {
             (account: TestUiWalletAccount, wallet: TestUiWallet) => account.wallet === wallet,
         );
         mockGetWalletAccountForUiWalletAccount.mockImplementation((account: TestUiWalletAccount) => account);
-        mockUseConnect.mockReturnValue([false, jest.fn().mockResolvedValue([])]);
+        mockUseConnect.mockReturnValue([false, vi.fn().mockResolvedValue([])]);
     });
 
     it('exposes a headless hook for a wallet', async () => {
@@ -77,7 +77,7 @@ describe('WalletUiAuth', () => {
             features: [SolanaSignIn, SolanaSignMessage],
             name: 'Phantom',
         });
-        const connect = jest.fn();
+        const connect = vi.fn();
         const nativeSignIn = createNativeSignIn(account);
 
         mockGetWalletFeature.mockReturnValue({
@@ -116,7 +116,7 @@ describe('WalletUiAuth', () => {
             features: [SolanaSignIn, SolanaSignMessage],
             name: 'Phantom',
         });
-        const connect = jest.fn();
+        const connect = vi.fn();
         const nativeSignIn = createNativeSignIn(account);
 
         mockGetWalletFeature.mockReturnValue({
@@ -173,7 +173,7 @@ describe('WalletUiAuth', () => {
             features: [SolanaSignIn],
             name: 'Phantom',
         });
-        const connect = jest.fn();
+        const connect = vi.fn();
         const nativeSignIn = createNativeSignIn(standardAccount);
         const standardWallet = {
             accounts: [standardAccount],
@@ -229,7 +229,7 @@ describe('WalletUiAuth', () => {
             features: [StandardConnect, SolanaSignMessage],
             name: 'Solflare',
         });
-        const connectWallet = jest.fn().mockResolvedValue([account]);
+        const connectWallet = vi.fn().mockResolvedValue([account]);
         const signMessage = createSignMessageSigner();
         const input = {
             domain: 'example.com',
@@ -243,7 +243,7 @@ describe('WalletUiAuth', () => {
 
         mockUseConnect.mockReturnValue([false, connectWallet]);
         mockUseSignMessage.mockReturnValue(signMessage.signMessage);
-        mockUseWalletUi.mockReturnValue({ account, connect: jest.fn(), wallet, wallets: [wallet] });
+        mockUseWalletUi.mockReturnValue({ account, connect: vi.fn(), wallet, wallets: [wallet] });
 
         const view = renderAuth(wallet);
         const auth = view.getState();
@@ -289,7 +289,7 @@ describe('WalletUiAuth', () => {
             signMessage: signMessage.signMessage,
             version: '1.1.0',
         });
-        mockUseWalletUi.mockReturnValue({ account, connect: jest.fn(), wallet, wallets: [wallet] });
+        mockUseWalletUi.mockReturnValue({ account, connect: vi.fn(), wallet, wallets: [wallet] });
 
         const view = renderAuthHook(wallet);
         const auth = view.getState();
@@ -328,7 +328,7 @@ describe('WalletUiAuth', () => {
             features: [StandardConnect, SolanaSignMessage],
             name: 'Backpack',
         });
-        const connectWallet = jest.fn().mockResolvedValue([account]);
+        const connectWallet = vi.fn().mockResolvedValue([account]);
         const signMessage = createSignMessage();
         const walletUi = createWalletUiStore({ wallet });
 
@@ -387,7 +387,7 @@ describe('WalletUiAuth', () => {
         }
 
         mockUseSignMessage.mockReturnValue(signMessage.signMessage);
-        mockUseWalletUi.mockReturnValue({ account, connect: jest.fn(), wallet, wallets: [wallet] });
+        mockUseWalletUi.mockReturnValue({ account, connect: vi.fn(), wallet, wallets: [wallet] });
 
         const view = renderAuth(wallet);
         const domain = globalThis.location.host;
@@ -430,7 +430,7 @@ describe('WalletUiAuth', () => {
         const signMessage = createSignMessageSigner();
 
         mockUseSignMessage.mockReturnValue(signMessage.signMessage);
-        mockUseWalletUi.mockReturnValue({ account, connect: jest.fn(), wallet, wallets: [wallet] });
+        mockUseWalletUi.mockReturnValue({ account, connect: vi.fn(), wallet, wallets: [wallet] });
 
         const view = renderAuth(wallet);
         const error = await getSignInError(view.getState().signIn, { domain: '' });
@@ -449,7 +449,7 @@ describe('WalletUiAuth', () => {
             name: 'Unsupported',
         });
 
-        mockUseWalletUi.mockReturnValue({ account, connect: jest.fn(), wallet, wallets: [wallet] });
+        mockUseWalletUi.mockReturnValue({ account, connect: vi.fn(), wallet, wallets: [wallet] });
 
         const view = renderAuthHook(wallet);
         const auth = view.getState();
@@ -471,7 +471,7 @@ describe('WalletUiAuth', () => {
 
         mockUseWalletUi.mockReturnValue({
             account: undefined,
-            connect: jest.fn(),
+            connect: vi.fn(),
             wallet: undefined,
             wallets: [wallet],
         });
@@ -514,7 +514,7 @@ describe('WalletUiAuth', () => {
 
         mockUseWalletUi.mockReturnValue({
             account: undefined,
-            connect: jest.fn(),
+            connect: vi.fn(),
             wallet: undefined,
             wallets: [wallet],
         });
@@ -536,7 +536,7 @@ describe('WalletUiAuth', () => {
             features: [SolanaSignIn],
             name: 'Phantom',
         });
-        const nativeSignIn = jest.fn(() => Promise.resolve([]));
+        const nativeSignIn = vi.fn(() => Promise.resolve([]));
 
         mockGetWalletFeature.mockReturnValue({
             signIn: nativeSignIn,
@@ -544,7 +544,7 @@ describe('WalletUiAuth', () => {
         });
         mockUseWalletUi.mockReturnValue({
             account: undefined,
-            connect: jest.fn(),
+            connect: vi.fn(),
             wallet: undefined,
             wallets: [wallet],
         });
@@ -565,14 +565,14 @@ describe('WalletUiAuth', () => {
             features: [SolanaSignMessage],
             name: 'Solflare',
         });
-        const signMessage = jest.fn(() => Promise.resolve([]));
+        const signMessage = vi.fn(() => Promise.resolve([]));
 
         mockGetWalletAccountForUiWalletAccount.mockReturnValue(standardAccount);
         mockGetWalletAccountFeature.mockReturnValue({
             signMessage,
             version: '1.1.0',
         });
-        mockUseWalletUi.mockReturnValue({ account, connect: jest.fn(), wallet, wallets: [wallet] });
+        mockUseWalletUi.mockReturnValue({ account, connect: vi.fn(), wallet, wallets: [wallet] });
 
         const view = renderAuthHook(wallet);
         const error = await getSignInError(view.getState().signIn, { domain: 'example.com' });
@@ -588,8 +588,8 @@ describe('WalletUiAuth', () => {
             features: [StandardConnect, SolanaSignMessage],
             name: 'Backpack',
         });
-        const connectWallet = jest.fn().mockResolvedValue([]);
-        const selectAccount = jest.fn();
+        const connectWallet = vi.fn().mockResolvedValue([]);
+        const selectAccount = vi.fn();
 
         mockUseConnect.mockReturnValue([false, connectWallet]);
         mockUseWalletUi.mockReturnValue({
@@ -615,8 +615,8 @@ describe('WalletUiAuth', () => {
             features: [StandardConnect, SolanaSignMessage],
             name: 'Backpack',
         });
-        const connectWallet = jest.fn().mockResolvedValue([account]);
-        const selectAccount = jest.fn();
+        const connectWallet = vi.fn().mockResolvedValue([account]);
+        const selectAccount = vi.fn();
 
         mockUseConnect.mockReturnValue([false, connectWallet]);
         mockUseWalletUi.mockReturnValue({
@@ -643,7 +643,7 @@ describe('WalletUiAuth', () => {
             name: 'Unsupported',
         });
 
-        mockUseWalletUi.mockReturnValue({ account, connect: jest.fn(), wallet, wallets: [wallet] });
+        mockUseWalletUi.mockReturnValue({ account, connect: vi.fn(), wallet, wallets: [wallet] });
 
         const view = renderAuth(wallet);
         const auth = view.getState();
@@ -668,7 +668,7 @@ type TestUiWalletAccount = UiWalletAccount & {
 function createNativeSignIn(account: TestUiWalletAccount | WalletAccount) {
     const signedMessage = Uint8Array.from([1, 2, 3]);
     const signature = Uint8Array.from([4, 5, 6]);
-    const signIn = jest.fn(() =>
+    const signIn = vi.fn(() =>
         Promise.resolve([
             {
                 account,
@@ -687,7 +687,7 @@ function createNativeSignIn(account: TestUiWalletAccount | WalletAccount) {
 
 function createSignMessage() {
     const signature = Uint8Array.from([7, 8, 9]);
-    const signMessage = jest.fn(({ message }: { account: WalletAccount; message: Uint8Array }) =>
+    const signMessage = vi.fn(({ message }: { account: WalletAccount; message: Uint8Array }) =>
         Promise.resolve([
             {
                 signature,
@@ -704,7 +704,7 @@ function createSignMessage() {
 
 function createSignMessageSigner() {
     const signature = Uint8Array.from([7, 8, 9]);
-    const signMessage = jest.fn(({ message }: { message: Uint8Array }) =>
+    const signMessage = vi.fn(({ message }: { message: Uint8Array }) =>
         Promise.resolve({
             signature,
             signedMessage: message,

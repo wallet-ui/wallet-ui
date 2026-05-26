@@ -6,7 +6,7 @@ describe('authorization-store', () => {
         expect.assertions(4);
         const authorization = createExpectedAuthorization();
         const cache = createCache({
-            get: jest.fn().mockResolvedValue(authorization),
+            get: vi.fn().mockResolvedValue(authorization),
         });
         const store = createAuthorizationStore({ cache });
 

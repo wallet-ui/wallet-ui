@@ -8,11 +8,11 @@ const CLUSTER: SolanaCluster = {
     url: 'https://api.testnet.solana.com',
 };
 
-const mockUseWallets = jest.fn();
+const mockUseWallets = vi.fn();
 let mockWallets: TestWallet[] = [];
 
-jest.mock('@wallet-standard/react', () => {
-    const { mockWalletStandardReact } = jest.requireActual<typeof import('../test-utils/wallet-ui-test-utils')>(
+vi.mock('@wallet-standard/react', async () => {
+    const { mockWalletStandardReact } = await vi.importActual<typeof import('../test-utils/wallet-ui-test-utils')>(
         '../test-utils/wallet-ui-test-utils',
     );
     return mockWalletStandardReact(() => mockUseWallets());
@@ -22,7 +22,7 @@ describe('WalletUiAccountContextProvider actions', () => {
     const cleanups: Array<() => void> = [];
 
     beforeEach(() => {
-        jest.useFakeTimers();
+        vi.useFakeTimers();
         mockUseWallets.mockReset();
         mockUseWallets.mockImplementation(() => mockWallets);
         mockWallets = [];
@@ -32,16 +32,16 @@ describe('WalletUiAccountContextProvider actions', () => {
         for (const cleanup of cleanups.splice(0).reverse()) {
             cleanup();
         }
-        jest.runOnlyPendingTimers();
-        jest.useRealTimers();
+        vi.runOnlyPendingTimers();
+        vi.useRealTimers();
     });
 
-    it('stores the selected account and exposes it through context', () => {
+    it('stores the selected account and exposes it through context', async () => {
         expect.assertions(4);
 
         const account = createAccount({ address: 'phantom-1', walletName: 'Phantom' });
         const wallet = createWallet({ accounts: [account], name: 'Phantom' });
-        const view = renderProvider(cleanups, [wallet]);
+        const view = await renderProvider(cleanups, [wallet]);
 
         view.act(() => {
             view.getContext().setAccount(account);
@@ -53,12 +53,12 @@ describe('WalletUiAccountContextProvider actions', () => {
         expect(view.getContext().wallet?.name).toBe('Phantom');
     });
 
-    it('clears the selected account and storage when set to undefined', () => {
+    it('clears the selected account and storage when set to undefined', async () => {
         expect.assertions(4);
 
         const account = createAccount({ address: 'phantom-1', walletName: 'Phantom' });
         const wallet = createWallet({ accounts: [account], name: 'Phantom' });
-        const view = renderProvider(cleanups, [wallet]);
+        const view = await renderProvider(cleanups, [wallet]);
 
         view.act(() => {
             view.getContext().setAccount(account);
@@ -73,12 +73,12 @@ describe('WalletUiAccountContextProvider actions', () => {
         expect(view.getContext().wallet).toBeUndefined();
     });
 
-    it('does not auto-reselect a saved account after an explicit selection has occurred', () => {
+    it('does not auto-reselect a saved account after an explicit selection has occurred', async () => {
         expect.assertions(5);
 
         const account = createAccount({ address: 'phantom-1', walletName: 'Phantom' });
         const wallet = createWallet({ accounts: [account], name: 'Phantom' });
-        const view = renderProvider(cleanups, [wallet]);
+        const view = await renderProvider(cleanups, [wallet]);
 
         view.act(() => {
             view.getContext().setAccount(account);
@@ -96,7 +96,7 @@ describe('WalletUiAccountContextProvider actions', () => {
     });
 });
 
-function renderProvider(cleanups: Array<() => void>, initialWallets: TestWallet[]) {
+async function renderProvider(cleanups: Array<() => void>, initialWallets: TestWallet[]) {
     mockWallets = initialWallets;
 
     let harness:
@@ -114,20 +114,18 @@ function renderProvider(cleanups: Array<() => void>, initialWallets: TestWallet[
           }
         | undefined;
 
-    jest.isolateModules(() => {
-        const React = jest.requireActual<typeof import('react')>('react');
+    vi.resetModules();
+    {
+        const React = await import('react');
         const persistent: {
             getTestStorage(): Record<string, string | undefined>;
             useTestStorageEngine(): void;
-        } = jest.requireActual('@nanostores/persistent');
+        } = await vi.importActual('@nanostores/persistent');
         const { getTestStorage, useTestStorageEngine } = persistent;
-        const { createStorageAccount } = jest.requireActual<typeof import('@wallet-ui/core')>('@wallet-ui/core');
-        const { act, create } = jest.requireActual<typeof import('react-test-renderer')>('react-test-renderer');
-        const { WalletUiAccountContext } =
-            jest.requireActual<typeof import('../wallet-ui-account-context')>('../wallet-ui-account-context');
-        const { WalletUiAccountContextProvider } = jest.requireActual<
-            typeof import('../wallet-ui-account-context-provider')
-        >('../wallet-ui-account-context-provider');
+        const { createStorageAccount } = await import('@wallet-ui/core');
+        const { act, create } = await import('react-test-renderer');
+        const { WalletUiAccountContext } = await import('../wallet-ui-account-context');
+        const { WalletUiAccountContextProvider } = await import('../wallet-ui-account-context-provider');
 
         let contextValue:
             | {
@@ -181,7 +179,7 @@ function renderProvider(cleanups: Array<() => void>, initialWallets: TestWallet[
                 });
             },
         };
-    });
+    }
 
     if (!harness) {
         throw new Error('Failed to create account provider harness');

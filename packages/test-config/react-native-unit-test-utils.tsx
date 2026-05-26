@@ -1,7 +1,9 @@
+import type { Mock } from 'vitest';
+
 type AsyncStorageModule = {
-    getItem: jest.Mock<Promise<string | null>, [string]>;
-    removeItem: jest.Mock<Promise<void>, [string]>;
-    setItem: jest.Mock<Promise<void>, [string, string]>;
+    getItem: Mock<(key: string) => Promise<string | null>>;
+    removeItem: Mock<(key: string) => Promise<void>>;
+    setItem: Mock<(key: string, value: string) => Promise<void>>;
 };
 
 export function resetAsyncStorageMock(asyncStorage: AsyncStorageModule) {

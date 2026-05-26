@@ -1,3 +1,5 @@
+import type { Mock } from 'vitest';
+
 import {
     Account as AuthorizedAccount,
     AuthorizationResult,
@@ -9,9 +11,9 @@ import type { SignInOutput } from '../convert-sign-in-result';
 import type { Account, WalletAuthorization } from '../use-authorization';
 
 type CacheMocks = Cache<WalletAuthorization | undefined> & {
-    clear: jest.Mock;
-    get: jest.Mock;
-    set: jest.Mock;
+    clear: Mock;
+    get: Mock;
+    set: Mock;
 };
 
 export const FIRST_ADDRESS = '11111111111111111111111111111111';
@@ -56,13 +58,13 @@ export function createAuthorizationResult({
 }
 
 export function createCache({
-    clear = jest.fn().mockResolvedValue(undefined),
-    get = jest.fn().mockResolvedValue(undefined),
-    set = jest.fn().mockResolvedValue(undefined),
+    clear = vi.fn().mockResolvedValue(undefined),
+    get = vi.fn().mockResolvedValue(undefined),
+    set = vi.fn().mockResolvedValue(undefined),
 }: {
-    clear?: jest.Mock;
-    get?: jest.Mock;
-    set?: jest.Mock;
+    clear?: Mock;
+    get?: Mock;
+    set?: Mock;
 } = {}): CacheMocks {
     return {
         clear,

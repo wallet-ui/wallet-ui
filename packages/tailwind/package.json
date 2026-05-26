@@ -47,7 +47,7 @@
         "compile:js": "tsup --config build-scripts/tsup.config.package.ts",
         "compile:typedefs": "tsc -p ./tsconfig.declarations.json",
         "compile:css": "tailwindcss -i ./src/index.css -o ../react/src/index.css",
-        "dev": "jest -c ../../node_modules/@wallet-ui/test-config/jest-dev.config.js --rootDir . --watch",
+        "dev": "vitest -c ../../node_modules/@wallet-ui/test-config/vitest.config.mjs --root . --watch",
         "prepublishOnly": "pnpm pkg delete devDependencies",
         "publish-impl": "npm view $npm_package_name@$npm_package_version > /dev/null 2>&1 || (pnpm publish --tag ${PUBLISH_TAG:-canary} --access public --no-git-checks && (([ -n \"${GITHUB_OUTPUT:-}\" ] && echo 'published=true' >> \"$GITHUB_OUTPUT\") || true) && (([ \"$PUBLISH_TAG\" != \"canary\" ] && ../build-scripts/maybe-tag-latest.ts --token \"$GITHUB_TOKEN\" $npm_package_name@$npm_package_version) || true))",
         "publish-packages": "pnpm prepublishOnly && pnpm publish-impl",
@@ -55,8 +55,8 @@
         "test:treeshakability:native": "true # agadoo dist/index.native.mjs",
         "test:treeshakability:node": "true # agadoo dist/index.node.mjs",
         "test:typecheck": "tsc --noEmit",
-        "test:unit:browser": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../../node_modules/@wallet-ui/test-config/jest-unit.config.browser.js --rootDir . --silent",
-        "test:unit:node": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../../node_modules/@wallet-ui/test-config/jest-unit.config.node.js --rootDir . --silent"
+        "test:unit:browser": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} vitest -c ../../node_modules/@wallet-ui/test-config/vitest.config.browser.mjs --root . --run --silent",
+        "test:unit:node": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} vitest -c ../../node_modules/@wallet-ui/test-config/vitest.config.node.mjs --root . --run --silent"
     },
     "author": "beeman <beeman@beeman.nl>",
     "homepage": "https://wallet-ui.dev",

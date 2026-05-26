@@ -22,21 +22,25 @@ const CLUSTERS: SolanaCluster[] = [
         url: 'https://api.testnet.solana.com',
     },
 ];
+type PersistentTesting = {
+    getTestStorage(): Record<string, string | undefined>;
+    useTestStorageEngine(): void;
+};
 
 describe('WalletUiClusterContextProvider', () => {
     const cleanups: Array<() => void> = [];
 
-    beforeEach(() => {
-        jest.useFakeTimers();
-        resetPersistentTestStorage();
+    beforeEach(async () => {
+        vi.useFakeTimers();
+        await resetPersistentTestStorage();
     });
 
     afterEach(() => {
         for (const cleanup of cleanups.splice(0).reverse()) {
             cleanup();
         }
-        jest.runOnlyPendingTimers();
-        jest.useRealTimers();
+        vi.runOnlyPendingTimers();
+        vi.useRealTimers();
     });
 
     it('throws when no clusters are provided', () => {
@@ -169,15 +173,10 @@ function renderProvider({
     };
 }
 
-function resetPersistentTestStorage() {
-    const persistent: {
-        getTestStorage(): Record<string, string | undefined>;
-        useTestStorageEngine(): void;
-    } = jest.requireActual('@nanostores/persistent');
-    const installTestStorageEngine = persistent.useTestStorageEngine;
-
-    installTestStorageEngine();
-    const storage = persistent.getTestStorage();
+async function resetPersistentTestStorage() {
+    const { getTestStorage, useTestStorageEngine } = await vi.importActual<PersistentTesting>('@nanostores/persistent');
+    useTestStorageEngine();
+    const storage = getTestStorage();
     for (const key of Object.keys(storage)) {
         delete storage[key];
     }

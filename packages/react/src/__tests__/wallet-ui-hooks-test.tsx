@@ -1,3 +1,5 @@
+import type { Mock } from 'vitest';
+
 import { StandardConnect, StandardDisconnect } from '@wallet-standard/core';
 import type { UiWallet, UiWalletAccount } from '@wallet-standard/react';
 
@@ -8,13 +10,13 @@ import { ellipsify, useWalletUiDropdown } from '../use-wallet-ui-dropdown';
 import { useWalletUiSigner } from '../use-wallet-ui-signer';
 import { useWalletUiWallet } from '../use-wallet-ui-wallet';
 
-const mockUseBaseDropdown = jest.fn();
-const mockUseConnect = jest.fn();
-const mockUseDisconnect = jest.fn();
-const mockUseWalletAccountTransactionSendingSigner = jest.fn();
-const mockUseWalletUi = jest.fn();
-const mockUseWalletUiAccount = jest.fn();
-const mockGetWalletFeature = jest.fn((_wallet?: unknown, _featureName?: unknown) => ({}));
+const mockUseBaseDropdown = vi.fn();
+const mockUseConnect = vi.fn();
+const mockUseDisconnect = vi.fn();
+const mockUseWalletAccountTransactionSendingSigner = vi.fn();
+const mockUseWalletUi = vi.fn();
+const mockUseWalletUiAccount = vi.fn();
+const mockGetWalletFeature = vi.fn((_wallet?: unknown, _featureName?: unknown) => ({}));
 const TEST_ICON = 'data:image/png;base64,ZmFrZQ==';
 
 afterEach(() => {
@@ -22,8 +24,8 @@ afterEach(() => {
     mockGetWalletFeature.mockImplementation(() => ({}));
 });
 
-jest.mock('react-error-boundary', () => {
-    const React = jest.requireActual<typeof import('react')>('react');
+vi.mock('react-error-boundary', async () => {
+    const React = await vi.importActual<typeof import('react')>('react');
 
     return {
         ErrorBoundary: ({ children }: { children: React.ReactNode }) =>
@@ -31,29 +33,29 @@ jest.mock('react-error-boundary', () => {
     };
 });
 
-jest.mock('@solana/react', () => ({
+vi.mock('@solana/react', () => ({
     useWalletAccountTransactionSendingSigner: (...args: unknown[]) =>
         mockUseWalletAccountTransactionSendingSigner(...args),
 }));
 
-jest.mock('@wallet-standard/react', () => ({
+vi.mock('@wallet-standard/react', () => ({
     useConnect: (...args: unknown[]) => mockUseConnect(...args),
     useDisconnect: (...args: unknown[]) => mockUseDisconnect(...args),
 }));
 
-jest.mock('@wallet-standard/ui', () => ({
+vi.mock('@wallet-standard/ui', () => ({
     getWalletFeature: (wallet: unknown, featureName: unknown) => mockGetWalletFeature(wallet, featureName),
 }));
 
-jest.mock('../use-base-dropdown', () => ({
+vi.mock('../use-base-dropdown', () => ({
     useBaseDropdown: () => mockUseBaseDropdown(),
 }));
 
-jest.mock('../use-wallet-ui', () => ({
+vi.mock('../use-wallet-ui', () => ({
     useWalletUi: () => mockUseWalletUi(),
 }));
 
-jest.mock('../use-wallet-ui-account', () => ({
+vi.mock('../use-wallet-ui-account', () => ({
     useWalletUiAccount: () => mockUseWalletUiAccount(),
 }));
 
@@ -69,7 +71,7 @@ describe('useWalletUiDropdown', () => {
         expect.assertions(7);
 
         const account = createUiWalletAccount({ address: 'phantom-1', walletName: 'Phantom' });
-        const connect = jest.fn();
+        const connect = vi.fn();
         const dropdown = createDropdownControl();
         const wallet = createUiWallet({ accounts: [account], name: 'Phantom' });
 
@@ -78,8 +80,8 @@ describe('useWalletUiDropdown', () => {
             account: undefined,
             connect,
             connected: false,
-            copy: jest.fn(),
-            disconnect: jest.fn(),
+            copy: vi.fn(),
+            disconnect: vi.fn(),
             wallet: undefined,
             wallets: [wallet],
         });
@@ -102,16 +104,16 @@ describe('useWalletUiDropdown', () => {
         expect.assertions(3);
 
         const dropdown = createDropdownControl();
-        const open = jest.fn();
+        const open = vi.fn();
         const restoreWindow = stubWindowOpen(open);
 
         mockUseBaseDropdown.mockReturnValue(dropdown);
         mockUseWalletUi.mockReturnValue({
             account: undefined,
-            connect: jest.fn(),
+            connect: vi.fn(),
             connected: false,
-            copy: jest.fn(),
-            disconnect: jest.fn(),
+            copy: vi.fn(),
+            disconnect: vi.fn(),
             wallet: undefined,
             wallets: [],
         });
@@ -133,7 +135,7 @@ describe('useWalletUiDropdown', () => {
     it('marks unavailable wallets as disabled connect items', async () => {
         expect.assertions(6);
 
-        const connect = jest.fn();
+        const connect = vi.fn();
         const dropdown = createDropdownControl();
         const wallet = createUiWallet({ name: 'Phantom' });
 
@@ -145,8 +147,8 @@ describe('useWalletUiDropdown', () => {
             account: undefined,
             connect,
             connected: false,
-            copy: jest.fn(),
-            disconnect: jest.fn(),
+            copy: vi.fn(),
+            disconnect: vi.fn(),
             wallet: undefined,
             wallets: [wallet],
         });
@@ -167,7 +169,7 @@ describe('useWalletUiDropdown', () => {
     it('does not select an available wallet when it has no accounts', async () => {
         expect.assertions(2);
 
-        const connect = jest.fn();
+        const connect = vi.fn();
         const dropdown = createDropdownControl();
         const wallet = createUiWallet({ name: 'Phantom' });
 
@@ -176,8 +178,8 @@ describe('useWalletUiDropdown', () => {
             account: undefined,
             connect,
             connected: false,
-            copy: jest.fn(),
-            disconnect: jest.fn(),
+            copy: vi.fn(),
+            disconnect: vi.fn(),
             wallet: undefined,
             wallets: [wallet],
         });
@@ -194,15 +196,15 @@ describe('useWalletUiDropdown', () => {
         expect.assertions(5);
 
         const account = createUiWalletAccount({ address: '1234567890', walletName: 'Phantom' });
-        const copy = jest.fn();
-        const disconnect = jest.fn();
+        const copy = vi.fn();
+        const disconnect = vi.fn();
         const dropdown = createDropdownControl();
         const wallet = createUiWallet({ accounts: [account], icon: TEST_ICON, name: 'Phantom' });
 
         mockUseBaseDropdown.mockReturnValue(dropdown);
         mockUseWalletUi.mockReturnValue({
             account,
-            connect: jest.fn(),
+            connect: vi.fn(),
             connected: true,
             copy,
             disconnect,
@@ -226,7 +228,7 @@ describe('useWalletUiDropdown', () => {
     it('clears connected state without wallet hooks when the selected wallet is unavailable', async () => {
         expect.assertions(5);
 
-        const disconnect = jest.fn();
+        const disconnect = vi.fn();
         const dropdown = createDropdownControl();
         const wallet = createUiWallet({ icon: TEST_ICON, name: 'Phantom' });
 
@@ -236,9 +238,9 @@ describe('useWalletUiDropdown', () => {
         mockUseBaseDropdown.mockReturnValue(dropdown);
         mockUseWalletUi.mockReturnValue({
             account: undefined,
-            connect: jest.fn(),
+            connect: vi.fn(),
             connected: true,
-            copy: jest.fn(),
+            copy: vi.fn(),
             disconnect,
             wallet,
             wallets: [wallet],
@@ -266,19 +268,19 @@ describe('useWalletUiDropdown', () => {
         mockUseWalletUi
             .mockReturnValueOnce({
                 account: undefined,
-                connect: jest.fn(),
+                connect: vi.fn(),
                 connected: true,
-                copy: jest.fn(),
-                disconnect: jest.fn(),
+                copy: vi.fn(),
+                disconnect: vi.fn(),
                 wallet,
                 wallets: [wallet],
             })
             .mockReturnValueOnce({
                 account: undefined,
-                connect: jest.fn(),
+                connect: vi.fn(),
                 connected: true,
-                copy: jest.fn(),
-                disconnect: jest.fn(),
+                copy: vi.fn(),
+                disconnect: vi.fn(),
                 wallet: undefined,
                 wallets: [],
             });
@@ -296,7 +298,7 @@ describe('useWalletUiDropdown', () => {
 describe('useWalletUiSigner', () => {
     it('delegates to the Solana signer hook with the selected cluster id', () => {
         const account = createAccount({ address: 'phantom-1', walletName: 'Phantom' }) as unknown as UiWalletAccount;
-        const signer = { send: jest.fn() };
+        const signer = { send: vi.fn() };
 
         mockUseWalletAccountTransactionSendingSigner.mockReturnValue(signer);
         mockUseWalletUi.mockReturnValue({
@@ -317,10 +319,10 @@ describe('useWalletUiWallet', () => {
         expect.assertions(6);
 
         const account = createUiWalletAccount({ address: 'phantom-1', walletName: 'Phantom' });
-        const connect = jest.fn().mockResolvedValue([account]);
-        const connectAccount = jest.fn();
-        const disconnect = jest.fn().mockResolvedValue(undefined);
-        const setAccount = jest.fn();
+        const connect = vi.fn().mockResolvedValue([account]);
+        const connectAccount = vi.fn();
+        const disconnect = vi.fn().mockResolvedValue(undefined);
+        const setAccount = vi.fn();
         const wallet = createUiWallet({ accounts: [account], name: 'Phantom' });
 
         mockUseConnect.mockReturnValue([true, connect]);
@@ -344,10 +346,10 @@ describe('useWalletUiWallet', () => {
     it('warns and skips account selection when connect returns no accounts', async () => {
         expect.assertions(6);
 
-        const connect = jest.fn().mockResolvedValue([]);
-        const connectAccount = jest.fn();
-        const disconnect = jest.fn();
-        const setAccount = jest.fn();
+        const connect = vi.fn().mockResolvedValue([]);
+        const connectAccount = vi.fn();
+        const disconnect = vi.fn();
+        const setAccount = vi.fn();
         const wallet = createUiWallet({ accounts: [], name: 'Phantom' });
 
         mockUseConnect.mockReturnValue([false, connect]);
@@ -355,7 +357,7 @@ describe('useWalletUiWallet', () => {
         mockUseWalletUi.mockReturnValue({ connect: connectAccount });
         mockUseWalletUiAccount.mockReturnValue({ setAccount });
 
-        const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+        const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
         try {
             const hook = getHookResult(renderHook(() => useWalletUiWallet({ wallet })).result);
 
@@ -376,14 +378,14 @@ describe('useWalletUiWallet', () => {
 function createDropdownControl() {
     return {
         api: {},
-        close: jest.fn(),
-        open: jest.fn(),
+        close: vi.fn(),
+        open: vi.fn(),
     };
 }
 
-function stubWindowOpen(open: jest.Mock) {
+function stubWindowOpen(open: Mock) {
     if (typeof window !== 'undefined') {
-        const spy = jest.spyOn(window, 'open').mockImplementation((...args) => {
+        const spy = vi.spyOn(window, 'open').mockImplementation((...args) => {
             open(...args);
             return null;
         });

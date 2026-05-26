@@ -1,3 +1,5 @@
+import type { Mock } from 'vitest';
+
 import type { SolanaCluster } from '@wallet-ui/core';
 import React, { useContext } from 'react';
 import { act, create } from 'react-test-renderer';
@@ -13,19 +15,19 @@ const CLUSTER: SolanaCluster = {
     url: 'https://api.testnet.solana.com',
 };
 
-const mockHandleCopyText = jest.fn();
-const mockUseWallets = jest.fn();
+const mockHandleCopyText = vi.fn();
+const mockUseWallets = vi.fn();
 let mockWallets: TestWallet[] = [];
 const cleanups: Array<() => void> = [];
 
-jest.mock('@wallet-standard/react', () => {
-    const { mockWalletStandardReact } = jest.requireActual<typeof import('../test-utils/wallet-ui-test-utils')>(
+vi.mock('@wallet-standard/react', async () => {
+    const { mockWalletStandardReact } = await vi.importActual<typeof import('../test-utils/wallet-ui-test-utils')>(
         '../test-utils/wallet-ui-test-utils',
     );
     return mockWalletStandardReact(() => mockUseWallets());
 });
 
-jest.mock('@wallet-ui/core', () => ({
+vi.mock('@wallet-ui/core', () => ({
     handleCopyText: (...args: unknown[]) => mockHandleCopyText(...args),
 }));
 
@@ -46,7 +48,7 @@ describe('WalletUiContextProvider', () => {
     it('filters to Solana wallets, sorts them alphabetically, and reports disconnected state when no account is selected', () => {
         expect.assertions(3);
 
-        const setAccount = jest.fn();
+        const setAccount = vi.fn();
         const backpackWallet = createWallet({ accounts: [], name: 'Backpack' });
         const ethereumWallet = createWallet({ chains: ['eip155:1'], name: 'Ethereum Wallet' });
         const solflareWallet = createWallet({ accounts: [], name: 'Solflare' });
@@ -69,7 +71,7 @@ describe('WalletUiContextProvider', () => {
         expect.assertions(4);
 
         const account = createAccount({ address: 'phantom-1', walletName: 'Phantom' });
-        const setAccount = jest.fn();
+        const setAccount = vi.fn();
         const wallet = createWallet({ accounts: [account], name: 'Phantom' });
         const view = renderProvider({
             account,
@@ -97,7 +99,7 @@ function renderProvider({
     wallets,
 }: {
     account: TestAccount | undefined;
-    setAccount: jest.Mock;
+    setAccount: Mock;
     wallet: TestWallet | undefined;
     wallets: TestWallet[];
 }) {

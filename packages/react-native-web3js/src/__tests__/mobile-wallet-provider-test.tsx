@@ -9,11 +9,11 @@ import { createCache } from '../test-utils/fixtures';
 import { act, renderHook } from '../test-utils/react-test-renderer';
 import type { WalletAuthorization } from '../use-authorization';
 
-jest.mock('../async-storage-cache', () => ({
-    createAsyncStorageCache: jest.fn(),
+vi.mock('../async-storage-cache', () => ({
+    createAsyncStorageCache: vi.fn(),
 }));
 
-const mockCreateAsyncStorageCache = jest.mocked(createAsyncStorageCache);
+const mockCreateAsyncStorageCache = vi.mocked(createAsyncStorageCache);
 const CHAIN = 'solana:devnet' as Chain;
 const ENDPOINT = 'https://rpc.wallet-ui.dev';
 const IDENTITY = {

@@ -7,8 +7,8 @@
         "dev": "expo start --clear --dev-client --reset-cache",
         "ios": "expo run:ios",
         "start": "expo start",
-        "test": "jest -c ./jest.config.js --runInBand",
-        "test:live-with-test-validator": "jest -c ./jest.live.config.js --runInBand",
+        "test": "vitest -c ./vitest.config.mjs --run",
+        "test:live-with-test-validator": "vitest -c ./vitest.live.config.mjs --run",
         "test:native-entry": "node ../../scripts/test-expo-native-entry-smoke.mjs @wallet-ui/react-native-kit",
         "web": "expo start --web"
     },
@@ -53,7 +53,6 @@
     },
     "devDependencies": {
         "@types/react": "^19.2.14",
-        "jest": "^29.7.0",
         "react-test-renderer": "19.2.3",
         "typescript": "~6.0.3"
     },

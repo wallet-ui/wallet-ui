@@ -1,5 +1,5 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 
 import { SolanaSignMessage } from '@solana/wallet-standard-features';
@@ -18,7 +18,7 @@ describe('wallet-ui-auth-utils', () => {
             features: [SolanaSignMessage],
             publicKey: Uint8Array.from([1, 2, 3]),
         } as unknown as UiWalletAccount;
-        const signMessage = jest.fn();
+        const signMessage = vi.fn();
         let error: WalletUiAuthError | undefined;
 
         try {

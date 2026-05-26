@@ -8,13 +8,12 @@ expect.extend({
 });
 
 declare global {
-    // eslint-disable-next-line @typescript-eslint/no-namespace
-    namespace jest {
-        interface AsymmetricMatchers {
+    namespace Vi {
+        interface AsymmetricMatchersContaining {
             toBeFrozenObject(): void;
         }
-        interface Matchers<R> {
-            toBeFrozenObject(): R;
+        interface Assertion {
+            toBeFrozenObject(): void;
         }
     }
 }

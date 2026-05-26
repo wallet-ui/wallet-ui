@@ -18,13 +18,13 @@ const packagesRoot = path.join(repoRoot, 'packages');
 const outputRoot = path.join(repoRoot, 'tmp', 'coverage', 'published-packages');
 const pnpmCommand = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
 const excludedPackageNames = new Set(['@wallet-ui/css', '@wallet-ui/tailwind']);
-const coveragePatterns = [
-    'src/**/*.{js,jsx,ts,tsx}',
-    '!src/**/*.d.ts',
-    '!src/**/__tests__/**',
-    '!src/**/__typetests__/**',
-    '!src/**/test-utils/**',
+const coverageExcludePatterns = [
+    'src/**/*.d.ts',
+    'src/**/__tests__/**',
+    'src/**/__typetests__/**',
+    'src/**/test-utils/**',
 ];
+const coverageIncludePatterns = ['src/**/*.{js,jsx,ts,tsx}'];
 const publishedPackages = getPublishedPackages();
 const repositoryCoverageMap = createCoverageMap({});
 
@@ -253,8 +253,8 @@ function runCoverageForPackage(pkg) {
     mkdirSync(browserCoverageDirectory, { recursive: true });
     mkdirSync(nodeCoverageDirectory, { recursive: true });
 
-    const browserResult = runJestCoverage({
-        configPath: path.join(repoRoot, 'packages', 'test-config', 'jest-unit.config.browser.js'),
+    const browserResult = runVitestCoverage({
+        configPath: path.join(repoRoot, 'packages', 'test-config', 'vitest.config.browser.mjs'),
         coverageDirectory: browserCoverageDirectory,
         pkg,
         runtimeName: 'browser',
@@ -269,8 +269,8 @@ function runCoverageForPackage(pkg) {
         };
     }
 
-    const nodeResult = runJestCoverage({
-        configPath: path.join(repoRoot, 'packages', 'test-config', 'jest-unit.config.node.js'),
+    const nodeResult = runVitestCoverage({
+        configPath: path.join(repoRoot, 'packages', 'test-config', 'vitest.config.node.mjs'),
         coverageDirectory: nodeCoverageDirectory,
         pkg,
         runtimeName: 'node',
@@ -314,7 +314,7 @@ function runCoverageForPackage(pkg) {
     }
 }
 
-function runJestCoverage({ configPath, coverageDirectory, pkg, runtimeName }) {
+function runVitestCoverage({ configPath, coverageDirectory, pkg, runtimeName }) {
     console.log(`   ${runtimeName}: running coverage`);
 
     const result = spawnSync(
@@ -323,17 +323,22 @@ function runJestCoverage({ configPath, coverageDirectory, pkg, runtimeName }) {
             '--dir',
             pkg.directoryPath,
             'exec',
-            'jest',
+            'vitest',
             '-c',
             configPath,
-            '--coverage',
-            '--coverageDirectory',
-            coverageDirectory,
-            '--coverageReporters=json',
-            '--rootDir',
+            '--root',
             '.',
+            '--run',
+            '--coverage',
+            '--coverage.provider',
+            'v8',
+            '--coverage.reporter',
+            'json',
+            '--coverage.reportsDirectory',
+            coverageDirectory,
             '--silent',
-            ...coveragePatterns.flatMap(pattern => ['--collectCoverageFrom', pattern]),
+            ...coverageIncludePatterns.flatMap(pattern => ['--coverage.include', pattern]),
+            ...coverageExcludePatterns.flatMap(pattern => ['--coverage.exclude', pattern]),
         ],
         {
             cwd: repoRoot,

@@ -1,3 +1,5 @@
+import type { Mock } from 'vitest';
+
 import {
     AppIdentity,
     AuthorizeAPI,
@@ -22,19 +24,14 @@ import {
 import type { WalletAuthorization } from '../use-authorization';
 import { useAuthorization } from '../use-authorization';
 
-const mockUseAuthorizationStore = jest.fn();
+const mockUseAuthorizationStore = vi.fn();
 
-jest.mock('react', () => {
-    const actual = jest.requireActual('react');
+vi.mock('react', () => ({
+    useCallback: (callback: unknown) => callback,
+    useMemo: (factory: () => unknown) => factory(),
+}));
 
-    return {
-        ...actual,
-        useCallback: (callback: unknown) => callback,
-        useMemo: (factory: () => unknown) => factory(),
-    };
-});
-
-jest.mock('../use-authorization-store', () => ({
+vi.mock('../use-authorization-store', () => ({
     useAuthorizationStore: (...args: unknown[]) => mockUseAuthorizationStore(...args),
 }));
 
@@ -53,7 +50,7 @@ describe('useAuthorization', () => {
         expect.assertions(3);
         const { authorization, persist } = useAuthorizationTestHarness();
         const wallet = createWallet({
-            authorize: jest.fn().mockResolvedValue(
+            authorize: vi.fn().mockResolvedValue(
                 createAuthorizationResult({
                     accounts: [
                         createAuthorizedAccount({
@@ -98,7 +95,7 @@ describe('useAuthorization', () => {
         expect.assertions(2);
         const { authorization, persist } = useAuthorizationTestHarness();
         const wallet = createWallet({
-            authorize: jest
+            authorize: vi
                 .fn()
                 .mockRejectedValueOnce(
                     new SolanaMobileWalletAdapterProtocolError(
@@ -159,7 +156,7 @@ describe('useAuthorization', () => {
         } as SignInPayload;
         const signInResult = createSignInResult();
         const wallet = createWallet({
-            authorize: jest.fn().mockResolvedValue(
+            authorize: vi.fn().mockResolvedValue(
                 createAuthorizationResult({
                     authToken: 'signed-in-auth-token',
                     signInResult,
@@ -192,7 +189,7 @@ describe('useAuthorization', () => {
         expect.assertions(2);
         const { authorization, persist } = useAuthorizationTestHarness();
         const wallet = createWallet({
-            deauthorize: jest.fn().mockResolvedValue(undefined),
+            deauthorize: vi.fn().mockResolvedValue(undefined),
         });
 
         await authorization.deauthorizeSession(wallet);
@@ -231,11 +228,11 @@ describe('useAuthorization', () => {
 });
 
 function createWallet({
-    authorize = jest.fn(),
-    deauthorize = jest.fn(),
+    authorize = vi.fn(),
+    deauthorize = vi.fn(),
 }: {
-    authorize?: jest.Mock;
-    deauthorize?: jest.Mock;
+    authorize?: Mock;
+    deauthorize?: Mock;
 } = {}) {
     return {
         authorize,
@@ -243,12 +240,12 @@ function createWallet({
     };
 }
 
-function lastPersistedAuthorization(persist: jest.Mock): WalletAuthorization {
+function lastPersistedAuthorization(persist: Mock): WalletAuthorization {
     return persist.mock.calls.at(-1)?.[0] as WalletAuthorization;
 }
 
 function useAuthorizationTestHarness({ identity = IDENTITY }: { identity?: AppIdentity } = {}) {
-    const persist = jest.fn().mockResolvedValue(undefined);
+    const persist = vi.fn().mockResolvedValue(undefined);
 
     mockUseAuthorizationStore.mockReturnValue({
         accounts: [createExpectedAccount()],

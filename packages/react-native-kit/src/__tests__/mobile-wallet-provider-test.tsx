@@ -9,11 +9,11 @@ import { createCache } from '../test-utils/fixtures';
 import { act, renderHook } from '../test-utils/react-test-renderer';
 import type { WalletAuthorization } from '../use-authorization';
 
-jest.mock('../async-storage-cache', () => ({
-    createAsyncStorageCache: jest.fn(),
+vi.mock('../async-storage-cache', () => ({
+    createAsyncStorageCache: vi.fn(),
 }));
 
-const mockCreateAsyncStorageCache = jest.mocked(createAsyncStorageCache);
+const mockCreateAsyncStorageCache = vi.mocked(createAsyncStorageCache);
 const CLUSTER = {
     id: 'solana:devnet',
     url: 'https://rpc.wallet-ui.dev',
@@ -33,7 +33,7 @@ describe('MobileWalletProvider', () => {
         expect.assertions(8);
         const cache = createCache();
         const client = createClient();
-        const createClientFactory = jest.fn().mockReturnValue(client);
+        const createClientFactory = vi.fn().mockReturnValue(client);
         const hook = renderHook(useProviderState, {
             initialProps: undefined,
             wrapper: createProviderWrapper({
@@ -62,7 +62,7 @@ describe('MobileWalletProvider', () => {
         expect.assertions(6);
         const cache = createCache();
         const client = createClient();
-        const createClientFactory = jest.fn().mockReturnValue(client);
+        const createClientFactory = vi.fn().mockReturnValue(client);
 
         mockCreateAsyncStorageCache.mockReturnValue(cache as never);
 
@@ -89,7 +89,7 @@ describe('MobileWalletProvider', () => {
 function createClient(): Client {
     return {
         rpc: {
-            getLatestBlockhash: jest.fn(),
+            getLatestBlockhash: vi.fn(),
         } as never,
         rpcSubscriptions: {} as never,
     };

@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "undici": "^7.24.6",
-    "uuid": "^13.0.0",
+    "uuid": "^14.0.0",
     "whatwg-fetch": "^3.6.20"
   },
   "engines": {

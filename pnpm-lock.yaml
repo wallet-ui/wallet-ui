@@ -630,6 +630,9 @@ importers:
       nanostores:
         specifier: 1.2.0
         version: 1.2.0
+      qr:
+        specifier: 0.6.0
+        version: 0.6.0
     devDependencies:
       typescript:
         specifier: ^6.0.3
@@ -8975,6 +8978,10 @@ packages:
 
   pure-rand@6.1.0:
     resolution: {integrity: sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA==}
+
+  qr@0.6.0:
+    resolution: {integrity: sha512-P23VoX7SipHALdiIYG+D+LT/6n22dNKwV92FAb3d+Nlki/5WisSsfLt0UDFz2XEBtuwrECTznvu+chKKFCSYhA==}
+    engines: {node: '>= 20.19.0'}
 
   quansync@0.2.11:
     resolution: {integrity: sha512-AifT7QEbW9Nri4tAwR5M/uzpBuqfZf+zwaEM/QkzEjj7NBuFD2rBuy0K3dE+8wltbezDV7JMA0WfnCPYRSYbXA==}
@@ -21275,6 +21282,8 @@ snapshots:
 
   pure-rand@6.1.0:
     optional: true
+
+  qr@0.6.0: {}
 
   quansync@0.2.11: {}
 

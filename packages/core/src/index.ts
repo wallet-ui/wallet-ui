@@ -1,4 +1,6 @@
 export * from './clusters';
+export * from './create-qr-code';
+export * from './create-qr-code-svg';
 export * from './create-storage';
 export * from './create-storage-account';
 export * from './create-storage-cluster';

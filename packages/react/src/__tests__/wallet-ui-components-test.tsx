@@ -21,12 +21,14 @@ import { WalletUiList } from '../wallet-ui-list';
 import { WalletUiListButton } from '../wallet-ui-list-button';
 import { WalletUiModal } from '../wallet-ui-modal';
 import { WalletUiModalTrigger } from '../wallet-ui-modal-trigger';
+import { WalletUiQrCode } from '../wallet-ui-qr-code';
 
 const mockBaseModal = vi.fn();
 const mockUseBaseDropdown = vi.fn();
 const mockUseWalletUiWallet = vi.fn();
 const mockUseWalletUiDropdown = vi.fn();
 const TEST_ICON = 'data:image/png;base64,ZmFrZQ==';
+const TEST_WALLET_ADDRESS = '11111111111111111111111111111111';
 
 afterEach(() => {
     mockBaseModal.mockReset();
@@ -533,6 +535,91 @@ describe('WalletUiModalTrigger', () => {
 
         expect(button.children).toContain('Select Wallet');
         expect(modal.open).toHaveBeenCalled();
+    });
+});
+
+describe('WalletUiQrCode', () => {
+    const cleanups: Array<() => void> = [];
+
+    afterEach(() => {
+        for (const cleanup of cleanups.splice(0).reverse()) {
+            cleanup();
+        }
+    });
+
+    it('renders an accessible QR code svg when a title is provided', () => {
+        const renderer = render(
+            cleanups,
+            <WalletUiQrCode
+                className="qr-code"
+                foregroundColor="#111827"
+                title="Wallet address"
+                value={TEST_WALLET_ADDRESS}
+            />,
+        );
+        const svg = renderer.root.findByProps({ 'data-wu': 'wallet-ui-qr-code' });
+        const background = renderer.root.findByType('rect');
+        const foreground = renderer.root.findByType('path');
+        const title = renderer.root.findByType('title');
+
+        expect(background.props.fill).toBe('#fff');
+        expect(background.props.height).toBe(29);
+        expect(foreground.props.d).toContain('M4 4h1v1H4z');
+        expect(foreground.props.fill).toBe('#111827');
+        expect(svg.props['aria-labelledby']).toBe(title.props.id);
+        expect(svg.props.className).toBe('qr-code');
+        expect(svg.props.role).toBe('img');
+        expect(svg.props.viewBox).toBe('0 0 29 29');
+        expect(title.children).toEqual(['Wallet address']);
+    });
+
+    it('hides an untitled QR code svg from assistive technology', () => {
+        const renderer = render(cleanups, <WalletUiQrCode value={TEST_WALLET_ADDRESS} />);
+        const svg = renderer.root.findByProps({ 'data-wu': 'wallet-ui-qr-code' });
+
+        expect(renderer.root.findAllByType('title')).toHaveLength(0);
+        expect(svg.props['aria-hidden']).toBe(true);
+        expect(svg.props.role).toBeUndefined();
+    });
+
+    it('preserves a custom aria-labelledby value', () => {
+        const renderer = render(
+            cleanups,
+            <WalletUiQrCode aria-labelledby="custom-qr-label" title="Wallet address" value={TEST_WALLET_ADDRESS} />,
+        );
+        const svg = renderer.root.findByProps({ 'data-wu': 'wallet-ui-qr-code' });
+
+        expect(svg.props['aria-labelledby']).toBe('custom-qr-label');
+    });
+
+    it('renders a centered logo with capped size', () => {
+        const renderer = render(
+            cleanups,
+            <WalletUiQrCode
+                backgroundColor="#f8fafc"
+                logo={{
+                    backgroundColor: '#ffffff',
+                    href: TEST_ICON,
+                    size: 0.5,
+                }}
+                value={TEST_WALLET_ADDRESS}
+            />,
+        );
+        const image = renderer.root.findByType('image');
+        const logoBackground = renderer.root.findAllByType('rect')[1];
+        const svg = renderer.root.findByProps({ 'data-wu': 'wallet-ui-qr-code' });
+
+        expect(image.props.height).toBe(8.25);
+        expect(image.props.href).toBe(TEST_ICON);
+        expect(image.props.width).toBe(8.25);
+        expect(image.props.x).toBe(12.375);
+        expect(image.props.y).toBe(12.375);
+        expect(logoBackground.props.fill).toBe('#ffffff');
+        expect(logoBackground.props.height).toBe(11);
+        expect(logoBackground.props.width).toBe(11);
+        expect(logoBackground.props.x).toBe(11);
+        expect(logoBackground.props.y).toBe(11);
+        expect(svg.props.viewBox).toBe('0 0 33 33');
     });
 });
 

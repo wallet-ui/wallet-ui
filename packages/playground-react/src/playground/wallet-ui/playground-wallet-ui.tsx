@@ -17,6 +17,7 @@ import { PlaygroundWalletUiList } from './playground-wallet-ui-list';
 import { PlaygroundWalletUiListButton } from './playground-wallet-ui-list-button';
 import { PlaygroundWalletUiModal } from './playground-wallet-ui-modal';
 import { PlaygroundWalletUiProvider } from './playground-wallet-ui-provider';
+import { PlaygroundWalletUiQrCode } from './playground-wallet-ui-qr-code';
 
 const cards = {
     BaseButton: <PlaygroundBaseButton />,
@@ -32,6 +33,7 @@ const cards = {
     WalletUiListButton: <PlaygroundWalletUiListButton />,
     WalletUiModal: <PlaygroundWalletUiModal />,
     WalletUiProvider: <PlaygroundWalletUiProvider />,
+    WalletUiQrCode: <PlaygroundWalletUiQrCode />,
 };
 
 export function PlaygroundWalletUi() {

@@ -31,6 +31,7 @@ export * from './wallet-ui-list';
 export * from './wallet-ui-list-button';
 export * from './wallet-ui-modal';
 export * from './wallet-ui-modal-trigger';
+export * from './wallet-ui-qr-code';
 
 // Re-exports
 export * from '@solana/react';

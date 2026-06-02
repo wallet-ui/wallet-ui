@@ -5,7 +5,8 @@
     "type": "module",
     "scripts": {
         "astro": "astro",
-        "build": "astro build",
+        "build": "pnpm build:dependencies && astro build",
+        "build:dependencies": "pnpm --workspace-root turbo run compile:js compile:typedefs --filter=@wallet-ui/docs^...",
         "check": "astro check",
         "check:dead-links": "pnpm build && pnpm check:dead-links:dist",
         "check:dead-links:dist": "node scripts/check-dead-links.mjs",
@@ -18,11 +19,15 @@
     },
     "dependencies": {
         "@astrojs/cloudflare": "^13.1.6",
+        "@astrojs/react": "^5.0.7",
         "@astrojs/starlight": "^0.38.1",
         "@astrojs/starlight-tailwind": "^5.0.0",
         "@catppuccin/starlight": "^2.0.1",
         "@tailwindcss/vite": "^4.1.18",
+        "@wallet-ui/react": "workspace:*",
         "astro": "^6.1.5",
+        "react": "^19.2.1",
+        "react-dom": "^19.2.1",
         "sharp": "^0.34.2",
         "tailwindcss": "^4.1.18"
     },

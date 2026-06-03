@@ -60,6 +60,7 @@ jobs:
           commit: 'chore: update versions'
           publish: pnpm changeset:publish
           title: 'chore: update versions'
+          version: pnpm changeset:version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_TAG: latest

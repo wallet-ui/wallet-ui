@@ -1,5 +1,18 @@
 # @wallet-ui/react
 
+## 4.2.0
+
+### Minor Changes
+
+- [#533](https://github.com/wallet-ui/wallet-ui/pull/533) [`e79cb14`](https://github.com/wallet-ui/wallet-ui/commit/e79cb140b6320d0bc1873c444d68c0accd9f0dec) Thanks [@beeman](https://github.com/beeman)! - Add framework-neutral QR code matrix and SVG generation helpers backed by `qr`, and raise the Node.js engine floor to 20.19 for published Wallet UI packages.
+
+- [#536](https://github.com/wallet-ui/wallet-ui/pull/536) [`e5e412b`](https://github.com/wallet-ui/wallet-ui/commit/e5e412b604d851294e5a3b6e5b58bc4aebbf2dcb) Thanks [@beeman](https://github.com/beeman)! - Add a WalletUiQrCode component for rendering QR codes from React.
+
+### Patch Changes
+
+- Updated dependencies [[`e79cb14`](https://github.com/wallet-ui/wallet-ui/commit/e79cb140b6320d0bc1873c444d68c0accd9f0dec)]:
+    - @wallet-ui/core@4.2.0
+
 ## 4.1.1
 
 ### Patch Changes

@@ -1,6 +1,7 @@
 // @ts-check
 import catppuccin from '@catppuccin/starlight';
 import cloudflare from '@astrojs/cloudflare';
+import react from '@astrojs/react';
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
@@ -33,6 +34,7 @@ export default defineConfig({
         prerenderEnvironment: 'node',
     }),
     integrations: [
+        react(),
         starlight({
             title: siteName,
             description: siteDescription,
@@ -99,6 +101,9 @@ export default defineConfig({
                     light: { flavor: 'latte' },
                 }),
             ],
+            components: {
+                ThemeProvider: './src/components/starlight/ThemeProvider.astro',
+            },
             customCss: ['./src/styles/global.css'],
             routeMiddleware: './src/starlight-route-data.ts',
         }),

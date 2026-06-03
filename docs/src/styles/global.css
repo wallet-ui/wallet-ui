@@ -15,3 +15,82 @@
 Add additional Tailwind styles to this file:
 https://tailwindcss.com/docs/adding-custom-styles#using-custom-css
 */
+
+.wallet-ui-react-island {
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    padding: 1rem;
+}
+
+.wallet-ui-react-island__controls {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+}
+
+.wallet-ui-react-island__control {
+    margin-top: 0;
+    min-width: 0;
+}
+
+.wallet-ui-react-island__label {
+    color: var(--sl-color-gray-2);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    margin: 0 0 0.375rem;
+}
+
+.wallet-ui-react-island [data-wu='base-button'] {
+    align-items: center;
+    background: var(--sl-color-bg-nav);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.375rem;
+    color: var(--sl-color-white);
+    display: inline-flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+    min-height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+}
+
+.wallet-ui-react-island [data-wu='base-button']:hover {
+    border-color: var(--sl-color-accent);
+}
+
+.wallet-ui-react-island [data-wu='base-dropdown'] {
+    position: relative;
+}
+
+.wallet-ui-react-island [data-wu='base-dropdown-list'] {
+    background: var(--sl-color-black);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.375rem;
+    box-shadow: var(--sl-shadow-md);
+    display: grid;
+    gap: 0.25rem;
+    margin-top: 0.375rem;
+    min-width: 100%;
+    padding: 0.375rem;
+    z-index: 10;
+}
+
+.wallet-ui-react-island [data-wu='base-dropdown-list'][hidden] {
+    display: none;
+}
+
+.wallet-ui-react-island [data-wu='base-dropdown-item'] {
+    background: transparent;
+    border: 0;
+    border-radius: 0.25rem;
+    color: var(--sl-color-white);
+    padding: 0.5rem 0.625rem;
+    text-align: left;
+    width: 100%;
+}
+
+.wallet-ui-react-island [data-wu='base-dropdown-item']:hover {
+    background: var(--sl-color-gray-6);
+}

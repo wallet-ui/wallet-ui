@@ -1,0 +1,26 @@
+{
+    "name": "@wallet-ui/example-react-vite-unstyled",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "compile:js": "vite build",
+        "dev": "vite",
+        "preview": "vite preview",
+        "test:typecheck": "tsc"
+    },
+    "dependencies": {
+        "@wallet-ui/css": "workspace:*",
+        "@wallet-ui/react": "workspace:*",
+        "react": "^19.1.4",
+        "react-dom": "^19.1.4",
+        "ws": "^8.18.3"
+    },
+    "devDependencies": {
+        "@types/react": "^19.1.17",
+        "@types/react-dom": "^19.1.11",
+        "@vitejs/plugin-react": "^5.1.1",
+        "typescript": "~6.0.3",
+        "vite": "^7.2.6"
+    }
+}

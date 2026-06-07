@@ -37,7 +37,9 @@
     "files": [
         "./dist/"
     ],
-    "sideEffects": false,
+    "sideEffects": [
+        "**/*.css"
+    ],
     "keywords": [
         "blockchain",
         "solana",
@@ -46,7 +48,6 @@
     "scripts": {
         "compile:js": "tsup --config build-scripts/tsup.config.package.ts",
         "compile:typedefs": "tsc -p ./tsconfig.declarations.json",
-        "compile:css": "tailwindcss -i ../tailwind/src/index.css -o ./src/index.css",
         "dev": "vitest -c ../../node_modules/@wallet-ui/test-config/vitest.config.mjs --root . --watch",
         "prepublishOnly": "pnpm pkg delete devDependencies",
         "publish-impl": "npm view $npm_package_name@$npm_package_version > /dev/null 2>&1 || (pnpm publish --tag ${PUBLISH_TAG:-canary} --access public --no-git-checks && (([ -n \"${GITHUB_OUTPUT:-}\" ] && echo 'published=true' >> \"$GITHUB_OUTPUT\") || true) && (([ \"$PUBLISH_TAG\" != \"canary\" ] && ../build-scripts/maybe-tag-latest.ts --token \"$GITHUB_TOKEN\" $npm_package_name@$npm_package_version) || true))",
@@ -72,12 +73,6 @@
         "supports bigint and not dead",
         "maintained node versions"
     ],
-    "devDependencies": {
-        "@tailwindcss/cli": "^4.2.2"
-    },
-    "peerDependencies": {
-        "tailwindcss": "^4.2.2"
-    },
     "engines": {
         "node": ">=20.19.0"
     }

@@ -567,6 +567,40 @@ importers:
         specifier: ^7.2.6
         version: 7.2.6(@types/node@25.9.1)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3)
 
+  examples/react-vite-unstyled:
+    dependencies:
+      '@wallet-ui/css':
+        specifier: workspace:*
+        version: link:../../packages/css
+      '@wallet-ui/react':
+        specifier: workspace:*
+        version: link:../../packages/react
+      react:
+        specifier: ^19.1.4
+        version: 19.2.1
+      react-dom:
+        specifier: ^19.1.4
+        version: 19.2.1(react@19.2.1)
+      ws:
+        specifier: ^8.18.3
+        version: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+    devDependencies:
+      '@types/react':
+        specifier: ^19.1.17
+        version: 19.2.7
+      '@types/react-dom':
+        specifier: ^19.1.11
+        version: 19.2.3(@types/react@19.2.7)
+      '@vitejs/plugin-react':
+        specifier: ^5.1.1
+        version: 5.1.1(vite@7.2.6(@types/node@25.3.1)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3))
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+      vite:
+        specifier: ^7.2.6
+        version: 7.2.6(@types/node@25.3.1)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3)
+
   examples/utils:
     dependencies:
       '@inquirer/core':
@@ -639,14 +673,7 @@ importers:
         version: 6.0.3
 
   packages/css:
-    dependencies:
-      tailwindcss:
-        specifier: ^4.2.2
-        version: 4.2.2
-    devDependencies:
-      '@tailwindcss/cli':
-        specifier: ^4.2.2
-        version: 4.2.2
+    dependencies: {}
 
   packages/playground-react:
     dependencies:

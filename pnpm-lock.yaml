@@ -144,7 +144,7 @@ importers:
         specifier: ^0.11.0
         version: 0.11.0(@solana/kit@6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.3)(utf-8-validate@5.0.10))
       '@solana/kit':
-        specifier: ^6.1.0
+        specifier: ^6.1.0 || ^7.0.0
         version: 6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.3)(utf-8-validate@5.0.10)
       '@solana/spl-memo':
         specifier: ^0.2.5
@@ -625,7 +625,7 @@ importers:
         specifier: 1.1.0
         version: 1.1.0(nanostores@1.2.0)
       '@solana/kit':
-        specifier: ^6.1.0
+        specifier: ^6.1.0 || ^7.0.0
         version: 6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.3)(utf-8-validate@5.0.10)
       nanostores:
         specifier: 1.2.0
@@ -654,7 +654,7 @@ importers:
         specifier: ^0.12.0
         version: 0.12.0(@solana/kit@6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.3)(utf-8-validate@5.0.10))
       '@solana/kit':
-        specifier: ^6.1.0
+        specifier: ^6.1.0 || ^7.0.0
         version: 6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@solana/kit-client-rpc':
         specifier: ^0.6.0
@@ -694,7 +694,7 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(nanostores@1.2.0)(react@19.2.1)
       '@solana/kit':
-        specifier: ^6.1.0
+        specifier: ^6.1.0 || ^7.0.0
         version: 6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.3)(utf-8-validate@5.0.10)
       '@solana/react':
         specifier: 6.1.0
@@ -773,7 +773,7 @@ importers:
         specifier: ^0.11.0
         version: 0.11.0(@solana/kit@6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.3)(utf-8-validate@5.0.10))
       '@solana/kit':
-        specifier: ^6.1.0
+        specifier: ^6.1.0 || ^7.0.0
         version: 6.1.0(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@6.0.3)(utf-8-validate@5.0.10)
       '@solana/react':
         specifier: ^6.1.0

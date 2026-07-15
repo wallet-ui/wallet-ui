@@ -6,14 +6,14 @@
         "./index.ts"
     ],
     "dependencies": {
-        "@solana/kit": "^6.1.0",
+        "@solana-program/system": "^0.12.0",
+        "@solana/kit": "^6.1.0 || ^7.0.0",
         "@solana/kit-client-rpc": "^0.6.0",
         "@solana/kit-plugin-rpc": "^0.6.0",
         "@wallet-ui/react": "workspace:*",
         "react": "^19.1.4",
         "react-dom": "^19.1.4",
         "react-error-boundary": "^6.0.0",
-        "@solana-program/system": "^0.12.0",
         "react-router": "^7.13.2",
         "ws": "^8.18.3"
     },

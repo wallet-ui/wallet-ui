@@ -1,6 +1,10 @@
-import { devnet, mainnet, testnet } from '@solana/kit';
-
-import { localnet, SolanaCluster } from './types/solana-cluster';
+import {
+    localnet,
+    type SolanaCluster,
+    type SolanaDevnetUrl,
+    type SolanaMainnetUrl,
+    type SolanaTestnetUrl,
+} from './types/solana-cluster';
 
 export type CreateSolanaProps = string | (Partial<Pick<SolanaCluster, 'label' | 'url' | 'urlWs'>> & { url: string });
 
@@ -18,6 +22,18 @@ function createSolanaCluster(
         url: props.url ?? defaultUrl,
         urlWs: props.urlWs ?? defaultUrlWs,
     };
+}
+
+function devnet(url: string) {
+    return url as SolanaDevnetUrl;
+}
+
+function mainnet(url: string) {
+    return url as SolanaMainnetUrl;
+}
+
+function testnet(url: string) {
+    return url as SolanaTestnetUrl;
 }
 
 export function createSolanaDevnet(props: CreateSolanaProps = 'https://api.devnet.solana.com'): SolanaCluster {

@@ -95,7 +95,7 @@
         "typescript": "^6.0.3"
     },
     "peerDependencies": {
-        "@solana/kit": "^6.1.0",
+        "@solana/kit": "^6.1.0 || ^7.0.0",
         "react": ">=18"
     },
     "engines": {

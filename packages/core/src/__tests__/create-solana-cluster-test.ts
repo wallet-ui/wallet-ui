@@ -1,4 +1,4 @@
-import { createSolanaDevnet, createSolanaLocalnet, createSolanaTestnet } from '../clusters';
+import { createSolanaDevnet, createSolanaLocalnet, createSolanaMainnet, createSolanaTestnet } from '../clusters';
 
 describe('createSolanaCluster', () => {
     it('should create a SolanaCluster for devnet', () => {
@@ -15,13 +15,13 @@ describe('createSolanaCluster', () => {
     });
     it('should create a SolanaCluster for mainnet', () => {
         // Act
-        const result = createSolanaDevnet();
+        const result = createSolanaMainnet('https://api.mainnet-beta.solana.com');
         // Assert
         expect(result).toMatchInlineSnapshot(`
             {
-              "id": "solana:devnet",
-              "label": "Devnet",
-              "url": "https://api.devnet.solana.com",
+              "id": "solana:mainnet",
+              "label": "Mainnet",
+              "url": "https://api.mainnet-beta.solana.com",
             }
         `);
     });

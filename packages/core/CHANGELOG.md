@@ -1,5 +1,11 @@
 # @wallet-ui/core
 
+## 4.2.1
+
+### Patch Changes
+
+- [#542](https://github.com/wallet-ui/wallet-ui/pull/542) [`9ffbd0e`](https://github.com/wallet-ui/wallet-ui/commit/9ffbd0e6701d00047a9dc41f3fabf888c06efec8) Thanks [@beeman](https://github.com/beeman)! - support @solana/kit 6 and 7
+
 ## 4.2.0
 
 ### Minor Changes

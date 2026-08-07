@@ -5,6 +5,7 @@ import { createAsyncStorageCache } from '../async-storage-cache';
 import type { Cache } from '../cache';
 import type { Client } from '../client';
 import { createDefaultClient } from '../create-default-client';
+import type { MobileWalletConfig } from '../mobile-wallet';
 import { MobileWalletProvider, MobileWalletProviderContext } from '../mobile-wallet-provider';
 import { createCache } from '../test-utils/fixtures';
 import { act, renderHook } from '../test-utils/react-test-renderer';
@@ -36,9 +37,10 @@ describe('MobileWalletProvider', () => {
     });
 
     it('requires a client factory for explicit custom client types', () => {
-        expectTypeOf<Parameters<typeof MobileWalletProvider<CustomClient>>[0]>().toMatchTypeOf<{
-            createClient: (cluster: { url: string; urlWs?: string }) => CustomClient;
-        }>();
+        type CustomClientFactory = Parameters<typeof MobileWalletProvider<CustomClient>>[0]['createClient'];
+
+        expectTypeOf<CustomClientFactory>().toBeFunction();
+        expectTypeOf<Parameters<CustomClientFactory>[1]>().toEqualTypeOf<MobileWalletConfig>();
         expectTypeOf<{
             children: ReactNode;
             cluster: typeof CLUSTER;
@@ -47,7 +49,7 @@ describe('MobileWalletProvider', () => {
     });
 
     it('uses the provided cache and client factory and fetches authorization on mount', async () => {
-        expect.assertions(8);
+        expect.assertions(9);
         const cache = createCache();
         const client = createClient();
         const createClientFactory = vi.fn().mockReturnValue(client);
@@ -63,9 +65,17 @@ describe('MobileWalletProvider', () => {
             await Promise.resolve();
         });
 
-        expect(createClientFactory).toHaveBeenCalledWith(CLUSTER);
+        expect(createClientFactory).toHaveBeenCalledWith(
+            CLUSTER,
+            expect.objectContaining({
+                chain: CLUSTER.id,
+                identity: IDENTITY,
+                store: expect.objectContaining({ persist: expect.any(Function) }),
+            }),
+        );
         expect(mockCreateAsyncStorageCache).not.toHaveBeenCalled();
         expect(cache.get).toHaveBeenCalledTimes(1);
+        expect(createClientFactory.mock.calls[0][1].store).toBe(hook.result.store);
         expect(hook.result.cache).toBe(cache);
         expect(hook.result.chain).toBe(CLUSTER.id);
         expect(hook.result.client).toBe(client);
@@ -95,7 +105,14 @@ describe('MobileWalletProvider', () => {
         });
 
         expect(mockCreateAsyncStorageCache).toHaveBeenCalledTimes(1);
-        expect(createClientFactory).toHaveBeenCalledWith(CLUSTER);
+        expect(createClientFactory).toHaveBeenCalledWith(
+            CLUSTER,
+            expect.objectContaining({
+                chain: CLUSTER.id,
+                identity: IDENTITY,
+                store: expect.objectContaining({ persist: expect.any(Function) }),
+            }),
+        );
         expect(cache.get).toHaveBeenCalledTimes(1);
         expect(hook.result.cache).toBe(cache);
         expect(hook.result.client).toBe(client);

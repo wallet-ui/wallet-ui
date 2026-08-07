@@ -15,6 +15,7 @@ import { WalletIcon } from '@wallet-standard/core';
 import { useCallback, useMemo } from 'react';
 
 import { assertValidIdentityUri } from './assert-valid-identity-uri';
+import { authorizeMobileWalletSession } from './authorize-mobile-wallet-session';
 import { AuthorizationStore } from './authorization-store';
 import { Cache } from './cache';
 import { convertSignInResult, SignInOutput } from './convert-sign-in-result';
@@ -55,30 +56,9 @@ export function useAuthorization({ chain, identity, store }: WalletAuthorization
     );
 
     const authorizeSession = useCallback(
-        async (wallet: AuthorizeAPI) => {
-            assertValidIdentityUri(identity);
-            try {
-                const authorizationResult = await wallet.authorize({
-                    auth_token: authToken,
-                    chain,
-                    identity,
-                });
-                return (await handleAuthorizationResult(authorizationResult)).selectedAccount;
-            } catch (error) {
-                if (
-                    error instanceof SolanaMobileWalletAdapterProtocolError &&
-                    error.code === SolanaMobileWalletAdapterProtocolErrorCode.ERROR_AUTHORIZATION_FAILED
-                ) {
-                    const retryResult = await wallet.authorize({
-                        chain,
-                        identity,
-                    });
-                    return (await handleAuthorizationResult(retryResult)).selectedAccount;
-                }
-                throw error;
-            }
-        },
-        [authToken, chain, identity, handleAuthorizationResult],
+        async (wallet: AuthorizeAPI) =>
+            await authorizeMobileWalletSession({ authToken, chain, handleAuthorizationResult, identity }, wallet),
+        [authToken, chain, handleAuthorizationResult, identity],
     );
 
     const authorizeSessionWithSignIn = useCallback(

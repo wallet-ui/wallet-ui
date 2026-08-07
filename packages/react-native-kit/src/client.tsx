@@ -1,6 +1,8 @@
-import { createSolanaRpc, createSolanaRpcSubscriptions } from '@solana/kit';
+import type { Rpc, RpcSubscriptions, SolanaRpcApi, SolanaRpcSubscriptionsApi } from '@solana/kit';
 
-export interface Client {
-    rpc: ReturnType<typeof createSolanaRpc>;
-    rpcSubscriptions: ReturnType<typeof createSolanaRpcSubscriptions>;
+export interface BaseClient {
+    rpc: Rpc<SolanaRpcApi>;
+    rpcSubscriptions: RpcSubscriptions<SolanaRpcSubscriptionsApi>;
 }
+
+export interface Client extends BaseClient {}

@@ -3,6 +3,7 @@ import type { Mock } from 'vitest';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { resetAsyncStorageMock } from '../../../test-config/react-native-unit-test-utils';
+import type { BaseClient, Client } from '../client';
 import { createExpectedAccount, FIRST_ADDRESS, FIRST_ADDRESS_BASE64 } from '../test-utils/fixtures';
 import { useMobileWallet } from '../use-mobile-wallet';
 
@@ -90,6 +91,24 @@ describe('useMobileWallet', () => {
         expect(callback).toHaveBeenCalledWith(transportWallet);
         expect(mockAuthorizeSession).not.toHaveBeenCalled();
         expect(result).toBe('connected-via-callback');
+    });
+
+    it('preserves a custom client type', () => {
+        expect.assertions(1);
+        const createClient = () => ({
+            extraMethod: vi.fn(() => 'extra capability'),
+            rpc: {} as BaseClient['rpc'],
+            rpcSubscriptions: {} as BaseClient['rpcSubscriptions'],
+        });
+        const client = createClient();
+        const { mobileWallet } = useMobileWalletTestHarness<ReturnType<typeof createClient>>({
+            contextOverrides: { client },
+        });
+        const { mobileWallet: defaultMobileWallet } = useMobileWalletTestHarness();
+
+        expectTypeOf(defaultMobileWallet.client.rpc.getBalance).toBeFunction();
+        expectTypeOf<ReturnType<typeof mobileWallet.client.extraMethod>>().toEqualTypeOf<string>();
+        expect(mobileWallet.client.extraMethod()).toBe('extra capability');
     });
 
     it('rejects invalid identity URI schemes before launching the wallet transport', async () => {
@@ -342,7 +361,7 @@ function createTransportWallet({
     };
 }
 
-function useMobileWalletTestHarness({
+function useMobileWalletTestHarness<TClient extends BaseClient = Client>({
     contextOverrides,
     transportWallet = createTransportWallet(),
 }: {
@@ -381,7 +400,7 @@ function useMobileWalletTestHarness({
     mockUseAuthorization.mockReturnValue(createAuthorizationHookValue());
 
     return {
-        mobileWallet: useMobileWallet(),
+        mobileWallet: useMobileWallet<TClient>(),
         transportWallet,
     };
 }

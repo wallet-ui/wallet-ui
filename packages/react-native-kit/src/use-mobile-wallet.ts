@@ -16,14 +16,15 @@ import { transact } from '@solana-mobile/mobile-wallet-adapter-protocol-kit';
 import { useCallback, useContext, useMemo } from 'react';
 
 import { assertValidIdentityUri } from './assert-valid-identity-uri';
+import type { BaseClient, Client } from './client';
 import { SignInOutput } from './convert-sign-in-result';
-import { MobileWalletProviderContext } from './mobile-wallet-provider';
+import { MobileWalletProviderContext, type MobileWalletProviderState } from './mobile-wallet-provider';
 import { TransactionSignatures } from './types';
 import { Account, useAuthorization } from './use-authorization';
 
 const decoder = getBase58Decoder();
-export function useMobileWallet() {
-    const ctx = useContext(MobileWalletProviderContext);
+export function useMobileWallet<TClient extends BaseClient = Client>() {
+    const ctx = useContext(MobileWalletProviderContext) as MobileWalletProviderState<TClient>;
     const {
         authorizeSessionWithSignIn,
         authorizeSession,

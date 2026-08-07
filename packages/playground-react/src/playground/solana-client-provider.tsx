@@ -1,7 +1,7 @@
-import React, { ReactNode } from 'react';
-import { rpc } from '@solana/kit-plugin-rpc';
+import { createClient } from '@solana/kit';
+import { solanaRpcConnection } from '@solana/kit-plugin-rpc';
 import { SolanaCluster, useWalletUi } from '@wallet-ui/react';
-import { createEmptyClient } from '@solana/kit';
+import React, { ReactNode } from 'react';
 
 const SolanaClientContext = React.createContext<SolanaClient>({} as SolanaClient);
 
@@ -14,5 +14,10 @@ export const useSolanaClient = () => React.useContext(SolanaClientContext);
 
 export type SolanaClient = ReturnType<typeof createSolanaClient>;
 function createSolanaClient(cluster: SolanaCluster) {
-    return createEmptyClient().use(rpc(cluster.url, cluster.urlWs ? { url: cluster.urlWs } : undefined));
+    return createClient().use(
+        solanaRpcConnection({
+            rpcSubscriptionsUrl: cluster.urlWs,
+            rpcUrl: cluster.url,
+        }),
+    );
 }

@@ -10,28 +10,22 @@ import PackageManagerTabs from '../../../components/docs/PackageManagerTabs.astr
 
 The fastest path is to start from a template. That gives you a working app structure, styling setup, and Wallet UI already wired in.
 
-### Next.js and Tailwind CSS
-
-Basic Next.js app with Tailwind, gill and Wallet UI.
-
-Use templates `gill-next-tailwind-basic` or `gill-next-tailwind-counter` to generate a starting point with Wallet UI and the surrounding app scaffolding in place.
-
-<PackageManagerTabs
-    npm="npx create-solana-dapp@latest -t gill-next-tailwind"
-    pnpm="pnpm dlx create-solana-dapp@latest -t gill-next-tailwind"
-    bun="bunx create-solana-dapp@latest -t gill-next-tailwind"
-/>
-
 ### React with Vite and Tailwind CSS
 
-Basic React app with Vite, Tailwind, gill and Wallet UI.
+React apps with Vite, TypeScript, Tailwind CSS, Wallet UI, and Solana Kit.
 
-Use templates `gill-react-vite-tailwind-basic` or `gill-react-vite-tailwind-counter` to generate a starting point with Wallet UI and the surrounding app scaffolding in place.
+Use `bun-react-vite-solana-kit` for a basic app, or choose `quasar-react-counter` or `quasar-react-escrow` for an app with an example Quasar program.
 
 <PackageManagerTabs
-    npm="npx create-solana-dapp@latest -t gill-react-vite-tailwind"
-    pnpm="pnpm dlx create-solana-dapp@latest -t gill-react-vite-tailwind"
-    bun="bunx create-solana-dapp@latest -t gill-react-vite-tailwind"
+    npm={`npx create-seed@latest -t bun-react-vite-solana-kit
+npx create-seed@latest -t quasar-react-counter
+npx create-seed@latest -t quasar-react-escrow`}
+    pnpm={`pnpm dlx create-seed@latest -t bun-react-vite-solana-kit
+pnpm dlx create-seed@latest -t quasar-react-counter
+pnpm dlx create-seed@latest -t quasar-react-escrow`}
+    bun={`bunx create-seed@latest -t bun-react-vite-solana-kit
+bunx create-seed@latest -t quasar-react-counter
+bunx create-seed@latest -t quasar-react-escrow`}
 />
 
 ## Framework guide

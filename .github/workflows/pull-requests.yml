@@ -18,12 +18,20 @@ env:
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
 jobs:
-  # Needed for grouping check-web3 strategies into one check for mergify
+  # Groups the build-and-test matrix into a single check, so branch rulesets and
+  # auto-merge can gate on one stable status name instead of every matrix leg.
+  #
+  # `always()` is required: without it a failing build-and-test would skip this
+  # job instead of failing it, and a skipped required check does not reliably
+  # block a merge. The job therefore runs unconditionally and asserts the result.
   all-web3-checks:
+    if: ${{ always() }}
     runs-on: ubuntu-latest
     needs: build-and-test
     steps:
-      - run: echo "Done"
+      - env:
+          BUILD_AND_TEST_RESULT: ${{ needs.build-and-test.result }}
+        run: test "$BUILD_AND_TEST_RESULT" = 'success'
 
   build-and-test:
     runs-on: ubuntu-latest

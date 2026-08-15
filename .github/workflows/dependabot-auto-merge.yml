@@ -1,0 +1,61 @@
+name: 'Dependabot auto-merge'
+
+# Enables GitHub's native auto-merge on Dependabot pull requests so they merge
+# themselves once the required status checks pass.
+#
+# `pull_request_target` is required: pull requests opened by Dependabot run with
+# a read-only `GITHUB_TOKEN` under `pull_request`, which cannot enable auto-merge.
+# This workflow never checks out or executes pull request code, so the elevated
+# token is not exposed to the contents of the branch being merged.
+on:
+  pull_request_target:
+    types:
+      - labeled
+      - opened
+      - reopened
+      - synchronize
+      - unlabeled
+
+permissions:
+  contents: read
+
+jobs:
+  auto-merge:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      # Skipped on `unlabeled` so that withdrawing auto-merge stays independent
+      # of metadata resolution, which the opt out does not need.
+      - name: Fetch Dependabot metadata
+        id: metadata
+        if: github.event.action != 'unlabeled'
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Major bumps land breaking changes, so they stay manual.
+      - name: Enable auto-merge
+        if: >-
+          github.event.action != 'unlabeled'
+          && contains(github.event.pull_request.labels.*.name, 'automerge')
+          && steps.metadata.outputs.update-type != 'version-update:semver-major'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge --auto --squash "$PR_URL"
+
+      # Removing the `automerge` label is the manual opt out, so it has to
+      # withdraw a pending auto-merge rather than just skip enabling one.
+      - name: Disable auto-merge
+        if: >-
+          github.event.action == 'unlabeled'
+          && github.event.label.name == 'automerge'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge --disable-auto "$PR_URL"

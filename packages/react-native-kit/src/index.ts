@@ -1,6 +1,7 @@
 export * from './authorization-store';
 export * from './cache';
 export * from './convert-sign-in-result';
+export * from './mobile-wallet';
 export * from './mobile-wallet-provider';
 export * from './use-authorization';
 export * from './use-mobile-wallet';

@@ -24,6 +24,6 @@
         "@wallet-ui/react": "workspace:*",
         "@wallet-ui/tailwind": "workspace:*",
         "tailwindcss": "^4.2.2",
-        "typescript": "^6.0.3"
+        "typescript": "^7.0.2"
     }
 }

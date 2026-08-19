@@ -15,7 +15,7 @@
   "dependencies": {
     "@expo/dom-webview": "~56.0.5",
     "@expo/metro-runtime": "~56.0.12",
-    "@expo/vector-icons": "^15.0.3",
+    "@expo/vector-icons": "^15.1.1",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-native-clipboard/clipboard": "^1.16.3",
     "@rn-primitives/dropdown-menu": "^1.2.0",

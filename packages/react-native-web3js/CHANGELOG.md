@@ -1,5 +1,14 @@
 # @wallet-ui/react-native-web3js
 
+## 4.3.0
+
+### Patch Changes
+
+- [#555](https://github.com/wallet-ui/wallet-ui/pull/555) [`abc6d2b`](https://github.com/wallet-ui/wallet-ui/commit/abc6d2b52a4fbd9beb856cdbb92978f73003051c) Thanks [@beeman](https://github.com/beeman)! - Update the React Native packages to `@solana-mobile/mobile-wallet-adapter-protocol@^2.3.0`, `@solana-mobile/mobile-wallet-adapter-protocol-kit@^0.4.0`, and `@solana-mobile/mobile-wallet-adapter-protocol-web3js@^2.3.0`.
+
+- Updated dependencies []:
+    - @wallet-ui/core@4.3.0
+
 ## 4.2.1
 
 ### Patch Changes

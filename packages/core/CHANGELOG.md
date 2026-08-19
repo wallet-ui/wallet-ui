@@ -1,5 +1,7 @@
 # @wallet-ui/core
 
+## 4.3.0
+
 ## 4.2.1
 
 ### Patch Changes

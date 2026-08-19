@@ -1,5 +1,20 @@
 # @wallet-ui/react-native-kit
 
+## 4.3.0
+
+### Minor Changes
+
+- [#545](https://github.com/wallet-ui/wallet-ui/pull/545) [`3a0a1f7`](https://github.com/wallet-ui/wallet-ui/commit/3a0a1f7335e2c170aa0167e6b487a547db8c5f26) Thanks [@beeman](https://github.com/beeman)! - Preserve custom client capabilities through `MobileWalletProvider` and `useMobileWallet`.
+
+- [#547](https://github.com/wallet-ui/wallet-ui/pull/547) [`8beff2e`](https://github.com/wallet-ui/wallet-ui/commit/8beff2e391a9f11142e635ee442a90c63814fffe) Thanks [@beeman](https://github.com/beeman)! - Add a Kit 7 `mobileWallet` plugin with a lazy MWA payer, headless session lifecycle, and wallet-routed transaction plan execution.
+
+### Patch Changes
+
+- [#555](https://github.com/wallet-ui/wallet-ui/pull/555) [`abc6d2b`](https://github.com/wallet-ui/wallet-ui/commit/abc6d2b52a4fbd9beb856cdbb92978f73003051c) Thanks [@beeman](https://github.com/beeman)! - Update the React Native packages to `@solana-mobile/mobile-wallet-adapter-protocol@^2.3.0`, `@solana-mobile/mobile-wallet-adapter-protocol-kit@^0.4.0`, and `@solana-mobile/mobile-wallet-adapter-protocol-web3js@^2.3.0`.
+
+- Updated dependencies []:
+    - @wallet-ui/core@4.3.0
+
 ## 4.2.1
 
 ### Patch Changes

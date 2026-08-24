@@ -77,7 +77,7 @@
         "qr": "0.6.0"
     },
     "devDependencies": {
-        "typescript": "^6.0.3"
+        "typescript": "^7.0.2"
     },
     "peerDependencies": {
         "@solana/kit": "^6.1.0 || ^7.0.0"

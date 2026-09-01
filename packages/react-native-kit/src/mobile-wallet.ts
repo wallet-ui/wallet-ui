@@ -53,7 +53,7 @@ export function mobileWallet(config: MobileWalletConfig) {
                 );
                 context.message = message;
                 const signatureBytes = await signAndSendTransactionMessageWithSigners(message, executorConfig);
-                return signature(decoder.decode(signatureBytes));
+                return { signature: signature(decoder.decode(signatureBytes)) };
             },
         });
 

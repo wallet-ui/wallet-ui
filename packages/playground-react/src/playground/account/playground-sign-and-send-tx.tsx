@@ -3,6 +3,8 @@ import {
     appendTransactionMessageInstruction,
     assertIsTransactionMessageWithSingleSendingSigner,
     createTransactionMessage,
+    estimateAndSetResourceLimitsFactory,
+    estimateResourceLimitsFactory,
     pipe,
     setTransactionMessageFeePayerSigner,
     setTransactionMessageLifetimeUsingBlockhash,
@@ -14,6 +16,7 @@ import {
     useWallets,
     useWalletUiCluster,
     useWalletUiSigner,
+    useWalletUiTransactionVersions,
 } from '@wallet-ui/react';
 import type { SyntheticEvent } from 'react';
 import React, { useMemo, useState } from 'react';
@@ -32,6 +35,7 @@ export function PlaygroundSignAndSendTx({ account }: { account: UiWalletAccount 
     const wallets = useWallets();
     const [isSendingTransaction, setIsSendingTransaction] = useState(false);
     const [lastSignature, setLastSignature] = useState<Uint8Array | undefined>();
+    const [lastVersion, setLastVersion] = useState<0 | 1>(0);
     const [solQuantityString, setSolQuantityString] = useState<string>('');
     const [recipientAccountStorageKey, setRecipientAccountStorageKey] = useState<string | undefined>();
 
@@ -47,6 +51,9 @@ export function PlaygroundSignAndSendTx({ account }: { account: UiWalletAccount 
         }
     }, [recipientAccountStorageKey, wallets]);
     const transactionSendingSigner = useWalletUiSigner({ account });
+    // Build a version 1 transaction when the wallet advertises support for it, otherwise fall back to version 0.
+    const supportedTransactionVersions = useWalletUiTransactionVersions({ account });
+    const version = supportedTransactionVersions.includes(1) ? 1 : 0;
 
     async function submit() {
         resetError();
@@ -59,7 +66,7 @@ export function PlaygroundSignAndSendTx({ account }: { account: UiWalletAccount 
             }
             const { value: latestBlockhash } = await client.rpc.getLatestBlockhash({ commitment: 'confirmed' }).send();
             const message = pipe(
-                createTransactionMessage({ version: 0 }),
+                createTransactionMessage({ version }),
                 m => setTransactionMessageFeePayerSigner(transactionSendingSigner, m),
                 m => setTransactionMessageLifetimeUsingBlockhash(latestBlockhash, m),
                 m =>
@@ -73,9 +80,18 @@ export function PlaygroundSignAndSendTx({ account }: { account: UiWalletAccount 
                     ),
             );
             assertIsTransactionMessageWithSingleSendingSigner(message);
-            const signature = await signAndSendTransactionMessageWithSigners(message);
+            // A version 1 transaction is budgeted zero compute units unless it carries a compute unit limit, so
+            // simulate to estimate the limits the runtime needs. Version 0 messages go out without limits, as before.
+            const messageWithLimits =
+                version === 1
+                    ? await estimateAndSetResourceLimitsFactory(estimateResourceLimitsFactory({ rpc: client.rpc }))(
+                          message,
+                      )
+                    : message;
+            const signature = await signAndSendTransactionMessageWithSigners(messageWithLimits);
 
             setLastSignature(signature);
+            setLastVersion(version);
             setSolQuantityString('');
         } catch (e) {
             setLastSignature(undefined);
@@ -138,10 +154,19 @@ export function PlaygroundSignAndSendTx({ account }: { account: UiWalletAccount 
                             {isSendingTransaction ? 'Sending...' : 'Transfer'}
                         </button>
                     </div>
+                    <div style={{ fontSize: 12, opacity: 0.7, marginTop: 8 }}>
+                        Wallet supports transaction versions:{' '}
+                        {supportedTransactionVersions.length ? supportedTransactionVersions.join(', ') : 'unknown'}.
+                        Sending as version {version}.
+                    </div>
                 </div>
 
                 {lastSignature ? (
-                    <PlaygroundTxSuccess cluster={cluster} signature={lastSignature} title="You transferred tokens!" />
+                    <PlaygroundTxSuccess
+                        cluster={cluster}
+                        signature={lastSignature}
+                        title={`You transferred tokens with a version ${lastVersion} transaction!`}
+                    />
                 ) : null}
                 {hasError ? (
                     <PlaygroundErrorPanel error={error} onClose={() => resetError()} title="Transfer failed" />

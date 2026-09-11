@@ -1,0 +1,63 @@
+---
+title: useWalletUiTransactionVersions
+description: A hook to read which transaction versions the connected wallet can sign.
+---
+
+import Callout from '../../../../components/docs/Callout.astro';
+
+The `useWalletUiTransactionVersions` hook returns the transaction versions the wallet behind a `UiWalletAccount` can sign, as the wallet advertises them on its `solana:signAndSendTransaction` feature (the feature `useWalletUiSigner` uses). Wallets that only sign fall back to the `solana:signTransaction` feature.
+
+Use it to decide whether to build a `legacy`, version `0` or version `1` transaction message.
+
+<Callout>
+    A version 1 transaction is budgeted zero compute units unless it carries a compute unit limit. When you build one,
+    set the limit explicitly or estimate it with `estimateAndSetResourceLimitsFactory` from `@solana/kit`.
+</Callout>
+
+### Parameters
+
+| Name      | Type              | Description                                    |
+| --------- | ----------------- | ---------------------------------------------- |
+| `account` | `UiWalletAccount` | The connected account to read the versions of. |
+
+### Return Value
+
+A `readonly SolanaTransactionVersion[]`, where `SolanaTransactionVersion` is `'legacy' | 0 | 1`. The list is empty when the account offers no signing feature.
+
+The non-hook variant `getWalletUiAccountTransactionVersions(account)` returns the same list outside of React.
+
+### Example
+
+```tsx
+import {
+    createTransactionMessage,
+    estimateAndSetResourceLimitsFactory,
+    estimateResourceLimitsFactory,
+    pipe,
+    setTransactionMessageFeePayerSigner,
+    setTransactionMessageLifetimeUsingBlockhash,
+    signAndSendTransactionMessageWithSigners,
+} from '@solana/kit';
+import { useWalletUiSigner, useWalletUiTransactionVersions, type UiWalletAccount } from '@wallet-ui/react';
+
+function useSendTransfer({ account, rpc }) {
+    const signer = useWalletUiSigner({ account });
+    const versions = useWalletUiTransactionVersions({ account });
+    const version = versions.includes(1) ? 1 : 0;
+
+    return async instructions => {
+        const { value: latestBlockhash } = await rpc.getLatestBlockhash().send();
+        const message = pipe(
+            createTransactionMessage({ version }),
+            m => setTransactionMessageFeePayerSigner(signer, m),
+            m => setTransactionMessageLifetimeUsingBlockhash(latestBlockhash, m),
+            m => appendTransactionMessageInstructions(instructions, m),
+        );
+        const messageWithLimits =
+            version === 1
+                ? await estimateAndSetResourceLimitsFactory(estimateResourceLimitsFactory({ rpc }))(message)
+                : message;
+        return await signAndSendTransactionMessageWithSigners(messageWithLimits);
+    };
+}
+```

@@ -13,6 +13,8 @@ This signer can be used with libraries like `@solana/kit` or other transaction-b
     This hook is a wrapper around `useWalletAccountTransactionSendingSigner` from the `@solana/react` package.
 </Callout>
 
+The signer accepts `legacy`, version `0` and version `1` transactions. Whether the wallet can sign a given version is up to the wallet; read the versions it advertises with [`useWalletUiTransactionVersions`](/react/hooks/use-wallet-ui-transaction-versions/) before building a version `1` transaction.
+
 ### Return Value
 
 The hook returns a `TransactionSendingSigner` object if a wallet is connected, otherwise it returns `undefined`.

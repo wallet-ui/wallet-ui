@@ -2,11 +2,15 @@ import {
     Address,
     appendTransactionMessageInstructions,
     createTransactionMessage,
+    estimateAndSetResourceLimitsFactory,
+    estimateResourceLimitsFactory,
     getBase58Decoder,
     Instruction,
     pipe,
+    setTransactionMessageComputeUnitLimit,
     setTransactionMessageFeePayerSigner,
     setTransactionMessageLifetimeUsingBlockhash,
+    setTransactionMessageLoadedAccountsDataSizeLimit,
     signAndSendTransactionMessageWithSigners,
     Transaction,
     TransactionSendingSigner,
@@ -19,7 +23,8 @@ import { assertValidIdentityUri } from './assert-valid-identity-uri';
 import type { BaseClient, Client } from './client';
 import { SignInOutput } from './convert-sign-in-result';
 import { MobileWalletProviderContext, type MobileWalletProviderState } from './mobile-wallet-provider';
-import { TransactionSignatures } from './types';
+import { getComputeUnitLimitFromEstimate } from './resource-limits';
+import { SendTransactionsOptions, TransactionSignatures } from './types';
 import { Account, useAuthorization } from './use-authorization';
 
 const decoder = getBase58Decoder();
@@ -123,10 +128,11 @@ export function useMobileWallet<TClient extends BaseClient = Client>() {
     );
 
     const sendTransactions = useCallback(
-        async (instructions: Instruction[]): Promise<string> => {
+        async (instructions: Instruction[], options: SendTransactionsOptions = {}): Promise<string> => {
             if (!selectedAccount) {
                 throw new Error('No account selected');
             }
+            const { computeUnitLimit, loadedAccountsDataSizeLimit, version = 0 } = options;
             const {
                 context: { slot: minContextSlot },
                 value: latestBlockhash,
@@ -134,12 +140,31 @@ export function useMobileWallet<TClient extends BaseClient = Client>() {
 
             const signer = getTransactionSigner(selectedAccount.address, minContextSlot);
 
-            const transactionMessage = pipe(
-                createTransactionMessage({ version: 0 }),
+            let transactionMessage = pipe(
+                createTransactionMessage({ version }),
                 tx => appendTransactionMessageInstructions(instructions, tx),
                 tx => setTransactionMessageFeePayerSigner(signer, tx),
                 tx => setTransactionMessageLifetimeUsingBlockhash(latestBlockhash, tx),
+                tx =>
+                    computeUnitLimit === undefined ? tx : setTransactionMessageComputeUnitLimit(computeUnitLimit, tx),
+                tx =>
+                    loadedAccountsDataSizeLimit === undefined
+                        ? tx
+                        : setTransactionMessageLoadedAccountsDataSizeLimit(loadedAccountsDataSizeLimit, tx),
             );
+
+            // A version 1 transaction is budgeted zero compute units unless it carries a compute unit limit, so
+            // simulate to fill in whichever resource limits the caller left out.
+            const estimateResourceLimits =
+                options.estimateResourceLimits ??
+                (version === 1 && (computeUnitLimit === undefined || loadedAccountsDataSizeLimit === undefined));
+            if (estimateResourceLimits) {
+                const estimate = estimateResourceLimitsFactory({ rpc: ctx.client.rpc });
+                transactionMessage = await estimateAndSetResourceLimitsFactory(async (message, config) => {
+                    const limits = await estimate(message, config);
+                    return { ...limits, computeUnitLimit: getComputeUnitLimitFromEstimate(limits.computeUnitLimit) };
+                })(transactionMessage);
+            }
 
             const signatureBytes = await signAndSendTransactionMessageWithSigners(transactionMessage);
             return decoder.decode(signatureBytes);

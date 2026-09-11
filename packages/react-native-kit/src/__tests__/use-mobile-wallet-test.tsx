@@ -14,9 +14,12 @@ const mockCreateTransactionMessage = vi.fn();
 const mockDecodeBase58 = vi.fn();
 const mockDeauthorizeSession = vi.fn();
 const mockDeauthorizeSessions = vi.fn();
+const mockEstimateResourceLimits = vi.fn();
 const mockPipe = vi.fn();
+const mockSetTransactionMessageComputeUnitLimit = vi.fn();
 const mockSetTransactionMessageFeePayerSigner = vi.fn();
 const mockSetTransactionMessageLifetimeUsingBlockhash = vi.fn();
+const mockSetTransactionMessageLoadedAccountsDataSizeLimit = vi.fn();
 const mockSignAndSendTransactionMessageWithSigners = vi.fn();
 const mockTransact = vi.fn();
 const mockUseContext = vi.fn();
@@ -54,13 +57,23 @@ vi.mock('@solana-mobile/mobile-wallet-adapter-protocol-kit', () => ({
 vi.mock('@solana/kit', () => ({
     appendTransactionMessageInstructions: (...args: unknown[]) => mockAppendTransactionMessageInstructions(...args),
     createTransactionMessage: (...args: unknown[]) => mockCreateTransactionMessage(...args),
+    estimateAndSetResourceLimitsFactory:
+        (estimate: (message: object, config?: unknown) => Promise<object>) =>
+        async (transactionMessage: object, config?: unknown) => ({
+            estimatedResourceLimits: await estimate(transactionMessage, config),
+            transactionMessage,
+        }),
+    estimateResourceLimitsFactory: () => mockEstimateResourceLimits,
     getBase58Decoder: () => ({
         decode: (...args: unknown[]) => mockDecodeBase58(...args),
     }),
     pipe: (...args: unknown[]) => mockPipe(...args),
+    setTransactionMessageComputeUnitLimit: (...args: unknown[]) => mockSetTransactionMessageComputeUnitLimit(...args),
     setTransactionMessageFeePayerSigner: (...args: unknown[]) => mockSetTransactionMessageFeePayerSigner(...args),
     setTransactionMessageLifetimeUsingBlockhash: (...args: unknown[]) =>
         mockSetTransactionMessageLifetimeUsingBlockhash(...args),
+    setTransactionMessageLoadedAccountsDataSizeLimit: (...args: unknown[]) =>
+        mockSetTransactionMessageLoadedAccountsDataSizeLimit(...args),
     signAndSendTransactionMessageWithSigners: (...args: unknown[]) =>
         mockSignAndSendTransactionMessageWithSigners(...args),
 }));
@@ -300,6 +313,76 @@ describe('useMobileWallet', () => {
         expect(mockDecodeBase58).toHaveBeenCalledWith(Uint8Array.from([7, 8, 9]));
         expect(result).toBe('decoded-signature');
     });
+
+    it('does not simulate a version 0 transaction unless asked to', async () => {
+        expect.assertions(4);
+        const instructions = [{ id: 'instruction' }] as never[];
+        const { mobileWallet } = useMobileWalletTestHarness();
+
+        await mobileWallet.sendTransactions(instructions);
+
+        expect(mockEstimateResourceLimits).not.toHaveBeenCalled();
+        expect(mockSetTransactionMessageComputeUnitLimit).not.toHaveBeenCalled();
+        expect(mockSetTransactionMessageLoadedAccountsDataSizeLimit).not.toHaveBeenCalled();
+
+        await mobileWallet.sendTransactions(instructions, { estimateResourceLimits: true });
+
+        expect(mockEstimateResourceLimits).toHaveBeenCalledTimes(1);
+    });
+
+    it('builds a version 1 transaction with explicit resource limits without simulating', async () => {
+        expect.assertions(5);
+        const instructions = [{ id: 'instruction' }] as never[];
+        const { mobileWallet } = useMobileWalletTestHarness();
+
+        const result = await mobileWallet.sendTransactions(instructions, {
+            computeUnitLimit: 200_000,
+            loadedAccountsDataSizeLimit: 65_536,
+            version: 1,
+        });
+
+        expect(mockCreateTransactionMessage).toHaveBeenCalledWith({ version: 1 });
+        expect(mockSetTransactionMessageComputeUnitLimit).toHaveBeenCalledWith(
+            200_000,
+            expect.objectContaining({ blockhash: expect.anything() }),
+        );
+        expect(mockSetTransactionMessageLoadedAccountsDataSizeLimit).toHaveBeenCalledWith(
+            65_536,
+            expect.objectContaining({ computeUnitLimit: 200_000 }),
+        );
+        expect(mockEstimateResourceLimits).not.toHaveBeenCalled();
+        expect(result).toBe('decoded-signature');
+    });
+
+    it('simulates a version 1 transaction to fill in the resource limits it is missing', async () => {
+        expect.assertions(4);
+        const instructions = [{ id: 'instruction' }] as never[];
+        const { mobileWallet } = useMobileWalletTestHarness();
+        mockEstimateResourceLimits.mockResolvedValue({ computeUnitLimit: 1_000, loadedAccountsDataSizeLimit: 4_096 });
+
+        await mobileWallet.sendTransactions(instructions, { version: 1 });
+
+        expect(mockCreateTransactionMessage).toHaveBeenCalledWith({ version: 1 });
+        expect(mockSetTransactionMessageComputeUnitLimit).not.toHaveBeenCalled();
+        expect(mockEstimateResourceLimits).toHaveBeenCalledTimes(1);
+        expect(mockSignAndSendTransactionMessageWithSigners).toHaveBeenCalledWith({
+            // The 1,000 CU estimate gets the minimum 300 CU buffer; the data size limit is passed through.
+            estimatedResourceLimits: { computeUnitLimit: 1_300, loadedAccountsDataSizeLimit: 4_096 },
+            transactionMessage: expect.objectContaining({ blockhash: expect.anything() }),
+        });
+    });
+
+    it('simulates a version 1 transaction when only one resource limit is given', async () => {
+        expect.assertions(2);
+        const instructions = [{ id: 'instruction' }] as never[];
+        const { mobileWallet } = useMobileWalletTestHarness();
+        mockEstimateResourceLimits.mockResolvedValue({ computeUnitLimit: 1_000, loadedAccountsDataSizeLimit: 4_096 });
+
+        await mobileWallet.sendTransactions(instructions, { computeUnitLimit: 50_000, version: 1 });
+
+        expect(mockSetTransactionMessageComputeUnitLimit).toHaveBeenCalledWith(50_000, expect.anything());
+        expect(mockEstimateResourceLimits).toHaveBeenCalledTimes(1);
+    });
 });
 
 function createAuthorizationHookValue() {
@@ -380,13 +463,26 @@ function useMobileWalletTestHarness<TClient extends BaseClient = Client>({
         signature: Uint8Array.from([1, 2, 3]),
         signedMessage: Uint8Array.from([4, 5, 6]),
     });
-    mockCreateTransactionMessage.mockReturnValue({
-        version: 0,
-    });
+    mockCreateTransactionMessage.mockReset();
+    mockCreateTransactionMessage.mockImplementation(({ version }) => ({ version }));
     mockDecodeBase58.mockReturnValue('decoded-signature');
     mockDeauthorizeSession.mockResolvedValue(undefined);
     mockDeauthorizeSessions.mockResolvedValue(undefined);
+    mockEstimateResourceLimits.mockReset();
+    mockEstimateResourceLimits.mockResolvedValue({ computeUnitLimit: 1_000 });
     mockPipe.mockImplementation((value, ...steps) => steps.reduce((current, step) => step(current), value));
+    mockSetTransactionMessageComputeUnitLimit.mockReset();
+    mockSetTransactionMessageComputeUnitLimit.mockImplementation((computeUnitLimit, transactionMessage) => ({
+        computeUnitLimit,
+        transactionMessage,
+    }));
+    mockSetTransactionMessageLoadedAccountsDataSizeLimit.mockReset();
+    mockSetTransactionMessageLoadedAccountsDataSizeLimit.mockImplementation(
+        (loadedAccountsDataSizeLimit, transactionMessage) => ({
+            loadedAccountsDataSizeLimit,
+            transactionMessage,
+        }),
+    );
     mockSetTransactionMessageFeePayerSigner.mockImplementation((signer, transactionMessage) => ({
         signer,
         transactionMessage,

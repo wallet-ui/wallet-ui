@@ -2,7 +2,8 @@
     "$schema": "https://json.schemastore.org/tsconfig",
     "compilerOptions": {
         "jsx": "react",
-        "lib": ["DOM", "ES2024"]
+        "lib": ["DOM", "ES2024"],
+        "types": ["vitest/globals", "node"]
     },
     "display": "@wallet-ui/react-native-web3js",
     "extends": "../tsconfig/base.json",

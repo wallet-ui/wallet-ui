@@ -11,16 +11,16 @@ This package provides Wallet UI's React Native hooks and Mobile Wallet Adapter i
 
 ## Mobile Wallet Adapter Kit plugin
 
-`mobileWallet()` adds three capabilities to a Kit 7 client:
+`mobileWallet()` adds three capabilities to a Kit 8 client:
 
 - A lazy `payer` backed by the currently selected Mobile Wallet Adapter account.
-- A `transactionPlanExecutor` that submits through the wallet's `signAndSendTransactions` method.
+- A `transactionPlanExecutor` that submits through the wallet's `signAndSendTransactions` method. Before signing, it simulates each message to estimate and set its compute unit limit (and, for version 1 messages, the loaded accounts data size limit). Pass `estimateResourceLimits: false` to skip that, and keep the option in sync with `rpcTransactionPlanner`.
 - Headless `client.wallet.connect()` and `client.wallet.disconnect()` actions.
 
 Install the Kit plugins used to build the client:
 
 ```sh
-pnpm add @solana/kit@^7 @solana/kit-plugin-instruction-plan @solana/kit-plugin-rpc @wallet-ui/react-native-kit
+pnpm add @solana/kit@^8.3 @solana/kit-plugin-instruction-plan @solana/kit-plugin-rpc @wallet-ui/react-native-kit
 ```
 
 Compose the granular plugins in capability order:
@@ -32,16 +32,19 @@ import { rpcTransactionPlanner, solanaRpcConnection } from '@solana/kit-plugin-r
 import { mobileWallet, type MobileWalletConfig } from '@wallet-ui/react-native-kit';
 
 function createMobileClient(cluster: { url: string; urlWs?: string }, mobileWalletConfig: MobileWalletConfig) {
-    return createClient()
-        .use(
-            solanaRpcConnection({
-                rpcSubscriptionsUrl: cluster.urlWs,
-                rpcUrl: cluster.url,
-            }),
-        )
-        .use(mobileWallet(mobileWalletConfig))
-        .use(rpcTransactionPlanner({ estimateResourceLimits: false }))
-        .use(planAndSendTransactions());
+    return (
+        createClient()
+            .use(
+                solanaRpcConnection({
+                    rpcSubscriptionsUrl: cluster.urlWs,
+                    rpcUrl: cluster.url,
+                }),
+            )
+            .use(mobileWallet(mobileWalletConfig))
+            // Pass `{ version: 1 }` to plan version 1 transactions once the connected wallet supports them.
+            .use(rpcTransactionPlanner())
+            .use(planAndSendTransactions())
+    );
 }
 
 export type MobileClient = ReturnType<typeof createMobileClient>;

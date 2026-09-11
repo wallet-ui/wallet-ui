@@ -4,6 +4,7 @@ import {
     airdropFactory,
     generateKeyPairSigner,
     getAddressEncoder,
+    getTransactionEncoder,
     sendAndConfirmTransactionFactory,
     signTransaction,
 } from '@solana/kit';
@@ -20,7 +21,11 @@ const mockTransact = vi.hoisted(() => vi.fn());
     mockTransact;
 
 const AIRDROP_LAMPORTS = 2_000_000_000n;
+/** Largest wire size of a legacy or version 0 transaction; version 1 raises it to 4096 bytes. */
+const LEGACY_MAX_TRANSACTION_SIZE = 1232;
 const LOCALNET = createSolanaLocalnet({ url: 'http://127.0.0.1:8899' });
+/** Byte 0 of every version 1 transaction. Legacy and version 0 transactions start with a signature count. */
+const V1_TRANSACTION_DISCRIMINATOR = 0x81;
 const SIGN_IN_RESULT = {
     signature: 'sign-in-signature',
     signed_message: 'sign-in-message',
@@ -135,6 +140,15 @@ describe('expo-kit local validator integration', () => {
                 transactions: expect.any(Array),
             }),
         );
+
+        await pressButton(renderer, 'Send v1 transaction');
+        await waitForCondition(() => hasButton(renderer, 'v1 Transaction Sent!'));
+
+        expect(wallet.signAndSendTransactions).toHaveBeenCalledTimes(3);
+        const [{ transactions: v1Transactions }] = wallet.signAndSendTransactions.mock.calls[2];
+        const v1WireTransaction = getTransactionEncoder().encode(v1Transactions[0]);
+        expect(v1WireTransaction[0]).toBe(V1_TRANSACTION_DISCRIMINATOR);
+        expect(v1WireTransaction.length).toBeGreaterThan(LEGACY_MAX_TRANSACTION_SIZE);
 
         await pressButton(renderer, 'Disconnect');
         await waitForCondition(

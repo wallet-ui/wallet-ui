@@ -1,5 +1,6 @@
 import type { Mock } from 'vitest';
 
+import { SolanaSignAndSendTransaction, SolanaSignTransaction } from '@solana/wallet-standard-features';
 import { StandardConnect, StandardDisconnect } from '@wallet-standard/core';
 import type { UiWallet, UiWalletAccount } from '@wallet-standard/react';
 
@@ -8,6 +9,10 @@ import { renderHook } from '../test-renderer';
 import { createAccount, createWallet } from '../test-utils/wallet-ui-test-utils';
 import { ellipsify, useWalletUiDropdown } from '../use-wallet-ui-dropdown';
 import { useWalletUiSigner } from '../use-wallet-ui-signer';
+import {
+    getWalletUiAccountTransactionVersions,
+    useWalletUiTransactionVersions,
+} from '../use-wallet-ui-transaction-versions';
 import { useWalletUiWallet } from '../use-wallet-ui-wallet';
 
 const mockUseBaseDropdown = vi.fn();
@@ -16,10 +21,13 @@ const mockUseDisconnect = vi.fn();
 const mockUseWalletAccountTransactionSendingSigner = vi.fn();
 const mockUseWalletUi = vi.fn();
 const mockUseWalletUiAccount = vi.fn();
+const mockGetWalletAccountFeature = vi.fn((_account?: unknown, _featureName?: unknown) => ({}));
 const mockGetWalletFeature = vi.fn((_wallet?: unknown, _featureName?: unknown) => ({}));
 const TEST_ICON = 'data:image/png;base64,ZmFrZQ==';
 
 afterEach(() => {
+    mockGetWalletAccountFeature.mockReset();
+    mockGetWalletAccountFeature.mockImplementation(() => ({}));
     mockGetWalletFeature.mockReset();
     mockGetWalletFeature.mockImplementation(() => ({}));
 });
@@ -44,6 +52,8 @@ vi.mock('@wallet-standard/react', () => ({
 }));
 
 vi.mock('@wallet-standard/ui', () => ({
+    getWalletAccountFeature: (account: unknown, featureName: unknown) =>
+        mockGetWalletAccountFeature(account, featureName),
     getWalletFeature: (wallet: unknown, featureName: unknown) => mockGetWalletFeature(wallet, featureName),
 }));
 
@@ -314,6 +324,62 @@ describe('useWalletUiSigner', () => {
     });
 });
 
+describe('getWalletUiAccountTransactionVersions', () => {
+    it('reads the versions advertised on the sign-and-send feature', () => {
+        expect.assertions(2);
+
+        const account = createUiWalletAccountWithFeatures({
+            address: 'seeker-1',
+            features: [SolanaSignAndSendTransaction, SolanaSignTransaction],
+        });
+        mockGetWalletAccountFeature.mockReturnValue({ supportedTransactionVersions: ['legacy', 0, 1] });
+
+        expect(getWalletUiAccountTransactionVersions(account)).toEqual(['legacy', 0, 1]);
+        expect(mockGetWalletAccountFeature).toHaveBeenCalledWith(account, SolanaSignAndSendTransaction);
+    });
+
+    it('falls back to the sign-transaction feature for wallets that only sign', () => {
+        expect.assertions(3);
+
+        const account = createUiWalletAccountWithFeatures({ address: 'ledger-1', features: [SolanaSignTransaction] });
+        mockGetWalletAccountFeature.mockReturnValue({ supportedTransactionVersions: ['legacy', 0] });
+
+        expect(getWalletUiAccountTransactionVersions(account)).toEqual(['legacy', 0]);
+        expect(mockGetWalletAccountFeature).toHaveBeenCalledTimes(1);
+        expect(mockGetWalletAccountFeature).toHaveBeenCalledWith(account, SolanaSignTransaction);
+    });
+
+    it('returns no versions for an account without signing features', () => {
+        expect.assertions(2);
+
+        const account = createUiWalletAccountWithFeatures({ address: 'watch-1', features: [] });
+
+        expect(getWalletUiAccountTransactionVersions(account)).toEqual([]);
+        expect(mockGetWalletAccountFeature).not.toHaveBeenCalled();
+    });
+});
+
+describe('useWalletUiTransactionVersions', () => {
+    it('memoizes the versions for a stable account handle', () => {
+        expect.assertions(3);
+
+        const account = createUiWalletAccountWithFeatures({
+            address: 'seeker-1',
+            features: [SolanaSignAndSendTransaction],
+        });
+        mockGetWalletAccountFeature.mockReturnValue({ supportedTransactionVersions: ['legacy', 0, 1] });
+
+        const hook = renderHook(() => useWalletUiTransactionVersions({ account }));
+        const first = getHookResult(hook.result);
+
+        hook.rerenderHook(() => useWalletUiTransactionVersions({ account }));
+
+        expect(first).toEqual(['legacy', 0, 1]);
+        expect(getHookResult(hook.result)).toBe(first);
+        expect(mockGetWalletAccountFeature).toHaveBeenCalledTimes(1);
+    });
+});
+
 describe('useWalletUiWallet', () => {
     it('connects the first account and exposes the wallet loading state', async () => {
         expect.assertions(6);
@@ -433,6 +499,16 @@ function createUiWallet({
 
 function createUiWalletAccount({ address, walletName }: { address: string; walletName: string }): UiWalletAccount {
     return createAccount({ address, walletName }) as unknown as UiWalletAccount;
+}
+
+function createUiWalletAccountWithFeatures({
+    address,
+    features,
+}: {
+    address: string;
+    features: readonly string[];
+}): UiWalletAccount {
+    return { ...createAccount({ address, walletName: 'Seeker' }), features } as unknown as UiWalletAccount;
 }
 
 function getHookResult<T>(result: { __type: 'error'; current: Error } | { __type: 'result'; current?: T }): T {

@@ -25,11 +25,32 @@ The wallet lifecycle methods are largely shared. The main differences are the cl
     	| `disconnect`             | `() => Promise<void>`                                                                              | Disconnect the current wallet.                           |
     	| `deauthorizeSession`     | `(wallet: DeauthorizeAPI) => Promise<void>`                                                        | Deauthorize the current session.                         |
     	| `getTransactionSigner`   | `(address: Address, minContextSlot: bigint) => TransactionSendingSigner`                           | Return a signer for Kit transaction pipelines.           |
-    	| `sendTransaction`        | `(instructions: Instruction[]) => Promise<string>`                                                 | Create, sign, and send a transaction from instructions.  |
+    	| `sendTransactions`       | `(instructions: Instruction[], options?: SendTransactionsOptions) => Promise<string>`              | Create, sign, and send a transaction from instructions.  |
     	| `signAndSendTransaction` | `(transaction: Transaction \| Transaction[], minContextSlot: bigint) => Promise<SignatureBytes[]>` | Sign and send one or more Kit transactions.              |
     	| `signTransaction`        | `(transaction: Transaction \| Transaction[]) => Promise<Transaction \| Transaction[]>`             | Sign one or more Kit transactions without sending them.  |
     	| `signIn`                 | `(signInPayload: SignInPayload) => Promise<Account>`                                               | Sign in with a wallet.                                   |
     	| `signMessage`            | `(message: Uint8Array \| Uint8Array[]) => Promise<Uint8Array \| Uint8Array[]>`                     | Sign one or more messages.                               |
+
+    	### Transaction versions
+
+    	`sendTransactions` builds a version `0` transaction message by default. Pass `options` to build a different version or to set its resource limits:
+
+    	| Name                          | Type                  | Description                                                                                                                                                           |
+    	| ----------------------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    	| `version`                     | `'legacy' \| 0 \| 1`  | The transaction message version. Defaults to `0`. Only pass `1` when the wallet reports `1` in `getCapabilities().supported_transaction_versions`.                    |
+    	| `computeUnitLimit`            | `number`              | Compute unit limit to set on the message.                                                                                                                             |
+    	| `loadedAccountsDataSizeLimit` | `number`              | Loaded accounts data size limit to set on the message. Version `1` only.                                                                                              |
+    	| `estimateResourceLimits`      | `boolean`             | Simulate the transaction to fill in the limits you did not pass. Defaults to `true` for a version `1` message that is missing a limit, `false` otherwise.             |
+
+    	A version `1` transaction is budgeted zero compute units unless it carries a compute unit limit, which is why `sendTransactions` simulates version `1` messages that do not set one. `signTransactions` and `signAndSendTransactions` accept compiled transactions of any version as-is.
+
+    	```tsx
+    	// Sends a version 1 transaction; the compute unit and loaded accounts data size limits are estimated by simulation.
+    	await sendTransactions(instructions, { version: 1 });
+
+    	// Same, with explicit limits and no simulation.
+    	await sendTransactions(instructions, { computeUnitLimit: 200_000, loadedAccountsDataSizeLimit: 65_536, version: 1 });
+    	```
 
     	### Account object
 

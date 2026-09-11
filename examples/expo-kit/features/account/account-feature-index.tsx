@@ -4,6 +4,7 @@ import { AccountFeatureGetBalance } from '@/features/account/account-feature-get
 import { useMobileWallet } from '@wallet-ui/react-native-kit';
 import { appStyles } from '@/constants/app-styles';
 import { AccountFeatureSendTransaction } from '@/features/account/account-feature-send-transaction';
+import { AccountFeatureSendTransactionV1 } from '@/features/account/account-feature-send-transaction-v1';
 import { AccountFeatureSendTransactions } from '@/features/account/account-feature-send-transactions';
 import { AccountFeatureSignMessage } from '@/features/account/account-feature-sign-message';
 import { AccountFeatureSignMessages } from '@/features/account/account-feature-sign-messages';
@@ -30,6 +31,7 @@ export function AccountFeatureIndex() {
                     <AccountFeatureSignTransaction address={account.address} />
                     <AccountFeatureSendTransaction address={account.address} />
                     <AccountFeatureSendTransactions address={account.address} />
+                    <AccountFeatureSendTransactionV1 address={account.address} />
                     <AccountFeatureDisconnect />
                 </View>
             ) : (

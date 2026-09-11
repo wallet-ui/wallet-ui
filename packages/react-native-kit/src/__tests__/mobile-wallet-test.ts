@@ -1,8 +1,8 @@
 import type { AppIdentity } from '@solana-mobile/mobile-wallet-adapter-protocol';
-import type { ClientWithRpc, GetLatestBlockhashApi } from '@solana/kit';
+import type { ClientWithRpc, GetLatestBlockhashApi, SimulateTransactionApi } from '@solana/kit';
 
 import { createAuthorizationStore } from '../authorization-store';
-import { mobileWallet } from '../mobile-wallet';
+import { mobileWallet, type MobileWalletConfig } from '../mobile-wallet';
 import {
     createAuthorizationResult,
     createCache,
@@ -15,6 +15,7 @@ import {
 
 const mockCreateTransactionPlanExecutor = vi.fn();
 const mockDecodeBase58 = vi.fn();
+const mockEstimateResourceLimits = vi.fn();
 const mockSignAndSendTransactionMessageWithSigners = vi.fn();
 const mockTransact = vi.fn();
 
@@ -24,6 +25,13 @@ vi.mock('@solana-mobile/mobile-wallet-adapter-protocol-kit', () => ({
 
 vi.mock('@solana/kit', () => ({
     createTransactionPlanExecutor: (...args: unknown[]) => mockCreateTransactionPlanExecutor(...args),
+    estimateAndSetResourceLimitsFactory:
+        (estimate: (message: object, config?: unknown) => Promise<object>) =>
+        async (transactionMessage: object, config?: unknown) => ({
+            ...transactionMessage,
+            resourceLimits: await estimate(transactionMessage, config),
+        }),
+    estimateResourceLimitsFactory: () => mockEstimateResourceLimits,
     extendClient: (client: object, additions: object) =>
         Object.defineProperties(
             Object.defineProperties({}, Object.getOwnPropertyDescriptors(client)),
@@ -62,15 +70,19 @@ describe('mobileWallet', () => {
     beforeEach(() => {
         mockCreateTransactionPlanExecutor.mockReset();
         mockDecodeBase58.mockReset();
+        mockEstimateResourceLimits.mockReset();
         mockSignAndSendTransactionMessageWithSigners.mockReset();
         mockTransact.mockReset();
+
+        mockEstimateResourceLimits.mockResolvedValue({ computeUnitLimit: 1_000 });
 
         mockCreateTransactionPlanExecutor.mockImplementation(({ executeTransactionMessage }) => {
             return async ({ message }: { message: object }) => {
                 const context: Record<string, unknown> = {};
-                const signature = await executeTransactionMessage(context, message);
+                // Like Kit, merge what the callback returns into the context it was handed.
+                const result = await executeTransactionMessage(context, message);
                 return {
-                    context: { ...context, signature },
+                    context: { ...context, ...result },
                     kind: 'single',
                     plannedMessage: message,
                     planType: 'transactionPlanResult',
@@ -186,6 +198,8 @@ describe('mobileWallet', () => {
                     blockhash: expect.objectContaining({ blockhash: 'latest-blockhash' }),
                     feePayerSigner: expect.objectContaining({ address: FIRST_ADDRESS }),
                     id: 'planned-message',
+                    // The 1,000 CU estimate gets the minimum 300 CU buffer.
+                    resourceLimits: { computeUnitLimit: 1_300 },
                 }),
             ],
         });
@@ -193,7 +207,7 @@ describe('mobileWallet', () => {
         expect(result).toEqual(
             expect.objectContaining({
                 context: expect.objectContaining({
-                    message: expect.objectContaining({ id: 'planned-message' }),
+                    message: expect.objectContaining({ id: 'planned-message', resourceLimits: expect.anything() }),
                     signature: 'encoded-signature',
                 }),
                 status: 'successful',
@@ -203,9 +217,102 @@ describe('mobileWallet', () => {
         expect(mockTransact).toHaveBeenCalledTimes(1);
         expect(mockSignAndSendTransactionMessageWithSigners).toHaveBeenCalledTimes(1);
     });
+
+    it('passes the estimated loaded accounts data size limit through for version 1 messages', async () => {
+        expect.assertions(2);
+        const store = createAuthorizationStore({ cache: createCache() });
+        await store.persist(createExpectedAuthorization());
+        mockEstimateResourceLimits.mockResolvedValue({ computeUnitLimit: 600_000, loadedAccountsDataSizeLimit: 4_096 });
+        const signAndSendTransactions = vi.fn().mockResolvedValue([new Uint8Array([1, 2, 3])]);
+        mockTransact.mockImplementation(
+            async callback =>
+                await callback({
+                    authorize: vi.fn().mockResolvedValue(createAuthorizationResult()),
+                    signAndSendTransactions,
+                }),
+        );
+        mockSignAndSendTransactionMessageWithSigners.mockImplementation(async transactionMessage => {
+            const [signature] = await transactionMessage.feePayerSigner.signAndSendTransactions([transactionMessage]);
+            return signature;
+        });
+        const client = createPluginClient(store);
+
+        await client.transactionPlanExecutor({ message: { id: 'planned-message', version: 1 } } as never);
+
+        expect(mockEstimateResourceLimits).toHaveBeenCalledWith(
+            expect.objectContaining({ id: 'planned-message', version: 1 }),
+            undefined,
+        );
+        expect(signAndSendTransactions).toHaveBeenCalledWith({
+            minContextSlot: 42,
+            transactions: [
+                expect.objectContaining({
+                    resourceLimits: { computeUnitLimit: expect.any(Number), loadedAccountsDataSizeLimit: 4_096 },
+                }),
+            ],
+        });
+    });
+
+    it('lets the caller replace the compute unit buffer', async () => {
+        expect.assertions(1);
+        const store = createAuthorizationStore({ cache: createCache() });
+        await store.persist(createExpectedAuthorization());
+        const signAndSendTransactions = vi.fn().mockResolvedValue([new Uint8Array([1, 2, 3])]);
+        mockTransact.mockImplementation(
+            async callback =>
+                await callback({
+                    authorize: vi.fn().mockResolvedValue(createAuthorizationResult()),
+                    signAndSendTransactions,
+                }),
+        );
+        mockSignAndSendTransactionMessageWithSigners.mockImplementation(async transactionMessage => {
+            const [signature] = await transactionMessage.feePayerSigner.signAndSendTransactions([transactionMessage]);
+            return signature;
+        });
+        const client = createPluginClient(store, { getComputeUnitLimitFromEstimate: estimate => estimate * 2 });
+
+        await client.transactionPlanExecutor({ message: { id: 'planned-message' } } as never);
+
+        expect(signAndSendTransactions).toHaveBeenCalledWith(
+            expect.objectContaining({
+                transactions: [expect.objectContaining({ resourceLimits: { computeUnitLimit: 2_000 } })],
+            }),
+        );
+    });
+
+    it('skips resource limit estimation when disabled', async () => {
+        expect.assertions(2);
+        const store = createAuthorizationStore({ cache: createCache() });
+        await store.persist(createExpectedAuthorization());
+        const signAndSendTransactions = vi.fn().mockResolvedValue([new Uint8Array([1, 2, 3])]);
+        mockTransact.mockImplementation(
+            async callback =>
+                await callback({
+                    authorize: vi.fn().mockResolvedValue(createAuthorizationResult()),
+                    signAndSendTransactions,
+                }),
+        );
+        mockSignAndSendTransactionMessageWithSigners.mockImplementation(async transactionMessage => {
+            const [signature] = await transactionMessage.feePayerSigner.signAndSendTransactions([transactionMessage]);
+            return signature;
+        });
+        const client = createPluginClient(store, { estimateResourceLimits: false });
+
+        await client.transactionPlanExecutor({ message: { id: 'planned-message' } } as never);
+
+        expect(mockEstimateResourceLimits).not.toHaveBeenCalled();
+        expect(signAndSendTransactions).toHaveBeenCalledWith(
+            expect.objectContaining({
+                transactions: [expect.not.objectContaining({ resourceLimits: expect.anything() })],
+            }),
+        );
+    });
 });
 
-function createPluginClient(store: ReturnType<typeof createAuthorizationStore>) {
+function createPluginClient(
+    store: ReturnType<typeof createAuthorizationStore>,
+    config: Partial<Omit<MobileWalletConfig, 'chain' | 'identity' | 'store'>> = {},
+) {
     const rpc = {
         getLatestBlockhash: vi.fn(() => ({
             send: vi.fn().mockResolvedValue({
@@ -216,8 +323,9 @@ function createPluginClient(store: ReturnType<typeof createAuthorizationStore>) 
                 },
             }),
         })),
+        simulateTransaction: vi.fn(),
     };
-    return mobileWallet({ chain: CHAIN, identity: IDENTITY, store })({
+    return mobileWallet({ chain: CHAIN, identity: IDENTITY, store, ...config })({
         rpc,
-    } as unknown as ClientWithRpc<GetLatestBlockhashApi>);
+    } as unknown as ClientWithRpc<GetLatestBlockhashApi & SimulateTransactionApi>);
 }

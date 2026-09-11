@@ -26,6 +26,7 @@
         "hooks/use-wallet-ui-sign-and-send",
         "hooks/use-wallet-ui-signer",
         "hooks/use-wallet-ui-solana-client",
+        "hooks/use-wallet-ui-transaction-versions",
         "hooks/use-wallet-ui-wallet",
         "hooks/use-wallet-ui-wallets",
         "---Providers---",

@@ -6,9 +6,9 @@
         "./index.ts"
     ],
     "dependencies": {
-        "@solana-program/system": "^0.13.0",
-        "@solana/kit": "^7.0.0",
-        "@solana/kit-plugin-rpc": "^0.16.0",
+        "@solana-program/system": "^0.14.1",
+        "@solana/kit": "^8.3.0",
+        "@solana/kit-plugin-rpc": "^0.19.0",
         "@wallet-ui/react": "workspace:*",
         "react": "^19.1.4",
         "react-dom": "^19.1.4",
@@ -21,7 +21,7 @@
         "@types/react-dom": "^19.1.11"
     },
     "peerDependencies": {
-        "@solana-program/system": "^0.13.0"
+        "@solana-program/system": "^0.14.1"
     },
     "engines": {
         "node": ">=20.19.0"

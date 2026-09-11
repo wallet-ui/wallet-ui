@@ -10,6 +10,7 @@ export * from './use-wallet-ui-auth';
 export * from './use-wallet-ui-cluster';
 export * from './use-wallet-ui-dropdown';
 export * from './use-wallet-ui-signer';
+export * from './use-wallet-ui-transaction-versions';
 export * from './use-wallet-ui-wallet';
 export * from './use-wallet-ui-wallets';
 export * from './wallet-ui';

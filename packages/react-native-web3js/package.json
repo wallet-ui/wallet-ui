@@ -79,7 +79,7 @@
         "@solana/wallet-standard-features": "1.3.0",
         "@solana/web3.js": "^1.98.4",
         "@wallet-standard/core": "1.1.1",
-        "@wallet-standard/react": "1.0.1",
+        "@wallet-standard/react": "1.0.3",
         "@wallet-ui/core": "workspace:*",
         "js-base64": "^3.7.8",
         "nanostores": "^1.2.0"

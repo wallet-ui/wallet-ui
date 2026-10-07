@@ -68,9 +68,9 @@ describe('mobileWallet', () => {
         mockCreateTransactionPlanExecutor.mockImplementation(({ executeTransactionMessage }) => {
             return async ({ message }: { message: object }) => {
                 const context: Record<string, unknown> = {};
-                const signature = await executeTransactionMessage(context, message);
+                const returnedContext = await executeTransactionMessage(context, message);
                 return {
-                    context: { ...context, signature },
+                    context: { ...context, ...returnedContext },
                     kind: 'single',
                     plannedMessage: message,
                     planType: 'transactionPlanResult',

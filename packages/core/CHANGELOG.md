@@ -1,5 +1,11 @@
 # @wallet-ui/core
 
+## 4.4.0
+
+### Minor Changes
+
+- [#558](https://github.com/wallet-ui/wallet-ui/pull/558) [`38123cb`](https://github.com/wallet-ui/wallet-ui/commit/38123cb2cfb47b49d979b6cff90c0e0dc6dc012b) Thanks [@beeman](https://github.com/beeman)! - Require `@solana/kit` 8 and bump the `@solana-mobile` packages to 3.0.0. Consumers on Kit 7 must upgrade to `@solana/kit@^8.4.0`.
+
 ## 4.3.0
 
 ## 4.2.1

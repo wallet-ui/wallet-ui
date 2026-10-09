@@ -1,5 +1,7 @@
 # @wallet-ui/core
 
+## 4.4.1
+
 ## 4.4.0
 
 ### Minor Changes

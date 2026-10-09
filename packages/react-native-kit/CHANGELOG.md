@@ -1,5 +1,14 @@
 # @wallet-ui/react-native-kit
 
+## 4.4.1
+
+### Patch Changes
+
+- [#564](https://github.com/wallet-ui/wallet-ui/pull/564) [`9cb67cb`](https://github.com/wallet-ui/wallet-ui/commit/9cb67cb3e51c4bff6fa3764b5e0b19a047cd7d22) Thanks [@beeman](https://github.com/beeman)! - Require `@solana-mobile/mobile-wallet-adapter-protocol`, `-protocol-kit`, and `-protocol-web3js` 3.0.1 or later. The 3.0.0 React Native builds of the kit and web3js wrappers import `startRemoteScenario` from the protocol package, whose React Native build does not export it, so strict ESM loaders such as vitest fail to load `@wallet-ui/react-native-kit` and `@wallet-ui/react-native-web3js` with "does not provide an export named 'startRemoteScenario'". 3.0.1 fixes that, and the `^3.0.1` range also keeps pnpm 12's release-age cooldown from resolving back to 3.0.0.
+
+- Updated dependencies []:
+    - @wallet-ui/core@4.4.1
+
 ## 4.4.0
 
 ### Minor Changes
